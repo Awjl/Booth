@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getUtk } from "@/utils/auth";
+// import { getUtk } from "@/utils/auth";
 import store from "../store/index";
 
 // 创建axios实例
@@ -18,7 +18,8 @@ service.interceptors.request.use(
     config.headers["atk"] = config.atk;
     if (store.getters.token) {
       // config.headers["utk"] = getUtk();
-      config.headers["utk"] = "wUkMhTchUyqBA+gO5NSQwdVVDOJ9Kdv2D7qF0PHjITbeUmP7zR/L7OrM0NVmpRTC";
+      config.headers["utk"] =
+        "wUkMhTchUyqBA+gO5NSQwdVVDOJ9Kdv2D7qF0PHjITbeUmP7zR/L7OrM0NVmpRTC";
     }
     return config;
   },

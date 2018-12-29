@@ -1,0 +1,385 @@
+/* tab */
+
+.tabIcon {
+  display: block;
+  width: 40px;
+  height: 40px;
+  margin: 13px auto 9px;
+  background-size: 100% 100%;
+}
+
+.home-icon {
+  background-image: url(../images/icon/home.png);
+}
+
+.home-acticon {
+  background-image: url(../images/icon/homeAct.png);
+}
+
+.lover-icon {
+  background-image: url(../images/icon/love.png);
+}
+
+.lover-acticon {
+  background-image: url(../images/icon/loveAct.png);
+}
+
+.Shopping-icon {
+  background-image: url(../images/icon/shopping.png);
+}
+
+.Shopping-acticon {
+  background-image: url(../images/icon/shoppingAct.png);
+}
+
+.My-icon {
+  background-image: url(../images/icon/my.png);
+}
+
+.My-acticon {
+  background-image: url(../images/icon/myAct.png);
+}
+
+/* 首页 */
+
+.iconmoney {
+  display: block;
+  width: 40px;
+  height: 40px;
+  background-size: auto 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-image: url(../images/icon/Bean.png);
+}
+
+.homeIcon {
+  display: block;
+  width: 70px;
+  height: 70px;
+  background-size: 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+
+.logoIcon {
+  background-image: url(../images/icon/logo.png);
+}
+
+.seachIcon {
+  width: 40px;
+  height: 40px;
+  background-image: url(../images/icon/seach.png);
+}
+
+/* 公益 */
+
+.lovericon {
+  display: block;
+  width: 30px;
+  height: 30px;
+  background-size: auto 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  margin-right: 5px;
+}
+
+.jine {
+  background-image: url(../images/icon/jine.png);
+}
+
+.addres {
+  background-image: url(../images/icon/addres.png);
+  margin-left: 40px;
+}
+
+.addAct {
+  background-image: url(../images/icon/addAct.png);
+}
+
+/* 购物车 */
+
+.shoppingicon {
+  display: block;
+  width: 30px;
+  height: 30px;
+  background-size: auto 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  margin-right: 5px;
+}
+
+.shoppinbot {
+  margin: -10px 0 0 18px;
+  background-image: url(../images/icon/bot.png);
+}
+
+.iconEdit {
+  background-image: url(../images/icon/edit.png);
+}
+
+.iconreduce {
+  width: 50px;
+  height: 50px;
+  background-image: url(../images/icon/res.png);
+}
+
+.iconAdd {
+  width: 50px;
+  height: 50px;
+  background-image: url(../images/icon/add.png);
+}
+
+/* 个人中心 */
+
+.myicon {
+  display: block;
+  width: 60px;
+  height: 60px;
+  background-size: auto 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+
+.righticon {
+  width: 30px;
+  height: 30px;
+  background-image: url(../images/icon/rig.png);
+}
+
+.myico1 {
+  margin-right: 40px;
+  background-image: url(../images/icon/myItem1.png);
+}
+
+.myico2 {
+  margin-right: 40px;
+  background-image: url(../images/icon/myItem2.png);
+}
+
+.myico3 {
+  margin-right: 40px;
+  background-image: url(../images/icon/myItem3.png);
+}
+
+.myico4 {
+  margin-right: 40px;
+  background-image: url(../images/icon/myItem4.png);
+}
+
+.myico5 {
+  margin-right: 40px;
+  background-image: url(../images/icon/myItem5.png);
+}
+
+.myico6 {
+  margin-right: 40px;
+  background-image: url(../images/icon/myItem6.png);
+}
+
+// 
+.angule {
+  background-image: url(../images/icon/angle.png);
+}
+
+.PermissionBoxS {
+  background-image: url(../images/bg/home/insect.png);
+  background-size: 100% 100%;
+}
+
+.PermissionBoxC {
+  background-image: url(../images/bg/home/close.png);
+  background-size: 100% 100%;
+}
+
+.shoppingCartBox {
+  background-image: url(../images/bg/home/shoCart.png);
+  background-size: 100% 100%;
+}
+
+.CartClose {
+  display: block;
+  width: 60px;
+  height: 60px;
+  background-size: auto 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  float: right;
+  margin-right: 30px;
+  background-image: url(../images/icon/close.png);
+}
+
+// 公益详情
+.startIcon {
+  display: block;
+  width: 40px;
+  height: 40px;
+  background-size: auto 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-image: url(../images/icon/begin.png);
+  margin-right: 40px;
+}
+
+.endIcon {
+  display: block;
+  width: 40px;
+  height: 40px;
+  background-size: auto 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-image: url(../images/icon/end.png);
+  margin-right: 40px;
+}
+
+.TowImg {
+  width: 100px;
+  height: 130px;
+  background-size: auto 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-image: url(../images/bg/love/two.png);
+  position: relative;
+  margin: 0 auto;
+}
+
+.OneImg {
+  width: 140px;
+  height: 177px;
+  background-size: auto 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-image: url(../images/bg/love/one.png);
+  position: relative;
+  margin: 0 auto;
+}
+
+.ThreeImg {
+  width: 100px;
+  height: 130px;
+  background-size: auto 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-image: url(../images/bg/love/three.png);
+  position: relative;
+  margin: 0 auto;
+}
+
+.ObtainOne {
+  width: 100%;
+  height: 360px;
+  background-size: auto 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-image: url(../images/bg/love/Obtain1.png);
+  position: relative;
+  margin: 30px 0;
+}
+
+.ObtainTwo {
+  width: 100%;
+  height: 360px;
+  background-size: auto 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-image: url(../images/bg/love/Obtain2.png);
+  position: relative;
+  margin: 30px 0;
+}
+
+.ObtainThree {
+  width: 100%;
+  height: 360px;
+  background-size: auto 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-image: url(../images/bg/love/Obtain3.png);
+  margin: 30px 0;
+}
+
+.loveVolunteer {
+  background-size: auto 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-image: url(../images/bg/love/volunteerBG.png);
+}
+
+/* 优惠券 */
+
+.useCouponBoxItem {
+  width: 100%;
+  height: 165px;
+  background-size: auto 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-image: url(../images/bg/shopping/conponBg.png);
+}
+
+// 我的邀请
+.myPlease {
+  width: 100vw;
+  height: 100vh;
+  background-size: auto 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-image: url(../images/bg/my/placeBg.png);
+  position: relative;
+}
+
+/* 登录注册 */
+
+.loginRegistered {
+  width: 100vw;
+  height: 100vh;
+  background-size: auto 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-image: url(../images/bg/login/loginBg.png);
+  overflow: hidden;
+}
+
+/* 订单详情 */
+
+.OrderDetailsBg {
+  width: 100%;
+  height: 200px;
+  background-size: auto 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-image: url(../images/bg/shopping/OrderBg.png);
+  display: flex;
+  align-items: center;
+  padding: 0 60px;
+  box-sizing: border-box;
+}
+
+.OrderDetailsIcon {
+  width: 84px;
+  height: 84px;
+  background-size: auto 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-image: url(../images/bg/shopping/timeBg.png);
+}
+
+/* 物流 */
+
+.logIcon {
+  width: 44px;
+  height: 44px;
+  background-size: auto 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  display: block;
+}
+
+.l-Icon {
+  margin-right: 30px;
+  background-image: url(../images/icon/log.png);
+}
+
+.A-Icon {
+  width: 50px;
+  height: 50px;
+  margin-right: 30px;
+  background-image: url(../images/icon/myItem5.png);
+}

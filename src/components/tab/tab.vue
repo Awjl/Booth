@@ -27,7 +27,7 @@ export default {
 
 <style lang="scss">
 .tab {
-  width: 100vw;
+  width: 100%;
   height: 60px;
   background: #326b90;
   display: flex;

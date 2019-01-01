@@ -26,7 +26,7 @@ export default {
 
 <style lang="scss">
 .food {
-  width: 100vw;
+  width: 100%;
   height: 158px;
   background: #326b90;
   display: flex;

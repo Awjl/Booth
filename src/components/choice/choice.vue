@@ -19,10 +19,14 @@
       </div>
       <div class="choiceList" style="left:170px;" v-if="choiceBoxshow">
         <div class="choiceListChildren">
-          <div class="choiceItem">基金/证券/期货/投资</div>
-          <div class="choiceItem">保险</div>
-          <div class="choiceItem">银行</div>
-          <div class="choiceItem">信托/担保/拍卖/典当</div>
+          <div class="choiceItem" @click.stop="toBooth()">
+            基金/证券/期货/投资
+          </div>
+          <div class="choiceItem" @click.stop="toBooth()">保险</div>
+          <div class="choiceItem" @click.stop="toBooth()">银行</div>
+          <div class="choiceItem" @click.stop="toBooth()">
+            信托/担保/拍卖/典当
+          </div>
         </div>
       </div>
     </div>
@@ -44,7 +48,8 @@ export default {
         "贸易|批发|零售|租凭业",
         "文体教育|工艺美术",
         "生产|加工|制造"
-      ]
+      ],
+      ToBooth: "生产|加工|制造"
     };
   },
   methods: {
@@ -55,6 +60,10 @@ export default {
     mouseOver(index) {
       console.log(index);
       this.typeindex = index;
+    },
+    toBooth() {
+      this.choiceBoxshow = !this.choiceBoxshow;
+      this.$emit("cliceToBooth", this.ToBooth);
     }
   }
 };

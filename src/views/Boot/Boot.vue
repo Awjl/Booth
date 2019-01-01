@@ -1,7 +1,7 @@
 <template>
   <div class="boot">
     <div class="bootLogo"><div class="logo"></div></div>
-    <div class="bootBg"><Choice></Choice></div>
+    <div class="bootBg"><Choice v-on:cliceToBooth="cliceToBooth"></Choice></div>
     <div class="bootFoot">
       <div class="footImg">
         <img src="../../assets/images/guide/item1.png" alt="" />
@@ -16,6 +16,15 @@
       </div>
       <div class="footText">Shanghai maiyu technology co.LTD</div>
     </div>
+    <div class="bootBox" v-if="title">
+      <p class="black" @click="heavy()">
+        <i class="icon iconBack"></i>返回，重新选择
+      </p>
+      <div class="ToBox">
+        <p>{{ title }}</p>
+        <div>进入booth</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -24,8 +33,22 @@ import Choice from "@/components/choice/choice.vue";
 
 export default {
   name: "boot",
+  data() {
+    return {
+      title: ""
+    };
+  },
   components: {
     Choice
+  },
+  methods: {
+    cliceToBooth(ToBooth) {
+      this.title = ToBooth;
+      console.log(this.title);
+    },
+    heavy() {
+      this.title = "";
+    }
   }
 };
 </script>
@@ -65,6 +88,48 @@ export default {
     .footText {
       font-size: 12px;
       margin-top: 20px;
+    }
+  }
+  .bootBox {
+    height: 100vh;
+    width: 362px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .black {
+      color: #fff;
+      font-size: 12px;
+      margin-bottom: 4px;
+      cursor: pointer;
+    }
+    .ToBox {
+      width: 362px;
+      height: 144px;
+      background: #fff;
+      p {
+        color: #3c586d;
+        width: 100%;
+        text-align: center;
+        font-size: 20px;
+        margin: 26px 0 16px;
+        font-weight: 600;
+      }
+      div {
+        width: 232px;
+        height: 40px;
+        text-align: center;
+        line-height: 40px;
+        background: #326b90;
+        color: #fff;
+        font-size: 16px;
+        margin: 0 auto;
+        cursor: pointer;
+      }
     }
   }
 }

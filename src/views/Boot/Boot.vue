@@ -63,7 +63,7 @@ export default {
       }
     }
     .footText {
-      font-size: 12PX;
+      font-size: 12px;
       margin-top: 20px;
     }
   }

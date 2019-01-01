@@ -1,0 +1,83 @@
+<template>
+  <div class="tab">
+    <div class="tabLogo">
+      <img src="../../assets/images/home/logo.png" alt />
+      <div class="tabSearch">
+        <input type="text" placeholder="搜索你感兴趣的企业/展会" />
+        <i class="icon iconSearch"></i>
+      </div>
+    </div>
+    <div class="tabLoging">
+      <div>首页</div>
+      <div>展会</div>
+      <div>企业</div>
+      <div>消息</div>
+      <div>注册</div>
+      <div>登陆</div>
+      <div class="HeadImg"></div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "tab"
+};
+</script>
+
+<style lang="scss">
+.tab {
+  width: 100vw;
+  height: 60px;
+  background: #326b90;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  box-sizing: border-box;
+  .tabLogo {
+    display: flex;
+    align-items: center;
+    .tabSearch {
+      width: 246px;
+      height: 30px;
+      border: 1px solid #fff;
+      padding: 0 16px;
+      margin-left: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .iconSearch {
+        cursor: pointer;
+      }
+      input {
+        background: initial;
+        outline: none;
+        color: #fff;
+        width: 200px;
+        font-size: 12px;
+        &::-webkit-input-placeholder {
+          color: #fff;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+  .tabLoging {
+    display: flex;
+    align-items: center;
+    div {
+      cursor: pointer;
+      margin-left: 36px;
+      color: #fff;
+      &.HeadImg {
+        width: 40px;
+        height: 40px;
+        background: #fff;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+    }
+  }
+}
+</style>

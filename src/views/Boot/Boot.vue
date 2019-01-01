@@ -22,7 +22,7 @@
       </p>
       <div class="ToBox">
         <p>{{ title }}</p>
-        <div>进入booth</div>
+        <div @click="toHome()">进入booth</div>
       </div>
     </div>
   </div>
@@ -48,6 +48,11 @@ export default {
     },
     heavy() {
       this.title = "";
+    },
+    toHome() {
+      this.$router.push({
+        path: `/home`
+      });
     }
   }
 };

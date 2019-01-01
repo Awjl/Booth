@@ -15,12 +15,19 @@ export default new Router({
       }
     },
     {
-      path: "/home",
-      component: () => import("./views/home/home.vue"),
-      name: "home",
-      meta: {
-        title: "首页"
-      }
+      path: "/",
+      component: () => import("./views/all.vue"),
+      redirect: "/Home",
+      children: [
+        {
+          path: "/home",
+          component: () => import("./views/home/home.vue"),
+          name: "home",
+          meta: {
+            title: "首页"
+          }
+        }
+      ]
     }
   ]
 });

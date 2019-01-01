@@ -28,7 +28,7 @@ export default {
     border-bottom: 2px solid #fff;
     padding-bottom: 10px;
     img:nth-child(2) {
-        margin: 0 0 10px 10px;
+      margin: 0 0 10px 10px;
     }
   }
 }

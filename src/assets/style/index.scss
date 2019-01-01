@@ -23,7 +23,7 @@ time, mark, audio, video, input{
   vertical-align: baseline;
 }
 body,html{
-  font:14/1.5 "Avenir", Helvetica, Arial, sans-serif;
+  font:14/1.5 "PingFang SC", "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei","Hiragino Sans GB","Heiti SC","WenQuanYi Micro Hei",sans-serif;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
   color: #000;
@@ -63,7 +63,8 @@ table{
 /* custom */
 
 a{
-   color: #7e8c8d;
+  color: #7e8c8d;
+  backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   text-decoration: none;
 }
@@ -80,8 +81,8 @@ body{
   
 $color-0:#000;
 $color-1:#fff;
-$color-2:#326B90;
-$color-3:#3C586D;
+$color-2:#326b90;
+$color-3:rgb(84, 91, 97);
 
 $he-10: 10px;
 $he-20: 20px;

@@ -8,15 +8,18 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "home",
-      component: () => import("./views/Home.vue")
+      name: "boot",
+      component: () => import("./views/Boot/Boot.vue"),
+      meta: {
+        title: "引导页"
+      }
     },
     {
-      path: "/about",
-      component: () => import("./views/About.vue"),
-      name: "about",
+      path: "/home",
+      component: () => import("./views/home/home.vue"),
+      name: "home",
       meta: {
-        title: "商品详情"
+        title: "首页"
       }
     }
   ]

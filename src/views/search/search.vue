@@ -33,7 +33,10 @@
           <div class="exhibitionList">
             <div class="exhibitionItem">
               <div class="exhibitionItemImg">
-                <img src="../../assets/images/search/one.png" alt="" />
+                <img
+                  src="../../assets/images/search/one.png"
+                  alt=""
+                />
               </div>
               <div class="exhibitionItemName">
                 HOUSE VISION 2018 BEIJING EXHIBITION 探索家——未来生活大展
@@ -41,7 +44,10 @@
             </div>
             <div class="exhibitionItem">
               <div class="exhibitionItemImg">
-                <img src="../../assets/images/search/one.png" alt="" />
+                <img
+                  src="../../assets/images/search/one.png"
+                  alt=""
+                />
               </div>
               <div class="exhibitionItemName">
                 HOUSE VISION 2018 BEIJING EXHIBITION 探索家——未来生活大展
@@ -49,7 +55,10 @@
             </div>
             <div class="exhibitionItem">
               <div class="exhibitionItemImg">
-                <img src="../../assets/images/search/one.png" alt="" />
+                <img
+                  src="../../assets/images/search/one.png"
+                  alt=""
+                />
               </div>
               <div class="exhibitionItemName">
                 HOUSE VISION 2018 BEIJING EXHIBITION 探索家——未来生活大展
@@ -69,7 +78,10 @@
                 <div class="brochureItemHead">
                   <div class="brochureItemName">
                     <div class="brochureItemLogo">
-                      <img src="../../assets/images/home/head2.png" alt="" />
+                      <img
+                        src="../../assets/images/home/head2.png"
+                        alt=""
+                      />
                     </div>
                     <div class="brochureLogoName">
                       <p>某某公司企业宣传手册</p>
@@ -94,7 +106,10 @@
                 <div class="brochureItemHead">
                   <div class="brochureItemName">
                     <div class="brochureItemLogo">
-                      <img src="../../assets/images/home/head2.png" alt="" />
+                      <img
+                        src="../../assets/images/home/head2.png"
+                        alt=""
+                      />
                     </div>
                     <div class="brochureLogoName">
                       <p>某某公司企业宣传手册</p>
@@ -121,6 +136,84 @@
           <div class="searchTitle">
             <span>企业 company</span>
             <div class="mover"><i class="icon iconTo1"></i></div>
+          </div>
+          <div class="companyList">
+            <div class="companyItem">
+              <div class="enterpriseItemLeft">
+                <div class="enterpriseItemHead">
+                  <img
+                    src="../../assets/images/home/TSNHCG_1_.png"
+                    alt=""
+                  />
+                </div>
+                <div class="enterpriseItemLeftTitle">
+                  <p>altiuma</p>
+                  <p>Roubaix 5,246 位关注者</p>
+                  <p>建筑行业</p>
+                </div>
+              </div>
+              <div class="enterpriseItemRight">
+                <div class="InterestListshare">分享</div>
+                <div class="InterestListSee">查看产品手册</div>
+              </div>
+            </div>
+            <div class="companyItem">
+              <div class="enterpriseItemLeft">
+                <div class="enterpriseItemHead">
+                  <img
+                    src="../../assets/images/home/TSNHCG_1_.png"
+                    alt=""
+                  />
+                </div>
+                <div class="enterpriseItemLeftTitle">
+                  <p>altiuma</p>
+                  <p>Roubaix 5,246 位关注者</p>
+                  <p>建筑行业</p>
+                </div>
+              </div>
+              <div class="enterpriseItemRight">
+                <div class="InterestListshare">分享</div>
+                <div class="InterestListSee">查看产品手册</div>
+              </div>
+            </div>
+            <div class="companyItem">
+              <div class="enterpriseItemLeft">
+                <div class="enterpriseItemHead">
+                  <img
+                    src="../../assets/images/home/TSNHCG_1_.png"
+                    alt=""
+                  />
+                </div>
+                <div class="enterpriseItemLeftTitle">
+                  <p>altiuma</p>
+                  <p>Roubaix 5,246 位关注者</p>
+                  <p>建筑行业</p>
+                </div>
+              </div>
+              <div class="enterpriseItemRight">
+                <div class="InterestListshare">分享</div>
+                <div class="InterestListSee">查看产品手册</div>
+              </div>
+            </div>
+            <div class="companyItem">
+              <div class="enterpriseItemLeft">
+                <div class="enterpriseItemHead">
+                  <img
+                    src="../../assets/images/home/TSNHCG_1_.png"
+                    alt=""
+                  />
+                </div>
+                <div class="enterpriseItemLeftTitle">
+                  <p>altiuma</p>
+                  <p>Roubaix 5,246 位关注者</p>
+                  <p>建筑行业</p>
+                </div>
+              </div>
+              <div class="enterpriseItemRight">
+                <div class="InterestListshare">分享</div>
+                <div class="InterestListSee">查看产品手册</div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="searchRightmian">
@@ -323,6 +416,63 @@ export default {
         padding: 16px 24px 0;
         box-sizing: border-box;
         overflow: auto;
+        .companyList {
+          display: flex;
+          flex-wrap: wrap;
+          .companyItem {
+            width: 48%;
+            margin-right: 2%;
+            height: 66px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            .enterpriseItemLeft {
+              display: flex;
+              height: 100%;
+              .enterpriseItemLeftTitle {
+                height: 100%;
+                margin-left: 10px;
+                p:nth-child(1) {
+                  font-size: 26px;
+                  font-weight: bold;
+                }
+                p:nth-child(2) {
+                  font-size: 14px;
+                  margin-top: 10px;
+                }
+                p:nth-child(3) {
+                  font-size: 12px;
+                  margin-top: 6px;
+                  color: #326b90;
+                }
+              }
+            }
+            .enterpriseItemRight {
+              display: flex;
+              flex-direction: column;
+              align-items: flex-end;
+              justify-content: space-between;
+              .InterestListshare {
+                width: 50px;
+                height: 30px;
+                text-align: center;
+                line-height: 30px;
+                color: #fff;
+                background: #326b90;
+                font-size: 10px;
+              }
+              .InterestListSee {
+                width: 90px;
+                height: 30px;
+                text-align: center;
+                line-height: 30px;
+                color: #fff;
+                background: #326b90;
+                font-size: 10px;
+              }
+            }
+          }
+        }
       }
       .searchRightmian {
         width: 100%;

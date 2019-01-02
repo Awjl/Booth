@@ -1,10 +1,10 @@
 <template>
   <div class="all">
-    <Tab></Tab>
+    <Tab v-on:ShowLogin="ShowLogin" v-on:ShowSign="ShowSign"></Tab>
     <router-view></router-view>
     <Food></Food>
-    <Login></Login>
-    <Sign></Sign>
+    <Login v-if="loginState" v-on:closeLogin="closeLogin"></Login>
+    <Sign v-if="signState" v-on:closeSign="closeSign"></Sign>
   </div>
 </template>
 
@@ -16,6 +16,28 @@ import Sign from "@/components/sign/sign.vue";
 
 export default {
   name: "all",
+  data() {
+    return {
+      loginState: false,
+      signState: false
+    };
+  },
+  methods: {
+    ShowLogin(LoginState) {
+      this.loginState = LoginState;
+      console.log(this.loginState);
+    },
+    ShowSign(SignState) {
+      this.signState = SignState;
+      console.log(this.signState);
+    },
+    closeLogin(closeLogin) {
+      this.loginState = closeLogin;
+    },
+    closeSign(closeSign) {
+      this.signState = closeSign;
+    }
+  },
   components: {
     Tab,
     Food,

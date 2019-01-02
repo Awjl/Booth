@@ -4,7 +4,7 @@
       <img src="../../assets/images/home/logo.png" alt />
       <div class="tabSearch">
         <input type="text" placeholder="搜索你感兴趣的企业/展会" />
-        <i class="icon iconSearch"></i>
+        <i class="icon iconSearch" @click="toSearch"></i>
       </div>
     </div>
     <div class="tabLoging">
@@ -12,8 +12,8 @@
       <div>展会</div>
       <div>企业</div>
       <div>消息</div>
-      <div>注册</div>
-      <div>登陆</div>
+      <div @click="ShowSign">注册</div>
+      <div @click="ShowLogin">登陆</div>
       <div class="HeadImg"></div>
     </div>
   </div>
@@ -21,7 +21,26 @@
 
 <script>
 export default {
-  name: "tab"
+  name: "tab",
+  data() {
+    return {
+      LoginState: true,
+      SignState: true
+    };
+  },
+  methods: {
+    ShowSign() {
+      this.$emit("ShowSign", this.LoginState);
+    },
+    ShowLogin() {
+      this.$emit("ShowLogin", this.SignState);
+    },
+    toSearch() {
+      this.$router.push({
+        path: `/search`
+      });
+    }
+  }
 };
 </script>
 

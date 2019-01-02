@@ -3,10 +3,7 @@
     <div class="homleListItem">
       <div class="homeListHead">
         <div class="homeListImg">
-          <div><img
-              src="../../assets/images/home/head2.png"
-              alt=""
-            /></div>
+          <div><img src="../../assets/images/home/head2.png" alt="" /></div>
           <div class="follow">+ 关注</div>
         </div>
         <div class="homeListTitle">
@@ -39,7 +36,7 @@
       </div>
       <div class="moveBtn">更多</div>
       <div class="homeItemImg">
-        <img src="../../assets/images/home/item1.png" alt="">
+        <img src="../../assets/images/home/item1.png" alt="" />
       </div>
     </div>
   </div>

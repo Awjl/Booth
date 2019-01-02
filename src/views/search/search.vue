@@ -221,6 +221,17 @@
             <span>产品图片 images</span>
             <div class="mover"><i class="icon iconTo1"></i></div>
           </div>
+          <div class="searchimagesList">
+            <div class="searchimagesItem"></div>
+            <div class="searchimagesItem"></div>
+            <div class="searchimagesItem"></div>
+            <div class="searchimagesItem"></div>
+            <div class="searchimagesItem"></div>
+            <div class="searchimagesItem"></div>
+            <div class="searchimagesItem"></div>
+            <div class="searchimagesItem"></div>
+            <div class="searchimagesItem"></div>
+          </div>
         </div>
         <div class="searchRightBottom">
           <div class="searchTitle">
@@ -482,6 +493,17 @@ export default {
         padding: 16px 24px 0;
         box-sizing: border-box;
         overflow: auto;
+        .searchimagesList {
+          display: flex;
+          flex-wrap: wrap;
+          .searchimagesItem {
+            width: 90px;
+            height: 90px;
+            background: #fff;
+            margin-right: 10px;
+            margin-bottom: 10px;
+          }
+        }
       }
       .searchRightBottom {
         width: 100%;

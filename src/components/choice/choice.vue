@@ -2,7 +2,7 @@
   <div class="choice">
     <div class="searchBox">
       <input type="text" placeholder="搜索你感兴趣的企业/展会" />
-      <i class="icon iconSearch"></i>
+      <i class="icon iconSearch" @click="toSearch"></i>
     </div>
     <div class="choiceBox" @click="choiceShow()">
       选择你的所属行业 Selected list item
@@ -58,12 +58,16 @@ export default {
       this.typeindex = 0;
     },
     mouseOver(index) {
-      console.log(index);
       this.typeindex = index;
     },
     toBooth() {
       this.choiceBoxshow = !this.choiceBoxshow;
       this.$emit("cliceToBooth", this.ToBooth);
+    },
+    toSearch() {
+      this.$router.push({
+        path: `/search`
+      });
     }
   }
 };

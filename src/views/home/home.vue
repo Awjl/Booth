@@ -38,7 +38,7 @@ export default {
       max-width: 396px;
     }
     .mianList {
-      width: 576px;
+      min-width: 576px;
       margin: 0 12px;
     }
     .mianRight {

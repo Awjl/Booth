@@ -34,6 +34,46 @@ export default new Router({
           meta: {
             title: "搜索结果"
           }
+        },
+        {
+          path: "/searchExhibition",
+          component: () => import("./views/search/searchExhibition.vue"),
+          name: "searchExhibition",
+          meta: {
+            title: "展会搜索结果"
+          }
+        },
+        {
+          path: "/searchBrochure",
+          component: () => import("./views/search/searchBrochure.vue"),
+          name: "searchBrochure",
+          meta: {
+            title: "产品搜索结果"
+          }
+        },
+        {
+          path: "/searchCompaby",
+          component: () => import("./views/search/searchCompaby.vue"),
+          name: "searchCompaby",
+          meta: {
+            title: "企业搜索结果"
+          }
+        },
+        {
+          path: "/searchImages",
+          component: () => import("./views/search/searhImages.vue"),
+          name: "searchImages",
+          meta: {
+            title: "图片搜索结果"
+          }
+        },
+        {
+          path: "/searchEvent",
+          component: () => import("./views/search/searchEvent.vue"),
+          name: "searchEvent",
+          meta: {
+            title: "动态搜索结果"
+          }
         }
       ]
     }

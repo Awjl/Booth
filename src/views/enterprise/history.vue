@@ -1,22 +1,82 @@
 <template>
-  <div class="enterprise">
-    <div class="enterpriseNav">
-      <div class="enterpriseNavSeach">
-        <span>筛选器/行业分类列表</span>
-        <input type="text" placeholder="搜索企业" />
-      </div>
-      <div class="enterpriseMian">
-        <div class="enterpriseMianOne">一级分类</div>
-        <div class="enterpriseMiantwo">二级分类</div>
-        <div class="enterpriseMianthree">三级分类</div>
-      </div>
+  <div class="enterpriseH">
+    <div class="enterpriseHNav">
       <div class="enterpriseList">
         <div class="enterpriseItem" @click="toEnterprise">发现</div>
         <div class="enterpriseItem ItemAct" @click="toHistory">历史记录</div>
         <div class="enterpriseItem" @click="toCollection">收藏</div>
       </div>
     </div>
-    <div class="enterpriseBox"></div>
+    <div class="enterpriseHBox">
+      <div class="HBoxOne">
+        <div class="enterpriseHItemName">企业</div>
+        <div class="enterpriseHItem">
+          <div class="enterpriseHItemA">
+            <div class="enterpriseHItemAItem">
+              <div class="enterpriseItemHead">
+                <img src="../../assets/images/home/TSNHCG_1_.png" alt="" />
+              </div>
+              <div class="enterpriseItemLeftTitle">
+                <p>altiuma</p>
+                <p>5,246 位关注者</p>
+                <p>建筑行业</p>
+              </div>
+            </div>
+            <div class="enterpriseHItemAItem">
+              <div class="enterpriseItemHead">
+                <img src="../../assets/images/home/TSNHCG_1_.png" alt="" />
+              </div>
+              <div class="enterpriseItemLeftTitle">
+                <p>altiuma</p>
+                <p>5,246 位关注者</p>
+                <p>建筑行业</p>
+              </div>
+            </div>
+            <div class="enterpriseHItemAItem">
+              <div class="enterpriseItemHead">
+                <img src="../../assets/images/home/TSNHCG_1_.png" alt="" />
+              </div>
+              <div class="enterpriseItemLeftTitle">
+                <p>altiuma</p>
+                <p>5,246 位关注者</p>
+                <p>建筑行业</p>
+              </div>
+            </div>
+            <div class="enterpriseHItemAItem">
+              <div class="enterpriseItemHead">
+                <img src="../../assets/images/home/TSNHCG_1_.png" alt="" />
+              </div>
+              <div class="enterpriseItemLeftTitle">
+                <p>altiuma</p>
+                <p>5,246 位关注者</p>
+                <p>建筑行业</p>
+              </div>
+            </div>
+            <div class="enterpriseHItemAItem">
+              <div class="enterpriseItemHead">
+                <img src="../../assets/images/home/TSNHCG_1_.png" alt="" />
+              </div>
+              <div class="enterpriseItemLeftTitle">
+                <p>altiuma</p>
+                <p>5,246 位关注者</p>
+                <p>建筑行业</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="HBoxTwo">
+        <div class="enterpriseHItemName">产品册</div>
+        <div class="enterpriseHItem">
+          <div class="enterpriseHItemB">
+          </div>
+        </div>
+      </div>
+      <div class=" HBoxThree">
+        <div class="enterpriseHItemName">图片</div>
+        <div class="enterpriseHItem"></div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -44,72 +104,27 @@ export default {
 </script>
 
 <style lang="scss">
-.enterprise {
+.enterpriseH {
   padding: 20px;
+  height: calc(100vh - 218px);
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
-  .enterpriseNav {
-    width: 240px;
+  .enterpriseHNav {
+    width: 140px;
+    height: 100%;
     padding: 0 10px;
     box-sizing: border-box;
     border-right: 1px dashed #707070;
-    .enterpriseNavSeach {
-      display: flex;
-      justify-content: space-between;
-      font-size: 10px;
-      span {
-        height: 20px;
-        line-height: 20px;
-      }
-      input {
-        width: 100px;
-        height: 20px;
-        line-height: 20px;
-        padding: 0 10px;
-        box-sizing: border-box;
-        border: 1px solid #707070;
-      }
-    }
-    .enterpriseMian {
-      height: 360px;
-      width: 100%;
-      margin-top: 20px;
-      background: rgba($color: #326b90, $alpha: 0.1);
-      .enterpriseMianOne {
-        width: 100%;
-        height: 36px;
-        line-height: 36px;
-        padding: 0 10px;
-        box-sizing: border-box;
-        background: #326b90;
-        font-size: 14px;
-      }
-      .enterpriseMiantwo {
-        width: 100%;
-        height: 36px;
-        line-height: 36px;
-        padding: 0 28px;
-        box-sizing: border-box;
-        background: rgba($color: #326b90, $alpha: 0.6);
-        font-size: 10px;
-      }
-      .enterpriseMianthree {
-        width: 100%;
-        height: 36px;
-        line-height: 36px;
-        padding: 0 42px;
-        box-sizing: border-box;
-        font-size: 10px;
-      }
-    }
+    display: flex;
+    align-items: flex-end;
     .enterpriseList {
       margin-top: 80px;
       display: flex;
       flex-direction: column;
       align-items: flex-end;
       .enterpriseItem {
-        width: 100px;
+        width: 80px;
         height: 24px;
         line-height: 24px;
         text-align: center;
@@ -121,10 +136,66 @@ export default {
       }
     }
   }
-  .enterpriseBox {
-    width: calc(100% - 240px);
-    height: 100px;
-    background: #000;
+  .enterpriseHBox {
+    width: calc(100% - 140px);
+    height: 100%;
+    display: flex;
+    .enterpriseHItemName {
+      font-size: 18px;
+      font-weight: bold;
+      padding: 0 10px;
+      margin-bottom: 20px;
+    }
+    .enterpriseHItem {
+      width: 100%;
+      .enterpriseHItemA {
+        width: 100%;
+        height: 100%;
+        .enterpriseHItemAItem {
+          display: flex;
+          height: 100%;
+          margin-bottom: 10px;
+          .enterpriseItemLeftTitle {
+            height: 100%;
+            margin-left: 10px;
+            p:nth-child(1) {
+              font-size: 26px;
+              font-weight: bold;
+            }
+            p:nth-child(2) {
+              font-size: 14px;
+              margin-top: 10px;
+            }
+            p:nth-child(3) {
+              font-size: 12px;
+              margin-top: 6px;
+              color: #326b90;
+            }
+          }
+        }
+      }
+    }
+    .HBoxOne {
+      width: 20%;
+      height: 100%;
+      padding: 0 10px;
+      overflow: auto;
+      box-sizing: border-box;
+    }
+    .HBoxTwo {
+      width: 50%;
+      height: 100%;
+      padding: 0 10px;
+      overflow: auto;
+      box-sizing: border-box;
+    }
+    .HBoxThree {
+      width: 30%;
+      height: 100%;
+      padding: 0 10px;
+      overflow: auto;
+      box-sizing: border-box;
+    }
   }
 }
 </style>

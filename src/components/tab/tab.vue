@@ -10,7 +10,7 @@
     <div class="tabLoging">
       <div>首页</div>
       <div>展会</div>
-      <div>企业</div>
+      <div @click="toEnterprise">企业</div>
       <div @click="toNews">消息</div>
       <div @click="ShowSign">注册</div>
       <div @click="ShowLogin">登陆</div>
@@ -43,6 +43,11 @@ export default {
     toNews() {
       this.$router.push({
         path: `/News`
+      });
+    },
+    toEnterprise() {
+      this.$router.push({
+        path: `/enterprise`
       });
     }
   }

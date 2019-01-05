@@ -82,6 +82,30 @@ export default new Router({
           meta: {
             title: "消息列表页"
           }
+        },
+        {
+          path: "/enterprise",
+          component: () => import("./views/enterprise/enterprise.vue"),
+          name: "enterprise",
+          meta: {
+            title: "企业发现"
+          }
+        },
+        {
+          path: "/history",
+          component: () => import("./views/enterprise/history.vue"),
+          name: "history",
+          meta: {
+            title: "历史纪录"
+          }
+        },
+        {
+          path: "/collection",
+          component: () => import("./views/enterprise/collection.vue"),
+          name: "collection",
+          meta: {
+            title: "收藏记录"
+          }
         }
       ]
     }

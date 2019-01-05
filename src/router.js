@@ -74,6 +74,14 @@ export default new Router({
           meta: {
             title: "动态搜索结果"
           }
+        },
+        {
+          path: "/News",
+          component: () => import("./views/news/news.vue"),
+          name: "News",
+          meta: {
+            title: "消息列表页"
+          }
         }
       ]
     }

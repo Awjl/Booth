@@ -11,7 +11,7 @@
       <div>首页</div>
       <div>展会</div>
       <div>企业</div>
-      <div>消息</div>
+      <div @click="toNews">消息</div>
       <div @click="ShowSign">注册</div>
       <div @click="ShowLogin">登陆</div>
       <div class="HeadImg"></div>
@@ -38,6 +38,11 @@ export default {
     toSearch() {
       this.$router.push({
         path: `/search`
+      });
+    },
+    toNews() {
+      this.$router.push({
+        path: `/News`
       });
     }
   }

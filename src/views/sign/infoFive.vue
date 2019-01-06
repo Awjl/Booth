@@ -12,11 +12,11 @@
       </div>
       <div class="signBgMain">
         <div class="signBgMainLeft">
-          <div class="signBgMainList ListAct" @click="toOne">基础信息</div>
+          <div class="signBgMainList" @click="toOne">基础信息</div>
           <div class="signBgMainList" @click="toTwo">行业及商业伙伴</div>
           <div class="signBgMainList" @click="toThree">其他信息</div>
           <div class="signBgMainList" @click="toFour">形象展示</div>
-          <div class="signBgMainList" @click="toFive">信息核对</div>
+          <div class="signBgMainList ListAct" @click="toFive">信息核对</div>
         </div>
         <div class="signBgMainRight"></div>
       </div>
@@ -67,6 +67,7 @@ export default {
     height: 100%;
     width: 100%;
     .signBgInfoLog {
+      width: 100%;
       padding: 10px;
       box-sizing: border-box;
       display: flex;

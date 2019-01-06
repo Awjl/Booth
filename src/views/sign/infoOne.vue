@@ -106,6 +106,7 @@ export default {
     width: 100%;
     .signBgInfoLog {
       padding: 10px;
+      width: 100%;
       box-sizing: border-box;
       display: flex;
       justify-content: space-between;

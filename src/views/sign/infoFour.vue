@@ -3,7 +3,7 @@
     <div class="signBg">
       <div class="signBgInfoLog">
         <div class="infoLog">
-          <img src="../../assets/images/home/logo.png" alt />
+          <img src="../../assets/images/home/logo.png" alt>
         </div>
         <div class="infoLog">
           <p>入驻booth</p>
@@ -28,11 +28,27 @@
             </div>
             <div class="signBgFourproduct">
               <div class="signBgFourHeard">产品手册展示</div>
-              <div class=""></div>
+              <div class="signBgFourproductList">
+                <div class="brochureItem">
+                  <div class="brochureItemImg"></div>
+                  <div class="brochureItemText">
+                    <div class="brochureItemmanual">
+                      <p>某某公司企业宣传手册</p>
+                      <div class="label">
+                        <span>标签</span>
+                        <span>标签</span>
+                        <span>标签</span>
+                      </div>
+                      <div class="brochureintroduce"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="signBgMainFoot">
-            <span>保存并返回到首页</span><span>下一页</span>
+            <span>保存并返回到首页</span>
+            <span>下一页</span>
           </div>
         </div>
       </div>
@@ -83,6 +99,7 @@ export default {
     height: 100%;
     width: 100%;
     .signBgInfoLog {
+      width: 100%;
       padding: 10px;
       box-sizing: border-box;
       display: flex;
@@ -151,6 +168,63 @@ export default {
             height: 400px;
             overflow: auto;
             background: rgba($color: #fff, $alpha: 0.5);
+            .signBgFourHeard {
+              font-size: 20px;
+              color: #fff;
+              padding: 0 20px;
+              box-sizing: border-box;
+              margin: 20px 0;
+            }
+            .signBgFourproductList {
+              width: 100%;
+              padding: 0 20px;
+              box-sizing: border-box;
+              .brochureItem {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 10px;
+                .brochureItemImg {
+                  width: 162px;
+                  background: #fff;
+                }
+                .brochureItemText {
+                  width: calc(100% - 182px);
+                  margin-left: 20px;
+                  .brochureItemHead {
+                    display: flex;
+                    justify-content: space-between;
+                    .brochureItemNum {
+                      font-weight: bold;
+                      margin-top: 30px;
+                    }
+                  }
+                  .brochureItemmanual {
+                    p {
+                      font-size: 16px;
+                      margin: 6px 0;
+                    }
+                    .label {
+                      span {
+                        display: inline-block;
+                        width: 60px;
+                        height: 24px;
+                        text-align: center;
+                        line-height: 24px;
+                        margin-right: 4px;
+                        background: rgba($color: #000000, $alpha: 0.2);
+                        color: #fff;
+                      }
+                    }
+                    .brochureintroduce {
+                      width: 100%;
+                      height: 64px;
+                      background: rgba($color: #000000, $alpha: 0.2);
+                      margin-top: 10px;
+                    }
+                  }
+                }
+              }
+            }
           }
         }
         .signBgMainFoot {

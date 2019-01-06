@@ -15,6 +15,54 @@ export default new Router({
       }
     },
     {
+      path: "/sign",
+      name: "sign",
+      component: () => import("./views/sign/sign.vue"),
+      meta: {
+        title: "注册"
+      }
+    },
+    {
+      path: "/infoOne",
+      name: "infoOne",
+      component: () => import("./views/sign/infoOne.vue"),
+      meta: {
+        title: "基础信息"
+      }
+    },
+    {
+      path: "/infoTwo",
+      name: "infoTwo",
+      component: () => import("./views/sign/infoTwo.vue"),
+      meta: {
+        title: "行业及商业伙伴"
+      }
+    },
+    {
+      path: "/infoThree",
+      name: "infoThree",
+      component: () => import("./views/sign/infoThree.vue"),
+      meta: {
+        title: "其他信息"
+      }
+    },
+    {
+      path: "/infoFour",
+      name: "infoFour",
+      component: () => import("./views/sign/infoFour.vue"),
+      meta: {
+        title: "形象展示"
+      }
+    },
+    {
+      path: "/infoFive",
+      name: "infoFive",
+      component: () => import("./views/sign/infoFive.vue"),
+      meta: {
+        title: "信息核对"
+      }
+    },
+    {
       path: "/",
       component: () => import("./views/all.vue"),
       redirect: "/Home",

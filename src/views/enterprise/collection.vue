@@ -1,28 +1,28 @@
 <template>
-  <div class="enterprise">
-    <div class="enterpriseNav">
-      <div class="enterpriseNavSeach">
+  <div class="collection">
+    <div class="collectionNav">
+      <div class="collectionNavSeach">
         <span>筛选器/行业分类列表</span>
         <input type="text" placeholder="搜索企业" />
       </div>
-      <div class="enterpriseMian">
-        <div class="enterpriseMianOne">一级分类</div>
-        <div class="enterpriseMiantwo">二级分类</div>
-        <div class="enterpriseMianthree">三级分类</div>
+      <div class="collectionMian">
+        <div class="collectionMianOne">一级分类</div>
+        <div class="collectionMiantwo">二级分类</div>
+        <div class="collectionMianthree">三级分类</div>
       </div>
-      <div class="enterpriseList">
-        <div class="enterpriseItem " @click="toEnterprise">发现</div>
-        <div class="enterpriseItem" @click="toHistory">历史记录</div>
-        <div class="enterpriseItem ItemAct" @click="toCollection">收藏</div>
+      <div class="collectionList">
+        <div class="collectionItem " @click="toEnterprise">发现</div>
+        <div class="collectionItem" @click="toHistory">历史记录</div>
+        <div class="collectionItem ItemAct" @click="toCollection">收藏</div>
       </div>
     </div>
-    <div class="enterpriseBox"></div>
+    <div class="collectionBox"></div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "enterprise",
+  name: "collection",
   methods: {
     toEnterprise() {
       this.$router.push({
@@ -44,17 +44,17 @@ export default {
 </script>
 
 <style lang="scss">
-.enterprise {
+.collection {
   padding: 20px;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
-  .enterpriseNav {
+  .collectionNav {
     width: 240px;
     padding: 0 10px;
     box-sizing: border-box;
     border-right: 1px dashed #707070;
-    .enterpriseNavSeach {
+    .collectionNavSeach {
       display: flex;
       justify-content: space-between;
       font-size: 10px;
@@ -71,12 +71,12 @@ export default {
         border: 1px solid #707070;
       }
     }
-    .enterpriseMian {
+    .collectionMian {
       height: 360px;
       width: 100%;
       margin-top: 20px;
       background: rgba($color: #326b90, $alpha: 0.1);
-      .enterpriseMianOne {
+      .collectionMianOne {
         width: 100%;
         height: 36px;
         line-height: 36px;
@@ -85,7 +85,7 @@ export default {
         background: #326b90;
         font-size: 14px;
       }
-      .enterpriseMiantwo {
+      .collectionMiantwo {
         width: 100%;
         height: 36px;
         line-height: 36px;
@@ -94,7 +94,7 @@ export default {
         background: rgba($color: #326b90, $alpha: 0.6);
         font-size: 10px;
       }
-      .enterpriseMianthree {
+      .collectionMianthree {
         width: 100%;
         height: 36px;
         line-height: 36px;
@@ -103,12 +103,12 @@ export default {
         font-size: 10px;
       }
     }
-    .enterpriseList {
+    .collectionList {
       margin-top: 80px;
       display: flex;
       flex-direction: column;
       align-items: flex-end;
-      .enterpriseItem {
+      .collectionItem {
         width: 100px;
         height: 24px;
         line-height: 24px;
@@ -121,7 +121,7 @@ export default {
       }
     }
   }
-  .enterpriseBox {
+  .collectionBox {
     width: calc(100% - 240px);
     height: 100px;
     background: #000;

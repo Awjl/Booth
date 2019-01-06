@@ -12,7 +12,7 @@
       <div>展会</div>
       <div @click="toEnterprise">企业</div>
       <div @click="toNews">消息</div>
-      <div @click="ShowSign">注册</div>
+      <div @click="toSign">注册</div>
       <div @click="ShowLogin">登陆</div>
       <div class="HeadImg"></div>
     </div>
@@ -29,8 +29,10 @@ export default {
     };
   },
   methods: {
-    ShowSign() {
-      this.$emit("ShowSign", this.LoginState);
+    toSign() {
+      this.$router.push({
+        path: `/sign`
+      });
     },
     ShowLogin() {
       this.$emit("ShowLogin", this.SignState);

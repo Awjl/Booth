@@ -4,7 +4,7 @@
     <router-view></router-view>
     <Food></Food>
     <Login v-if="loginState" v-on:closeLogin="closeLogin"></Login>
-    <Sign v-if="signState" v-on:closeSign="closeSign"></Sign>
+    <!-- <Sign v-if="signState" v-on:closeSign="closeSign"></Sign> -->
   </div>
 </template>
 
@@ -12,7 +12,7 @@
 import Tab from "@/components/tab/tab.vue";
 import Food from "@/components/food/food.vue";
 import Login from "@/components/login/login.vue";
-import Sign from "@/components/sign/sign.vue";
+// import Sign from "@/components/sign/sign.vue";
 
 export default {
   name: "all",
@@ -41,8 +41,8 @@ export default {
   components: {
     Tab,
     Food,
-    Login,
-    Sign
+    Login
+    // Sign
   }
 };
 </script>

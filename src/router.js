@@ -154,6 +154,14 @@ export default new Router({
           meta: {
             title: "收藏记录"
           }
+        },
+        {
+          path: "/core",
+          component: () => import("./views/core/core.vue"),
+          name: "core",
+          meta: {
+            title: "企业主页"
+          }
         }
       ]
     }

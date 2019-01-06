@@ -14,7 +14,7 @@
       <div @click="toNews">消息</div>
       <div @click="toSign">注册</div>
       <div @click="ShowLogin">登陆</div>
-      <div class="HeadImg"></div>
+      <div class="HeadImg" @click="toCore"></div>
     </div>
   </div>
 </template>
@@ -50,6 +50,11 @@ export default {
     toEnterprise() {
       this.$router.push({
         path: `/enterprise`
+      });
+    },
+    toCore() {
+      this.$router.push({
+        path: `/core`
       });
     }
   }

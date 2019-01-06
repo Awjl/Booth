@@ -3,7 +3,7 @@
     <div class="signBg">
       <div class="signBgInfoLog">
         <div class="infoLog">
-          <img src="../../assets/images/home/logo.png" alt>
+          <img src="../../assets/images/home/logo.png" alt />
         </div>
         <div class="infoLog">
           <p>入驻booth</p>
@@ -35,9 +35,7 @@
                     <div class="brochureItemmanual">
                       <p>某某公司企业宣传手册</p>
                       <div class="label">
-                        <span>标签</span>
-                        <span>标签</span>
-                        <span>标签</span>
+                        <span>标签</span><span>标签</span><span>标签</span>
                       </div>
                       <div class="brochureintroduce"></div>
                     </div>
@@ -47,8 +45,7 @@
             </div>
           </div>
           <div class="signBgMainFoot">
-            <span>保存并返回到首页</span>
-            <span>下一页</span>
+            <span>保存并返回到首页</span><span>下一页</span>
           </div>
         </div>
       </div>

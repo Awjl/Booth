@@ -33,6 +33,9 @@
           <div class="coreAboutText">We’re a Swedish creative agency based in Shanghai where 30 digital-natives create the cam- paigns of tomorrow for Converse, Burberry, Absolut, New Balance, Ballantine’s, Dynaudio, Jameson, Sam’s Club and Skullcandy. We believe in walking before tal</div>
           <div class="coreAboutText">We’re a Swedish creative agency based in Shanghai where 30 digital-natives create the cam- paigns of tomorrow for Converse, Burberry, Absolut, New Balance, Ballantine’s, Dynaudio, Jameson, Sam’s Club and Skullcandy. We believe in walking before tal</div>
           <div class="coreAboutHead">公司详情</div>
+          <div class="">公司网址</div>
+          <div class="">公司简介</div>
+          <div class="">公司网址</div>
         </div>
       </div>
       <div class="coreAboutLeft">

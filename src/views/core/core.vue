@@ -15,14 +15,26 @@
           <div class="over">
             <p>企业资料完成度70% </p>
             <div class="overBox">
-              <div class="overBoxItem" style="width:70%;"></div>
+              <div
+                class="overBoxItem"
+                style="width:70%;"
+              ></div>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="coreMain">
-      <div class="coreAbout"></div>
+      <div class="coreAbout">
+        <div class="coreAboutintroduction">
+          <div class="coreAboutHead">关于我们</div>
+          <div class="coreAboutText">We’re a Swedish creative agency based in Shanghai where 30 digital-natives create the cam- paigns of tomorrow for Converse, Burberry, Absolut, New Balance, Ballantine’s, Dynaudio, Jameson, Sam’s Club and Skullcandy. We believe in walking before tal</div>
+          <div class="coreAboutText">We’re a Swedish creative agency based in Shanghai where 30 digital-natives create the cam- paigns of tomorrow for Converse, Burberry, Absolut, New Balance, Ballantine’s, Dynaudio, Jameson, Sam’s Club and Skullcandy. We believe in walking before tal</div>
+          <div class="coreAboutText">We’re a Swedish creative agency based in Shanghai where 30 digital-natives create the cam- paigns of tomorrow for Converse, Burberry, Absolut, New Balance, Ballantine’s, Dynaudio, Jameson, Sam’s Club and Skullcandy. We believe in walking before tal</div>
+          <div class="coreAboutText">We’re a Swedish creative agency based in Shanghai where 30 digital-natives create the cam- paigns of tomorrow for Converse, Burberry, Absolut, New Balance, Ballantine’s, Dynaudio, Jameson, Sam’s Club and Skullcandy. We believe in walking before tal</div>
+          <div class="coreAboutHead">公司详情</div>
+        </div>
+      </div>
       <div class="coreAboutLeft">
         <AboutList></AboutList>
       </div>
@@ -68,7 +80,7 @@ export default {
           }
           p:nth-child(3) {
             margin-top: 10px;
-            color: #648AA2;
+            color: #648aa2;
           }
         }
       }
@@ -93,7 +105,7 @@ export default {
             width: 100%;
             text-align: right;
             font-size: 28px;
-            color: #2C73A1;
+            color: #2c73a1;
             margin-bottom: 20px;
           }
           .overBox {
@@ -102,11 +114,35 @@ export default {
             background: #fff;
             .overBoxItem {
               height: 12px;
-              background: #326B90;
+              background: #326b90;
             }
           }
         }
       }
+    }
+  }
+  .coreMain {
+    display: flex;
+    width: 100%;
+    margin-top: 80px;
+    .coreAbout {
+      width: 70%;
+      padding: 30px 40px;
+      background: rgba($color: #648aa2, $alpha: 0.3);
+      .coreAboutHead {
+        font-size: 26px;
+        margin-bottom: 30px;
+      }
+      .coreAboutText {
+        font-size: 16px;
+        line-height: 26px;
+        margin: 10px 0;
+      }
+    }
+    .coreAboutLeft {
+      width: 30%;
+      padding-left: 30px;
+      box-sizing: border-box;
     }
   }
 }

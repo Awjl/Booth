@@ -44,14 +44,20 @@
           企业动态 event
           <span>20个</span>
         </span>
-        <div class="Back" @click="toBack">返回搜索页</div>
+        <div
+          class="Back"
+          @click="toBack"
+        >返回搜索页</div>
       </div>
       <div class="EvDetailsList">
         <div class="EvDetailsItem">
           <div class="homeListHead">
             <div class="homeListImg">
               <div>
-                <img src="../../assets/images/home/head2.png" alt>
+                <img
+                  src="../../assets/images/home/head2.png"
+                  alt
+                >
               </div>
               <div class="follow">+ 关注</div>
             </div>
@@ -83,19 +89,23 @@
               <div class="InterestListSee">查看产品手册</div>
             </div>
           </div>
-          <div
-            class="hometext"
-          >11月30日下午，由巴适成都联合报花探店、成都生活君、成都那些事儿、触摸成都等成都生活方式类新媒体账号举办的“传媒新势力·2018成都UP榜”在蔚来中心拉开序幕。会上发布了2018年成都UP榜单，基准方中荣获“成都UP榜</div>
+          <div class="hometext">11月30日下午，由巴适成都联合报花探店、成都生活君、成都那些事儿、触摸成都等成都生活方式类新媒体账号举办的“传媒新势力·2018成都UP榜”在蔚来中心拉开序幕。会上发布了2018年成都UP榜单，基准方中荣获“成都UP榜</div>
           <div class="moveBtn">更多</div>
           <div class="homeItemImg">
-            <img src="../../assets/images/home/item1.png" alt>
+            <img
+              src="../../assets/images/home/item1.png"
+              alt
+            >
           </div>
         </div>
         <div class="EvDetailsItem">
           <div class="homeListHead">
             <div class="homeListImg">
               <div>
-                <img src="../../assets/images/home/head2.png" alt>
+                <img
+                  src="../../assets/images/home/head2.png"
+                  alt
+                >
               </div>
               <div class="follow">+ 关注</div>
             </div>
@@ -127,19 +137,23 @@
               <div class="InterestListSee">查看产品手册</div>
             </div>
           </div>
-          <div
-            class="hometext"
-          >11月30日下午，由巴适成都联合报花探店、成都生活君、成都那些事儿、触摸成都等成都生活方式类新媒体账号举办的“传媒新势力·2018成都UP榜”在蔚来中心拉开序幕。会上发布了2018年成都UP榜单，基准方中荣获“成都UP榜</div>
+          <div class="hometext">11月30日下午，由巴适成都联合报花探店、成都生活君、成都那些事儿、触摸成都等成都生活方式类新媒体账号举办的“传媒新势力·2018成都UP榜”在蔚来中心拉开序幕。会上发布了2018年成都UP榜单，基准方中荣获“成都UP榜</div>
           <div class="moveBtn">更多</div>
           <div class="homeItemImg">
-            <img src="../../assets/images/home/item1.png" alt>
+            <img
+              src="../../assets/images/home/item1.png"
+              alt
+            >
           </div>
         </div>
         <div class="EvDetailsItem">
           <div class="homeListHead">
             <div class="homeListImg">
               <div>
-                <img src="../../assets/images/home/head2.png" alt>
+                <img
+                  src="../../assets/images/home/head2.png"
+                  alt
+                >
               </div>
               <div class="follow">+ 关注</div>
             </div>
@@ -156,9 +170,7 @@
                     </div>
                   </div>
                   <div class="exhibitionTime">
-                    <span>2018年9月21日
-                      <br>11月6日
-                    </span>
+                    <span>2018年9月21日<br>11月6日</span>
                     <div class="exhibitionDetali">
                       <i class="icon iconTo"></i>
                     </div>
@@ -171,7 +183,7 @@
               <div class="InterestListSee">查看产品手册</div>
             </div>
           </div>
-          <div class="hometext" >
+          <div class="hometext">
             11月30日下午，由巴适成都联合报花探店、成都生活君、成都那些事儿、触摸成都等成都生活方式类新媒体账号举办的“传媒新势力·2018成都UP榜”在蔚来中心拉开序幕。会上发布了2018年成都UP榜单，基准方中荣获“成都UP榜
           </div>
           <div class="moveBtn">更多</div>

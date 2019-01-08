@@ -179,6 +179,14 @@ export default new Router({
             title: "展会列表"
           }
         },
+        {
+          path: "/exhibitionDetails",
+          component: () => import("./views/exhibition/exhibitionDetails.vue"),
+          name: "exhibitionDetails",
+          meta: {
+            title: "展会详情"
+          }
+        },
       ]
     }
   ]

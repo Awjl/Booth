@@ -3,7 +3,7 @@
     <Swiper></Swiper>
     <div class="exhibitionBottom">
       <div class="leftBtn"></div>
-      <div class="exhibitionMain">
+      <div class="exhibitionMain" @click="toDetails">
         <div class="exhibitionMainName">
           <p>HOUSE VISION 2018 BEIJING EXHIBITION</p>
           <p>探索家——未来生活大展</p>
@@ -25,6 +25,13 @@
 import Swiper from "@/base/swiper/swiper.vue";
 
 export default {
+  methods: {
+    toDetails() {
+      this.$router.push({
+        path: `/exhibitionDetails`
+      });
+    }
+  },
   components: {
     Swiper
   }
@@ -42,6 +49,7 @@ export default {
   .exhibitionMain {
     width: 90%;
     display: flex;
+    cursor: pointer;
     .exhibitionMainName {
       width: 50%;
       padding: 0 5%;

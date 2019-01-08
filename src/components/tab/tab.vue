@@ -1,14 +1,14 @@
 <template>
   <div class="tab">
     <div class="tabLogo">
-      <img src="../../assets/images/home/logo.png" alt />
+      <img src="../../assets/images/home/logo.png" alt @click="toHome"/>
       <div class="tabSearch">
         <input type="text" placeholder="搜索你感兴趣的企业/展会" />
         <i class="icon iconSearch" @click="toSearch"></i>
       </div>
     </div>
     <div class="tabLoging">
-      <div>首页</div>
+      <div @click="toHome">首页</div>
       <div>展会</div>
       <div @click="toEnterprise">企业</div>
       <div @click="toNews">消息</div>
@@ -32,6 +32,11 @@ export default {
     toSign() {
       this.$router.push({
         path: `/sign`
+      });
+    },
+    toHome() {
+      this.$router.push({
+        path: `/home`
       });
     },
     ShowLogin() {
@@ -74,6 +79,9 @@ export default {
   .tabLogo {
     display: flex;
     align-items: center;
+    img {
+      cursor: pointer;
+    }
     .tabSearch {
       width: 246px;
       height: 30px;

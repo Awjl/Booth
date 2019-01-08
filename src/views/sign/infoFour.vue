@@ -1,5 +1,5 @@
 <template>
-  <div class="sign">
+  <div class="signDetails">
     <div class="signBg">
       <div class="signBgInfoLog">
         <div class="infoLog">
@@ -87,7 +87,7 @@ export default {
 </script>
 
 <style lang="scss">
-.sign {
+.signDetails {
   width: 100vw;
   height: 100vh;
   background: #2c73a1;

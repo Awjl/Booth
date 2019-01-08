@@ -162,6 +162,14 @@ export default new Router({
           meta: {
             title: "企业主页"
           }
+        },
+        {
+          path: "/productList",
+          component: () => import("./views/core/productList.vue"),
+          name: "productList",
+          meta: {
+            title: "企业手册"
+          }
         }
       ]
     }

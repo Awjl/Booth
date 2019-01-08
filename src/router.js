@@ -170,7 +170,15 @@ export default new Router({
           meta: {
             title: "企业手册"
           }
-        }
+        },
+        {
+          path: "/exhibition",
+          component: () => import("./views/exhibition/exhibition.vue"),
+          name: "exhibition",
+          meta: {
+            title: "展会列表"
+          }
+        },
       ]
     }
   ]

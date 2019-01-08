@@ -13,3 +13,18 @@
     background: url(../images/new/logosign.png) no-repeat 10% center;
     background-size: 24%;
 }
+.leftBtn {
+    width: 32px;
+    height: 32px;
+    background: url(../images/icon/left.png) no-repeat 50% 50%;
+    background-size: 100%;
+    transform:rotate(180deg);
+    cursor: pointer;
+}
+.leftRight {
+    width: 32px;
+    height: 32px;
+    background: url(../images/icon/left.png) no-repeat 50% 50%;
+    background-size: 100%;
+    cursor: pointer;
+}

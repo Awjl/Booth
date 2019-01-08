@@ -9,7 +9,7 @@
     </div>
     <div class="tabLoging">
       <div @click="toHome">首页</div>
-      <div>展会</div>
+      <div @click="toExhibition">展会</div>
       <div @click="toEnterprise">企业</div>
       <div @click="toNews">消息</div>
       <div @click="toSign">注册</div>
@@ -29,6 +29,11 @@ export default {
     };
   },
   methods: {
+    toExhibition() {
+      this.$router.push({
+        path: `/exhibition`
+      });
+    },
     toSign() {
       this.$router.push({
         path: `/sign`

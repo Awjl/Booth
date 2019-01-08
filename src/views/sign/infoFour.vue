@@ -1,8 +1,8 @@
 <template>
   <div class="signDetails">
-    <div class="signBg">
+    <div class="signBgTwo">
       <div class="signBgInfoLog">
-        <div class="infoLog">
+        <div class="infoLog" @click="tohome">
           <img src="../../assets/images/home/logo.png" alt />
         </div>
         <div class="infoLog">
@@ -57,6 +57,11 @@
 export default {
   name: "sign",
   methods: {
+    tohome() {
+      this.$router.push({
+        path: `/home`
+      });
+    },
     toOne() {
       this.$router.push({
         path: `/infoOne`
@@ -92,7 +97,7 @@ export default {
   height: 100vh;
   background: #2c73a1;
   overflow: auto;
-  .signBg {
+  .signBgTwo {
     height: 100%;
     width: 100%;
     .signBgInfoLog {
@@ -104,6 +109,9 @@ export default {
       .infoLog {
         color: #fff;
         text-align: center;
+        img {
+          cursor: pointer;
+        }
         p:nth-child(1) {
           font-size: 50px;
         }

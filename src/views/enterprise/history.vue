@@ -124,7 +124,18 @@
       </div>
       <div class="HBoxThree">
         <div class="historyItemName">图片</div>
-        <div class="historyItem"></div>
+        <div class="historyItem">
+          <div class="historyItemImg"></div>
+          <div class="historyItemImg"></div>
+          <div class="historyItemImg"></div>
+          <div class="historyItemImg"></div>
+          <div class="historyItemImg"></div>
+          <div class="historyItemImg"></div>
+          <div class="historyItemImg"></div>
+          <div class="historyItemImg"></div>
+          <div class="historyItemImg"></div>
+          <div class="historyItemImg"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -296,6 +307,13 @@ export default {
             }
           }
         }
+      }
+      .historyItemImg {
+        width: 80px;
+        height: 80px;
+        background: #fff;
+        margin: 0 10px 10px 0;
+        float: left;
       }
     }
     .HBoxOne {

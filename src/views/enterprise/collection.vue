@@ -3,7 +3,7 @@
     <div class="collectionNav">
       <div class="collectionNavSeach">
         <span>筛选器/行业分类列表</span>
-        <input type="text" placeholder="搜索企业" />
+        <input type="text" placeholder="搜索企业">
       </div>
       <div class="collectionMian">
         <div class="collectionMianOne">一级分类</div>
@@ -11,12 +11,176 @@
         <div class="collectionMianthree">三级分类</div>
       </div>
       <div class="collectionList">
-        <div class="collectionItem " @click="toEnterprise">发现</div>
+        <div class="collectionItem" @click="toEnterprise">发现</div>
         <div class="collectionItem" @click="toHistory">历史记录</div>
         <div class="collectionItem ItemAct" @click="toCollection">收藏</div>
       </div>
     </div>
-    <div class="collectionBox"></div>
+    <div class="collectionBox">
+      <div class="collectionBoxLeft">
+        <div class="collectHead">
+          <span>产品册</span>
+          <input type="text">
+        </div>
+        <div class="leftList">
+          <div class="leftListItem">
+            <div class="brochureItemImg"></div>
+            <div class="brochureItemText">
+              <div class="brochureItemHead">
+                <div class="brochureItemName">
+                  <div class="brochureItemLogo">
+                    <img src="../../assets/images/home/head2.png" alt>
+                  </div>
+                  <div class="brochureLogoName">
+                    <p>某某公司企业宣传手册</p>
+                    <p>Sichuan，Chengdu 856关注者</p>
+                    <p>建筑设计行业</p>
+                  </div>
+                </div>
+                <div class="brochureItemNum">阅读量 3000+</div>
+              </div>
+              <div class="brochureItemmanual">
+                <p>某某公司企业宣传手册</p>
+                <div class="label">
+                  <span>标签</span>
+                  <span>标签</span>
+                  <span>标签</span>
+                </div>
+                <div class="brochureintroduce"></div>
+              </div>
+            </div>
+          </div>
+          <div class="leftListItem">
+            <div class="brochureItemImg"></div>
+            <div class="brochureItemText">
+              <div class="brochureItemHead">
+                <div class="brochureItemName">
+                  <div class="brochureItemLogo">
+                    <img src="../../assets/images/home/head2.png" alt>
+                  </div>
+                  <div class="brochureLogoName">
+                    <p>某某公司企业宣传手册</p>
+                    <p>Sichuan，Chengdu 856关注者</p>
+                    <p>建筑设计行业</p>
+                  </div>
+                </div>
+                <div class="brochureItemNum">阅读量 3000+</div>
+              </div>
+              <div class="brochureItemmanual">
+                <p>某某公司企业宣传手册</p>
+                <div class="label">
+                  <span>标签</span>
+                  <span>标签</span>
+                  <span>标签</span>
+                </div>
+                <div class="brochureintroduce"></div>
+              </div>
+            </div>
+          </div>
+          <div class="leftListItem">
+            <div class="brochureItemImg"></div>
+            <div class="brochureItemText">
+              <div class="brochureItemHead">
+                <div class="brochureItemName">
+                  <div class="brochureItemLogo">
+                    <img src="../../assets/images/home/head2.png" alt>
+                  </div>
+                  <div class="brochureLogoName">
+                    <p>某某公司企业宣传手册</p>
+                    <p>Sichuan，Chengdu 856关注者</p>
+                    <p>建筑设计行业</p>
+                  </div>
+                </div>
+                <div class="brochureItemNum">阅读量 3000+</div>
+              </div>
+              <div class="brochureItemmanual">
+                <p>某某公司企业宣传手册</p>
+                <div class="label">
+                  <span>标签</span>
+                  <span>标签</span>
+                  <span>标签</span>
+                </div>
+                <div class="brochureintroduce"></div>
+              </div>
+            </div>
+          </div>
+          <div class="leftListItem">
+            <div class="brochureItemImg"></div>
+            <div class="brochureItemText">
+              <div class="brochureItemHead">
+                <div class="brochureItemName">
+                  <div class="brochureItemLogo">
+                    <img src="../../assets/images/home/head2.png" alt>
+                  </div>
+                  <div class="brochureLogoName">
+                    <p>某某公司企业宣传手册</p>
+                    <p>Sichuan，Chengdu 856关注者</p>
+                    <p>建筑设计行业</p>
+                  </div>
+                </div>
+                <div class="brochureItemNum">阅读量 3000+</div>
+              </div>
+              <div class="brochureItemmanual">
+                <p>某某公司企业宣传手册</p>
+                <div class="label">
+                  <span>标签</span>
+                  <span>标签</span>
+                  <span>标签</span>
+                </div>
+                <div class="brochureintroduce"></div>
+              </div>
+            </div>
+          </div>
+          <div class="leftListItem">
+            <div class="brochureItemImg"></div>
+            <div class="brochureItemText">
+              <div class="brochureItemHead">
+                <div class="brochureItemName">
+                  <div class="brochureItemLogo">
+                    <img src="../../assets/images/home/head2.png" alt>
+                  </div>
+                  <div class="brochureLogoName">
+                    <p>某某公司企业宣传手册</p>
+                    <p>Sichuan，Chengdu 856关注者</p>
+                    <p>建筑设计行业</p>
+                  </div>
+                </div>
+                <div class="brochureItemNum">阅读量 3000+</div>
+              </div>
+              <div class="brochureItemmanual">
+                <p>某某公司企业宣传手册</p>
+                <div class="label">
+                  <span>标签</span>
+                  <span>标签</span>
+                  <span>标签</span>
+                </div>
+                <div class="brochureintroduce"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="collectionBoxRight">
+        <div class="collectHead">
+          <span>图片</span>
+          <input type="text">
+        </div>
+        <div class="rightimgList">
+          <div class="rightImgItem"></div>
+          <div class="rightImgItem"></div>
+          <div class="rightImgItem"></div>
+          <div class="rightImgItem"></div>
+          <div class="rightImgItem"></div>
+          <div class="rightImgItem"></div>
+          <div class="rightImgItem"></div>
+          <div class="rightImgItem"></div>
+          <div class="rightImgItem"></div>
+          <div class="rightImgItem"></div>
+          <div class="rightImgItem"></div>
+          <div class="rightImgItem"></div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -123,8 +287,120 @@ export default {
   }
   .collectionBox {
     width: calc(100% - 240px);
-    height: 100px;
-    background: #000;
+    // height: 100%;
+    display: flex;
+    .collectHead {
+      font-size: 20px;
+      height: 30px;
+      span {
+        font-weight: bold;
+      }
+      input {
+        width: 100px;
+        height: 20px;
+        line-height: 20px;
+        padding: 0 10px;
+        box-sizing: border-box;
+        border: 1px solid #707070;
+        margin-left: 30px;
+      }
+    }
+    .collectionBoxLeft {
+      width: 60%;
+      height: 552px;
+      padding: 0 20px;
+      box-sizing: border-box;
+      border-right: 1px dashed #707070;
+      .leftList {
+        height: 520px;
+        overflow: auto;
+        .leftListItem {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 10px;
+          margin: 10px 0;
+          .brochureItemImg {
+            width: 162px;
+            background: #fff;
+          }
+          .brochureItemText {
+            width: calc(100% - 182px);
+            margin-left: 20px;
+            .brochureItemName {
+              display: flex;
+              .brochureLogoName {
+                margin-left: 10px;
+                p:nth-child(1) {
+                  margin-top: 4px;
+                  font-size: 16px;
+                  font-weight: bold;
+                }
+                p:nth-child(2) {
+                  margin-top: 6px;
+                }
+                p:nth-child(3) {
+                  color: #326b90;
+                  font-weight: bold;
+                  font-size: 12px;
+                  margin-top: 6px;
+                }
+              }
+            }
+            .brochureItemHead {
+              display: flex;
+              justify-content: space-between;
+              .brochureItemNum {
+                font-weight: bold;
+                margin-top: 30px;
+              }
+            }
+            .brochureItemmanual {
+              p {
+                font-size: 16px;
+                margin: 6px 0;
+              }
+              .label {
+                span {
+                  display: inline-block;
+                  width: 60px;
+                  height: 24px;
+                  text-align: center;
+                  line-height: 24px;
+                  margin-right: 4px;
+                  background: rgba($color: #000000, $alpha: 0.2);
+                  color: #fff;
+                }
+              }
+              .brochureintroduce {
+                width: 100%;
+                height: 64px;
+                background: rgba($color: #000000, $alpha: 0.2);
+                margin-top: 10px;
+              }
+            }
+          }
+        }
+      }
+    }
+    .collectionBoxRight {
+      width: 40%;
+      height: 100%;
+      padding: 0 20px;
+      box-sizing: border-box;
+      .rightimgList {
+        height: 520px;
+        overflow: auto;
+        .rightImgItem {
+          width: 80px;
+          height: 80px;
+          margin-right: 10px;
+          background: #fff;
+          float: left;
+          margin-bottom: 10px;
+        }
+      }
+    }
   }
 }
 </style>

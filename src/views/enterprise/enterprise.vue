@@ -105,6 +105,7 @@ export default {
   justify-content: space-between;
   .enterpriseNav {
     width: 240px;
+    height: calc(100vh);
     padding: 0 10px;
     box-sizing: border-box;
     border-right: 1px dashed #707070;

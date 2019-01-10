@@ -52,14 +52,14 @@ export function getHistoryRecord(id) {
         url: "/company/getHistoryRecord",
         method: "get",
         params: {
-            id: did
+            id: id
         }
     });
 }
 // 报名参加
-export function getHistoryRecord(data) {
+export function enrollExhibition(data) {
     return service({
-        url: "/company/getHistoryRecord",
+        url: "/enrollExhibition",
         method: "post",
         data: data
     });
@@ -72,9 +72,9 @@ export function getAllExhibitions() {
     });
 }
 // 获取所有参展商
-export function getAllExhibitions(id) {
+export function getAllExhibitiors(id) {
     return service({
-        url: "/getAllExhibitions",
+        url: "/getAllExhibitiors",
         method: "get",
         params: {
             exhibitionId: id
@@ -173,7 +173,7 @@ export function checkEmail(id) {
     });
 }
 // 判断是否激活
-export function activate(id) {
+export function isActivate(id) {
     return service({
         url: `/isActivate/${id}`,
         method: "get"

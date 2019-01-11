@@ -15,6 +15,14 @@ export default new Router({
       }
     },
     {
+      path: "/success",
+      name: "success",
+      component: () => import("./views/success/success.vue"),
+      meta: {
+        title: "验证邮箱"
+      }
+    },
+    {
       path: "/sign",
       name: "sign",
       component: () => import("./views/sign/sign.vue"),

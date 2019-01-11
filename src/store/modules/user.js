@@ -1,29 +1,12 @@
-import { login } from "@/api/login/login";
-import { setUtk } from "@/utils/auth";
+import { getUser } from "@/utils/auth";
 
 const user = {
   state: {
-    utk: ""
+    UserID: getUser()
   },
   mutations: {
-    SET_UTK: (state, utk) => {
-      state.utk = utk;
-    }
-  },
-  actions: {
-    Login({ commit }, userInfo) {
-      console.log(userInfo);
-      return new Promise((resolve, reject) => {
-        login(userInfo)
-          .then(res => {
-            console.log(res);
-            setUtk(res.utk);
-            commit("SET_UTK", res.token);
-          })
-          .catch(error => {
-            reject(error);
-          });
-      });
+    SET_USERID: (state, UserID) => {
+      state.UserID = UserID;
     }
   }
 };

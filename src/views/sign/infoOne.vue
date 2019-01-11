@@ -2,8 +2,14 @@
   <div class="signDetails">
     <div class="signBgTwo">
       <div class="signBgInfoLog">
-        <div class="infoLog" @click="tohome">
-          <img src="../../assets/images/home/logo.png" alt />
+        <div
+          class="infoLog"
+          @click="tohome"
+        >
+          <img
+            src="../../assets/images/home/logo.png"
+            alt
+          />
         </div>
         <div class="infoLog">
           <p>入驻booth</p>
@@ -12,49 +18,88 @@
       </div>
       <div class="signBgMain">
         <div class="signBgMainLeft">
-          <div class="signBgMainList ListAct" @click="toOne">基础信息</div>
-          <div class="signBgMainList" @click="toTwo">行业及商业伙伴</div>
-          <div class="signBgMainList" @click="toThree">其他信息</div>
-          <div class="signBgMainList" @click="toFour">形象展示</div>
-          <div class="signBgMainList" @click="toFive">信息核对</div>
+          <div
+            class="signBgMainList ListAct"
+            @click="toOne"
+          >基础信息</div>
+          <div
+            class="signBgMainList"
+            @click="toTwo"
+          >行业及商业伙伴</div>
+          <div
+            class="signBgMainList"
+            @click="toThree"
+          >其他信息</div>
+          <div
+            class="signBgMainList"
+            @click="toFour"
+          >形象展示</div>
+          <div
+            class="signBgMainList"
+            @click="toFive"
+          >信息核对</div>
         </div>
         <div class="signBgMainRight">
           <div class="signBgMainList">
             <div class="signBgMainRightItem">
               <p>企业中文全称</p>
-              <input type="text" />
+              <input
+                type="text"
+                v-model="userData.name"
+              />
             </div>
             <div class="signBgMainRightItem">
               <p>企业英文全称</p>
-              <input type="text" />
+              <input
+                type="text"
+                v-model="userData.nameEng"
+              />
             </div>
             <div class="signBgMainRightItem">
               <p>人数规模（勾选）</p>
-              <input type="text" />
+              <input
+                type="text"
+                v-model="userData.member"
+              />
             </div>
             <div class="signBgMainRightItem">
               <p>企业所在地</p>
-              <input type="text" />
+              <input
+                type="text"
+                v-model="userData.address"
+              />
             </div>
             <div class="signBgMainRightItem">
               <p>联系人</p>
-              <input type="text" />
+              <input
+                type="text"
+                v-model="userData.linkman"
+              />
             </div>
             <div class="signBgMainRightItem">
               <p>联系人职位（勾选）</p>
-              <input type="text" />
+              <input
+                type="text"
+                v-model="userData.position"
+              />
             </div>
             <div class="signBgMainRightItem">
               <p>联系人手机号码</p>
-              <input type="text" />
+              <input
+                type="text"
+                v-model="userData.mobile"
+              />
             </div>
             <div class="signBgMainRightItem">
               <p>联系人邮件</p>
-              <input type="text" />
+              <input
+                type="text"
+                v-model="userData.linkmanEmail"
+              />
             </div>
           </div>
           <div class="signBgMainFoot">
-            <span>保存并返回到首页</span><span>下一页</span>
+            <span @click="preservation">保存并返回到首页</span><span @click="toNext">下一页</span>
           </div>
         </div>
       </div>
@@ -63,9 +108,71 @@
 </template>
 
 <script>
+import { addUserInfo } from "@/api/api.js";
+import { getUser } from "@/utils/auth.js"
+import { mapGetters } from 'vuex';
+
 export default {
   name: "sign",
+  data() {
+    return {
+      formData: new FormData(),
+      userData: {
+        name: "",
+        nameEng: "",
+        member: "",
+        address: "", // 地点
+        linkman: "",
+        position: "",
+        mobile: "",
+        linkmanEmail: ""
+      }
+    };
+  },
+  computed: {
+    ...mapGetters([
+      'UserID'
+    ])
+  },
+  created() {
+    console.log(this.UserID)
+    console.log(getUser())
+  },
   methods: {
+    _addUserInfo() {
+      console.log(this.formData)
+      addUserInfo(this.formData).then((res) => {
+        if (res.status === ERR_OK) {
+          console.log("保存成功")
+        }
+      })
+    },
+    preservation() {
+      this.formData.append('id', this.UserID)
+      this.formData.append('name', this.userData.name)
+      this.formData.append('nameEng', this.userData.nameEng)
+      this.formData.append('member', this.userData.member)
+      this.formData.append('address', this.userData.address)
+      this.formData.append('linkman', this.userData.linkman)
+      this.formData.append('position', this.userData.position)
+      this.formData.append('mobile', this.userData.mobile)
+      this.formData.append('linkmanEmail', this.userData.linkmanEmail)
+      this._addUserInfo()
+    },
+    toNext() {
+      this.$store.commit('SET_NAME', this.userData.name)
+      this.$store.commit('SET_NAMEENG', this.userData.nameEng)
+      this.$store.commit('SET_MEMBER', this.userData.member)
+      this.$store.commit('SET_ADDRESS', this.userData.address)
+      this.$store.commit('SET_LINKMAN', this.userData.linkman)
+      this.$store.commit('SET_POSITION', this.userData.position)
+      this.$store.commit('SET_MOBILE', this.userData.mobile)
+      this.$store.commit('SET_LINKMANEMAIL', this.userData.linkmanEmail)
+
+      this.$router.push({
+        path: `/infoTwo`
+      });
+    },
     tohome() {
       this.$router.push({
         path: `/home`
@@ -200,6 +307,7 @@ export default {
             background: #000;
             color: #fff;
             font-size: 10px;
+            cursor: pointer;
           }
           span:nth-child(2) {
             display: inline-block;
@@ -210,6 +318,7 @@ export default {
             background: #000;
             color: #fff;
             margin-left: 10px;
+            cursor: pointer;
           }
         }
       }

@@ -1,4 +1,6 @@
 import axios from "axios";
+export const ERR_OK = 200;
+
 
 const service = axios.create({
     baseURL: "./api", // api的base_url
@@ -289,7 +291,10 @@ export function addUserInfo(data) {
     return service({
         url: `/user/addUserInfo`,
         method: "post",
-        data: data
+        data: data,
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
     });
 }
 // 获取用户信息

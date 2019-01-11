@@ -2,8 +2,14 @@
   <div class="signDetails">
     <div class="signBgTwo">
       <div class="signBgInfoLog">
-        <div class="infoLog" @click="tohome">
-          <img src="../../assets/images/home/logo.png" alt />
+        <div
+          class="infoLog"
+          @click="tohome"
+        >
+          <img
+            src="../../assets/images/home/logo.png"
+            alt
+          />
         </div>
         <div class="infoLog">
           <p>入驻booth</p>
@@ -12,13 +18,28 @@
       </div>
       <div class="signBgMain">
         <div class="signBgMainLeft">
-          <div class="signBgMainList" @click="toOne">基础信息</div>
-          <div class="signBgMainList ListAct" @click="toTwo">
+          <div
+            class="signBgMainList"
+            @click="toOne"
+          >基础信息</div>
+          <div
+            class="signBgMainList ListAct"
+            @click="toTwo"
+          >
             行业及商业伙伴
           </div>
-          <div class="signBgMainList" @click="toThree">其他信息</div>
-          <div class="signBgMainList" @click="toFour">形象展示</div>
-          <div class="signBgMainList" @click="toFive">信息核对</div>
+          <div
+            class="signBgMainList"
+            @click="toThree"
+          >其他信息</div>
+          <div
+            class="signBgMainList"
+            @click="toFour"
+          >形象展示</div>
+          <div
+            class="signBgMainList"
+            @click="toFive"
+          >信息核对</div>
         </div>
         <div class="signBgMainRight">
           <div class="signBgMainList">
@@ -72,7 +93,7 @@
             <div class=""></div>
           </div>
           <div class="signBgMainFoot">
-            <span>保存并返回到首页</span><span>下一页</span>
+            <span>保存并返回到首页</span><span @click="toNext">下一页</span>
           </div>
         </div>
       </div>
@@ -81,9 +102,51 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: "sign",
+  data() {
+    return {
+      fromData: new FormData(),
+      userData: {
+        name: "",
+        nameEng: "",
+        member: "",
+        address: "",
+        linkman: "",
+        position: "",
+        mobile: "",
+        linkmanEmail: "",
+      }
+    };
+  },
+  computed: {
+    ...mapGetters([
+      'UserID',
+      'name',
+      'nameEng',
+      'member',
+      'address',
+      'linkman',
+      'position',
+      'mobile',
+      'linkmanEmail'
+    ])
+  },
+  created() {
+    // console.log(this.userData)
+  },
   methods: {
+    toNext() {
+      console.log(this.$store.state.userData.UserID)
+      // this.$store.dispatch
+      // this.$store.commit
+      console.log(this.userData)
+      // this.$router.push({
+      //   path: `/infoThree`
+      // });
+    },
     tohome() {
       this.$router.push({
         path: `/home`

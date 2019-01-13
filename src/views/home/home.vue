@@ -1,10 +1,17 @@
 <template>
   <div class="home">
     <Swiper></Swiper>
+    <!-- <Swiper :listImg="listImg" :height="height"></Swiper> -->
     <div class="mian">
-      <div class="mianLeft"><HomeLogin></HomeLogin></div>
-      <div class="mianList"><HomeList></HomeList></div>
-      <div class="mianRight"><HomeRight></HomeRight></div>
+      <div class="mianLeft">
+        <HomeLogin></HomeLogin>
+      </div>
+      <div class="mianList">
+        <HomeList></HomeList>
+      </div>
+      <div class="mianRight">
+        <HomeRight></HomeRight>
+      </div>
     </div>
   </div>
 </template>
@@ -17,6 +24,15 @@ import HomeRight from "@/components/homeRight/homeRight.vue";
 
 export default {
   name: "home",
+  data() {
+    return {
+      listImg: [
+        { url: "../../assets/images/home/banner.png" },
+        { url: "../../assets/images/home/banner.png" }
+      ],
+      height: "472"
+    };
+  },
   components: {
     Swiper,
     HomeLogin,

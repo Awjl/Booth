@@ -101,11 +101,13 @@ export default {
     height: 100%;
     width: 100%;
     .signBgInfoLog {
-      width: 100%;
+      height: 90px;
       padding: 10px;
+      width: 100%;
       box-sizing: border-box;
       display: flex;
       justify-content: space-between;
+      align-items: center;
       .infoLog {
         color: #fff;
         text-align: center;
@@ -121,14 +123,17 @@ export default {
       }
     }
     .signBgMain {
-      height: 496px;
+      height: calc(100% - 90px);
+      margin: 0 auto;
+      max-width: 1200px;
       width: 100%;
       padding: 0 30px;
       box-sizing: border-box;
       display: flex;
+      align-items: center;
       .signBgMainLeft {
-        height: 100%;
-        width: 246px;
+        height: 496px;
+        width: 200px;
         padding: 0 20px;
         border-right: 1px dashed #fff;
         .signBgMainList {
@@ -145,7 +150,7 @@ export default {
         }
       }
       .signBgMainRight {
-        width: calc(100% - 246px);
+        width: calc(100% - 200px);
         padding: 0 80px;
         box-sizing: border-box;
         display: flex;
@@ -155,7 +160,9 @@ export default {
         .signBgFourMainList {
           display: flex;
           justify-content: space-between;
+          width: 100%;
           .signBgFourLogo {
+            width: 20%;
             .signBgFourLogoP {
               font-size: 16px;
               color: #fff;
@@ -169,10 +176,12 @@ export default {
             }
           }
           .signBgFourproduct {
-            width: 616px;
-            height: 400px;
+            width: calc(80% - 40px);
+            height: 410px;
             overflow: auto;
             background: rgba($color: #fff, $alpha: 0.5);
+            margin: 0 20px 20px;
+            box-sizing: border-box;
             .signBgFourHeard {
               font-size: 20px;
               color: #fff;
@@ -235,6 +244,9 @@ export default {
         .signBgMainFoot {
           display: flex;
           justify-content: flex-end;
+          width: 100%;
+          padding: 0 20px;
+          box-sizing: border-box;
           span:nth-child(1) {
             display: inline-block;
             width: 110px;

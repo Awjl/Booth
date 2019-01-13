@@ -72,11 +72,13 @@ export default {
     height: 100%;
     width: 100%;
     .signBgInfoLog {
-      width: 100%;
+      height: 90px;
       padding: 10px;
+      width: 100%;
       box-sizing: border-box;
       display: flex;
       justify-content: space-between;
+      align-items: center;
       .infoLog {
         color: #fff;
         text-align: center;
@@ -92,13 +94,17 @@ export default {
       }
     }
     .signBgMain {
-      height: 496px;
+      height: calc(100% - 90px);
+      margin: 0 auto;
+      max-width: 1200px;
       width: 100%;
       padding: 0 30px;
       box-sizing: border-box;
+      display: flex;
+      align-items: center;
       .signBgMainLeft {
-        height: 100%;
-        width: 246px;
+        height: 496px;
+        width: 200px;
         padding: 0 20px;
         border-right: 1px dashed #fff;
         .signBgMainList {

@@ -58,6 +58,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 9999;
   .LoginBox {
     width: 400px;
     background: #2c73a1;

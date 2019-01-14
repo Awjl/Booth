@@ -1,26 +1,30 @@
 <template>
   <div class="homeList">
-    <div class="homleListItem">
+    <div class="homleListItem" v-for="(item, index) in dataList" :key="index">
       <div class="homeListHead">
         <div class="homeListImg">
-          <div><img src="../../assets/images/home/head2.png" alt="" /></div>
-          <div class="follow">+ 关注</div>
+          <div><img
+              src="../../assets/images/home/head2.png"
+              alt=""
+            /></div>
+          <div class="follow" v-if="item.isConcerned === 2">+ 关注</div>
+          <div class="follow" v-if="item.isConcerned === 1">+ 已关注</div>
         </div>
         <div class="homeListTitle">
-          <div class="name">基准方中建筑设计有限公司</div>
-          <div class="nameEN">Sichuan，Chengdu 856关注者</div>
-          <p class="industry">建筑设计行业</p>
+          <div class="name">{{item.user.name}}</div>
+          <div class="nameEN">Sichuan，Chengdu {{item.user.fansNumber}}关注者</div>
+          <p class="industry">{{item.user.industryName}}</p>
           <div class="exhibition">
             <div class="exhibitionItem">
               <div class="exhibitionCan">
                 <span>已参与</span>
                 <div class="exhibitionName">
-                  HOUSE VISION 2018 BEIJING EXHIBITION <br />
-                  探索家——未来生活大展
+                  {{item.participation.titleEng}} <br />
+                  {{item.participation.title}}
                 </div>
               </div>
               <div class="exhibitionTime">
-                <span>2018年9月21日<br />11月6日</span>
+                <span>{{item.participation.date}}</span>
                 <div class="exhibitionDetali"><i class="icon iconTo"></i></div>
               </div>
             </div>
@@ -32,19 +36,67 @@
         </div>
       </div>
       <div class="hometext">
-        11月30日下午，由巴适成都联合报花探店、成都生活君、成都那些事儿、触摸成都等成都生活方式类新媒体账号举办的“传媒新势力·2018成都UP榜”在蔚来中心拉开序幕。会上发布了2018年成都UP榜单，基准方中荣获“成都UP榜
+        {{item.user.summary}}
       </div>
       <div class="moveBtn">更多</div>
       <div class="homeItemImg">
-        <img src="../../assets/images/home/item1.png" alt="" />
+        <img
+          src="../../assets/images/home/item1.png"
+          alt=""
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { getRecommendCompany, ERR_OK } from "@/api/api.js";
+import { getOne, getTwo } from "@/utils/auth.js";
+
 export default {
-  name: "homeList"
+  name: "homeList",
+  data() {
+    return {
+      upList: {
+        secondIndustryId: getTwo(),
+        id: '1'
+      },
+      dataList: [
+        {
+          isConcerned: 1, //  1关注，2没关注
+          participation: {
+            date: "2018-08-01至09-01",
+            id: 0,
+            title: "探索家——未来生活大展",
+            titleEng: "HOUSE VISION 2018 BEIJING EXHIBITION",
+          },
+          user: {
+            id: 1,
+            name: '基准方中建筑设计有限公司',
+            logoUrl: '',
+            fansNumber: '856',
+            industryName: '建筑设计行业',
+            summary: "11月30日下午，由巴适成都联合报花探店、成都生活君、成都那些事儿、触摸成都等成都生活方式类新媒体账号举办的“传媒新势力·2018成都UP榜”在蔚来中心拉开序幕。会上发布了2018年成都UP榜单，基准方中荣获“成都UP榜",
+            introductionUrl:''
+          }
+        }
+      ]
+    };
+  },
+  created() {
+    this._getRecommendCompany()
+  },
+  methods: {
+    _getRecommendCompany() {
+      getRecommendCompany(this.upList).then((res) => {
+        if (res.status === ERR_OK) {
+          console.log("查看公司首页-------------------")
+          console.log(res.data)
+          // this.dataList = res.data.data
+        }
+      })
+    }
+  }
 };
 </script>
 
@@ -67,7 +119,7 @@ export default {
           width: 100%;
         }
         .follow {
-          width: 50px;
+          width: 60px;
           height: 20px;
           text-align: center;
           line-height: 20px;
@@ -75,6 +127,7 @@ export default {
           color: #fff;
           font-size: 10px;
           margin-top: 10px;
+          cursor: pointer;
         }
       }
       .homeListTitle {
@@ -163,6 +216,7 @@ export default {
           color: #fff;
           background: #326b90;
           font-size: 10px;
+          cursor: pointer;
         }
         .InterestListSee {
           width: 90px;
@@ -173,6 +227,7 @@ export default {
           background: #326b90;
           font-size: 10px;
           margin-top: 5px;
+          cursor: pointer;
         }
       }
     }

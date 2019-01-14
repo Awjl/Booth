@@ -1,7 +1,6 @@
 <template>
   <div class="home">
     <Swiper></Swiper>
-    <!-- <Swiper :listImg="listImg" :height="height"></Swiper> -->
     <div class="mian">
       <div class="mianLeft">
         <HomeLogin></HomeLogin>
@@ -21,6 +20,7 @@ import Swiper from "@/base/swiper/swiper.vue";
 import HomeLogin from "@/components/homeLogin/homeLogin.vue";
 import HomeList from "@/components/homeList/homeList.vue";
 import HomeRight from "@/components/homeRight/homeRight.vue";
+import { getIndexBanner, ERR_OK } from "@/api/api.js"
 
 export default {
   name: "home",
@@ -29,9 +29,16 @@ export default {
       listImg: [
         { url: "../../assets/images/home/banner.png" },
         { url: "../../assets/images/home/banner.png" }
-      ],
-      height: "472"
+      ]
     };
+  },
+  created() {
+    getIndexBanner().then((res) => {
+      if (res.status === ERR_OK) {
+        console.log('获取banner----------------')
+        console.log(res.data)
+      }
+    })
   },
   components: {
     Swiper,

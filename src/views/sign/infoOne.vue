@@ -5,7 +5,7 @@
         <div
           class="infoLog"
           @click="tohome"
-       > 
+        >
           <img
             src="../../assets/images/home/logo.png"
             alt
@@ -137,6 +137,8 @@ export default {
   created() {
     console.log(this.UserID)
     console.log(getUser())
+    this.userData = this.$store.state.userData
+    console.log(this.$store.state.userData)
   },
   methods: {
     _addUserInfo() {

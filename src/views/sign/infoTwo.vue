@@ -139,10 +139,10 @@ export default {
   },
   methods: {
     toNext() {
-      console.log(this.$store.state.userData.UserID)
+      console.log(this.$store.state.userData)
       // this.$store.dispatch
       // this.$store.commit
-      console.log(this.userData)
+      // console.log(this.userData)
       // this.$router.push({
       //   path: `/infoThree`
       // });

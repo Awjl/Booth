@@ -95,7 +95,7 @@ export default {
     };
   },
   created() {
-    setUser('7')
+    setUser('17')
     console.log(getUser())
   },
   methods: {

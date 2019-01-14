@@ -2,11 +2,12 @@
 module.exports = {
   // 修改的配置
   // 将baseUrl: '/api',改为baseUrl: '/',
+  transpileDependencies: [],
   baseUrl: '/',
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://10.1.50.199',
+        target: 'http://10.1.23.209',
         changeOrigin: true,
         ws: true,
         pathRewrite: {

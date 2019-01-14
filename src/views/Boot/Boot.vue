@@ -30,18 +30,32 @@
 
 <script>
 import Choice from "@/components/choice/choice.vue";
+import { getIndustry, ERR_OK} from "@/api/api.js";
 
 export default {
   name: "boot",
   data() {
     return {
-      title: ""
+      title: "",
+      industryData: []
     };
+  },
+  created() {
+    this._getIndustry()
   },
   components: {
     Choice
   },
   methods: {
+    _getIndustry() {
+      console.log('123')
+      getIndustry().then((res) => {
+        if (res.status === ERR_OK) {
+          this.industryData =res.data
+          console.log(this.industryData)
+        }
+      })
+    },
     cliceToBooth(ToBooth) {
       this.title = ToBooth;
       console.log(this.title);

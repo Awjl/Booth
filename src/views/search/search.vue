@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="searchText">
-        <p>“金融圈xxxx”</p>
+        <p>{{center}}</p>
         <p>相关搜索结果</p>
       </div>
     </div>
@@ -275,6 +275,14 @@
 <script>
 export default {
   name: "searchPag",
+  data() {
+    return {
+      center: this.$route.query.center
+    }
+  },
+  created() {
+    console.log(this.$route.query.center)
+  },
   methods: {
     toExhibition() {
       this.$router.push({

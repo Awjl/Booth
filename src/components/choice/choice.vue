@@ -1,31 +1,48 @@
 <template>
   <div class="choice">
     <div class="searchBox">
-      <input type="text" placeholder="搜索你感兴趣的企业/展会" />
-      <i class="icon iconSearch" @click="toSearch"></i>
+      <input
+        type="text"
+        placeholder="搜索你感兴趣的企业/展会"
+        v-model="searchData"
+      />
+      <i
+        class="icon iconSearch"
+        @click="toSearch"
+      ></i>
     </div>
-    <div class="choiceBox" @click="choiceShow()">
+    <div
+      class="choiceBox"
+      @click="choiceShow()"
+    >
       选择你的所属行业 Selected list item
-      <div class="choiceList" v-if="choiceBoxshow">
+      <div
+        class="choiceList"
+        v-if="choiceBoxshow"
+      >
         <div
           class="choiceItem"
-          v-for="(items, index) in items"
+          v-for="(items, index) in industryData"
           :key="index"
           :class="{ choiceItemHover: index == typeindex }"
-          @mouseenter="mouseOver(index)"
+          @mouseenter="mouseOver(index, items)"
         >
-          {{ items }}
+          {{ items.industryName }}
         </div>
       </div>
-      <div class="choiceList" style="left:170px;" v-if="choiceBoxshow">
+      <div
+        class="choiceList"
+        style="left:270px;"
+        v-if="choiceBoxshow"
+      >
         <div class="choiceListChildren">
-          <div class="choiceItem" @click.stop="toBooth()">
-            基金/证券/期货/投资
-          </div>
-          <div class="choiceItem" @click.stop="toBooth()">保险</div>
-          <div class="choiceItem" @click.stop="toBooth()">银行</div>
-          <div class="choiceItem" @click.stop="toBooth()">
-            信托/担保/拍卖/典当
+          <div
+            class="choiceItem"
+            @click.stop="toBooth(items.industryName, items.id)"
+            v-for="(items, index) in items"
+            :key="index"
+          >
+            {{items.industryName}}
           </div>
         </div>
       </div>
@@ -34,39 +51,54 @@
 </template>
 
 <script>
+import { getIndustry, ERR_OK } from "@/api/api.js";
+import {setOne, setTwo} from "@/utils/auth.js"
+
 export default {
   name: "choice",
   data() {
     return {
       choiceBoxshow: false,
       typeindex: 0,
-      items: [
-        "IT|通信|电子|互联网",
-        "金融业",
-        "房地产|建筑业",
-        "商业服务",
-        "贸易|批发|零售|租凭业",
-        "文体教育|工艺美术",
-        "生产|加工|制造"
-      ],
-      ToBooth: "生产|加工|制造"
+      searchData: "",
+      industryData: [],
+      items: [],
+      ToBooth: ""
     };
   },
+  created() {
+    this._getIndustry()
+  },
   methods: {
+    _getIndustry() {
+      getIndustry().then((res) => {
+        if (res.status === ERR_OK) {
+          this.industryData = res.data.data
+          this.items = this.industryData[0].secondIndustries
+          console.log(this.industryData)
+        }
+      })
+    },
     choiceShow() {
       this.choiceBoxshow = !this.choiceBoxshow;
       this.typeindex = 0;
     },
-    mouseOver(index) {
+    mouseOver(index, data) {
       this.typeindex = index;
+      this.items = data.secondIndustries;
+      setOne(data.id);
     },
-    toBooth() {
+    toBooth(name, id) {
       this.choiceBoxshow = !this.choiceBoxshow;
+      this.ToBooth = name;
+      setTwo(id)
       this.$emit("cliceToBooth", this.ToBooth);
     },
     toSearch() {
+      console.log(this.searchData)
       this.$router.push({
-        path: `/search`
+        path: `/search`,
+        query: { center: this.searchData}
       });
     }
   }
@@ -114,7 +146,7 @@ export default {
       position: absolute;
       top: 45px;
       left: 0;
-      width: 174px;
+      width: 274px;
       height: 189px;
       background: #fff;
       box-sizing: border-box;

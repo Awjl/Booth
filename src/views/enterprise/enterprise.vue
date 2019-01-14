@@ -3,25 +3,43 @@
     <div class="enterpriseNav">
       <div class="enterpriseNavSeach">
         <span>筛选器/行业分类列表</span>
-        <input type="text" placeholder="搜索企业" />
+        <input
+          type="text"
+          placeholder="搜索企业"
+        />
       </div>
-      <div class="enterpriseMian">
-        <div class="enterpriseMianOne">一级分类</div>
-        <div class="enterpriseMiantwo">二级分类</div>
-        <div class="enterpriseMianthree">三级分类</div>
+      <div class="enterpriseNavBottom">
+        <div class="enterpriseMian">
+          <div class="enterpriseMianOne">一级分类</div>
+          <div class="enterpriseMiantwo">二级分类</div>
+          <div class="enterpriseMianthree">三级分类</div>
+        </div>
+        <div class="enterpriseList">
+          <div
+            class="enterpriseItem ItemAct"
+            @click="toEnterprise"
+          >发现</div>
+          <div
+            class="enterpriseItem"
+            @click="toHistory"
+          >历史记录</div>
+          <div
+            class="enterpriseItem"
+            @click="toCollection"
+          >收藏</div>
+        </div>
       </div>
-      <div class="enterpriseList">
-        <div class="enterpriseItem ItemAct" @click="toEnterprise">发现</div>
-        <div class="enterpriseItem" @click="toHistory">历史记录</div>
-        <div class="enterpriseItem" @click="toCollection">收藏</div>
-      </div>
+
     </div>
     <div class="enterpriseBox">
       <div class="enterpriseBoxList">
         <div class="enterpriseBoxItem">
           <div class="homeListHead">
             <div class="homeListImg">
-              <div><img src="../../assets/images/home/head2.png" alt /></div>
+              <div><img
+                  src="../../assets/images/home/head2.png"
+                  alt
+                /></div>
               <div class="follow">+ 关注</div>
             </div>
             <div class="homeListTitle">
@@ -56,18 +74,33 @@
           </div>
           <div class="moveBtn">更多</div>
           <div class="homeItemImg">
-            <img src="../../assets/images/home/item1.png" alt />
+            <img
+              src="../../assets/images/home/item1.png"
+              alt
+            />
           </div>
         </div>
       </div>
       <div class="enterpriseBoxBaner">
         <div class="homeRight">
-          <img src="../../assets/images/home/banner1.png" alt />
+          <img
+            src="../../assets/images/home/banner1.png"
+            alt
+          />
           <div class="homeTitle">
-            <img src="../../assets/images/home/logo.png" alt />
-            <img src="../../assets/images/home/logoText.png" alt />
+            <img
+              src="../../assets/images/home/logo.png"
+              alt
+            />
+            <img
+              src="../../assets/images/home/logoText.png"
+              alt
+            />
           </div>
-          <img src="../../assets/images/home/banner2.png" alt />
+          <img
+            src="../../assets/images/home/banner2.png"
+            alt
+          />
         </div>
       </div>
     </div>
@@ -105,7 +138,7 @@ export default {
   justify-content: space-between;
   .enterpriseNav {
     width: 240px;
-    height: calc(100vh);
+    height: calc(100vh - 218px);
     padding: 0 10px;
     box-sizing: border-box;
     border-right: 1px dashed #707070;
@@ -113,6 +146,7 @@ export default {
       display: flex;
       justify-content: space-between;
       font-size: 10px;
+      height: 30px;
       span {
         height: 20px;
         line-height: 20px;
@@ -125,6 +159,12 @@ export default {
         box-sizing: border-box;
         border: 1px solid #707070;
       }
+    }
+    .enterpriseNavBottom {
+      height: calc(100% - 30px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
     .enterpriseMian {
       height: 360px;
@@ -159,7 +199,6 @@ export default {
       }
     }
     .enterpriseList {
-      margin-top: 80px;
       display: flex;
       flex-direction: column;
       align-items: flex-end;

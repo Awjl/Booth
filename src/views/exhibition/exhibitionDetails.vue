@@ -144,8 +144,8 @@
       <P>2018年11月5-10日</P>
       <p>November 5-10, 2018</p>
     </div>
-    <div class="Map">
-      <img src="../../assets/images/new/map.png" alt>
+    <div class="Map1">
+      <img src="../../assets/images/new/mapbig2.png" alt>
     </div>
   </div>
 </template>
@@ -205,6 +205,9 @@ export default {
 .Map {
   margin-top: 30px;
   text-align: center;
+}
+.Map1 img {
+  width: 100%;
 }
 .exhibitionDetailsList {
   margin-top: 80px;

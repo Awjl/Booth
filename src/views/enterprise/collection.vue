@@ -3,17 +3,31 @@
     <div class="collectionNav">
       <div class="collectionNavSeach">
         <span>筛选器/行业分类列表</span>
-        <input type="text" placeholder="搜索企业">
+        <input
+          type="text"
+          placeholder="搜索企业"
+        >
       </div>
-      <div class="collectionMian">
-        <div class="collectionMianOne">一级分类</div>
-        <div class="collectionMiantwo">二级分类</div>
-        <div class="collectionMianthree">三级分类</div>
-      </div>
-      <div class="collectionList">
-        <div class="collectionItem" @click="toEnterprise">发现</div>
-        <div class="collectionItem" @click="toHistory">历史记录</div>
-        <div class="collectionItem ItemAct" @click="toCollection">收藏</div>
+      <div class="collectionNavBottom">
+        <div class="collectionMian">
+          <div class="collectionMianOne">一级分类</div>
+          <div class="collectionMiantwo">二级分类</div>
+          <div class="collectionMianthree">三级分类</div>
+        </div>
+        <div class="collectionList">
+          <div
+            class="collectionItem"
+            @click="toEnterprise"
+          >发现</div>
+          <div
+            class="collectionItem"
+            @click="toHistory"
+          >历史记录</div>
+          <div
+            class="collectionItem ItemAct"
+            @click="toCollection"
+          >收藏</div>
+        </div>
       </div>
     </div>
     <div class="collectionBox">
@@ -29,7 +43,10 @@
               <div class="brochureItemHead">
                 <div class="brochureItemName">
                   <div class="brochureItemLogo">
-                    <img src="../../assets/images/home/head2.png" alt>
+                    <img
+                      src="../../assets/images/home/head2.png"
+                      alt
+                    >
                   </div>
                   <div class="brochureLogoName">
                     <p>某某公司企业宣传手册</p>
@@ -56,7 +73,10 @@
               <div class="brochureItemHead">
                 <div class="brochureItemName">
                   <div class="brochureItemLogo">
-                    <img src="../../assets/images/home/head2.png" alt>
+                    <img
+                      src="../../assets/images/home/head2.png"
+                      alt
+                    >
                   </div>
                   <div class="brochureLogoName">
                     <p>某某公司企业宣传手册</p>
@@ -83,7 +103,10 @@
               <div class="brochureItemHead">
                 <div class="brochureItemName">
                   <div class="brochureItemLogo">
-                    <img src="../../assets/images/home/head2.png" alt>
+                    <img
+                      src="../../assets/images/home/head2.png"
+                      alt
+                    >
                   </div>
                   <div class="brochureLogoName">
                     <p>某某公司企业宣传手册</p>
@@ -110,7 +133,10 @@
               <div class="brochureItemHead">
                 <div class="brochureItemName">
                   <div class="brochureItemLogo">
-                    <img src="../../assets/images/home/head2.png" alt>
+                    <img
+                      src="../../assets/images/home/head2.png"
+                      alt
+                    >
                   </div>
                   <div class="brochureLogoName">
                     <p>某某公司企业宣传手册</p>
@@ -137,7 +163,10 @@
               <div class="brochureItemHead">
                 <div class="brochureItemName">
                   <div class="brochureItemLogo">
-                    <img src="../../assets/images/home/head2.png" alt>
+                    <img
+                      src="../../assets/images/home/head2.png"
+                      alt
+                    >
                   </div>
                   <div class="brochureLogoName">
                     <p>某某公司企业宣传手册</p>
@@ -209,11 +238,13 @@ export default {
 
 <style lang="scss">
 .collection {
+  height: calc(100vh - 218px);
   padding: 20px;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   .collectionNav {
+    height: 100%;
     width: 240px;
     padding: 0 10px;
     box-sizing: border-box;
@@ -222,6 +253,7 @@ export default {
       display: flex;
       justify-content: space-between;
       font-size: 10px;
+      height: 30px;
       span {
         height: 20px;
         line-height: 20px;
@@ -234,6 +266,12 @@ export default {
         box-sizing: border-box;
         border: 1px solid #707070;
       }
+    }
+    .collectionNavBottom {
+      height: calc(100% - 30px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
     .collectionMian {
       height: 360px;
@@ -268,7 +306,6 @@ export default {
       }
     }
     .collectionList {
-      margin-top: 80px;
       display: flex;
       flex-direction: column;
       align-items: flex-end;
@@ -287,7 +324,7 @@ export default {
   }
   .collectionBox {
     width: calc(100% - 240px);
-    // height: 100%;
+    height: calc(100vh - 218px);
     display: flex;
     .collectHead {
       font-size: 20px;
@@ -307,12 +344,12 @@ export default {
     }
     .collectionBoxLeft {
       width: 60%;
-      height: 552px;
+      height: calc(100vh - 248px);
       padding: 0 20px;
       box-sizing: border-box;
       border-right: 1px dashed #707070;
       .leftList {
-        height: 520px;
+        height: calc(100vh - 288px);
         overflow: auto;
         .leftListItem {
           width: 100%;

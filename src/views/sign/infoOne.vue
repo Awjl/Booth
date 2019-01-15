@@ -99,7 +99,7 @@ export default {
     ...mapGetters(["UserID"])
   },
   created() {
-    console.log(this.UserID);
+    console.log(this.UserID);        
     console.log(getUser());
     this.userData = this.$store.state.userData;
     console.log(this.$store.state.userData);

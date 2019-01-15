@@ -1,49 +1,27 @@
 <template>
   <div class="choice">
     <div class="searchBox">
-      <input
-        type="text"
-        placeholder="搜索你感兴趣的企业/展会"
-        v-model="searchData"
-      />
-      <i
-        class="icon iconSearch"
-        @click="toSearch"
-      ></i>
+      <input type="text" placeholder="搜索你感兴趣的企业/展会" v-model="searchData">
+      <i class="icon iconSearch" @click="toSearch"></i>
     </div>
-    <div
-      class="choiceBox"
-      @click="choiceShow()"
-    >
-      选择你的所属行业 Selected list item
-      <div
-        class="choiceList"
-        v-if="choiceBoxshow"
-      >
+    <div class="choiceBox" @click="choiceShow()">选择你的所属行业 Selected list item
+      <div class="choiceList" v-if="choiceBoxshow">
         <div
           class="choiceItem"
           v-for="(items, index) in industryData"
           :key="index"
           :class="{ choiceItemHover: index == typeindex }"
           @mouseenter="mouseOver(index, items)"
-        >
-          {{ items.industryName }}
-        </div>
+        >{{ items.industryName }}</div>
       </div>
-      <div
-        class="choiceList"
-        style="left:270px;"
-        v-if="choiceBoxshow"
-      >
+      <div class="choiceList" style="left:270px;" v-if="choiceBoxshow">
         <div class="choiceListChildren">
           <div
             class="choiceItem"
             @click.stop="toBooth(items.industryName, items.id)"
             v-for="(items, index) in items"
             :key="index"
-          >
-            {{items.industryName}}
-          </div>
+          >{{items.industryName}}</div>
         </div>
       </div>
     </div>
@@ -52,7 +30,7 @@
 
 <script>
 import { getIndustry, ERR_OK } from "@/api/api.js";
-import {setOne, setTwo} from "@/utils/auth.js"
+import { setOne, setTwo } from "@/utils/auth.js";
 
 export default {
   name: "choice",
@@ -67,17 +45,17 @@ export default {
     };
   },
   created() {
-    this._getIndustry()
+    this._getIndustry();
   },
   methods: {
     _getIndustry() {
-      getIndustry().then((res) => {
+      getIndustry().then(res => {
         if (res.status === ERR_OK) {
-          this.industryData = res.data.data
-          this.items = this.industryData[0].secondIndustries
-          console.log(this.industryData)
+          this.industryData = res.data.data;
+          this.items = this.industryData[0].secondIndustries;
+          console.log(this.industryData);
         }
-      })
+      });
     },
     choiceShow() {
       this.choiceBoxshow = !this.choiceBoxshow;
@@ -91,14 +69,14 @@ export default {
     toBooth(name, id) {
       this.choiceBoxshow = !this.choiceBoxshow;
       this.ToBooth = name;
-      setTwo(id)
+      setTwo(id);
       this.$emit("cliceToBooth", this.ToBooth);
     },
     toSearch() {
-      console.log(this.searchData)
+      console.log(this.searchData);
       this.$router.push({
         path: `/search`,
-        query: { center: this.searchData}
+        query: { center: this.searchData }
       });
     }
   }

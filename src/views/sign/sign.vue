@@ -5,73 +5,42 @@
         <p>入驻booth</p>
         <p>目前只开放企业用户注册</p>
       </div>
-      <div
-        class="signBgList"
-        v-if="!userID"
-      >
+      <div class="signBgList" v-if="!userID">
         <div class="LoginInput">
           <div class="inpList">
-            <input
-              type="text"
-              placeholder="企业名称"
-              v-model="user.username"
-            />
+            <input type="text" placeholder="企业名称" v-model="user.username">
             <!-- <p class="Err">错误</p> -->
           </div>
           <div class="inpList">
-            <input
-              type="password"
-              placeholder="密码"
-              v-model="user.password"
-            />
+            <input type="password" placeholder="密码" v-model="user.password">
             <!-- <p class="Err">错误</p> -->
           </div>
           <div class="inpList">
-            <input
-              type="text"
-              placeholder="邮箱"
-              v-model="user.email"
-            />
+            <input type="text" placeholder="邮箱" v-model="user.email">
             <!-- <p class="Err">错误</p> -->
           </div>
-          <div
-            class="LoginBtn"
-            @click="toSign"
-          ><span>立即注册</span></div>
+          <div class="LoginBtn" @click="toSign">
+            <span>立即注册</span>
+          </div>
         </div>
       </div>
-      <div
-        class="signBgList"
-        v-if="userID"
-      >
+      <div class="signBgList" v-if="userID">
         <p>注册成功！</p>
-        <div
-          class="btnEmial"
-          @click="verification"
-        >邮箱验证并完善资料</div>
+        <div class="btnEmial" @click="verification">邮箱验证并完善资料</div>
         <div class="EmialText">
           <p>验证邮件已发送至您的邮箱</p>
-          <p>{{user.email}} </p>
+          <p>{{user.email}}</p>
           <p>请点击邮件中的链接完成邮箱验证</p>
         </div>
       </div>
       <div class="signBgLogo">
-        <img
-          src="../../assets/images/home/logo.png"
-          alt
-        />
+        <img src="../../assets/images/home/logo.png" alt>
         <p>博商供应链</p>
         <div class="foot">Shanghai maiyu technology co.LTD</div>
       </div>
     </div>
-    <div
-      class="signBox"
-      v-if="successbox"
-    >
-      <div
-        class="signBoxTrue"
-        @click="tureFlase"
-      >验证成功</div>
+    <div class="signBox" v-if="successbox">
+      <div class="signBoxTrue" @click="tureFlase">验证成功</div>
       <div class="signBoxTrue">验证失败，重新验证</div>
       <div class="signBoxTrue">未收到邮箱</div>
     </div>
@@ -80,7 +49,7 @@
 
 <script>
 import { register, checkEmail, isActivate, ERR_OK } from "@/api/api.js";
-import { setUser, getUser } from "@/utils/auth.js"
+import { setUser, getUser } from "@/utils/auth.js";
 export default {
   name: "sign",
   data() {
@@ -95,45 +64,45 @@ export default {
     };
   },
   created() {
-    setUser('17')
-    console.log(getUser())
+    setUser("17");
+    console.log(getUser());
   },
   methods: {
     _isActivate() {
-      isActivate(this.userID).then((res) => {
+      isActivate(this.userID).then(res => {
         if (res.status === ERR_OK) {
           this.$router.push({
             path: `/infoOne`
-          })
+          });
         }
-      })
+      });
     },
     _register() {
-      register(this.user).then((res) => {
+      register(this.user).then(res => {
         if (res.status === ERR_OK) {
-          console.log("注册成功")
-          console.log(res.data)
-          this.userID = res.data.data
+          console.log("注册成功");
+          console.log(res.data);
+          this.userID = res.data.data;
           // setUser(this.userID)
         }
-      })
+      });
     },
     _checkEmail() {
-      checkEmail(this.userID).then((res) => {
+      checkEmail(this.userID).then(res => {
         if (res.status === ERR_OK) {
-          console.log('发送成功')
-          this.successbox = !this.successbox
+          console.log("发送成功");
+          this.successbox = !this.successbox;
         }
-      })
+      });
     },
     tureFlase() {
-      this._isActivate()
+      this._isActivate();
     },
     toSign() {
-      this._register()
+      this._register();
     },
     verification() {
-      this._checkEmail()
+      this._checkEmail();
     }
   }
 };

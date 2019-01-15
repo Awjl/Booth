@@ -12,11 +12,11 @@
       </div>
       <div class="signBgMain">
         <div class="signBgMainLeft">
-          <div class="signBgMainList" @click="toOne">基础信息</div>
-          <div class="signBgMainList ListAct" @click="toTwo">行业及商业伙伴</div>
-          <div class="signBgMainList" @click="toThree">其他信息</div>
-          <div class="signBgMainList" @click="toFour">形象展示</div>
-          <div class="signBgMainList" @click="toFive">信息核对</div>
+          <div class="signBgMainList">基础信息</div>
+          <div class="signBgMainList ListAct">行业及商业伙伴</div>
+          <div class="signBgMainList">其他信息</div>
+          <div class="signBgMainList">形象展示</div>
+          <div class="signBgMainList">信息核对</div>
         </div>
         <div class="signBgMainRightTwo">
           <div class="signBgMainList">
@@ -225,9 +225,9 @@
             </div>
           </div>
           <div class="signBgMainFootTwo">
-            <span>上一页</span>
+            <span @click="toBack">上一页</span>
             <div>
-              <span>保存并返回到首页</span>
+              <span @click="preservation">保存并返回到首页</span>
               <span @click="toNext">下一页</span>
             </div>
           </div>
@@ -304,6 +304,52 @@ export default {
           console.log("保存成功");
         }
       });
+    },
+     preservation() {
+      this.formData.append("id", this.$store.state.user.UserID);
+      this.formData.append("name", this.$store.state.userData.name);
+      this.formData.append("nameEng", this.$store.state.userData.nameEng);
+      this.formData.append("member", this.$store.state.userData.member);
+      this.formData.append("address", this.$store.state.userData.address);
+      this.formData.append("linkman", this.$store.state.userData.linkman);
+      this.formData.append("position", this.$store.state.userData.position);
+      this.formData.append("mobile", this.$store.state.userData.mobile);
+      this.formData.append(
+        "linkmanEmail",
+        this.$store.state.userData.linkmanEmail
+      );
+      this.formData.append(
+        "oneIndustry",
+        this.$store.state.userData.oneIndustry
+      );
+      this.formData.append(
+        "twoIndustry",
+        this.$store.state.userData.twoIndustry
+      );
+      this.formData.append("competitor", this.$store.state.userData.competitor);
+      this.formData.append("keywords", this.$store.state.userData.keywords);
+      this.formData.append(
+        "mainProcess",
+        this.$store.state.userData.mainProcess
+      );
+      this.formData.append(
+        "facilitator",
+        this.$store.state.userData.facilitator
+      );
+      this.formData.append("summary", this.$store.state.userData.summary);
+      this.formData.append(
+        "exhibitions",
+        this.$store.state.userData.exhibitions
+      );
+      this.formData.append("customer", this.$store.state.userData.customer);
+      this.formData.append("imgList", this.$store.state.userData.imgList);
+      this.formData.append("logoPic", this.$store.state.userData.logoPic);
+      this.formData.append(
+        "introductionPic",
+        this.$store.state.userData.introductionPic
+      );
+      this.formData.append("supplier", this.$store.state.userData.supplier);
+      this._addUserInfo();
     },
     _searchCompany(center) {
       searchCompany(center).then(res => {
@@ -486,34 +532,10 @@ export default {
         path: `/infoThree`
       });
     },
-    tohome() {
-      this.$router.push({
-        path: `/home`
-      });
-    },
-    toOne() {
+ 
+    toBack() {
       this.$router.push({
         path: `/infoOne`
-      });
-    },
-    toTwo() {
-      this.$router.push({
-        path: `/infoTwo`
-      });
-    },
-    toThree() {
-      this.$router.push({
-        path: `/infoThree`
-      });
-    },
-    toFour() {
-      this.$router.push({
-        path: `/infoFour`
-      });
-    },
-    toFive() {
-      this.$router.push({
-        path: `/infoFive`
       });
     }
   }

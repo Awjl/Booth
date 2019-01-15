@@ -101,6 +101,8 @@ export default {
   created() {
     console.log(this.UserID);
     console.log(getUser());
+    this.userData = this.$store.state.userData;
+    console.log(this.$store.state.userData);
   },
   methods: {
     _addUserInfo() {

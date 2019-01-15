@@ -238,7 +238,7 @@
 </template>
 
 <script>
-import { getIndustry, searchCompany, ERR_OK } from "@/api/api.js";
+import { getIndustry, searchCompany,addUserInfo, ERR_OK } from "@/api/api.js";
 import { setOne, setTwo } from "@/utils/auth.js";
 import { mapGetters } from "vuex";
 
@@ -262,73 +262,49 @@ export default {
       typeindex: 0,
       stateBox: false,
       exhibitionArr: [{ name: "", state: 1, numID: "" }],
-      competitorArr: [
-        { key: "点击输入" },
-        { key: "点击输入" },
-        { key: "点击输入" },
-        { key: "点击输入" },
-        { key: "点击输入" }
-      ],
-      keywordsArr: [
-        { key: "点击输入" },
-        { key: "点击输入" },
-        { key: "点击输入" },
-        { key: "点击输入" },
-        { key: "点击输入" }
-      ],
-      supplierArr: [
-        { key: "点击输入" },
-        { key: "点击输入" },
-        { key: "点击输入" },
-        { key: "点击输入" },
-        { key: "点击输入" }
-      ],
-      mainProcess: [
-        { key: "点击输入" },
-        { key: "点击输入" },
-        { key: "点击输入" },
-        { key: "点击输入" },
-        { key: "点击输入" }
-      ],
-      customerArr: [
-        { key: "点击输入" },
-        { key: "点击输入" },
-        { key: "点击输入" },
-        { key: "点击输入" },
-        { key: "点击输入" }
-      ],
-      facilitatorArr: [
-        { key: "点击输入" },
-        { key: "点击输入" },
-        { key: "点击输入" },
-        { key: "点击输入" },
-        { key: "点击输入" }
-      ],
-      fromData: new FormData(),
+      competitorArr: [],
+      keywordsArr: [],
+      supplierArr: [],
+      mainProcess: [],
+      customerArr: [ ],
+      facilitatorArr: [],
+      formData: new FormData(),
       userData: {
         oneIndustry: "", // 一级
         twoIndustry: "", // 二级
-        competitor: [], // 竞争
-        keywords: [], // 关键词
-        supplier: [], // 供应商
-        mainProcess: [], // 工艺
-        facilitator: [], // 服务商
         summary: "", // 简介
-        exhibitions: [], // 会展
-        customer: [] // 客户
       }
     };
   },
   created() {
+    this.name = this.$store.state.userData.oneIndustryname;
+    this.userData.oneIndustry = this.$store.state.userData.oneIndustry;
+    this.userData.twoIndustry = this.$store.state.userData.twoIndustry;
+    this.userData.summary = this.$store.state.userData.summary;
+    this.exhibitionArr = this.$store.state.userData.exhibitions
+    this.competitorArr = this.$store.state.userData.competitor
+    this.keywordsArr = this.$store.state.userData.keywords
+    this.supplierArr = this.$store.state.userData.supplier
+    this.mainProcess = this.$store.state.userData.mainProcess
+    this.customerArr = this.$store.state.userData.customer
+    this.facilitatorArr = this.$store.state.userData.facilitator
     getIndustry().then(res => {
       if (res.status === ERR_OK) {
         this.industryData = res.data.data;
-        this.userData.oneIndustry =this.industryData[0].id;
+        this.userData.oneIndustry = this.industryData[0].id;
         this.items = this.industryData[0].secondIndustries;
       }
     });
   },
   methods: {
+    _addUserInfo() {
+      console.log(this.formData);
+      addUserInfo(this.formData).then(res => {
+        if (res.status === ERR_OK) {
+          console.log("保存成功");
+        }
+      });
+    },
     _searchCompany(center) {
       searchCompany(center).then(res => {
         if (res.status === ERR_OK) {
@@ -495,8 +471,9 @@ export default {
       this.facilitatorArr[this.index].key = val;
     },
     toNext() {
-      this.$store.commit("SET_oneIndustry",  this.userData.oneIndustry);
-      this.$store.commit("SET_twoIndustry",  this.userData.twoIndustry);
+      this.$store.commit("SET_oneIndustryname", this.name);
+      this.$store.commit("SET_oneIndustry", this.userData.oneIndustry);
+      this.$store.commit("SET_twoIndustry", this.userData.twoIndustry);
       this.$store.commit("SET_competitor", this.competitorArr);
       this.$store.commit("SET_keywords", this.keywordsArr);
       this.$store.commit("SET_supplier", this.supplierArr);
@@ -505,7 +482,9 @@ export default {
       this.$store.commit("SET_summary", this.userData.summary);
       this.$store.commit("SET_exhibitions", this.exhibitionArr);
       this.$store.commit("SET_customer", this.customerArr);
-      console.log(this.$store.state.userData);
+      this.$router.push({
+        path: `/infoThree`
+      });
     },
     tohome() {
       this.$router.push({

@@ -25,9 +25,19 @@
 </template>
 
 <script>
+import { addUserInfo } from "@/api/api.js";
+
 export default {
   name: "sign",
   methods: {
+    _addUserInfo() {
+      console.log(this.formData);
+      addUserInfo(this.formData).then(res => {
+        if (res.status === ERR_OK) {
+          console.log("保存成功");
+        }
+      });
+    },
     toOne() {
       this.$router.push({
         path: `/infoOne`
@@ -63,6 +73,7 @@ export default {
 </script>
 
 <style lang="scss">
+
 .signDetails {
   width: 100vw;
   height: 100vh;

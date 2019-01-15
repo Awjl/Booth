@@ -3,7 +3,7 @@
     <div class="signBgTwo">
       <div class="signBgInfoLog">
         <div class="infoLog" @click="tohome">
-          <img src="../../assets/images/home/logo.png" alt />
+          <img src="../../assets/images/home/logo.png" alt>
         </div>
         <div class="infoLog">
           <p>入驻booth</p>
@@ -23,23 +23,23 @@
             <p>您可以上传相关素材支撑您的企业资质</p>
             <p>例如：主要产品、专利证书、制造车间、企业文化相关照片、视频等</p>
             <div class="UpImg">
-              <div class="Upimg"></div>
+              <div class="UpimgList">
+                <label for="upTop">+</label>
+                <input @change="upImg" type="file" id="upTop" value="图片上传预览" multiple>
+              </div>
               <div class="imgList">
-                <div class="imgListItem"></div>
-                <div class="imgListItem"></div>
-                <div class="imgListItem"></div>
-                <div class="imgListItem"></div>
-                <div class="imgListItem"></div>
-                <div class="imgListItem"></div>
-                <div class="imgListItem"></div>
-                <div class="imgListItem"></div>
-                <div class="imgListItem"></div>
-                <div class="imgListItem"></div>
+                <div class="imgListItem" v-for="(item, index) in imgList" :key="index">
+                  <img :src="item" alt>
+                </div>
               </div>
             </div>
           </div>
-          <div class="signBgMainFoot">
-            <span>保存并返回到首页</span><span>下一页</span>
+          <div class="signBgMainFootTwo">
+            <span>上一页</span>
+            <div>
+              <span>保存并返回到首页</span>
+              <span @click="toNext">下一页</span>
+            </div>
           </div>
         </div>
       </div>
@@ -48,9 +48,68 @@
 </template>
 
 <script>
+import { addUserInfo } from "@/api/api.js";
+
 export default {
   name: "sign",
+  data() {
+    return {
+      imgList: [],
+      upImgList: [],
+      imgType: {
+        type: "image/jpeg, image/png, image/jpg"
+      }
+    };
+  },
+  created() {
+    console.log(this.$store.state.userData.imgList);
+    this.upImgList = this.$store.state.userData.imgList;
+    let _this = this;
+    this.$store.state.userData.imgList.forEach(function(e) {
+      // _this.imgList
+      const reader = new FileReader();
+      reader.readAsDataURL(e);
+      reader.onload = function(e) {
+        _this.imgList.push(e.target.result);
+      };
+    });
+  },
   methods: {
+    _addUserInfo() {
+      console.log(this.formData);
+      addUserInfo(this.formData).then(res => {
+        if (res.status === ERR_OK) {
+          console.log("保存成功");
+        }
+      });
+    },
+    toNext() {
+      this.$router.push({
+        path: `/infoFour`
+      });
+      this.$store.commit("SET_imgList", this.upImgList);
+    },
+    upImg(e) {
+      var avatarImg = e.target.files;
+      for (var i = 0; i < avatarImg.length; i++) {
+        var Img = e.target.files[i];
+        var avatarImgsize = Img.size;
+        var avatarImgtype = Img.type;
+        if (this.imgType.type.indexOf(avatarImgtype) === -1) {
+          this.$message.error("格式不正确");
+          return false;
+        } else {
+          const _this = this;
+          if (!e || !window.FileReader) return;
+          const reader = new FileReader();
+          reader.readAsDataURL(Img);
+          reader.onload = function(e) {
+            _this.imgList.push(e.target.result);
+          };
+          this.upImgList.push(Img);
+        }
+      }
+    },
     tohome() {
       this.$router.push({
         path: `/home`
@@ -162,11 +221,30 @@ export default {
           .UpImg {
             display: flex;
             margin: 50px 0;
-            .Upimg {
+            .UpimgList {
               width: 132px;
               height: 132px;
               background: #fff;
+              overflow: hidden;
+              position: relative;
               margin-right: 20px;
+              label {
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: block;
+                width: 100%;
+                height: 100%;
+                // text-align: center;
+                z-index: 999;
+                font-size: 30px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              }
+              input {
+                opacity: 0;
+              }
             }
           }
           .imgList {
@@ -184,23 +262,13 @@ export default {
             }
           }
         }
-        .signBgMainFoot {
+        .signBgMainFootTwo {
           display: flex;
-          justify-content: flex-end;
+          justify-content: space-between;
           width: 100%;
           padding: 0 20px;
           box-sizing: border-box;
-          span:nth-child(1) {
-            display: inline-block;
-            width: 110px;
-            height: 32px;
-            line-height: 32px;
-            text-align: center;
-            background: #000;
-            color: #fff;
-            font-size: 10px;
-          }
-          span:nth-child(2) {
+          span {
             display: inline-block;
             width: 85px;
             height: 32px;
@@ -208,7 +276,29 @@ export default {
             text-align: center;
             background: #000;
             color: #fff;
-            margin-left: 10px;
+            cursor: pointer;
+          }
+          div {
+            span:nth-child(1) {
+              display: inline-block;
+              width: 110px;
+              height: 32px;
+              line-height: 32px;
+              text-align: center;
+              background: #000;
+              color: #fff;
+              font-size: 10px;
+            }
+            span:nth-child(2) {
+              display: inline-block;
+              width: 85px;
+              height: 32px;
+              line-height: 32px;
+              text-align: center;
+              background: #000;
+              color: #fff;
+              margin-left: 10px;
+            }
           }
         }
       }

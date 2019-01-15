@@ -114,15 +114,28 @@ export default {
       });
     },
     preservation() {
-      this.formData.append("id", this.UserID);
-      this.formData.append("name", this.userData.name);
-      this.formData.append("nameEng", this.userData.nameEng);
-      this.formData.append("member", this.userData.member);
-      this.formData.append("address", this.userData.address);
-      this.formData.append("linkman", this.userData.linkman);
-      this.formData.append("position", this.userData.position);
-      this.formData.append("mobile", this.userData.mobile);
-      this.formData.append("linkmanEmail", this.userData.linkmanEmail);
+      this.formData.append("id", this.$store.state.user.UserID);
+      this.formData.append("name", this.$store.state.userData.name);
+      this.formData.append("nameEng", this.$store.state.userData.nameEng);
+      this.formData.append("member", this.$store.state.userData.member);
+      this.formData.append("address", this.$store.state.userData.address);
+      this.formData.append("linkman", this.$store.state.userData.linkman);
+      this.formData.append("position", this.$store.state.userData.position);
+      this.formData.append("mobile", this.$store.state.userData.mobile);
+      this.formData.append("linkmanEmail", this.$store.state.userData.linkmanEmail);
+      this.formData.append("oneIndustry", this.$store.state.userData.oneIndustry);
+      this.formData.append("twoIndustry", this.$store.state.userData.twoIndustry);
+      this.formData.append("competitor", this.$store.state.userData.competitor);
+      this.formData.append("keywords", this.$store.state.userData.keywords);
+      this.formData.append("mainProcess", this.$store.state.userData.mainProcess);
+      this.formData.append("facilitator", this.$store.state.userData.facilitator);
+      this.formData.append("summary", this.$store.state.userData.summary);
+      this.formData.append("exhibitions", this.$store.state.userData.exhibitions);
+      this.formData.append("customer", this.$store.state.userData.customer);
+      this.formData.append("imgList", this.$store.state.userData.imgList);
+      this.formData.append("logoPic", this.$store.state.userData.logoPic);
+      this.formData.append("introductionPic", this.$store.state.userData.introductionPic);
+      this.formData.append("supplier", this.$store.state.userData.supplier);
       this._addUserInfo();
     },
     toNext() {

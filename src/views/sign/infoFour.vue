@@ -3,7 +3,7 @@
     <div class="signBgTwo">
       <div class="signBgInfoLog">
         <div class="infoLog" @click="tohome">
-          <img src="../../assets/images/home/logo.png" alt />
+          <img src="../../assets/images/home/logo.png" alt>
         </div>
         <div class="infoLog">
           <p>入驻booth</p>
@@ -22,9 +22,21 @@
           <div class="signBgFourMainList">
             <div class="signBgFourLogo">
               <div class="signBgFourLogoP">企业Logo</div>
-              <div class="signBgFourLogoImg"></div>
+              <div class="signBgFourLogoImg">
+                <label for="upOneTop">
+                  <span v-if="!logoImg">+</span>
+                  <img :src="logoImg" alt v-else>
+                </label>
+                <input @change="upOneImg" type="file" id="upOneTop" value="图片上传预览" multiple>
+              </div>
               <div class="signBgFourLogoP">公司介绍页</div>
-              <div class="signBgFourLogoImg"></div>
+              <div class="signBgFourLogoImg">
+                <label for="upTwoTop">
+                  <span v-if="!introduceImg">+</span>
+                  <img :src="introduceImg" alt v-else>
+                </label>
+                <input @change="upTwoImg" type="file" id="upTwoTop" value="图片上传预览" multiple>
+              </div>
             </div>
             <div class="signBgFourproduct">
               <div class="signBgFourHeard">产品手册展示</div>
@@ -35,7 +47,9 @@
                     <div class="brochureItemmanual">
                       <p>某某公司企业宣传手册</p>
                       <div class="label">
-                        <span>标签</span><span>标签</span><span>标签</span>
+                        <span>标签</span>
+                        <span>标签</span>
+                        <span>标签</span>
                       </div>
                       <div class="brochureintroduce"></div>
                     </div>
@@ -44,8 +58,12 @@
               </div>
             </div>
           </div>
-          <div class="signBgMainFoot">
-            <span>保存并返回到首页</span><span>下一页</span>
+          <div class="signBgMainFootTwo">
+            <span>上一页</span>
+            <div>
+              <span>保存并返回到首页</span>
+              <span @click="toNext">下一页</span>
+            </div>
           </div>
         </div>
       </div>
@@ -54,9 +72,108 @@
 </template>
 
 <script>
+import { addUserInfo } from "@/api/api.js";
+
 export default {
   name: "sign",
+  data() {
+    return {
+      logoImg: "",
+      uplogoImg: "",
+      introduceImg: "",
+      upintroduceImg: "",
+      imgType: {
+        type: "image/jpeg, image/png, image/jpg"
+      }
+    };
+  },
+  created() {
+    this.uplogoImg = this.$store.state.userData.logoPic;
+    this.upintroduceImg = this.$store.state.userData.introductionPic;
+    this.One(this.$store.state.userData.logoPic);
+    this.Two(this.$store.state.userData.introductionPic);
+  },
   methods: {
+    _addUserInfo() {
+      console.log(this.formData);
+      addUserInfo(this.formData).then(res => {
+        if (res.status === ERR_OK) {
+          console.log("保存成功");
+        }
+      });
+    },
+    toNext() {
+      this.$router.push({
+        path: `/infoFive`
+      });
+      this.$store.commit("SET_logoPic", this.uplogoImg);
+      this.$store.commit("SET_introductionPic", this.upintroduceImg);
+      console.log(this.$store.state.userData);
+    },
+    One(file) {
+      if (!file) {
+        return
+      }
+      const _this = this;
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = function(e) {
+        _this.logoImg = e.target.result;
+      };
+    },
+    Two(file) {
+      if (!file) {
+        return
+      }
+      const _this = this;
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = function(e) {
+        _this.introduceImg = e.target.result;
+      };
+    },
+    upOneImg(e) {
+      var avatarImg = e.target.files;
+      for (var i = 0; i < avatarImg.length; i++) {
+        var Img = e.target.files[i];
+        var avatarImgsize = Img.size;
+        var avatarImgtype = Img.type;
+        if (this.imgType.type.indexOf(avatarImgtype) === -1) {
+          this.$message.error("格式不正确");
+          return false;
+        } else {
+          const _this = this;
+          if (!e || !window.FileReader) return;
+          const reader = new FileReader();
+          reader.readAsDataURL(Img);
+          reader.onload = function(e) {
+            _this.logoImg = e.target.result;
+          };
+          this.uplogoImg = Img;
+        }
+      }
+    },
+    upTwoImg(e) {
+      console.log("123");
+      var avatarImg = e.target.files;
+      for (var i = 0; i < avatarImg.length; i++) {
+        var Img = e.target.files[i];
+        var avatarImgsize = Img.size;
+        var avatarImgtype = Img.type;
+        if (this.imgType.type.indexOf(avatarImgtype) === -1) {
+          return false;
+        } else {
+          const _this = this;
+          if (!e || !window.FileReader) return;
+          const reader = new FileReader();
+          reader.readAsDataURL(Img);
+          reader.onload = function(e) {
+            _this.introduceImg = e.target.result;
+          };
+          this.upintroduceImg = Img;
+        }
+      }
+    },
     tohome() {
       this.$router.push({
         path: `/home`
@@ -169,10 +286,30 @@ export default {
               margin: 10px 0;
             }
             .signBgFourLogoImg {
-              width: 134px;
-              height: 134px;
+              width: 132px;
+              height: 132px;
               background: #fff;
+              overflow: hidden;
+              position: relative;
+              margin-right: 20px;
               margin-bottom: 40px;
+              label {
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: block;
+                width: 100%;
+                height: 100%;
+                // text-align: center;
+                z-index: 999;
+                font-size: 30px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              }
+              input {
+                opacity: 0;
+              }
             }
           }
           .signBgFourproduct {
@@ -241,23 +378,13 @@ export default {
             }
           }
         }
-        .signBgMainFoot {
+        .signBgMainFootTwo {
           display: flex;
-          justify-content: flex-end;
+          justify-content: space-between;
           width: 100%;
           padding: 0 20px;
           box-sizing: border-box;
-          span:nth-child(1) {
-            display: inline-block;
-            width: 110px;
-            height: 32px;
-            line-height: 32px;
-            text-align: center;
-            background: #000;
-            color: #fff;
-            font-size: 10px;
-          }
-          span:nth-child(2) {
+          span {
             display: inline-block;
             width: 85px;
             height: 32px;
@@ -265,7 +392,29 @@ export default {
             text-align: center;
             background: #000;
             color: #fff;
-            margin-left: 10px;
+            cursor: pointer;
+          }
+          div {
+            span:nth-child(1) {
+              display: inline-block;
+              width: 110px;
+              height: 32px;
+              line-height: 32px;
+              text-align: center;
+              background: #000;
+              color: #fff;
+              font-size: 10px;
+            }
+            span:nth-child(2) {
+              display: inline-block;
+              width: 85px;
+              height: 32px;
+              line-height: 32px;
+              text-align: center;
+              background: #000;
+              color: #fff;
+              margin-left: 10px;
+            }
           }
         }
       }

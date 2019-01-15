@@ -9,15 +9,53 @@ const userData = {
     mobile: "",
     linkmanEmail: "",
     oneIndustry: "", // 一级
+    oneIndustryname: "",
     twoIndustry: "", // 二级
-    competitor: [], // 竞争
-    keywords: [], // 关键词
-    supplier: [], // 供应商
-    mainProcess: [], // 工艺
-    facilitator: [], // 服务商
+    competitor: [
+      { key: "点击输入" },
+      { key: "点击输入" },
+      { key: "点击输入" },
+      { key: "点击输入" },
+      { key: "点击输入" }
+    ], // 竞争
+    keywords: [
+      { key: "点击输入" },
+      { key: "点击输入" },
+      { key: "点击输入" },
+      { key: "点击输入" },
+      { key: "点击输入" }
+    ], // 关键词
+    supplier: [
+      { key: "点击输入" },
+      { key: "点击输入" },
+      { key: "点击输入" },
+      { key: "点击输入" },
+      { key: "点击输入" }
+    ], // 供应商
+    mainProcess: [
+      { key: "点击输入" },
+      { key: "点击输入" },
+      { key: "点击输入" },
+      { key: "点击输入" },
+      { key: "点击输入" }
+    ], // 工艺
+    facilitator: [
+      { key: "点击输入" },
+      { key: "点击输入" },
+      { key: "点击输入" },
+      { key: "点击输入" },
+      { key: "点击输入" }
+    ], // 服务商
     summary: "", // 简介
-    exhibitions: [], // 会展
-    customer: [] // 客户
+    exhibitions: [{ name: "", state: 1, numID: "" }], // 会展
+    customer: [{ key: "点击输入" },
+    { key: "点击输入" },
+    { key: "点击输入" },
+    { key: "点击输入" },
+    { key: "点击输入" }], // 客户/
+    imgList: [],
+    logoPic: "",
+    introductionPic: ""
   },
   mutations: {
     SET_NAME: (state, name) => {
@@ -47,6 +85,9 @@ const userData = {
     SET_oneIndustry: (state, oneIndustry) => {
       state.oneIndustry = oneIndustry;
     },
+    SET_oneIndustryname: (state, oneIndustryname) => {
+      state.oneIndustryname = oneIndustryname;
+    },
     SET_twoIndustry: (state, twoIndustry) => {
       state.twoIndustry = twoIndustry;
     },
@@ -73,6 +114,15 @@ const userData = {
     },
     SET_customer: (state, customer) => {
       state.customer = customer;
+    },
+    SET_imgList: (state, imgList) => {
+      state.imgList = imgList;
+    },
+    SET_logoPic: (state, logoPic) => {
+      state.logoPic = logoPic;
+    },
+    SET_introductionPic: (state, introductionPic) => {
+      state.introductionPic = introductionPic;
     }
   }
 };

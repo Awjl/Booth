@@ -43,6 +43,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 200px;
   height: calc(100vh - 685px);
   width: 100%;
   background: #fff;

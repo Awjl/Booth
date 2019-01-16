@@ -1,6 +1,18 @@
 <template>
   <div class="home">
-    <Swiper></Swiper>
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" v-for="(item, index) in listImg" :key="index" >
+          <img :src="`http://47.101.165.134${item.bannerUrl}`" alt >
+        </div>
+      </div>
+      <!-- 如果需要分页器 -->
+      <div class="swiper-pagination"></div>
+
+      <!-- 如果需要导航按钮 --> 
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
     <div class="mian">
       <div class="mianLeft">
         <HomeLogin></HomeLogin>
@@ -16,32 +28,54 @@
 </template>
 
 <script>
-import Swiper from "@/base/swiper/swiper.vue";
+import Swiper from "swiper";
+import "swiper/dist/css/swiper.min.css";
 import HomeLogin from "@/components/homeLogin/homeLogin.vue";
 import HomeList from "@/components/homeList/homeList.vue";
 import HomeRight from "@/components/homeRight/homeRight.vue";
-import { getIndexBanner, ERR_OK } from "@/api/api.js"
+import { getIndexBanner, ERR_OK } from "@/api/api.js";
 
 export default {
   name: "home",
   data() {
     return {
-      listImg: [
-        { url: "../../assets/images/home/banner.png" },
-        { url: "../../assets/images/home/banner.png" }
-      ]
+      listImg: []
     };
   },
   created() {
-    getIndexBanner().then((res) => {
+    getIndexBanner().then(res => {
       if (res.status === ERR_OK) {
-        console.log('获取banner----------------')
-        console.log(res.data)
+        console.log("获取banner----------------");
+        console.log(res.data.data);
+        this.listImg = res.data.data;
       }
-    })
+    });
+  },
+  updated() {
+    var swiper = new Swiper(".swiper-container", {
+      slidesPerView: 1,
+      spaceBetween: 30,
+      loop: true,
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev"
+      }
+    });
+  },
+  methods: {
+    toDetails(id) {
+      console.log(id)
+    }
   },
   components: {
-    Swiper,
     HomeLogin,
     HomeList,
     HomeRight
@@ -51,6 +85,20 @@ export default {
 
 <style lang="scss">
 .home {
+  .swiper-container {
+    width: 100%;
+    height: 472px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .swiper-slide {
+    width: 100%;
+    height: 100%;
+  }
+  .swiper-slide > img {
+    width: 100%;
+    height: 100%;
+  }
   .mian {
     padding: 30px;
     width: 100%;

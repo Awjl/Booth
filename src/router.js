@@ -71,7 +71,7 @@ export default new Router({
       }
     },
     {
-      path: "/",
+      path: "/home",
       component: () => import("./views/all.vue"),
       redirect: "/Home",
       children: [

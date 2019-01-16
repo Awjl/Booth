@@ -39,7 +39,10 @@
               </div>
             </div>
             <div class="signBgFourproduct">
-              <div class="signBgFourHeard">产品手册展示</div>
+              <div class="signBgFourHeard">
+                产品手册展示
+                <span>+</span>
+              </div>
               <div class="signBgFourproductList">
                 <div class="brochureItem">
                   <div class="brochureItemImg"></div>
@@ -55,7 +58,36 @@
                     </div>
                   </div>
                 </div>
+                <div class="brochureItem">
+                  <div class="brochureItemImg"></div>
+                  <div class="brochureItemText">
+                    <div class="brochureItemmanual">
+                      <p>某某公司企业宣传手册</p>
+                      <div class="label">
+                        <span>标签</span>
+                        <span>标签</span>
+                        <span>标签</span>
+                      </div>
+                      <div class="brochureintroduce"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="brochureItem">
+                  <div class="brochureItemImg"></div>
+                  <div class="brochureItemText">
+                    <div class="brochureItemmanual">
+                      <p>某某公司企业宣传手册</p>
+                      <div class="label">
+                        <span>标签</span>
+                        <span>标签</span>
+                        <span>标签</span>
+                      </div>
+                      <div class="brochureintroduce"></div>
+                    </div>
+                  </div>
+                </div>
               </div>
+              <div class="brochureItemBtn">我要设计</div>
             </div>
           </div>
           <div class="signBgMainFootTwo">
@@ -68,12 +100,15 @@
         </div>
       </div>
     </div>
+    <div class="UpproductBox">
+      <UpProduct></UpProduct>
+    </div>
   </div>
 </template>
 
 <script>
 import { addUserInfo, ERR_OK } from "@/api/api.js";
-
+import UpProduct from "@/base/upproduct/upproduct.vue";
 export default {
   name: "sign",
   data() {
@@ -97,7 +132,7 @@ export default {
   methods: {
     _addUserInfo() {
       addUserInfo(this.formData).then(res => {
-        console.log(res.data)
+        console.log(res.data);
         if (res.data.code === 0) {
           this.$router.push({
             path: `/home`
@@ -253,6 +288,9 @@ export default {
         path: `/home`
       });
     }
+  },
+  components: {
+    UpProduct
   }
 };
 </script>
@@ -374,11 +412,20 @@ export default {
               padding: 0 20px;
               box-sizing: border-box;
               margin: 20px 0;
+              display: flex;
+              align-items: center;
+              span {
+                font-size: 30px;
+                cursor: pointer;
+                margin-left: 20px;
+              }
             }
             .signBgFourproductList {
               width: 100%;
               padding: 0 20px;
               box-sizing: border-box;
+              height: 250px;
+              overflow: auto;
               .brochureItem {
                 display: flex;
                 justify-content: space-between;
@@ -425,6 +472,16 @@ export default {
                 }
               }
             }
+            .brochureItemBtn {
+              width: 136px;
+              height: 40px;
+              background: #fff;
+              margin: 20px 0 0 20px;
+              line-height: 40px;
+              text-align: center;
+              font-size: 16px;
+              cursor: pointer;
+            }
           }
         }
         .signBgMainFootTwo {
@@ -468,6 +525,18 @@ export default {
         }
       }
     }
+  }
+  .UpproductBox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba($color: #000000, $alpha: 0.2);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999999;
   }
 }
 </style>

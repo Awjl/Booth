@@ -1,21 +1,23 @@
 <template>
   <div class="exhibitionDetails">
     <Swiper></Swiper>
-    <div class="signUp">参加报名</div>
+    <div class="signUp" @click="showBox">参加报名</div>
     <div class="exhibitionTitle">
       <div class="exhibitionLeft">
-        <p>HOUSE VISION 2018 BEIJING EXHIBITION</p>
-        <p>探索家——未来生活大展</p>
+        <p>{{detailsData.titleEng}}</p>
+        <p>{{detailsData.title}}</p>
         <div>主题：NEW GRAVITY</div>
-        <div>时间：2018年9月21日—11月6日</div>
+        <div>时间：{{detailsData.date}}</div>
         <div>地点：北京・国家体育场(鸟巢)南广场</div>
-        <div>简述：“CHINA HOUSE VISION探索家” 是一个思考中国未来生活形态的平 台，也是一个首次尝试将建筑、设 计、科技、制造等多个产业跨界合 作的项目。</div>
+        <div>简述：{{detailsData.summary}}</div>
       </div>
-      <div class="exhibitionRight"></div>
+      <div class="exhibitionRight">
+        <img :src="`http://47.101.165.134${detailsData.summaryPicture}`" alt>
+      </div>
     </div>
     <div class="TitleHead">展会地图</div>
     <div class="Map">
-      <img src="../../assets/images/new/map.png" alt>
+      <img :src="`http://47.101.165.134${detailsData.mapUrl}`" alt>
     </div>
     <div class="exhibitionDetailsList">
       <div class="TitleHead">参展商列表</div>
@@ -141,19 +143,117 @@
       </div>
     </div>
     <div class="timebox">
-      <P>2018年11月5-10日</P>
-      <p>November 5-10, 2018</p>
+      <P>{{detailsData.date}}</P>
+      <p>{{detailsData.dateEng}}</p>
     </div>
     <div class="Map1">
-      <img src="../../assets/images/new/mapbig2.png" alt>
+      <img :src="`http://47.101.165.134${detailsData.trafficUrl}`" alt>
+    </div>
+    <div class="signUpBox" v-if="show">
+      <div class="signUpBoxItem">
+        <div class="signUpBoxhead">参观报名</div>
+        <div class="signUpBoxMove">
+          <p @click="showBox">取消</p>
+          <div @click="addMan">添加人员</div>
+        </div>
+        <div class="signUpBoxList">
+          <div class="signUpBoxListItem" v-for="(item, index) in signUp" :key="index">
+            <div class="signUpBoxListItemOne">
+              <p>姓名</p>
+              <input type="text" v-model="item.name">
+            </div>
+            <div class="signUpBoxListItemOne">
+              <p>职务</p>
+              <input type="text" v-model="item.position">
+            </div>
+            <div class="signUpBoxListItemTwo">
+              <p>联系方式</p>
+              <input type="text" v-model="item.mobile">
+            </div>
+            <div class="signUpBoxListItemTwo">
+              <p>到场时间</p>
+              <input type="text" v-model="item.precentDate">
+            </div>
+          </div>
+        </div>
+        <div class="signUpBoxBtn" @click="UpList">确认报名</div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import Swiper from "@/base/swiper/swiper.vue";
+import { getExhibitionInfoById, enrollExhibition, ERR_OK } from "@/api/api.js";
+import { getUser } from "@/utils/auth.js";
 
 export default {
+  data() {
+    return {
+      show: false,
+      signUp: [
+        {
+          exhibitionId: this.$route.query.id,
+          userId: getUser(),
+          name: "",
+          mobile: "",
+          precentDate: "",
+          position: ""
+        }
+      ],
+      detailsData: {
+        bannerUrl: "", //
+        date: "", //
+        dateEng: "", //
+        id: "", //
+        isUpper: "", //
+        mapUrl: "", //
+        summary: "", //
+        summaryPicture: "", //
+        title: "", ///
+        titleEng: "", //
+        trafficUrl: "" //
+      }
+    };
+  },
+  created() {
+    this._getExhibitionInfoById(this.$route.query.id);
+  },
+  methods: {
+    _enrollExhibition() {
+      enrollExhibition(this.signUp).then(res => {
+        if (res.status === ERR_OK) {
+          console.log("报名成功");
+          this.show = false;
+        }
+      });
+    },
+    _getExhibitionInfoById(id) {
+      getExhibitionInfoById(id).then(res => {
+        console.log(res);
+        if (res.status === ERR_OK) {
+          this.detailsData = res.data.data;
+        }
+      });
+    },
+    UpList() {
+      this._enrollExhibition();
+    },
+    addMan() {
+      let arr = {
+        exhibitionId: this.$route.query.id,
+        userId: getUser(),
+        name: "",
+        mobile: "",
+        precentDate: "",
+        position: ""
+      };
+      this.signUp.push(arr);
+    },
+    showBox() {
+      this.show = !this.show;
+    }
+  },
   components: {
     Swiper
   }
@@ -163,6 +263,96 @@ export default {
 <style lang="scss">
 .exhibitionDetails {
   background: #fff;
+}
+.signUpBox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba($color: #000000, $alpha: 0.2);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999999;
+  .signUpBoxItem {
+    max-width: 638px;
+    max-height: 80vh;
+    background: #fff;
+    padding: 0 20px;
+    box-sizing: border-box;
+    overflow: auto;
+    .signUpBoxhead {
+      text-align: center;
+      font-size: 24px;
+      margin: 10px 0;
+    }
+    .signUpBoxMove {
+      width: 100%;
+      text-align: right;
+      overflow: hidden;
+      font-size: 10px;
+      margin: -20px 0 0px;
+      p {
+        margin-bottom: 10px;
+        cursor: pointer;
+      }
+      div {
+        width: 56px;
+        height: 22px;
+        background: #000;
+        color: #fff;
+        text-align: center;
+        line-height: 22px;
+        float: right;
+        cursor: pointer;
+      }
+    }
+    .signUpBoxList {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      .signUpBoxListItem {
+        width: 268px;
+        height: 178px;
+        background: #e0e8ec;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        margin: 10px;
+        p {
+          font-size: 10px;
+          margin: 6px 0;
+        }
+        input {
+          width: 100%;
+          height: 20px;
+        }
+        .signUpBoxListItemOne {
+          width: 50%;
+          padding: 0 20px;
+          box-sizing: border-box;
+        }
+        .signUpBoxListItemTwo {
+          width: 100%;
+          padding: 0 20px;
+          box-sizing: border-box;
+        }
+      }
+    }
+    .signUpBoxBtn {
+      width: 56px;
+      height: 22px;
+      background: #326b90;
+      color: #fff;
+      text-align: center;
+      line-height: 22px;
+      margin: 20px auto;
+      font-size: 10px;
+      cursor: pointer;
+    }
+  }
 }
 .signUp {
   height: 100px;

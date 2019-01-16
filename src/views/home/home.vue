@@ -2,14 +2,14 @@
   <div class="home">
     <div class="swiper-container">
       <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="(item, index) in listImg" :key="index" >
-          <img :src="`http://47.101.165.134${item.bannerUrl}`" alt >
+        <div class="swiper-slide" v-for="(item, index) in listImg" :key="index">
+          <img :src="`http://47.101.165.134${item.bannerUrl}`" alt>
         </div>
       </div>
       <!-- 如果需要分页器 -->
       <div class="swiper-pagination"></div>
 
-      <!-- 如果需要导航按钮 --> 
+      <!-- 如果需要导航按钮 -->
       <div class="swiper-button-prev"></div>
       <div class="swiper-button-next"></div>
     </div>
@@ -52,6 +52,7 @@ export default {
     });
   },
   updated() {
+    let _this = this;
     var swiper = new Swiper(".swiper-container", {
       slidesPerView: 1,
       spaceBetween: 30,
@@ -67,12 +68,21 @@ export default {
       navigation: {
         nextEl: ".swiper-button-next",
         prevEl: ".swiper-button-prev"
+      },
+      on: {
+        click: function() {
+          const realIndex = this.realIndex;
+          _this.toDetails(realIndex);
+        }
       }
     });
   },
   methods: {
     toDetails(id) {
-      console.log(id)
+      this.$router.push({
+        path: `/exhibitionDetails`,
+        query: { id: this.listImg[id].id }
+      });
     }
   },
   components: {

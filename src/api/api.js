@@ -63,7 +63,9 @@ export function enrollExhibition(data) {
     return service({
         url: "/enrollExhibition",
         method: "post",
-        data: data
+        data: {
+            enrolls: data
+        }
     });
 }
 // 查询所有展会

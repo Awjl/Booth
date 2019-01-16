@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import { addUserInfo } from "@/api/api.js";
+import { addUserInfo, ERR_OK } from "@/api/api.js";
 
 export default {
   name: "sign",
@@ -96,17 +96,22 @@ export default {
   },
   methods: {
     _addUserInfo() {
-      console.log(this.formData);
       addUserInfo(this.formData).then(res => {
-        if (res.status === ERR_OK) {
-          console.log("保存成功");
+        console.log(res.data)
+        if (res.data.code === 0) {
+          this.$router.push({
+            path: `/home`
+          });
         }
       });
     },
-     preservation() {
+    preservation() {
+      this.$store.commit("SET_logoPic", this.uplogoImg);
+      this.$store.commit("SET_introductionPic", this.upintroduceImg);
+
       this.formData.append("id", this.$store.state.user.UserID);
       this.formData.append("name", this.$store.state.userData.name);
-      this.formData.append("nameEng", this.$store.state.userData.nameEng);
+      this.formData.append("engName", this.$store.state.userData.nameEng);
       this.formData.append("member", this.$store.state.userData.member);
       this.formData.append("address", this.$store.state.userData.address);
       this.formData.append("linkman", this.$store.state.userData.linkman);
@@ -124,29 +129,46 @@ export default {
         "twoIndustry",
         this.$store.state.userData.twoIndustry
       );
-      this.formData.append("competitor", this.$store.state.userData.competitor);
-      this.formData.append("keywords", this.$store.state.userData.keywords);
+      this.formData.append(
+        "competitor",
+        JSON.stringify(this.$store.state.userData.competitor)
+      );
+      this.formData.append(
+        "keywords",
+        JSON.stringify(this.$store.state.userData.keywords)
+      );
       this.formData.append(
         "mainProcess",
-        this.$store.state.userData.mainProcess
+        JSON.stringify(this.$store.state.userData.mainProcess)
       );
       this.formData.append(
         "facilitator",
-        this.$store.state.userData.facilitator
+        JSON.stringify(this.$store.state.userData.facilitator)
       );
       this.formData.append("summary", this.$store.state.userData.summary);
       this.formData.append(
         "exhibitions",
-        this.$store.state.userData.exhibitions
+        JSON.stringify(this.$store.state.userData.exhibitions)
       );
-      this.formData.append("customer", this.$store.state.userData.customer);
-      this.formData.append("imgList", this.$store.state.userData.imgList);
+      this.formData.append(
+        "customer",
+        JSON.stringify(this.$store.state.userData.customer)
+      );
+      for (let i = 0; i <= this.$store.state.userData.imgList.length; i++) {
+        this.formData.append(
+          "companyPics",
+          this.$store.state.userData.imgList[i]
+        );
+      }
       this.formData.append("logoPic", this.$store.state.userData.logoPic);
       this.formData.append(
         "introductionPic",
         this.$store.state.userData.introductionPic
       );
-      this.formData.append("supplier", this.$store.state.userData.supplier);
+      this.formData.append(
+        "supplier",
+        JSON.stringify(this.$store.state.userData.supplier)
+      );
       this._addUserInfo();
     },
     toNext() {
@@ -159,7 +181,7 @@ export default {
     },
     One(file) {
       if (!file) {
-        return
+        return;
       }
       const _this = this;
       const reader = new FileReader();
@@ -170,7 +192,7 @@ export default {
     },
     Two(file) {
       if (!file) {
-        return
+        return;
       }
       const _this = this;
       const reader = new FileReader();
@@ -224,6 +246,11 @@ export default {
     toBack() {
       this.$router.push({
         path: `/infoThree`
+      });
+    },
+    tohome() {
+      this.$router.push({
+        path: `/home`
       });
     }
   }

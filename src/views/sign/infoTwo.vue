@@ -238,7 +238,7 @@
 </template>
 
 <script>
-import { getIndustry, searchCompany,addUserInfo, ERR_OK } from "@/api/api.js";
+import { getIndustry, searchCompany, addUserInfo, ERR_OK } from "@/api/api.js";
 import { setOne, setTwo } from "@/utils/auth.js";
 import { mapGetters } from "vuex";
 
@@ -266,13 +266,13 @@ export default {
       keywordsArr: [],
       supplierArr: [],
       mainProcess: [],
-      customerArr: [ ],
+      customerArr: [],
       facilitatorArr: [],
       formData: new FormData(),
       userData: {
         oneIndustry: "", // 一级
         twoIndustry: "", // 二级
-        summary: "", // 简介
+        summary: "" // 简介
       }
     };
   },
@@ -281,13 +281,13 @@ export default {
     this.userData.oneIndustry = this.$store.state.userData.oneIndustry;
     this.userData.twoIndustry = this.$store.state.userData.twoIndustry;
     this.userData.summary = this.$store.state.userData.summary;
-    this.exhibitionArr = this.$store.state.userData.exhibitions
-    this.competitorArr = this.$store.state.userData.competitor
-    this.keywordsArr = this.$store.state.userData.keywords
-    this.supplierArr = this.$store.state.userData.supplier
-    this.mainProcess = this.$store.state.userData.mainProcess
-    this.customerArr = this.$store.state.userData.customer
-    this.facilitatorArr = this.$store.state.userData.facilitator
+    this.exhibitionArr = this.$store.state.userData.exhibitions;
+    this.competitorArr = this.$store.state.userData.competitor;
+    this.keywordsArr = this.$store.state.userData.keywords;
+    this.supplierArr = this.$store.state.userData.supplier;
+    this.mainProcess = this.$store.state.userData.mainProcess;
+    this.customerArr = this.$store.state.userData.customer;
+    this.facilitatorArr = this.$store.state.userData.facilitator;
     getIndustry().then(res => {
       if (res.status === ERR_OK) {
         this.industryData = res.data.data;
@@ -298,17 +298,32 @@ export default {
   },
   methods: {
     _addUserInfo() {
-      console.log(this.formData);
       addUserInfo(this.formData).then(res => {
-        if (res.status === ERR_OK) {
-          console.log("保存成功");
+        if (res.state === ERR_OK) {
+          if (res.data.code === 0) {
+            this.$router.push({
+              path: `/home`
+            });
+          }
         }
       });
     },
-     preservation() {
+    preservation() {
+      this.$store.commit("SET_oneIndustryname", this.name);
+      this.$store.commit("SET_oneIndustry", this.userData.oneIndustry);
+      this.$store.commit("SET_twoIndustry", this.userData.twoIndustry);
+      this.$store.commit("SET_competitor", this.competitorArr);
+      this.$store.commit("SET_keywords", this.keywordsArr);
+      this.$store.commit("SET_supplier", this.supplierArr);
+      this.$store.commit("SET_mainProcess", this.mainProcess);
+      this.$store.commit("SET_facilitator", this.facilitatorArr);
+      this.$store.commit("SET_summary", this.userData.summary);
+      this.$store.commit("SET_exhibitions", this.exhibitionArr);
+      this.$store.commit("SET_customer", this.customerArr);
+
       this.formData.append("id", this.$store.state.user.UserID);
       this.formData.append("name", this.$store.state.userData.name);
-      this.formData.append("nameEng", this.$store.state.userData.nameEng);
+      this.formData.append("engName", this.$store.state.userData.nameEng);
       this.formData.append("member", this.$store.state.userData.member);
       this.formData.append("address", this.$store.state.userData.address);
       this.formData.append("linkman", this.$store.state.userData.linkman);
@@ -326,29 +341,46 @@ export default {
         "twoIndustry",
         this.$store.state.userData.twoIndustry
       );
-      this.formData.append("competitor", this.$store.state.userData.competitor);
-      this.formData.append("keywords", this.$store.state.userData.keywords);
+      this.formData.append(
+        "competitor",
+        JSON.stringify(this.$store.state.userData.competitor)
+      );
+      this.formData.append(
+        "keywords",
+        JSON.stringify(this.$store.state.userData.keywords)
+      );
       this.formData.append(
         "mainProcess",
-        this.$store.state.userData.mainProcess
+        JSON.stringify(this.$store.state.userData.mainProcess)
       );
       this.formData.append(
         "facilitator",
-        this.$store.state.userData.facilitator
+        JSON.stringify(this.$store.state.userData.facilitator)
       );
       this.formData.append("summary", this.$store.state.userData.summary);
       this.formData.append(
         "exhibitions",
-        this.$store.state.userData.exhibitions
+        JSON.stringify(this.$store.state.userData.exhibitions)
       );
-      this.formData.append("customer", this.$store.state.userData.customer);
-      this.formData.append("imgList", this.$store.state.userData.imgList);
+      this.formData.append(
+        "customer",
+        JSON.stringify(this.$store.state.userData.customer)
+      );
+      for (let i = 0; i <= this.$store.state.userData.imgList.length; i++) {
+        this.formData.append(
+          "companyPics",
+          this.$store.state.userData.imgList[i]
+        );
+      }
       this.formData.append("logoPic", this.$store.state.userData.logoPic);
       this.formData.append(
         "introductionPic",
         this.$store.state.userData.introductionPic
       );
-      this.formData.append("supplier", this.$store.state.userData.supplier);
+      this.formData.append(
+        "supplier",
+        JSON.stringify(this.$store.state.userData.supplier)
+      );
       this._addUserInfo();
     },
     _searchCompany(center) {
@@ -532,10 +564,15 @@ export default {
         path: `/infoThree`
       });
     },
- 
+
     toBack() {
       this.$router.push({
         path: `/infoOne`
+      });
+    },
+    tohome() {
+      this.$router.push({
+        path: `/home`
       });
     }
   }

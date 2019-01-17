@@ -299,12 +299,10 @@ export default {
   methods: {
     _addUserInfo() {
       addUserInfo(this.formData).then(res => {
-        if (res.state === ERR_OK) {
-          if (res.data.code === 0) {
-            this.$router.push({
-              path: `/home`
-            });
-          }
+       if (res.data.code === 0) {
+          this.$router.push({
+            path: `/home`
+          });
         }
       });
     },

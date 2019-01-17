@@ -125,7 +125,7 @@ export default {
   created() {
     // console.log(this.UserID);
     // console.log(getUser());
-    setUser("17");
+    // setUser("17");
     this.userData = this.$store.state.userData;
     console.log(this.$store.state.user.UserID);
   },

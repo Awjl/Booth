@@ -312,7 +312,7 @@ export function getCompanyInfo(data) {
         }
     });
 }
-// 获取资料百分比 GET /user/getInfoPercent
+// 获取资料百分比 GET /user/getInfoPercent 1
 export function getInfoPercent(id) {
     return service({
         url: `/user/getInfoPercent`,

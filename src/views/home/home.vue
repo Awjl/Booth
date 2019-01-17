@@ -33,7 +33,8 @@ import "swiper/dist/css/swiper.min.css";
 import HomeLogin from "@/components/homeLogin/homeLogin.vue";
 import HomeList from "@/components/homeList/homeList.vue";
 import HomeRight from "@/components/homeRight/homeRight.vue";
-import { getIndexBanner, ERR_OK } from "@/api/api.js";
+import { getIndexBanner, getInfoPercent, ERR_OK } from "@/api/api.js";
+import { getUser } from "@/utils/auth.js";
 
 export default {
   name: "home",
@@ -49,6 +50,12 @@ export default {
         this.listImg = res.data.data;
       }
     });
+    getInfoPercent("33").then(res => {
+      if (res.status === ERR_OK) {
+        console.log("获取百分比----------------");
+        console.log(res.data.data)
+      }
+    }) 
   },
   updated() {
     let _this = this;

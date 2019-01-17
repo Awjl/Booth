@@ -6,7 +6,7 @@ const service = axios.create({
     baseURL: "./api", // api的base_url本地
     // baseURL: "http://47.101.165.134/booth", // api的base_url 服务器
 });
-// 获取行业列表
+// 获取行业列表   1
 export function getIndustry(Class) {
     return service({
         url: "/industry/getIndustry",
@@ -16,7 +16,7 @@ export function getIndustry(Class) {
         }
     });
 }
-// 根据行业查询广告
+// 根据行业查询广告  1
 export function getAdvert(id) {
     return service({
         url: "/advert/getAdvert",
@@ -59,7 +59,7 @@ export function getHistoryRecord(id) {
         }
     });
 }
-// 报名参加
+// 报名参加 1
 export function enrollExhibition(data) {
     return service({
         url: "/enrollExhibition",
@@ -70,14 +70,14 @@ export function enrollExhibition(data) {
         data: data
     });
 }
-// 查询所有展会
+// 查询所有展会 1
 export function getAllExhibitions() {
     return service({
         url: "/getAllExhibitions",
         method: "get"
     });
 }
-// 获取所有参展商
+// 获取所有参展商 
 export function getAllExhibitiors(id) {
     return service({
         url: "/getAllExhibitiors",
@@ -87,7 +87,7 @@ export function getAllExhibitiors(id) {
         }
     });
 }
-// 获取某个展会详情
+// 获取某个展会详情 1
 export function getExhibitionInfoById(id) {
     return service({
         url: "/getExhibitionInfoById",
@@ -97,7 +97,7 @@ export function getExhibitionInfoById(id) {
         }
     });
 }
-// 关注
+// 关注 1
 export function cancelFocus(data) {
     return service({
         url: "/cancelFocus",
@@ -105,7 +105,7 @@ export function cancelFocus(data) {
         data: data
     });
 }
-// 取消关注
+// 取消关注 1
 export function focus(data) {
     return service({
         url: "/focus",
@@ -123,14 +123,14 @@ export function getCompanyByTheSameExhibition(id) {
         }
     });
 }
-// 获查看首页推荐广告banner
+// 获查看首页推荐广告banner 1
 export function getIndexBanner() {
     return service({
         url: "/index/getIndexBanner",
         method: "get"
     });
 }
-// 查看首页推荐公司
+// 查看首页推荐公司 1
 export function getRecommendCompany(data) {
     return service({
         url: "/index/getRecommendCompany",
@@ -141,7 +141,7 @@ export function getRecommendCompany(data) {
         }
     });
 }
-// 可能感兴趣的公司
+// 可能感兴趣的公司 1
 export function mayBeInterestedCompany(data) {
     return service({
         url: "/index/mayBeInterestedCompany",
@@ -152,7 +152,7 @@ export function mayBeInterestedCompany(data) {
         }
     });
 }
-// 点击链接激活用户
+// 点击链接激活用户 1
 export function activate(data) {
     return service({
         url: `/activate/${data}`,
@@ -168,7 +168,7 @@ export function changePassword(data) {
         data: data
     });
 }
-// 邮箱验证
+// 邮箱验证 1
 export function checkEmail(id) {
     return service({
         url: `/checkEmail`,
@@ -178,14 +178,14 @@ export function checkEmail(id) {
         }
     });
 }
-// 判断是否激活
+// 判断是否激活 1
 export function isActivate(id) {
     return service({
         url: `/isActivate/${id}`,
         method: "get"
     });
 }
-// 用户登录
+// 用户登录 1
 export function login(data) {
     return service({
         url: `/login`,
@@ -193,7 +193,7 @@ export function login(data) {
         data: data
     });
 }
-// 用户注册
+// 用户注册 1
 export function register(data) {
     return service({
         url: `/register`,
@@ -201,7 +201,7 @@ export function register(data) {
         data: data
     });
 }
-// 发送邮箱验证码
+// 发送邮箱验证码 1
 export function sendCode(username) {
     return service({
         url: `/sendCode`,
@@ -221,7 +221,7 @@ export function getAllMessage(id) {
         }
     });
 }
-// 设置已读
+// 设置已读 
 export function setMessageRead(id) {
     return service({
         url: `/setMessageRead`,
@@ -269,7 +269,7 @@ export function search(content) {
         }
     });
 }
-// 搜索工商
+// 搜索工商 1
 export function searchCompany(content) {
     return service({
         url: `/search/searchCompany`,
@@ -290,7 +290,7 @@ export function searchExhibitior(data) {
         }
     });
 }
-// 保存用户信息
+// 保存用户信息 1
 export function addUserInfo(data) {
     return service({
         url: `/user/addUserInfo`,
@@ -329,6 +329,27 @@ export function needDesign(id) {
         method: "get",
         params: {
             id: id
+        }
+    });
+}
+// 判断 公司名称是否注册
+export function matchCompanyName(name) {
+    return service({
+        url: `/user/matchCompanyName`,
+        method: "get",
+        params: {
+            name: name
+        }
+    });
+}
+// 匹配验证码
+export function matchCode(data) {
+    return service({
+        url: `/matchCode`,
+        method: "get",
+        params: {
+            username: data.username,
+            code: data.code
         }
     });
 }

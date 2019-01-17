@@ -45,6 +45,7 @@ export default {
     };
   },
   created() {
+    setOne(1);
     this._getIndustry();
   },
   methods: {

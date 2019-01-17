@@ -1,6 +1,9 @@
 <template>
   <div class="homeRight">
-    <img :src="`http://47.101.165.134${dataAll.areaA.url}`" alt=""/>
+    <img
+      :src="`http://47.101.165.134${dataAll.areaA.url}`"
+      alt=""
+    />
     <div class="homeTitle">
       <img
         src="../../assets/images/home/logo.png"
@@ -11,7 +14,10 @@
         alt=""
       />
     </div>
-    <img :src="`http://47.101.165.134${dataAll.areaB.url}`" alt=""/>
+    <img
+      :src="`http://47.101.165.134${dataAll.areaB.url}`"
+      alt=""
+    />
   </div>
 </template>
 
@@ -30,13 +36,25 @@ export default {
     }
   },
   created() {
-    getAdvert(getTwo()).then((res) => {
-      console.log("获取行业广告---------------------------")
-      if (res.status === ERR_OK) {
-        console.log(res.data.data)
-        this.dataAll = res.data.data
-      }
-    })
+    console.log(getTwo(),getOne())
+    if (!getTwo()) {
+      getAdvert(getOne()).then((res) => {
+        console.log("获取行业广告---------------------------")
+        if (res.status === ERR_OK) {
+          console.log(res.data.data)
+          this.dataAll = res.data.data
+        }
+      })
+    } else {
+      getAdvert(getTwo()).then((res) => {
+        console.log("获取行业广告---------------------------")
+        if (res.status === ERR_OK) {
+          console.log(res.data.data)
+          this.dataAll = res.data.data
+        }
+      })
+    }
+
   }
 };
 </script>

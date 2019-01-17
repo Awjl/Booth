@@ -46,7 +46,6 @@ export default {
     getIndexBanner().then(res => {
       if (res.status === ERR_OK) {
         console.log("获取banner----------------");
-        console.log(res.data.data);
         this.listImg = res.data.data;
       }
     });

@@ -119,6 +119,8 @@
 
 <script>
 import AboutList from "@/components/aboutList/aboutList.vue";
+import { getRecommendCompany, focus, cancelFocus, ERR_OK } from "@/api/api.js";
+
 export default {
   name: "core",
   components: {

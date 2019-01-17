@@ -2,8 +2,14 @@
   <div class="signDetails">
     <div class="signBgTwo">
       <div class="signBgInfoLog">
-        <div class="infoLog" @click="tohome">
-          <img src="../../assets/images/home/logo.png" alt>
+        <div
+          class="infoLog"
+          @click="tohome"
+        >
+          <img
+            src="../../assets/images/home/logo.png"
+            alt
+          >
         </div>
         <div class="infoLog">
           <p>入驻booth</p>
@@ -22,11 +28,17 @@
           <div class="signBgMainList">
             <div class="signBgMainRightItem">
               <p>企业中文全称</p>
-              <input type="text" v-model="userData.name">
+              <input
+                type="text"
+                v-model="userData.name"
+              >
             </div>
             <div class="signBgMainRightItem">
               <p>企业英文全称</p>
-              <input type="text" v-model="userData.nameEng">
+              <input
+                type="text"
+                v-model="userData.nameEng"
+              >
             </div>
             <div class="signBgMainRightItem">
               <p>人数规模（勾选）</p>
@@ -40,11 +52,17 @@
             </div>
             <div class="signBgMainRightItem">
               <p>企业所在地</p>
-              <input type="text" v-model="userData.address">
+              <input
+                type="text"
+                v-model="userData.address"
+              >
             </div>
             <div class="signBgMainRightItem">
               <p>联系人</p>
-              <input type="text" v-model="userData.linkman">
+              <input
+                type="text"
+                v-model="userData.linkman"
+              >
             </div>
             <div class="signBgMainRightItem">
               <p>联系人职位（勾选）</p>
@@ -56,11 +74,17 @@
             </div>
             <div class="signBgMainRightItem">
               <p>联系人手机号码</p>
-              <input type="text" v-model="userData.mobile">
+              <input
+                type="text"
+                v-model="userData.mobile"
+              >
             </div>
             <div class="signBgMainRightItem">
               <p>联系人邮件</p>
-              <input type="text" v-model="userData.linkmanEmail">
+              <input
+                type="text"
+                v-model="userData.linkmanEmail"
+              >
             </div>
           </div>
           <div class="signBgMainFoot">
@@ -75,7 +99,7 @@
 
 <script>
 import { addUserInfo, ERR_OK } from "@/api/api.js";
-import { getUser } from "@/utils/auth.js";
+import { getUser, setUser } from "@/utils/auth.js";
 import { mapGetters } from "vuex";
 
 export default {
@@ -101,6 +125,7 @@ export default {
   created() {
     // console.log(this.UserID);
     // console.log(getUser());
+    setUser("17");
     this.userData = this.$store.state.userData;
     console.log(this.$store.state.user.UserID);
   },

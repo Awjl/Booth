@@ -19,7 +19,7 @@
           <div class="signBgMainList">信息核对</div>
         </div>
         <div class="signBgMainRightTwo">
-          <div class="signBgMainList">
+          <div class="signBgMainListRight">
             <div class="signBgMainTRightItem" @click.stop="showBoxList">
               <p>行业类型（勾选）</p>
               <input type="text" disabled="true" v-model="name">
@@ -642,14 +642,13 @@ export default {
         width: calc(100% - 200px);
         padding: 0 80px;
         box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
         overflow: auto;
-        .signBgMainList {
+        .signBgMainListRight {
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
           align-items: center;
+          overflow: hidden;
         }
         .signExhibition {
           padding: 0 20px;

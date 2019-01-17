@@ -64,7 +64,6 @@ export default {
     };
   },
   created() {
-    setUser("17");
     console.log(getUser());
   },
   methods: {
@@ -83,7 +82,7 @@ export default {
           console.log("注册成功");
           console.log(res.data);
           this.userID = res.data.data;
-          // setUser(this.userID)
+          setUser(this.userID)
         }
       });
     },

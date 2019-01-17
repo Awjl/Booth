@@ -100,7 +100,7 @@
         </div>
       </div>
     </div>
-    <div class="UpproductBox">
+    <div class="UpproductBox" v-if="showUp">
       <UpProduct></UpProduct>
     </div>
   </div>
@@ -113,6 +113,7 @@ export default {
   name: "sign",
   data() {
     return {
+      showUp: false,
       logoImg: "",
       uplogoImg: "",
       introduceImg: "",

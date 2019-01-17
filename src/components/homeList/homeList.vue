@@ -1,26 +1,41 @@
 <template>
   <div class="homeList">
-    <div class="homleListItem" v-for="(item, index) in dataList" :key="index">
+    <div
+      class="homleListItem"
+      v-for="(item, index) in dataList"
+      :key="index"
+    >
       <div class="homeListHead">
         <div class="homeListImg">
           <div><img
-              src="../../assets/images/home/head2.png"
+              :src="`http://47.101.165.134${item.user.logoUrl}`"
               alt=""
             /></div>
-          <div class="follow" v-if="item.isConcerned === 2">+ 关注</div>
-          <div class="follow" v-if="item.isConcerned === 1">+ 已关注</div>
+          <div
+            class="follow"
+            v-if="item.isConcerned === 2"
+            @click="followId(item.user.id)"
+          >+ 关注</div>
+          <div
+            class="follow"
+            v-if="item.isConcerned === 1"
+            @click="cancelfollowId(item.user.id)"
+          >+ 已关注</div>
         </div>
         <div class="homeListTitle">
           <div class="name">{{item.user.name}}</div>
-          <div class="nameEN">Sichuan，Chengdu {{item.user.fansNumber}}关注者</div>
+          <div class="nameEN">{{item.user.fansNumber}}关注者</div>
           <p class="industry">{{item.user.industryName}}</p>
-          <div class="exhibition">
+          <div
+            class="exhibition"
+            v-if="item.participation !== null"
+          >
             <div class="exhibitionItem">
               <div class="exhibitionCan">
                 <span>已参与</span>
                 <div class="exhibitionName">
-                  {{item.participation.titleEng}} <br />
-                  {{item.participation.title}}
+                  {{item.participation.nameEng}} <br />
+                  {{item.participation.name}}
                 </div>
               </div>
               <div class="exhibitionTime">
@@ -41,7 +56,7 @@
       <div class="moveBtn">更多</div>
       <div class="homeItemImg">
         <img
-          src="../../assets/images/home/item1.png"
+          :src="`http://47.101.165.134${item.user.introductionUrl}`"
           alt=""
         />
       </div>
@@ -50,41 +65,32 @@
 </template>
 
 <script>
-import { getRecommendCompany, ERR_OK } from "@/api/api.js";
-import { getOne, getTwo } from "@/utils/auth.js";
+import { getRecommendCompany, focus, cancelFocus, ERR_OK } from "@/api/api.js";
+import { getOne, getTwo, getUser } from "@/utils/auth.js";
 
 export default {
   name: "homeList",
   data() {
     return {
-      upList: {
-        secondIndustryId: getTwo(),
-        id: '1'
+      followData: {
+        userId: "",
+        concernedId: ""
       },
-      dataList: [
-        {
-          isConcerned: 1, //  1关注，2没关注
-          participation: {
-            date: "2018-08-01至09-01",
-            id: 0,
-            title: "探索家——未来生活大展",
-            titleEng: "HOUSE VISION 2018 BEIJING EXHIBITION",
-          },
-          user: {
-            id: 1,
-            name: '基准方中建筑设计有限公司',
-            logoUrl: '',
-            fansNumber: '856',
-            industryName: '建筑设计行业',
-            summary: "11月30日下午，由巴适成都联合报花探店、成都生活君、成都那些事儿、触摸成都等成都生活方式类新媒体账号举办的“传媒新势力·2018成都UP榜”在蔚来中心拉开序幕。会上发布了2018年成都UP榜单，基准方中荣获“成都UP榜",
-            introductionUrl:''
-          }
-        }
-      ]
+      upList: {
+        secondIndustryId: "",
+        id: "",
+      },
+      dataList: []
     };
   },
   created() {
-    this._getRecommendCompany()
+    if (getUser()) {
+      this.upList.secondIndustryId = getTwo()
+      this.upList.id = getUser()
+      this._getRecommendCompany()
+    } else {
+      this.upList.secondIndustryId = getOne()
+    }
   },
   methods: {
     _getRecommendCompany() {
@@ -92,9 +98,37 @@ export default {
         if (res.status === ERR_OK) {
           console.log("查看公司首页-------------------")
           console.log(res.data)
-          // this.dataList = res.data.data
+          this.dataList = res.data.data
         }
       })
+    },
+    _focus() {
+      focus(this.followData).then((res) => {
+        if (res.status === ERR_OK) {
+          this._getRecommendCompany()
+        }
+      })
+    },
+    _cancelFocus() {
+      cancelFocus(this.followData).then((res) => {
+        if (res.status === ERR_OK) {
+          this._getRecommendCompany()
+        }
+      })
+    },
+    followId(id) {
+      if (getUser()) {
+        this.followData.userId = getUser()
+        this.followData.concernedId = id
+        this._focus()
+      }
+    },
+    cancelfollowId(id) {
+      if (getUser()) {
+        this.followData.userId = getUser()
+        this.followData.concernedId = id
+        this._cancelFocus()
+      }
     }
   }
 };
@@ -108,6 +142,7 @@ export default {
   box-sizing: border-box;
   .homleListItem {
     width: 100%;
+    margin-bottom: 60px;
     .homeListHead {
       display: flex;
       justify-content: space-between;

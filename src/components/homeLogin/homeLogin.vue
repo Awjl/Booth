@@ -3,9 +3,15 @@
     <div class="LoginMen">
       <div class="LoginItem">
         <div class="sign">
-          <img src="../../assets/images/home/signUp.png" alt />
+          <img
+            src="../../assets/images/home/signUp.png"
+            alt
+          />
           <div class="signIcon">
-            <img src="../../assets/images/icon/man.png" alt />
+            <img
+              src="../../assets/images/icon/man.png"
+              alt
+            />
           </div>
         </div>
         <div class="signBtn">加入booth</div>
@@ -17,31 +23,22 @@
           <span>你可能感兴趣的</span><span>了解更多</span>
         </div>
         <div class="InterestList">
-          <div class="enterpriseItem">
+          <div
+            class="enterpriseItem"
+            v-for="(item, index) in dataList"
+            :key="index"
+          >
             <div class="enterpriseItemLeft">
               <div class="enterpriseItemHead">
-                <img src="../../assets/images/home/TSNHCG_1_.png" alt="" />
+                <img
+                  :src="`http://47.101.165.134${item.logoUrl}`"
+                  alt=""
+                />
               </div>
               <div class="enterpriseItemLeftTitle">
-                <p>altiuma</p>
-                <p>Roubaix 5,246 位关注者</p>
-                <p>建筑行业</p>
-              </div>
-            </div>
-            <div class="enterpriseItemRight">
-              <div class="InterestListshare">分享</div>
-              <div class="InterestListSee">查看产品手册</div>
-            </div>
-          </div>
-          <div class="enterpriseItem">
-            <div class="enterpriseItemLeft">
-              <div class="enterpriseItemHead">
-                <img src="../../assets/images/home/TSNHCG_1_.png" alt="" />
-              </div>
-              <div class="enterpriseItemLeftTitle">
-                <p>altiuma</p>
-                <p>Roubaix 5,246 位关注者</p>
-                <p>建筑行业</p>
+                <p>{{item.name}}</p>
+                <p>{{item.fansNumber}}位关注者</p>
+                <p>{{item.industryName}}</p>
               </div>
             </div>
             <div class="enterpriseItemRight">
@@ -66,7 +63,10 @@
           <div class="enterpriseItem">
             <div class="enterpriseItemLeft">
               <div class="enterpriseItemHead">
-                <img src="../../assets/images/home/TSNHCG_1_.png" alt="" />
+                <img
+                  src="../../assets/images/home/TSNHCG_1_.png"
+                  alt=""
+                />
               </div>
               <div class="enterpriseItemLeftTitle">
                 <p>altiuma</p>
@@ -83,7 +83,10 @@
           <div class="enterpriseItem">
             <div class="enterpriseItemLeft">
               <div class="enterpriseItemHead">
-                <img src="../../assets/images/home/TSNHCG_1_.png" alt="" />
+                <img
+                  src="../../assets/images/home/TSNHCG_1_.png"
+                  alt=""
+                />
               </div>
               <div class="enterpriseItemLeftTitle">
                 <p>altiuma</p>
@@ -113,7 +116,10 @@
           <div class="enterpriseItem">
             <div class="enterpriseItemLeft">
               <div class="enterpriseItemHead">
-                <img src="../../assets/images/home/TSNHCG_1_.png" alt="" />
+                <img
+                  src="../../assets/images/home/TSNHCG_1_.png"
+                  alt=""
+                />
               </div>
               <div class="enterpriseItemLeftTitle">
                 <p>altiuma</p>
@@ -130,7 +136,10 @@
           <div class="enterpriseItem">
             <div class="enterpriseItemLeft">
               <div class="enterpriseItemHead">
-                <img src="../../assets/images/home/TSNHCG_1_.png" alt="" />
+                <img
+                  src="../../assets/images/home/TSNHCG_1_.png"
+                  alt=""
+                />
               </div>
               <div class="enterpriseItemLeftTitle">
                 <p>altiuma</p>
@@ -151,8 +160,40 @@
 </template>
 
 <script>
+import { mayBeInterestedCompany, ERR_OK } from "@/api/api.js";
+import { getOne, getTwo, getUser } from "@/utils/auth.js";
+
 export default {
-  name: "homeLogin"
+  name: "homeLogin",
+  data() {
+    return {
+      userData: {
+        secondIndustryId: "",
+        id: ""
+      },
+      dataList: []
+    }
+  },
+  created() {
+    if (getUser()) {
+      this.userData.secondIndustryId = getTwo()
+      this.userData.id = getUser()
+      this._mayBeInterestedCompany()
+    } else {
+      this.userData.secondIndustryId = getOne()
+    }
+  },
+  methods: {
+    _mayBeInterestedCompany() {
+      mayBeInterestedCompany(this.userData).then(res => {
+        if (res.status === ERR_OK) {
+          console.log("可能感兴趣-------------------------")
+          this.dataList = res.data.data
+          console.log(this.dataList)
+        }
+      })
+    }
+  }
 };
 </script>
 
@@ -246,6 +287,12 @@ export default {
         .enterpriseItemLeft {
           display: flex;
           height: 100%;
+          .enterpriseItemHead {
+            img {
+              width: 66px;
+              height: 66px;
+            }
+          }
           .enterpriseItemLeftTitle {
             height: 100%;
             margin-left: 10px;

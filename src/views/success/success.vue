@@ -13,13 +13,21 @@ export default {
   data() {
     return {
       success: "",
+      timer: '',
     };
   },
   created() {
+    console.log(window.location.href.split("=")[1])
     activate(window.location.href.split("=")[1]).then((res) => {
       if (res.status === ERR_OK) {
         console.log(res.data.data)
-        // this.success = res.data
+        this.success = res.data
+        let _this = this
+        this.timer = setTimeout(() => {
+          _this.$router.push({
+            path: `/infoOne`
+          })
+        }, 5000);
       }
     })
   }

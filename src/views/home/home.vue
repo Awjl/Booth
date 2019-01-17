@@ -3,7 +3,7 @@
     <div class="swiper-container">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(item, index) in listImg" :key="index">
-          <img :src="`http://47.101.165.134${item.bannerUrl}`" alt>
+          <img :src="`http://47.101.165.134${item.bannerUrl.split(',')[0]}`" alt>
         </div>
       </div>
       <!-- 如果需要分页器 -->

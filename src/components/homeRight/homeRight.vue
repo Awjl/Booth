@@ -1,17 +1,43 @@
 <template>
   <div class="homeRight">
-    <img src="../../assets/images/home/banner1.png" alt="" />
+    <img :src="`http://47.101.165.134${dataAll.areaA.url}`" alt=""/>
     <div class="homeTitle">
-      <img src="../../assets/images/home/logo.png" alt="" />
-      <img src="../../assets/images/home/logoText.png" alt="" />
+      <img
+        src="../../assets/images/home/logo.png"
+        alt=""
+      />
+      <img
+        src="../../assets/images/home/logoText.png"
+        alt=""
+      />
     </div>
-    <img src="../../assets/images/home/banner2.png" alt="" />
+    <img :src="`http://47.101.165.134${dataAll.areaB.url}`" alt=""/>
   </div>
 </template>
 
 <script>
+import { getAdvert, ERR_OK } from "@/api/api.js";
+import { getOne, getTwo } from "@/utils/auth.js";
+
 export default {
-  name: "homeRight"
+  name: "homeRight",
+  data() {
+    return {
+      dataAll: {
+        areaA: { id: 2, url: "" },
+        areaB: { id: 2, url: "" }
+      }
+    }
+  },
+  created() {
+    getAdvert(getTwo()).then((res) => {
+      console.log("获取行业广告---------------------------")
+      if (res.status === ERR_OK) {
+        console.log(res.data.data)
+        this.dataAll = res.data.data
+      }
+    })
+  }
 };
 </script>
 

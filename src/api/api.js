@@ -1,9 +1,10 @@
 import axios from "axios";
 export const ERR_OK = 200;
-
+// import qs from 'qs'
 
 const service = axios.create({
-    baseURL: "./api", // api的base_url
+    baseURL: "./api", // api的base_url本地
+    // baseURL: "http://47.101.165.134/booth", // api的base_url 服务器
 });
 // 获取行业列表
 export function getIndustry(Class) {
@@ -63,9 +64,10 @@ export function enrollExhibition(data) {
     return service({
         url: "/enrollExhibition",
         method: "post",
-        data: {
-            enrolls: data
-        }
+        headers: {
+            "content-type": "application/json;charset=UTF-8",
+        },
+        data: data
     });
 }
 // 查询所有展会

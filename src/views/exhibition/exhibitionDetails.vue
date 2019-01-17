@@ -4,11 +4,11 @@
     <div class="signUp" @click="showBox">参加报名</div>
     <div class="exhibitionTitle">
       <div class="exhibitionLeft">
-        <p>{{detailsData.titleEng}}</p>
-        <p>{{detailsData.title}}</p>
-        <div>主题：NEW GRAVITY</div>
+        <p>{{detailsData.nameEng}}</p>
+        <p>{{detailsData.name}}</p>
+        <div>主题：{{detailsData.title}}</div>
         <div>时间：{{detailsData.date}}</div>
-        <div>地点：北京・国家体育场(鸟巢)南广场</div>
+        <div>地点：{{detailsData.location}}</div>
         <div>简述：{{detailsData.summary}}</div>
       </div>
       <div class="exhibitionRight">
@@ -210,9 +210,11 @@ export default {
         mapUrl: "", //
         summary: "", //
         summaryPicture: "", //
-        title: "", ///
         titleEng: "", //
-        trafficUrl: "" //
+        trafficUrl: "", //,
+        nameEng: "",
+        name: "",
+        location: ""
       }
     };
   },

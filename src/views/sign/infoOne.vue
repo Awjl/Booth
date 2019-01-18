@@ -99,7 +99,7 @@
 
 <script>
 import { addUserInfo, ERR_OK } from "@/api/api.js";
-import { getUser, setUser } from "@/utils/auth.js";
+import { setUser } from "@/utils/auth.js";
 import { mapGetters } from "vuex";
 
 export default {
@@ -171,29 +171,23 @@ export default {
         this.$store.state.userData.twoIndustry
       );
       this.formData.append(
-        "competitor",
-        JSON.stringify(this.$store.state.userData.competitor)
+        "competitor", this.$store.state.userData.competitor
       );
       this.formData.append(
-        "keywords",
-        JSON.stringify(this.$store.state.userData.keywords)
+        "keywords", this.$store.state.userData.keywords
       );
       this.formData.append(
-        "mainProcess",
-        JSON.stringify(this.$store.state.userData.mainProcess)
+        "mainProcess", this.$store.state.userData.mainProcess
       );
       this.formData.append(
-        "facilitator",
-        JSON.stringify(this.$store.state.userData.facilitator)
+        "facilitator", this.$store.state.userData.facilitator
       );
       this.formData.append("summary", this.$store.state.userData.summary);
       this.formData.append(
-        "exhibitions",
-        JSON.stringify(this.$store.state.userData.exhibitions)
+        "exhibitions", this.$store.state.userData.exhibitions
       );
       this.formData.append(
-        "customer",
-        JSON.stringify(this.$store.state.userData.customer)
+        "customer", this.$store.state.userData.customer
       );
       for (let i = 0; i <= this.$store.state.userData.imgList.length; i++) {
         this.formData.append("companyPics", this.$store.state.userData.imgList[i]);
@@ -204,8 +198,7 @@ export default {
         this.$store.state.userData.introductionPic
       );
       this.formData.append(
-        "supplier",
-        JSON.stringify(this.$store.state.userData.supplier)
+        "supplier", this.$store.state.userData.supplier
       );
       this._addUserInfo();
     },

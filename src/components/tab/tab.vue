@@ -12,9 +12,10 @@
       <div @click="toExhibition">展会</div>
       <div @click="toEnterprise">企业</div>
       <div @click="toNews">消息</div>
-      <div @click="toSign">注册</div>
-      <div @click="ShowLogin">登陆</div>
-      <div class="HeadImg" @click="toCore"></div>
+      <div @click="toSign" v-if="!this.$store.state.user.UserID">注册</div>
+      <div @click="ShowLogin" v-if="!this.$store.state.user.UserID">登陆</div>
+      <div class="HeadImg" v-if="!this.$store.state.user.UserID"></div>
+      <div class="HeadImg" @click="toCore" v-if="this.$store.state.user.UserID"></div>
     </div>
   </div>
 </template>

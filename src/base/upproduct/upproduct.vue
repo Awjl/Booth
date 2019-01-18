@@ -2,12 +2,12 @@
   <div class="upproduct">
     <div class="upproductHead">
       <span>产品册上传</span>
-      <span>取消</span>
+      <span @click="hide">取消</span>
     </div>
     <div class="upproductList">
       <div class="upproductItem">
         <p>产品册标题</p>
-        <input type="text">
+        <input type="text" v-model="dataList.title">
       </div>
       <div class="upproductItem">
         <p>本地上传</p>
@@ -17,7 +17,7 @@
       </div>
       <div class="upproductItem">
         <p>简介（最多200字）</p>
-        <textarea></textarea>
+        <textarea v-model="dataList.summary"></textarea>
       </div>
       <div class="upproductItem">
         <p>添加标签（上限五个）</p>
@@ -37,7 +37,35 @@
 </template>
 
 <script>
-export default {};
+import { saveProduct, ERR_OK } from "@/api/api.js"
+export default {
+  data() {
+    return {
+      hideState: false,
+      fromData: new fromData,
+      dataList: {
+        userId: this.$store.state.user.UserID,
+        title: "",
+        summary: "",
+        label: "",
+        pdfFile: "",
+        coverPic: ""
+      }
+    }
+  },
+  methods: {
+    _saveProduct() {
+      saveProduct().then(res => {
+        if (res.data.code === 0) {
+          console.log("上传成功")
+        }
+      })
+    },
+    hide() {
+      this.$emit("clicehide", this.hideState);
+    }
+  }
+};
 </script>
 
 <style lang="scss">

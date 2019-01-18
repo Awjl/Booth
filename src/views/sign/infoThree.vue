@@ -1,4 +1,4 @@
-<template>
+res.data.data.<template>
   <div class="signDetails">
     <div class="signBgTwo">
       <div class="signBgInfoLog">
@@ -68,6 +68,7 @@
 
 <script>
 import { addUserInfo, ERR_OK } from "@/api/api.js";
+import { setUser } from "@/utils/auth.js";
 
 export default {
   name: "sign",
@@ -82,17 +83,7 @@ export default {
     };
   },
   created() {
-    console.log(this.$store.state.userData.imgList);
-    this.upImgList = this.$store.state.userData.imgList;
-    let _this = this;
-    this.$store.state.userData.imgList.forEach(function (e) {
-      // _this.imgList
-      const reader = new FileReader();
-      reader.readAsDataURL(e);
-      reader.onload = function (e) {
-        _this.imgList.push(e.target.result);
-      };
-    });
+    this.imgList = this.$store.state.userData.imgListUrl
   },
   methods: {
     _addUserInfo() {
@@ -107,6 +98,7 @@ export default {
     },
     preservation() {
       this.$store.commit("SET_imgList", this.upImgList);
+      this.$store.commit("SET_imgListUrl", this.imgList);
 
       this.formData.append("id", this.$store.state.user.UserID);
       this.formData.append("name", this.$store.state.userData.name);
@@ -129,35 +121,26 @@ export default {
         this.$store.state.userData.twoIndustry
       );
       this.formData.append(
-        "competitor",
-        JSON.stringify(this.$store.state.userData.competitor)
+        "competitor", this.$store.state.userData.competitor
       );
       this.formData.append(
-        "keywords",
-        JSON.stringify(this.$store.state.userData.keywords)
+        "keywords", this.$store.state.userData.keywords
       );
       this.formData.append(
-        "mainProcess",
-        JSON.stringify(this.$store.state.userData.mainProcess)
+        "mainProcess", this.$store.state.userData.mainProcess
       );
       this.formData.append(
-        "facilitator",
-        JSON.stringify(this.$store.state.userData.facilitator)
+        "facilitator", this.$store.state.userData.facilitator
       );
       this.formData.append("summary", this.$store.state.userData.summary);
       this.formData.append(
-        "exhibitions",
-        JSON.stringify(this.$store.state.userData.exhibitions)
+        "exhibitions", this.$store.state.userData.exhibitions
       );
       this.formData.append(
-        "customer",
-        JSON.stringify(this.$store.state.userData.customer)
+        "customer", this.$store.state.userData.customer
       );
       for (let i = 0; i <= this.$store.state.userData.imgList.length; i++) {
-        this.formData.append(
-          "companyPics",
-          this.$store.state.userData.imgList[i]
-        );
+        this.formData.append("companyPics", this.$store.state.userData.imgList[i]);
       }
       this.formData.append("logoPic", this.$store.state.userData.logoPic);
       this.formData.append(
@@ -165,8 +148,7 @@ export default {
         this.$store.state.userData.introductionPic
       );
       this.formData.append(
-        "supplier",
-        JSON.stringify(this.$store.state.userData.supplier)
+        "supplier", this.$store.state.userData.supplier
       );
       this._addUserInfo();
     },

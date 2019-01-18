@@ -84,7 +84,7 @@ export default {
     };
   },
   created() {
-    console.log(this.$store.state.user.UserID)
+    console.log(this.$store.state.userData)
     if (this.$store.state.user.UserID) {
       this.upList.secondIndustryId = this.$store.state.userData.twoIndustry;
       this.upList.id = this.$store.state.user.UserID

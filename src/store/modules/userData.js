@@ -14,51 +14,22 @@ const userData = {
     oneIndustry: getOne(), // 一级
     oneIndustryname: "",
     twoIndustry: getTwo(), // 二级
-    competitor: [
-      { key: "点击输入" },
-      { key: "点击输入" },
-      { key: "点击输入" },
-      { key: "点击输入" },
-      { key: "点击输入" }
-    ], // 竞争
-    keywords: [
-      { key: "点击输入" },
-      { key: "点击输入" },
-      { key: "点击输入" },
-      { key: "点击输入" },
-      { key: "点击输入" }
-    ], // 关键词
-    supplier: [
-      { key: "点击输入" },
-      { key: "点击输入" },
-      { key: "点击输入" },
-      { key: "点击输入" },
-      { key: "点击输入" }
-    ], // 供应商
-    mainProcess: [
-      { key: "点击输入" },
-      { key: "点击输入" },
-      { key: "点击输入" },
-      { key: "点击输入" },
-      { key: "点击输入" }
-    ], // 工艺
-    facilitator: [
-      { key: "点击输入" },
-      { key: "点击输入" },
-      { key: "点击输入" },
-      { key: "点击输入" },
-      { key: "点击输入" }
-    ], // 服务商
+    competitor: "", // 竞争
+    keywords: "", // 关键词
+    supplier: "", // 供应商
+    mainProcess: "", // 工艺
+    facilitator: "", // 服务商
     summary: "", // 简介
-    exhibitions: [{ name: "", state: 1, numID: "" }], // 会展
-    customer: [{ key: "点击输入" },
-    { key: "点击输入" },
-    { key: "点击输入" },
-    { key: "点击输入" },
-    { key: "点击输入" }], // 客户/
+    exhibitions: "", // 会展
+    customer: "", // 客户/
     imgList: [],
+    imgListUrl: [],
     logoPic: "",
-    introductionPic: ""
+    logoPicUrl: "",
+    introductionPic: "",
+    introductionPicUrl: "",
+    products: [],
+    fansNumber: ""
   },
   mutations: {
     SET_NAME: (state, name) => {
@@ -121,11 +92,26 @@ const userData = {
     SET_imgList: (state, imgList) => {
       state.imgList = imgList;
     },
+    SET_imgListUrl: (state, imgListUrl) => {
+      state.imgListUrl = imgListUrl;
+    },
     SET_logoPic: (state, logoPic) => {
       state.logoPic = logoPic;
     },
+    SET_logoPicUrl: (state, logoPicUrl) => {
+      state.logoPicUrl = logoPicUrl;
+    },
     SET_introductionPic: (state, introductionPic) => {
       state.introductionPic = introductionPic;
+    },
+    SET_introductionPicUrl: (state, introductionPicUrl) => {
+      state.introductionPicUrl = introductionPicUrl;
+    },
+    SET_products: (state, products) => {
+      state.products = products;
+    },
+    SET_fansNumber: (state, fansNumber) => {
+      state.fansNumber = fansNumber;
     }
   }
 };

@@ -20,7 +20,12 @@ const getters = {
   exhibitions: state => state.userData.exhibitions,
   customer: state => state.userData.customer,
   imgList: state => state.userData.imgList,
+  imgListUrl: state => state.userData.imgListUrl,
   logoPic: state => state.userData.logoPic,
-  introductionPic: state => state.userData.introductionPic
+  logoPicUrl: state => state.userData.logoPicUrl,
+  introductionPic: state => state.userData.introductionPic,
+  introductionPicUrl: state => state.userData.introductionPicUrl,
+  products: state => state.userData.products,
+  fansNumber: state => state.userData.fansNumber
 };
 export default getters;

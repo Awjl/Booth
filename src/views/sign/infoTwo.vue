@@ -289,7 +289,7 @@
 
 <script>
 import { getIndustry, searchCompany, addUserInfo, ERR_OK } from "@/api/api.js";
-import { setOne, setTwo } from "@/utils/auth.js";
+import { setUser } from "@/utils/auth.js";
 import { mapGetters } from "vuex";
 
 export default {
@@ -312,12 +312,48 @@ export default {
       typeindex: 0,
       stateBox: false,
       exhibitionArr: [{ name: "", state: 1, numID: "" }],
-      competitorArr: [],
-      keywordsArr: [],
-      supplierArr: [],
-      mainProcess: [],
-      customerArr: [],
-      facilitatorArr: [],
+      competitorArr: [
+        { key: "点击输入" },
+        { key: "点击输入" },
+        { key: "点击输入" },
+        { key: "点击输入" },
+        { key: "点击输入" }
+      ],
+      keywordsArr: [
+        { key: "点击输入" },
+        { key: "点击输入" },
+        { key: "点击输入" },
+        { key: "点击输入" },
+        { key: "点击输入" }
+      ],
+      supplierArr: [
+        { key: "点击输入" },
+        { key: "点击输入" },
+        { key: "点击输入" },
+        { key: "点击输入" },
+        { key: "点击输入" }
+      ],
+      mainProcess: [
+        { key: "点击输入" },
+        { key: "点击输入" },
+        { key: "点击输入" },
+        { key: "点击输入" },
+        { key: "点击输入" }
+      ],
+      customerArr: [
+        { key: "点击输入" },
+        { key: "点击输入" },
+        { key: "点击输入" },
+        { key: "点击输入" },
+        { key: "点击输入" }
+      ],
+      facilitatorArr: [
+        { key: "点击输入" },
+        { key: "点击输入" },
+        { key: "点击输入" },
+        { key: "点击输入" },
+        { key: "点击输入" }
+      ],
       formData: new FormData(),
       userData: {
         oneIndustry: "", // 一级
@@ -331,13 +367,27 @@ export default {
     this.userData.oneIndustry = this.$store.state.userData.oneIndustry;
     this.userData.twoIndustry = this.$store.state.userData.twoIndustry;
     this.userData.summary = this.$store.state.userData.summary;
-    this.exhibitionArr = this.$store.state.userData.exhibitions;
-    this.competitorArr = this.$store.state.userData.competitor;
-    this.keywordsArr = this.$store.state.userData.keywords;
-    this.supplierArr = this.$store.state.userData.supplier;
-    this.mainProcess = this.$store.state.userData.mainProcess;
-    this.customerArr = this.$store.state.userData.customer;
-    this.facilitatorArr = this.$store.state.userData.facilitator;
+    if (this.$store.state.userData.exhibitions) {
+      this.exhibitionArr = JSON.parse(this.$store.state.userData.exhibitions);
+    }
+    if (this.$store.state.userData.competitor) {
+      this.competitorArr = JSON.parse(this.$store.state.userData.competitor);
+    }
+    if (this.$store.state.userData.keywords) {
+      this.keywordsArr = JSON.parse(this.$store.state.userData.keywords);
+    }
+    if (this.$store.state.userData.supplier) {
+      this.supplierArr = JSON.parse(this.$store.state.userData.supplier);
+    }
+    if (this.$store.state.userData.mainProcess) {
+      this.mainProcess = JSON.parse(this.$store.state.userData.mainProcess);
+    }
+    if (this.$store.state.userData.customer) {
+      this.customerArr = JSON.parse(this.$store.state.userData.customer);
+    }
+    if (this.$store.state.userData.facilitator) {
+      this.facilitatorArr = JSON.parse(this.$store.state.userData.facilitator);
+    }
     getIndustry().then(res => {
       if (res.status === ERR_OK) {
         this.industryData = res.data.data;
@@ -361,14 +411,14 @@ export default {
       this.$store.commit("SET_oneIndustryname", this.name);
       this.$store.commit("SET_oneIndustry", this.userData.oneIndustry);
       this.$store.commit("SET_twoIndustry", this.userData.twoIndustry);
-      this.$store.commit("SET_competitor", this.competitorArr);
-      this.$store.commit("SET_keywords", this.keywordsArr);
-      this.$store.commit("SET_supplier", this.supplierArr);
-      this.$store.commit("SET_mainProcess", this.mainProcess);
-      this.$store.commit("SET_facilitator", this.facilitatorArr);
+      this.$store.commit("SET_competitor", JSON.stringify(this.competitorArr));
+      this.$store.commit("SET_keywords", JSON.stringify(this.keywordsArr));
+      this.$store.commit("SET_supplier", JSON.stringify(this.supplierArr));
+      this.$store.commit("SET_mainProcess", JSON.stringify(this.mainProcess));
+      this.$store.commit("SET_facilitator", JSON.stringify(this.facilitatorArr));
       this.$store.commit("SET_summary", this.userData.summary);
-      this.$store.commit("SET_exhibitions", this.exhibitionArr);
-      this.$store.commit("SET_customer", this.customerArr);
+      this.$store.commit("SET_exhibitions", JSON.stringify(this.exhibitionArr));
+      this.$store.commit("SET_customer", JSON.stringify(this.customerArr));
 
       this.formData.append("id", this.$store.state.user.UserID);
       this.formData.append("name", this.$store.state.userData.name);
@@ -391,29 +441,23 @@ export default {
         this.$store.state.userData.twoIndustry
       );
       this.formData.append(
-        "competitor",
-        JSON.stringify(this.$store.state.userData.competitor)
+        "competitor", this.$store.state.userData.competitor
       );
       this.formData.append(
-        "keywords",
-        JSON.stringify(this.$store.state.userData.keywords)
+        "keywords", this.$store.state.userData.keywords
       );
       this.formData.append(
-        "mainProcess",
-        JSON.stringify(this.$store.state.userData.mainProcess)
+        "mainProcess", this.$store.state.userData.mainProcess
       );
       this.formData.append(
-        "facilitator",
-        JSON.stringify(this.$store.state.userData.facilitator)
+        "facilitator", this.$store.state.userData.facilitator
       );
       this.formData.append("summary", this.$store.state.userData.summary);
       this.formData.append(
-        "exhibitions",
-        JSON.stringify(this.$store.state.userData.exhibitions)
+        "exhibitions", this.$store.state.userData.exhibitions
       );
       this.formData.append(
-        "customer",
-        JSON.stringify(this.$store.state.userData.customer)
+        "customer", this.$store.state.userData.customer
       );
       for (let i = 0; i <= this.$store.state.userData.imgList.length; i++) {
         this.formData.append(
@@ -427,8 +471,7 @@ export default {
         this.$store.state.userData.introductionPic
       );
       this.formData.append(
-        "supplier",
-        JSON.stringify(this.$store.state.userData.supplier)
+        "supplier", this.$store.state.userData.supplier
       );
       this._addUserInfo();
     },
@@ -601,14 +644,14 @@ export default {
       this.$store.commit("SET_oneIndustryname", this.name);
       this.$store.commit("SET_oneIndustry", this.userData.oneIndustry);
       this.$store.commit("SET_twoIndustry", this.userData.twoIndustry);
-      this.$store.commit("SET_competitor", this.competitorArr);
-      this.$store.commit("SET_keywords", this.keywordsArr);
-      this.$store.commit("SET_supplier", this.supplierArr);
-      this.$store.commit("SET_mainProcess", this.mainProcess);
-      this.$store.commit("SET_facilitator", this.facilitatorArr);
+      this.$store.commit("SET_competitor", JSON.stringify(this.competitorArr));
+      this.$store.commit("SET_keywords", JSON.stringify(this.keywordsArr));
+      this.$store.commit("SET_supplier", JSON.stringify(this.supplierArr));
+      this.$store.commit("SET_mainProcess", JSON.stringify(this.mainProcess));
+      this.$store.commit("SET_facilitator", JSON.stringify(this.facilitatorArr));
       this.$store.commit("SET_summary", this.userData.summary);
-      this.$store.commit("SET_exhibitions", this.exhibitionArr);
-      this.$store.commit("SET_customer", this.customerArr);
+      this.$store.commit("SET_exhibitions", JSON.stringify(this.exhibitionArr));
+      this.$store.commit("SET_customer", JSON.stringify(this.customerArr));
       this.$router.push({
         path: `/infoThree`
       });

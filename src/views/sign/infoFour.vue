@@ -67,7 +67,7 @@
             <div class="signBgFourproduct">
               <div class="signBgFourHeard">
                 产品手册展示
-                <span>+</span>
+                <span @click="show">+</span>
               </div>
               <div class="signBgFourproductList">
                 <div class="brochureItem">
@@ -130,7 +130,7 @@
       class="UpproductBox"
       v-if="showUp"
     >
-      <UpProduct></UpProduct>
+      <UpProduct v-on:clicehide="clicehide"></UpProduct>
     </div>
   </div>
 </template>
@@ -138,6 +138,8 @@
 <script>
 import { addUserInfo, ERR_OK } from "@/api/api.js";
 import UpProduct from "@/base/upproduct/upproduct.vue";
+import { setUser } from "@/utils/auth.js";
+
 export default {
   name: "sign",
   data() {
@@ -154,10 +156,10 @@ export default {
     };
   },
   created() {
-    this.uplogoImg = this.$store.state.userData.logoPic;
-    this.upintroduceImg = this.$store.state.userData.introductionPic;
-    this.One(this.$store.state.userData.logoPic);
-    this.Two(this.$store.state.userData.introductionPic);
+    console.log(this.$store.state.userData.logoPicUrl)
+    console.log(this.$store.state.userData.introductionPicUrl)
+    this.logoImg = this.$store.state.userData.logoPicUrl
+    this.introduceImg = this.$store.state.userData.introductionPicUrl
   },
   methods: {
     _addUserInfo() {
@@ -171,9 +173,17 @@ export default {
         }
       });
     },
+    clicehide(hideState) {
+      this.showUp = hideState;
+    },
+    show() {
+      this.showUp = true
+    },
     preservation() {
       this.$store.commit("SET_logoPic", this.uplogoImg);
       this.$store.commit("SET_introductionPic", this.upintroduceImg);
+      this.$store.commit("SET_logoPicUrl", this.logoImg);
+      this.$store.commit("SET_introductionPicUrl", this.introduceImg);
 
       this.formData.append("id", this.$store.state.user.UserID);
       this.formData.append("name", this.$store.state.userData.name);
@@ -196,35 +206,26 @@ export default {
         this.$store.state.userData.twoIndustry
       );
       this.formData.append(
-        "competitor",
-        JSON.stringify(this.$store.state.userData.competitor)
+        "competitor", this.$store.state.userData.competitor
       );
       this.formData.append(
-        "keywords",
-        JSON.stringify(this.$store.state.userData.keywords)
+        "keywords", this.$store.state.userData.keywords
       );
       this.formData.append(
-        "mainProcess",
-        JSON.stringify(this.$store.state.userData.mainProcess)
+        "mainProcess", this.$store.state.userData.mainProcess
       );
       this.formData.append(
-        "facilitator",
-        JSON.stringify(this.$store.state.userData.facilitator)
+        "facilitator", this.$store.state.userData.facilitator
       );
       this.formData.append("summary", this.$store.state.userData.summary);
       this.formData.append(
-        "exhibitions",
-        JSON.stringify(this.$store.state.userData.exhibitions)
+        "exhibitions", this.$store.state.userData.exhibitions
       );
       this.formData.append(
-        "customer",
-        JSON.stringify(this.$store.state.userData.customer)
+        "customer", this.$store.state.userData.customer
       );
       for (let i = 0; i <= this.$store.state.userData.imgList.length; i++) {
-        this.formData.append(
-          "companyPics",
-          this.$store.state.userData.imgList[i]
-        );
+        this.formData.append("companyPics", this.$store.state.userData.imgList[i]);
       }
       this.formData.append("logoPic", this.$store.state.userData.logoPic);
       this.formData.append(
@@ -232,8 +233,7 @@ export default {
         this.$store.state.userData.introductionPic
       );
       this.formData.append(
-        "supplier",
-        JSON.stringify(this.$store.state.userData.supplier)
+        "supplier", this.$store.state.userData.supplier
       );
       this._addUserInfo();
     },

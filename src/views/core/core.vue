@@ -1,13 +1,18 @@
 <template>
   <div class="core">
     <div class="coreHeard">
-      <div class="coreHeardLogo"></div>
+      <div class="coreHeardLogo">
+        <img
+          :src="this.$store.state.userData.logoPicUrl"
+          alt=""
+        >
+      </div>
       <div class="coreHeardName">
         <div class="coreHeardNameTop">
           <div class="coreName">
-            <p>基准方中建筑设计有限公司</p>
-            <p>Sichuan，Chengdu 856 位关注者</p>
-            <p>建筑设计行业</p>
+            <p>{{this.$store.state.userData.name}}</p>
+            <p>{{this.$store.state.userData.fansNumber}}位关注者</p>
+            <p>{{this.$store.state.userData.oneIndustryname}}</p>
           </div>
         </div>
         <div class="coreHeardNameBottom">
@@ -15,52 +20,43 @@
           <div class="over">
             <p>企业资料完成度70%</p>
             <div class="overBox">
-              <div class="overBoxItem" style="width:70%;"></div>
+              <div
+                class="overBoxItem"
+                style="width:70%;"
+              ></div>
             </div>
           </div>
         </div>
       </div>
+      <div @click="toInfo">修改资料</div>
     </div>
     <div class="coreMain">
       <div class="coreAbout">
         <div class="coreAboutTop">
           <div class="coreAboutintroduction">
             <div class="coreAboutHead">关于我们</div>
-            <div
-              class="coreAboutText"
-            >We’re a Swedish creative agency based in Shanghai where 30 digital-natives create the cam- paigns of tomorrow for Converse, Burberry, Absolut, New Balance, Ballantine’s, Dynaudio, Jameson, Sam’s Club and Skullcandy. We believe in walking before tal</div>
-            <div
-              class="coreAboutText"
-            >We’re a Swedish creative agency based in Shanghai where 30 digital-natives create the cam- paigns of tomorrow for Converse, Burberry, Absolut, New Balance, Ballantine’s, Dynaudio, Jameson, Sam’s Club and Skullcandy. We believe in walking before tal</div>
-            <div
-              class="coreAboutText"
-            >We’re a Swedish creative agency based in Shanghai where 30 digital-natives create the cam- paigns of tomorrow for Converse, Burberry, Absolut, New Balance, Ballantine’s, Dynaudio, Jameson, Sam’s Club and Skullcandy. We believe in walking before tal</div>
-            <div
-              class="coreAboutText"
-            >We’re a Swedish creative agency based in Shanghai where 30 digital-natives create the cam- paigns of tomorrow for Converse, Burberry, Absolut, New Balance, Ballantine’s, Dynaudio, Jameson, Sam’s Club and Skullcandy. We believe in walking before tal</div>
+            <div class="coreAboutText">{{this.$store.state.userData.summary}}</div>
             <div class="coreAboutHead">公司详情</div>
-            <div class="coreAboutTtile">公司网址</div>
-            <div class="coreAboutlist">wwwbaidu.com</div>
+            <!-- <div class="coreAboutTtile">公司网址</div>
+            <div class="coreAboutlist">wwwbaidu.com</div> -->
             <div class="coreAboutTtile">公司总部</div>
-            <div class="coreAboutlist">上海</div>
+            <div class="coreAboutlist">{{this.$store.state.userData.address}}</div>
             <div class="coreAboutTtile">创立年份</div>
             <div class="coreAboutlist">2019</div>
             <div class="coreAboutTtile">公司规模</div>
             <div class="coreAboutlist">11-50</div>
             <div class="coreAboutTtile">专注领域</div>
-            <div class="coreAboutlist">专注领域专注领域专注领域专注领域专注领域专注领域专注领域专注领域专注领域专注领域</div>
+            <div class="coreAboutlist">
+              <span
+                v-for="(item, index) in main"
+                :key="index"
+              >{{item}}</span>
+            </div>
           </div>
           <div class="coreAboutintroductionImg">
-            <div class="ItemImg"></div>
-            <div class="ItemImg"></div>
-            <div class="ItemImg"></div>
-            <div class="ItemImg"></div>
-            <div class="ItemImg"></div>
-            <div class="ItemImg"></div>
-            <div class="ItemImg"></div>
-            <div class="ItemImg"></div>
-            <div class="ItemImg"></div>
-            <div class="ItemImg"></div>
+            <div class="ItemImg" v-for="(item, index) in this.$store.state.userData.imgListUrl" :key="index">
+              <img :src="item.url" alt="">
+            </div>
           </div>
         </div>
         <div class="coreAboutBottom">
@@ -68,7 +64,10 @@
             <div class="homeListHead">
               <div class="homeListImg">
                 <div>
-                  <img src="../../assets/images/home/head2.png" alt>
+                  <img
+                    src="../../assets/images/home/head2.png"
+                    alt
+                  >
                 </div>
                 <div class="follow">+ 关注</div>
               </div>
@@ -100,12 +99,13 @@
                 <div class="InterestListSee">查看产品手册</div>
               </div>
             </div>
-            <div
-              class="hometext"
-            >11月30日下午，由巴适成都联合报花探店、成都生活君、成都那些事儿、触摸成都等成都生活方式类新媒体账号举办的“传媒新势力·2018成都UP榜”在蔚来中心拉开序幕。会上发布了2018年成都UP榜单，基准方中荣获“成都UP榜</div>
+            <div class="hometext">11月30日下午，由巴适成都联合报花探店、成都生活君、成都那些事儿、触摸成都等成都生活方式类新媒体账号举办的“传媒新势力·2018成都UP榜”在蔚来中心拉开序幕。会上发布了2018年成都UP榜单，基准方中荣获“成都UP榜</div>
             <div class="moveBtn">更多</div>
             <div class="homeItemImg">
-              <img src="../../assets/images/home/item1.png" alt>
+              <img
+                src="../../assets/images/home/item1.png"
+                alt
+              >
             </div>
           </div>
         </div>
@@ -119,10 +119,39 @@
 
 <script>
 import AboutList from "@/components/aboutList/aboutList.vue";
-import { getRecommendCompany, focus, cancelFocus, ERR_OK } from "@/api/api.js";
+// import {  } from "@/api/api.js";
 
 export default {
   name: "core",
+  data() {
+    return {
+      main: [],
+      listMain: this.$store.state.userData.mainProcess
+    };
+  },
+  mounted() {
+    this.arr()
+  },
+  methods: {
+    toInfo() {
+      this.$router.push({
+        name: `infoOne`,
+        params: { "id": this.$store.state.user.UserID }
+      });
+    },
+    arr() {
+      let _this = this
+      let arr = []
+      JSON.parse(this.listMain).forEach((e) => {
+        // _this.mian = e.key
+        // console.log(e)
+        if (e.key != '点击输入') {
+          arr.push(e.key)
+        }
+        _this.main = arr
+      });
+    }
+  },
   components: {
     AboutList
   }
@@ -353,8 +382,10 @@ export default {
           .homeItemImg {
             width: 100%;
             margin-top: 10px;
+            height: auto;
             img {
               width: 100%;
+              
             }
           }
         }
@@ -369,7 +400,6 @@ export default {
         flex-wrap: wrap;
         .ItemImg {
           width: 15%;
-          height: 100px;
           padding: 6px;
           box-sizing: border-box;
           background: #fff;
@@ -393,6 +423,9 @@ export default {
       .coreAboutlist {
         font-size: 16px;
         line-height: 26px;
+        span {
+          margin-right: 20px;
+        }
       }
     }
     .coreAboutLeft {

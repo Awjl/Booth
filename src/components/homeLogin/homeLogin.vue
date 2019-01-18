@@ -167,6 +167,7 @@ export default {
   data() {
     return {
       userData: {
+        firstIndustryId: "",
         secondIndustryId: "",
         id: ""
       },
@@ -174,12 +175,14 @@ export default {
     }
   },
   created() {
+    console.log(this.$store.state.user.UserID)
     if (this.$store.state.user.UserID) {
       this.userData.secondIndustryId = this.$store.state.userData.twoIndustry
       this.userData.id = this.$store.state.user.UserID
       this._mayBeInterestedCompany()
     } else {
-      this.userData.secondIndustryId = this.$store.state.userData.oneIndustry
+      this.userData.firstIndustryId = this.$store.state.userData.oneIndustry
+      this._mayBeInterestedCompany()
     }
   },
   methods: {

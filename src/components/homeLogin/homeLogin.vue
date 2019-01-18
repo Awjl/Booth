@@ -161,7 +161,6 @@
 
 <script>
 import { mayBeInterestedCompany, ERR_OK } from "@/api/api.js";
-import { getOne, getTwo, getUser } from "@/utils/auth.js";
 
 export default {
   name: "homeLogin",
@@ -175,21 +174,19 @@ export default {
     }
   },
   created() {
-    if (getUser()) {
-      this.userData.secondIndustryId = getTwo()
-      this.userData.id = getUser()
+    if (this.$store.state.user.UserID) {
+      this.userData.secondIndustryId = this.$store.state.userData.twoIndustry
+      this.userData.id = this.$store.state.user.UserID
       this._mayBeInterestedCompany()
     } else {
-      this.userData.secondIndustryId = getOne()
+      this.userData.secondIndustryId = this.$store.state.userData.oneIndustry
     }
   },
   methods: {
     _mayBeInterestedCompany() {
       mayBeInterestedCompany(this.userData).then(res => {
         if (res.status === ERR_OK) {
-          console.log("可能感兴趣-------------------------")
           this.dataList = res.data.data
-          console.log(this.dataList)
         }
       })
     }

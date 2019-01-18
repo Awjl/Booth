@@ -66,7 +66,6 @@
 
 <script>
 import { getRecommendCompany, focus, cancelFocus, ERR_OK } from "@/api/api.js";
-import { getOne, getTwo, getUser } from "@/utils/auth.js";
 
 export default {
   name: "homeList",
@@ -77,6 +76,7 @@ export default {
         concernedId: ""
       },
       upList: {
+        firstIndustryId: "",
         secondIndustryId: "",
         id: "",
       },
@@ -84,20 +84,20 @@ export default {
     };
   },
   created() {
-    if (getUser()) {
-      this.upList.secondIndustryId = getTwo()
-      this.upList.id = getUser()
+    console.log(this.$store.state.user.UserID)
+    if (this.$store.state.user.UserID) {
+      this.upList.secondIndustryId = this.$store.state.userData.twoIndustry;
+      this.upList.id = this.$store.state.user.UserID
       this._getRecommendCompany()
     } else {
-      this.upList.secondIndustryId = getOne()
+      this.upList.firstIndustryId = this.$store.state.userData.oneIndustry;
+      this._getRecommendCompany()
     }
   },
   methods: {
     _getRecommendCompany() {
       getRecommendCompany(this.upList).then((res) => {
         if (res.status === ERR_OK) {
-          console.log("查看公司首页-------------------")
-          console.log(res.data)
           this.dataList = res.data.data
         }
       })
@@ -117,15 +117,15 @@ export default {
       })
     },
     followId(id) {
-      if (getUser()) {
-        this.followData.userId = getUser()
+      if (this.$store.state.user.UserID()) {
+        this.followData.userId = this.$store.state.user.UserID()
         this.followData.concernedId = id
         this._focus()
       }
     },
     cancelfollowId(id) {
-      if (getUser()) {
-        this.followData.userId = getUser()
+      if (this.$store.state.user.UserID()) {
+        this.followData.userId = this.$store.state.user.UserID()
         this.followData.concernedId = id
         this._cancelFocus()
       }

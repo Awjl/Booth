@@ -14,19 +14,25 @@ export default {
     return {
       success: "",
       timer: '',
+      url: window.location.href.split("?")[1]
     };
   },
   created() {
-    console.log(window.location.href.split("=")[1])
-    activate(window.location.href.split("=")[1]).then((res) => {
-      if (res.status === ERR_OK) {
-        console.log(res.data.data)
+    console.log(this.url)
+    let splictStr = this.url.split("&")
+    let urlObj = {}
+    for (var i = 0; i < splictStr.length; i++) {
+      urlObj[splictStr[i].split("=")[0]] = splictStr[i].split("=")[1];
+    }
+    activate(urlObj.key).then((res) => {
+      if (res.data.code === 0) {
         this.success = res.data
         let _this = this
         this.timer = setTimeout(() => {
-          _this.$router.push({
-            path: `/infoOne`
-          })
+          this.$router.push({
+            name: `infoOne`,
+            params: { "id": urlObj.code }
+          });
         }, 5000);
       }
     })

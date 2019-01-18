@@ -2,8 +2,14 @@
   <div class="signDetails">
     <div class="signBgTwo">
       <div class="signBgInfoLog">
-        <div class="infoLog" @click="tohome">
-          <img src="../../assets/images/home/logo.png" alt>
+        <div
+          class="infoLog"
+          @click="tohome"
+        >
+          <img
+            src="../../assets/images/home/logo.png"
+            alt
+          >
         </div>
         <div class="infoLog">
           <p>入驻booth</p>
@@ -20,10 +26,20 @@
         </div>
         <div class="signBgMainRightTwo">
           <div class="signBgMainListRight">
-            <div class="signBgMainTRightItem" @click.stop="showBoxList">
+            <div
+              class="signBgMainTRightItem"
+              @click.stop="showBoxList"
+            >
               <p>行业类型（勾选）</p>
-              <input type="text" disabled="true" v-model="name">
-              <div class="Industry" v-if="stateBox">
+              <input
+                type="text"
+                disabled="true"
+                v-model="name"
+              >
+              <div
+                class="Industry"
+                v-if="stateBox"
+              >
                 <div class="IndustryLeft">
                   <div
                     class="choiceItem"
@@ -52,7 +68,10 @@
                   @click="selOne(index)"
                 >{{item.key}}</span>
               </div>
-              <div class="SearchIndustry" v-if="one">
+              <div
+                class="SearchIndustry"
+                v-if="one"
+              >
                 <div class="SearchIndustryIn">
                   <input
                     type="text"
@@ -79,7 +98,10 @@
                   @click="selTwo(index)"
                 >{{item.key}}</span>
               </div>
-              <div class="SearchIndustry" v-if="two">
+              <div
+                class="SearchIndustry"
+                v-if="two"
+              >
                 <div class="SearchIndustryIn">
                   <input
                     type="text"
@@ -100,7 +122,10 @@
                   @click="selThree(index)"
                 >{{item.key}}</span>
               </div>
-              <div class="SearchIndustry" v-if="Three">
+              <div
+                class="SearchIndustry"
+                v-if="Three"
+              >
                 <div class="SearchIndustryIn">
                   <input
                     type="text"
@@ -127,7 +152,10 @@
                   @click="selFore(index)"
                 >{{item.key}}</span>
               </div>
-              <div class="SearchIndustry" v-if="Fore">
+              <div
+                class="SearchIndustry"
+                v-if="Fore"
+              >
                 <div class="SearchIndustryIn">
                   <input
                     type="text"
@@ -148,7 +176,10 @@
                   @click="selFive(index)"
                 >{{item.key}}</span>
               </div>
-              <div class="SearchIndustry" v-if="Five">
+              <div
+                class="SearchIndustry"
+                v-if="Five"
+              >
                 <div class="SearchIndustryIn">
                   <input
                     type="text"
@@ -175,7 +206,10 @@
                   @click="selSix(index)"
                 >{{item.key}}</span>
               </div>
-              <div class="SearchIndustry" v-if="Six">
+              <div
+                class="SearchIndustry"
+                v-if="Six"
+              >
                 <div class="SearchIndustryIn">
                   <input
                     type="text"
@@ -195,7 +229,10 @@
             </div>
             <div class="signBgMainTRightItem">
               <p>简介（最多200字）</p>
-              <textarea class="ItemText" v-model="userData.summary"></textarea>
+              <textarea
+                class="ItemText"
+                v-model="userData.summary"
+              ></textarea>
             </div>
           </div>
           <div class="signExhibition">
@@ -204,10 +241,17 @@
               <span @click="addEx">+</span>
             </div>
             <div>
-              <div class="ExhibitionallList" v-for="(item, index) in exhibitionArr" :key="index">
+              <div
+                class="ExhibitionallList"
+                v-for="(item, index) in exhibitionArr"
+                :key="index"
+              >
                 <div class="ExhibitionallLeft">
                   <p>展会名称</p>
-                  <input type="text" v-model="item.name">
+                  <input
+                    type="text"
+                    v-model="item.name"
+                  >
                 </div>
                 <div class="Exhibitionallmind">
                   <p>是否参加</p>
@@ -218,9 +262,15 @@
                 </div>
                 <div class="Exhibitionallright">
                   <p>展位</p>
-                  <input type="text" v-model="item.numID">
+                  <input
+                    type="text"
+                    v-model="item.numID"
+                  >
                 </div>
-                <div class="icon iconDel" @click="delList(index)"></div>
+                <div
+                  class="icon iconDel"
+                  @click="delList(index)"
+                ></div>
               </div>
             </div>
           </div>
@@ -299,7 +349,8 @@ export default {
   methods: {
     _addUserInfo() {
       addUserInfo(this.formData).then(res => {
-       if (res.data.code === 0) {
+        if (res.data.code === 0) {
+          setUser(this.$store.state.user.UserID)
           this.$router.push({
             path: `/home`
           });

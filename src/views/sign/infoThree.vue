@@ -2,8 +2,14 @@
   <div class="signDetails">
     <div class="signBgTwo">
       <div class="signBgInfoLog">
-        <div class="infoLog" @click="tohome">
-          <img src="../../assets/images/home/logo.png" alt>
+        <div
+          class="infoLog"
+          @click="tohome"
+        >
+          <img
+            src="../../assets/images/home/logo.png"
+            alt
+          >
         </div>
         <div class="infoLog">
           <p>入驻booth</p>
@@ -25,11 +31,24 @@
             <div class="UpImg">
               <div class="UpimgList">
                 <label for="upTop">+</label>
-                <input @change="upImg" type="file" id="upTop" value="图片上传预览" multiple>
+                <input
+                  @change="upImg"
+                  type="file"
+                  id="upTop"
+                  value="图片上传预览"
+                  multiple
+                >
               </div>
               <div class="imgList">
-                <div class="imgListItem" v-for="(item, index) in imgList" :key="index">
-                  <img :src="item" alt>
+                <div
+                  class="imgListItem"
+                  v-for="(item, index) in imgList"
+                  :key="index"
+                >
+                  <img
+                    :src="item"
+                    alt
+                  >
                 </div>
               </div>
             </div>
@@ -66,11 +85,11 @@ export default {
     console.log(this.$store.state.userData.imgList);
     this.upImgList = this.$store.state.userData.imgList;
     let _this = this;
-    this.$store.state.userData.imgList.forEach(function(e) {
+    this.$store.state.userData.imgList.forEach(function (e) {
       // _this.imgList
       const reader = new FileReader();
       reader.readAsDataURL(e);
-      reader.onload = function(e) {
+      reader.onload = function (e) {
         _this.imgList.push(e.target.result);
       };
     });
@@ -79,6 +98,7 @@ export default {
     _addUserInfo() {
       addUserInfo(this.formData).then(res => {
         if (res.data.code === 0) {
+          setUser(this.$store.state.user.UserID)
           this.$router.push({
             path: `/home`
           });
@@ -170,7 +190,7 @@ export default {
           if (!e || !window.FileReader) return;
           const reader = new FileReader();
           reader.readAsDataURL(Img);
-          reader.onload = function(e) {
+          reader.onload = function (e) {
             _this.imgList.push(e.target.result);
           };
           this.upImgList.push(Img);

@@ -123,16 +123,17 @@ export default {
     ...mapGetters(["UserID"])
   },
   created() {
-    // console.log(this.UserID);
-    // console.log(getUser());
-    // setUser("17");
+    console.log(this.$route.params.id)
+    if (this.$route.params.id) {
+      this.$store.commit("SET_USERID", this.$route.params.id);
+    }
     this.userData = this.$store.state.userData;
-    console.log(this.$store.state.user.UserID);
   },
   methods: {
     _addUserInfo() {
       addUserInfo(this.formData).then(res => {
         if (res.data.code === 0) {
+          setUser(this.$store.state.user.UserID)
           this.$router.push({
             path: `/home`
           });

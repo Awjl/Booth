@@ -2,8 +2,14 @@
   <div class="signDetails">
     <div class="signBgTwo">
       <div class="signBgInfoLog">
-        <div class="infoLog" @click="tohome">
-          <img src="../../assets/images/home/logo.png" alt>
+        <div
+          class="infoLog"
+          @click="tohome"
+        >
+          <img
+            src="../../assets/images/home/logo.png"
+            alt
+          >
         </div>
         <div class="infoLog">
           <p>入驻booth</p>
@@ -25,17 +31,37 @@
               <div class="signBgFourLogoImg">
                 <label for="upOneTop">
                   <span v-if="!logoImg">+</span>
-                  <img :src="logoImg" alt v-else>
+                  <img
+                    :src="logoImg"
+                    alt
+                    v-else
+                  >
                 </label>
-                <input @change="upOneImg" type="file" id="upOneTop" value="图片上传预览" multiple>
+                <input
+                  @change="upOneImg"
+                  type="file"
+                  id="upOneTop"
+                  value="图片上传预览"
+                  multiple
+                >
               </div>
               <div class="signBgFourLogoP">公司介绍页</div>
               <div class="signBgFourLogoImg">
                 <label for="upTwoTop">
                   <span v-if="!introduceImg">+</span>
-                  <img :src="introduceImg" alt v-else>
+                  <img
+                    :src="introduceImg"
+                    alt
+                    v-else
+                  >
                 </label>
-                <input @change="upTwoImg" type="file" id="upTwoTop" value="图片上传预览" multiple>
+                <input
+                  @change="upTwoImg"
+                  type="file"
+                  id="upTwoTop"
+                  value="图片上传预览"
+                  multiple
+                >
               </div>
             </div>
             <div class="signBgFourproduct">
@@ -100,7 +126,10 @@
         </div>
       </div>
     </div>
-    <div class="UpproductBox" v-if="showUp">
+    <div
+      class="UpproductBox"
+      v-if="showUp"
+    >
       <UpProduct></UpProduct>
     </div>
   </div>
@@ -135,6 +164,7 @@ export default {
       addUserInfo(this.formData).then(res => {
         console.log(res.data);
         if (res.data.code === 0) {
+          setUser(this.$store.state.user.UserID)
           this.$router.push({
             path: `/home`
           });
@@ -222,7 +252,7 @@ export default {
       const _this = this;
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onload = function(e) {
+      reader.onload = function (e) {
         _this.logoImg = e.target.result;
       };
     },
@@ -233,7 +263,7 @@ export default {
       const _this = this;
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onload = function(e) {
+      reader.onload = function (e) {
         _this.introduceImg = e.target.result;
       };
     },
@@ -251,7 +281,7 @@ export default {
           if (!e || !window.FileReader) return;
           const reader = new FileReader();
           reader.readAsDataURL(Img);
-          reader.onload = function(e) {
+          reader.onload = function (e) {
             _this.logoImg = e.target.result;
           };
           this.uplogoImg = Img;
@@ -272,7 +302,7 @@ export default {
           if (!e || !window.FileReader) return;
           const reader = new FileReader();
           reader.readAsDataURL(Img);
-          reader.onload = function(e) {
+          reader.onload = function (e) {
             _this.introduceImg = e.target.result;
           };
           this.upintroduceImg = Img;

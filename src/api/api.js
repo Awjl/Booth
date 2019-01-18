@@ -136,6 +136,7 @@ export function getRecommendCompany(data) {
         url: "/index/getRecommendCompany",
         method: "get",
         params: {
+            firstIndustryId: data.firstIndustryId,
             secondIndustryId: data.secondIndustryId,
             id: data.id
         }
@@ -302,13 +303,13 @@ export function addUserInfo(data) {
     });
 }
 // 获取用户信息
-export function getCompanyInfo(data) {
+export function getCompanyInfo(userId, id) {
     return service({
         url: `/user/getCompanyInfo`,
         method: "get",
         params: {
-            userId: data.userId,
-            id: data.id
+            userId: userId,
+            id: id
         }
     });
 }

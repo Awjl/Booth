@@ -43,7 +43,10 @@
             placeholder="验证码"
             v-model="UserData.code"
           />
-          <div class="Listbtn" @click="_sendCode">发送</div>
+          <div
+            class="Listbtn"
+            @click="_sendCode"
+          >发送</div>
           <p class="Err">错误</p>
         </div>
         <div class="forgetPass"><span>忘记密码？</span></div>
@@ -55,7 +58,7 @@
 
 <script>
 import { login, sendCode, ERR_OK } from "@/api/api.js";
-import { setUser, setOne,  setTwo} from "@/utils/auth.js";
+import { setUser, setOne, setTwo } from "@/utils/auth.js";
 
 
 export default {
@@ -74,11 +77,18 @@ export default {
     _login() {
       login(this.UserData).then(res => {
         if (res.status === ERR_OK) {
-          console.log('登录成功')
-          setUser(res.data.data.id)
-          setOne(res.data.data.oneIndustryid)
-          setTwo(res.data.data.twoIndustryid)
           this.closeLogin()
+          if (res.data.data.isRegister === 2) {
+            this.$router.go(0)
+            setUser(res.data.data.id)
+            setOne(res.data.data.oneIndustryid)
+            setTwo( res.data.data.twoIndustryid);
+          } else {
+            this.$router.push({
+              name: `infoOne`,
+              params: { "id": res.data.data.id }
+            })
+          }
         }
       })
     },
@@ -90,7 +100,6 @@ export default {
       })
     },
     closeLogin() {
-      console.log('123')
       this.$emit("closeLogin", this.close);
     }
   }

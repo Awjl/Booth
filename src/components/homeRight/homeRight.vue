@@ -23,7 +23,6 @@
 
 <script>
 import { getAdvert, ERR_OK } from "@/api/api.js";
-import { getOne, getTwo } from "@/utils/auth.js";
 
 export default {
   name: "homeRight",
@@ -36,25 +35,19 @@ export default {
     }
   },
   created() {
-    console.log(getTwo(),getOne())
-    if (!getTwo()) {
-      getAdvert(getOne()).then((res) => {
-        console.log("获取行业广告---------------------------")
+    if (!this.$store.state.user.UserID) {
+      getAdvert(this.$store.state.userData.oneIndustry).then((res) => {
         if (res.status === ERR_OK) {
-          console.log(res.data.data)
           this.dataAll = res.data.data
         }
       })
     } else {
-      getAdvert(getTwo()).then((res) => {
-        console.log("获取行业广告---------------------------")
+      getAdvert(this.$store.state.userData.twoIndustry).then((res) => {
         if (res.status === ERR_OK) {
-          console.log(res.data.data)
           this.dataAll = res.data.data
         }
       })
     }
-
   }
 };
 </script>

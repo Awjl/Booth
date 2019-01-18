@@ -2,8 +2,15 @@
   <div class="home">
     <div class="swiper-container">
       <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="(item, index) in listImg" :key="index">
-          <img :src="`http://47.101.165.134${item.bannerUrl.split(',')[0]}`" alt>
+        <div
+          class="swiper-slide"
+          v-for="(item, index) in listImg"
+          :key="index"
+        >
+          <img
+            :src="`http://47.101.165.134${item.bannerUrl.split(',')[0]}`"
+            alt
+          >
         </div>
       </div>
       <!-- 如果需要分页器 -->
@@ -33,29 +40,31 @@ import "swiper/dist/css/swiper.min.css";
 import HomeLogin from "@/components/homeLogin/homeLogin.vue";
 import HomeList from "@/components/homeList/homeList.vue";
 import HomeRight from "@/components/homeRight/homeRight.vue";
-import { getIndexBanner, getInfoPercent, ERR_OK } from "@/api/api.js";
+import { getIndexBanner, getInfoPercent, getCompanyInfo, ERR_OK } from "@/api/api.js";
 import { getUser } from "@/utils/auth.js";
 
 export default {
   name: "home",
   data() {
     return {
-      listImg: []
+      listImg: [],
+      dataList: {}
     };
   },
   created() {
     getIndexBanner().then(res => {
       if (res.status === ERR_OK) {
-        console.log("获取banner----------------");
         this.listImg = res.data.data;
       }
     });
-    getInfoPercent("33").then(res => {
-      if (res.status === ERR_OK) {
-        console.log("获取百分比----------------");
-        console.log(res.data.data)
-      }
-    }) 
+    if (this.$store.state.user.UserID) {
+      getInfoPercent(this.$store.state.user.UserID).then(res => {
+        if (res.status === ERR_OK) {
+          console.log('获取百分比----------------------')
+          console.log(res.data.data)
+        }
+      })
+    }
   },
   updated() {
     let _this = this;
@@ -76,7 +85,7 @@ export default {
         prevEl: ".swiper-button-prev"
       },
       on: {
-        click: function() {
+        click: function () {
           const realIndex = this.realIndex;
           _this.toDetails(realIndex);
         }

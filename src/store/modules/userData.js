@@ -1,3 +1,6 @@
+import { getOne, getTwo } from "@/utils/auth";
+
+
 const userData = {
   state: {
     name: "",
@@ -8,9 +11,9 @@ const userData = {
     position: "",
     mobile: "",
     linkmanEmail: "",
-    oneIndustry: "", // 一级
+    oneIndustry: getOne(), // 一级
     oneIndustryname: "",
-    twoIndustry: "", // 二级
+    twoIndustry: getTwo(), // 二级
     competitor: [
       { key: "点击输入" },
       { key: "点击输入" },

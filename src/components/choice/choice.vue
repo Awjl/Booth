@@ -1,11 +1,24 @@
 <template>
   <div class="choice">
     <div class="searchBox">
-      <input type="text" placeholder="搜索你感兴趣的企业/展会" v-model="searchData">
-      <i class="icon iconSearch" @click="toSearch"></i>
+      <input
+        type="text"
+        placeholder="搜索你感兴趣的企业/展会"
+        v-model="searchData"
+      >
+      <i
+        class="icon iconSearch"
+        @click="toSearch"
+      ></i>
     </div>
-    <div class="choiceBox" @click="choiceShow()">选择你的所属行业 Selected list item
-      <div class="choiceList" v-if="choiceBoxshow">
+    <div
+      class="choiceBox"
+      @click="choiceShow()"
+    >选择你的所属行业 Selected list item
+      <div
+        class="choiceList"
+        v-if="choiceBoxshow"
+      >
         <div
           class="choiceItem"
           v-for="(items, index) in industryData"
@@ -14,7 +27,11 @@
           @mouseenter="mouseOver(index, items)"
         >{{ items.industryName }}</div>
       </div>
-      <div class="choiceList" style="left:270px;" v-if="choiceBoxshow">
+      <div
+        class="choiceList"
+        style="left:270px;"
+        v-if="choiceBoxshow"
+      >
         <div class="choiceListChildren">
           <div
             class="choiceItem"
@@ -54,7 +71,6 @@ export default {
         if (res.status === ERR_OK) {
           this.industryData = res.data.data;
           this.items = this.industryData[0].secondIndustries;
-          console.log(this.industryData);
         }
       });
     },

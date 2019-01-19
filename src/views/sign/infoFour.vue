@@ -2,14 +2,8 @@
   <div class="signDetails">
     <div class="signBgTwo">
       <div class="signBgInfoLog">
-        <div
-          class="infoLog"
-          @click="tohome"
-        >
-          <img
-            src="../../assets/images/home/logo.png"
-            alt
-          >
+        <div class="infoLog" @click="tohome">
+          <img src="../../assets/images/home/logo.png" alt>
         </div>
         <div class="infoLog">
           <p>入驻booth</p>
@@ -31,37 +25,17 @@
               <div class="signBgFourLogoImg">
                 <label for="upOneTop">
                   <span v-if="!logoImg">+</span>
-                  <img
-                    :src="logoImg"
-                    alt
-                    v-else
-                  >
+                  <img :src="logoImg" alt v-else>
                 </label>
-                <input
-                  @change="upOneImg"
-                  type="file"
-                  id="upOneTop"
-                  value="图片上传预览"
-                  multiple
-                >
+                <input @change="upOneImg" type="file" id="upOneTop" value="图片上传预览" multiple>
               </div>
               <div class="signBgFourLogoP">公司介绍页</div>
               <div class="signBgFourLogoImg">
                 <label for="upTwoTop">
                   <span v-if="!introduceImg">+</span>
-                  <img
-                    :src="introduceImg"
-                    alt
-                    v-else
-                  >
+                  <img :src="introduceImg" alt v-else>
                 </label>
-                <input
-                  @change="upTwoImg"
-                  type="file"
-                  id="upTwoTop"
-                  value="图片上传预览"
-                  multiple
-                >
+                <input @change="upTwoImg" type="file" id="upTwoTop" value="图片上传预览" multiple>
               </div>
             </div>
             <div class="signBgFourproduct">
@@ -70,45 +44,17 @@
                 <span @click="show">+</span>
               </div>
               <div class="signBgFourproductList">
-                <div class="brochureItem">
-                  <div class="brochureItemImg"></div>
-                  <div class="brochureItemText">
-                    <div class="brochureItemmanual">
-                      <p>某某公司企业宣传手册</p>
-                      <div class="label">
-                        <span>标签</span>
-                        <span>标签</span>
-                        <span>标签</span>
-                      </div>
-                      <div class="brochureintroduce"></div>
-                    </div>
+                <div class="brochureItem" v-for="(item, index) in AllProducts" :key="index">
+                  <div class="brochureItemImg">
+                    <img :src="item.coverUrl" alt>
                   </div>
-                </div>
-                <div class="brochureItem">
-                  <div class="brochureItemImg"></div>
                   <div class="brochureItemText">
                     <div class="brochureItemmanual">
-                      <p>某某公司企业宣传手册</p>
+                      <p>{{item.title}}</p>
                       <div class="label">
-                        <span>标签</span>
-                        <span>标签</span>
-                        <span>标签</span>
+                        <span v-for="(item, num) in item.label.split(',')" :key="num" v-show="item">{{item}}</span>
                       </div>
-                      <div class="brochureintroduce"></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="brochureItem">
-                  <div class="brochureItemImg"></div>
-                  <div class="brochureItemText">
-                    <div class="brochureItemmanual">
-                      <p>某某公司企业宣传手册</p>
-                      <div class="label">
-                        <span>标签</span>
-                        <span>标签</span>
-                        <span>标签</span>
-                      </div>
-                      <div class="brochureintroduce"></div>
+                      <div class="brochureintroduce">{{item.summary}}</div>
                     </div>
                   </div>
                 </div>
@@ -126,17 +72,14 @@
         </div>
       </div>
     </div>
-    <div
-      class="UpproductBox"
-      v-if="showUp"
-    >
+    <div class="UpproductBox" v-if="showUp">
       <UpProduct v-on:clicehide="clicehide"></UpProduct>
     </div>
   </div>
 </template>
 
 <script>
-import { addUserInfo, ERR_OK } from "@/api/api.js";
+import { addUserInfo, getAllProducts, ERR_OK } from "@/api/api.js";
 import UpProduct from "@/base/upproduct/upproduct.vue";
 import { setUser } from "@/utils/auth.js";
 
@@ -150,23 +93,40 @@ export default {
       introduceImg: "",
       upintroduceImg: "",
       formData: new FormData(),
+      AllProducts: [],
       imgType: {
         type: "image/jpeg, image/png, image/jpg"
       }
     };
   },
   created() {
-    console.log(this.$store.state.userData.logoPicUrl)
-    console.log(this.$store.state.userData.introductionPicUrl)
-    this.logoImg = this.$store.state.userData.logoPicUrl
-    this.introduceImg = this.$store.state.userData.introductionPicUrl
+    this.logoImg = this.$store.state.userData.logoPicUrl;
+    this.introduceImg = this.$store.state.userData.introductionPicUrl;
+    this._getAllProducts();
   },
   methods: {
+    _getAllProducts() {
+      getAllProducts(this.$store.state.user.UserID).then(res => {
+        if (res.data.code === 0) {
+          console.log(res.data.data);
+          this.AllProducts = res.data.data;
+          // coverUrl: "http://47.101.165.134/root/picture/product/1547885157181118.jpg"
+          // createDate: "2019-01-19T08:05:57.000+0000"
+          // id: 5
+          // label: "标签,,,,"
+          // pdfUrl: "http://47.101.165.134/root/picture/product/1547885157180187.jpg"
+          // readVolume: 0
+          // summary: "简介"
+          // title: "产品手册"
+          // userId: 38
+        }
+      });
+    },
     _addUserInfo() {
       addUserInfo(this.formData).then(res => {
         console.log(res.data);
         if (res.data.code === 0) {
-          setUser(this.$store.state.user.UserID)
+          setUser(this.$store.state.user.UserID);
           this.$router.push({
             path: `/home`
           });
@@ -177,7 +137,7 @@ export default {
       this.showUp = hideState;
     },
     show() {
-      this.showUp = true
+      this.showUp = true;
     },
     preservation() {
       this.$store.commit("SET_logoPic", this.uplogoImg);
@@ -205,36 +165,34 @@ export default {
         "twoIndustry",
         this.$store.state.userData.twoIndustry
       );
+      this.formData.append("competitor", this.$store.state.userData.competitor);
+      this.formData.append("keywords", this.$store.state.userData.keywords);
       this.formData.append(
-        "competitor", this.$store.state.userData.competitor
+        "mainProcess",
+        this.$store.state.userData.mainProcess
       );
       this.formData.append(
-        "keywords", this.$store.state.userData.keywords
-      );
-      this.formData.append(
-        "mainProcess", this.$store.state.userData.mainProcess
-      );
-      this.formData.append(
-        "facilitator", this.$store.state.userData.facilitator
+        "facilitator",
+        this.$store.state.userData.facilitator
       );
       this.formData.append("summary", this.$store.state.userData.summary);
       this.formData.append(
-        "exhibitions", this.$store.state.userData.exhibitions
+        "exhibitions",
+        this.$store.state.userData.exhibitions
       );
-      this.formData.append(
-        "customer", this.$store.state.userData.customer
-      );
+      this.formData.append("customer", this.$store.state.userData.customer);
       for (let i = 0; i <= this.$store.state.userData.imgList.length; i++) {
-        this.formData.append("companyPics", this.$store.state.userData.imgList[i]);
+        this.formData.append(
+          "companyPics",
+          this.$store.state.userData.imgList[i]
+        );
       }
       this.formData.append("logoPic", this.$store.state.userData.logoPic);
       this.formData.append(
         "introductionPic",
         this.$store.state.userData.introductionPic
       );
-      this.formData.append(
-        "supplier", this.$store.state.userData.supplier
-      );
+      this.formData.append("supplier", this.$store.state.userData.supplier);
       this._addUserInfo();
     },
     toNext() {
@@ -252,7 +210,7 @@ export default {
       const _this = this;
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onload = function (e) {
+      reader.onload = function(e) {
         _this.logoImg = e.target.result;
       };
     },
@@ -263,7 +221,7 @@ export default {
       const _this = this;
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onload = function (e) {
+      reader.onload = function(e) {
         _this.introduceImg = e.target.result;
       };
     },
@@ -281,7 +239,7 @@ export default {
           if (!e || !window.FileReader) return;
           const reader = new FileReader();
           reader.readAsDataURL(Img);
-          reader.onload = function (e) {
+          reader.onload = function(e) {
             _this.logoImg = e.target.result;
           };
           this.uplogoImg = Img;
@@ -302,7 +260,7 @@ export default {
           if (!e || !window.FileReader) return;
           const reader = new FileReader();
           reader.readAsDataURL(Img);
-          reader.onload = function (e) {
+          reader.onload = function(e) {
             _this.introduceImg = e.target.result;
           };
           this.upintroduceImg = Img;
@@ -464,6 +422,9 @@ export default {
                 .brochureItemImg {
                   width: 162px;
                   background: #fff;
+                  img {
+                    height: 150px;
+                  }
                 }
                 .brochureItemText {
                   width: calc(100% - 182px);
@@ -567,7 +528,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999999;
+    z-index: 99999999999999999999;
   }
 }
 </style>

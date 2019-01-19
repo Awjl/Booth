@@ -14,6 +14,7 @@ export default {
   },
   methods: {
     _getCompanyInfo() {
+      console.log('用户信息--------------------------------')
       getCompanyInfo(this.$store.state.user.UserID, this.$store.state.user.UserID).then(res => {
         if (res.status === ERR_OK) {
           console.log(res.data.data)

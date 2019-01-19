@@ -12,7 +12,7 @@
       <div class="upproductItem">
         <p>本地上传</p>
         <div>
-          <input type="file">
+          <input type="file" @change="upPdf">
         </div>
       </div>
       <div class="upproductItem">
@@ -22,47 +22,83 @@
       <div class="upproductItem">
         <p>添加标签（上限五个）</p>
         <div class="upproductLabel">
-          <span>标签</span>
+          <input
+            v-for="(item, index) in dataList.label"
+            :key="index"
+            v-model="dataList.label[index]"
+            placeholder="点击输入"
+          >
         </div>
       </div>
       <div class="upproductItem">
         <p>上传封面</p>
-        <div class="upproductimg"></div>
+        <div class="upproductimg">
+          <label for="upImg">
+            <span v-if="!UpImg">+</span>
+            <img :src="UpImg" alt v-else>
+          </label>
+          <input @change="upImg" type="file" id="upImg" value="图片上传预览" multiple>
+        </div>
       </div>
       <div class="upproductBtn">
-        <span>确认发布</span>
+        <span @click="UpConfirm">确认发布</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { saveProduct, ERR_OK } from "@/api/api.js"
+import { saveProduct, ERR_OK } from "@/api/api.js";
 export default {
   data() {
     return {
       hideState: false,
-      fromData: new fromData,
+      formData: new FormData(),
+      UpImg: "",
       dataList: {
-        userId: this.$store.state.user.UserID,
         title: "",
         summary: "",
-        label: "",
+        label: ["", "", "", "", ""],
         pdfFile: "",
         coverPic: ""
       }
-    }
+    };
   },
   methods: {
     _saveProduct() {
-      saveProduct().then(res => {
+      saveProduct(this.formData).then(res => {
         if (res.data.code === 0) {
-          console.log("上传成功")
+          console.log("上传成功");
+          this.hide();
         }
-      })
+      });
+    },
+    UpConfirm() {
+      this.formData.append("userId", this.$store.state.user.UserID);
+      this.formData.append("title", this.dataList.title);
+      this.formData.append("summary", this.dataList.summary);
+      this.formData.append("label", this.dataList.label);
+      this.formData.append("pdfFile", this.dataList.pdfFile);
+      this.formData.append("coverPic", this.dataList.coverPic);
+      this._saveProduct();
     },
     hide() {
       this.$emit("clicehide", this.hideState);
+    },
+    upPdf(e) {
+      this.dataList.pdfFile = e.target.files[0];
+      // this.pdfFile = pdf;
+      console.log(this.dataList.pdfFile);
+    },
+    upImg(e) {
+      this.dataList.coverPic = e.target.files[0];
+      const reader = new FileReader();
+      let _this = this;
+      reader.readAsDataURL(this.dataList.coverPic);
+      reader.onload = function(e) {
+        _this.UpImg = e.target.result;
+      };
+      // this.UpImg =
     }
   }
 };
@@ -113,16 +149,29 @@ export default {
       .upproductimg {
         width: 106px;
         height: 134px;
-        background: #cfdae2;
         margin: 0 auto;
+        position: relative;
+        label {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          background: #cfdae2;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 30px;
+        }
       }
       .upproductLabel {
         width: 100%;
-        height: 56px;
+        height: 100px;
         background: #cfdae2;
-        span {
+        overflow: auto;
+        input {
           display: inline-block;
-          padding: 4px 10px;
+          width: 100px;
+          height: 30px;
+          text-align: center;
           background: rgba($color: #000, $alpha: 0.3);
           margin: 10px;
           cursor: pointer;

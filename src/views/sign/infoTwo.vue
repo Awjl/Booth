@@ -2,14 +2,8 @@
   <div class="signDetails">
     <div class="signBgTwo">
       <div class="signBgInfoLog">
-        <div
-          class="infoLog"
-          @click="tohome"
-        >
-          <img
-            src="../../assets/images/home/logo.png"
-            alt
-          >
+        <div class="infoLog" @click="tohome">
+          <img src="../../assets/images/home/logo.png" alt>
         </div>
         <div class="infoLog">
           <p>入驻booth</p>
@@ -26,20 +20,10 @@
         </div>
         <div class="signBgMainRightTwo">
           <div class="signBgMainListRight">
-            <div
-              class="signBgMainTRightItem"
-              @click.stop="showBoxList"
-            >
+            <div class="signBgMainTRightItem" @click.stop="showBoxList">
               <p>行业类型（勾选）</p>
-              <input
-                type="text"
-                disabled="true"
-                v-model="name"
-              >
-              <div
-                class="Industry"
-                v-if="stateBox"
-              >
+              <input type="text" disabled="true" v-model="name">
+              <div class="Industry" v-if="stateBox">
                 <div class="IndustryLeft">
                   <div
                     class="choiceItem"
@@ -68,10 +52,7 @@
                   @click="selOne(index)"
                 >{{item.key}}</span>
               </div>
-              <div
-                class="SearchIndustry"
-                v-if="one"
-              >
+              <div class="SearchIndustry" v-if="one">
                 <div class="SearchIndustryIn">
                   <input
                     type="text"
@@ -98,10 +79,7 @@
                   @click="selTwo(index)"
                 >{{item.key}}</span>
               </div>
-              <div
-                class="SearchIndustry"
-                v-if="two"
-              >
+              <div class="SearchIndustry" v-if="two">
                 <div class="SearchIndustryIn">
                   <input
                     type="text"
@@ -122,10 +100,7 @@
                   @click="selThree(index)"
                 >{{item.key}}</span>
               </div>
-              <div
-                class="SearchIndustry"
-                v-if="Three"
-              >
+              <div class="SearchIndustry" v-if="Three">
                 <div class="SearchIndustryIn">
                   <input
                     type="text"
@@ -152,10 +127,7 @@
                   @click="selFore(index)"
                 >{{item.key}}</span>
               </div>
-              <div
-                class="SearchIndustry"
-                v-if="Fore"
-              >
+              <div class="SearchIndustry" v-if="Fore">
                 <div class="SearchIndustryIn">
                   <input
                     type="text"
@@ -176,10 +148,7 @@
                   @click="selFive(index)"
                 >{{item.key}}</span>
               </div>
-              <div
-                class="SearchIndustry"
-                v-if="Five"
-              >
+              <div class="SearchIndustry" v-if="Five">
                 <div class="SearchIndustryIn">
                   <input
                     type="text"
@@ -206,10 +175,7 @@
                   @click="selSix(index)"
                 >{{item.key}}</span>
               </div>
-              <div
-                class="SearchIndustry"
-                v-if="Six"
-              >
+              <div class="SearchIndustry" v-if="Six">
                 <div class="SearchIndustryIn">
                   <input
                     type="text"
@@ -229,10 +195,7 @@
             </div>
             <div class="signBgMainTRightItem">
               <p>简介（最多200字）</p>
-              <textarea
-                class="ItemText"
-                v-model="userData.summary"
-              ></textarea>
+              <textarea class="ItemText" v-model="userData.summary"></textarea>
             </div>
           </div>
           <div class="signExhibition">
@@ -241,17 +204,10 @@
               <span @click="addEx">+</span>
             </div>
             <div>
-              <div
-                class="ExhibitionallList"
-                v-for="(item, index) in exhibitionArr"
-                :key="index"
-              >
+              <div class="ExhibitionallList" v-for="(item, index) in exhibitionArr" :key="index">
                 <div class="ExhibitionallLeft">
                   <p>展会名称</p>
-                  <input
-                    type="text"
-                    v-model="item.name"
-                  >
+                  <input type="text" v-model="item.name">
                 </div>
                 <div class="Exhibitionallmind">
                   <p>是否参加</p>
@@ -262,15 +218,9 @@
                 </div>
                 <div class="Exhibitionallright">
                   <p>展位</p>
-                  <input
-                    type="text"
-                    v-model="item.numID"
-                  >
+                  <input type="text" v-model="item.numID">
                 </div>
-                <div
-                  class="icon iconDel"
-                  @click="delList(index)"
-                ></div>
+                <div class="icon iconDel" @click="delList(index)"></div>
               </div>
             </div>
           </div>
@@ -400,7 +350,7 @@ export default {
     _addUserInfo() {
       addUserInfo(this.formData).then(res => {
         if (res.data.code === 0) {
-          setUser(this.$store.state.user.UserID)
+          setUser(this.$store.state.user.UserID);
           this.$router.push({
             path: `/home`
           });
@@ -415,7 +365,10 @@ export default {
       this.$store.commit("SET_keywords", JSON.stringify(this.keywordsArr));
       this.$store.commit("SET_supplier", JSON.stringify(this.supplierArr));
       this.$store.commit("SET_mainProcess", JSON.stringify(this.mainProcess));
-      this.$store.commit("SET_facilitator", JSON.stringify(this.facilitatorArr));
+      this.$store.commit(
+        "SET_facilitator",
+        JSON.stringify(this.facilitatorArr)
+      );
       this.$store.commit("SET_summary", this.userData.summary);
       this.$store.commit("SET_exhibitions", JSON.stringify(this.exhibitionArr));
       this.$store.commit("SET_customer", JSON.stringify(this.customerArr));
@@ -440,25 +393,22 @@ export default {
         "twoIndustry",
         this.$store.state.userData.twoIndustry
       );
+      this.formData.append("competitor", this.$store.state.userData.competitor);
+      this.formData.append("keywords", this.$store.state.userData.keywords);
       this.formData.append(
-        "competitor", this.$store.state.userData.competitor
+        "mainProcess",
+        this.$store.state.userData.mainProcess
       );
       this.formData.append(
-        "keywords", this.$store.state.userData.keywords
-      );
-      this.formData.append(
-        "mainProcess", this.$store.state.userData.mainProcess
-      );
-      this.formData.append(
-        "facilitator", this.$store.state.userData.facilitator
+        "facilitator",
+        this.$store.state.userData.facilitator
       );
       this.formData.append("summary", this.$store.state.userData.summary);
       this.formData.append(
-        "exhibitions", this.$store.state.userData.exhibitions
+        "exhibitions",
+        this.$store.state.userData.exhibitions
       );
-      this.formData.append(
-        "customer", this.$store.state.userData.customer
-      );
+      this.formData.append("customer", this.$store.state.userData.customer);
       for (let i = 0; i <= this.$store.state.userData.imgList.length; i++) {
         this.formData.append(
           "companyPics",
@@ -470,9 +420,7 @@ export default {
         "introductionPic",
         this.$store.state.userData.introductionPic
       );
-      this.formData.append(
-        "supplier", this.$store.state.userData.supplier
-      );
+      this.formData.append("supplier", this.$store.state.userData.supplier);
       this._addUserInfo();
     },
     _searchCompany(center) {
@@ -648,7 +596,10 @@ export default {
       this.$store.commit("SET_keywords", JSON.stringify(this.keywordsArr));
       this.$store.commit("SET_supplier", JSON.stringify(this.supplierArr));
       this.$store.commit("SET_mainProcess", JSON.stringify(this.mainProcess));
-      this.$store.commit("SET_facilitator", JSON.stringify(this.facilitatorArr));
+      this.$store.commit(
+        "SET_facilitator",
+        JSON.stringify(this.facilitatorArr)
+      );
       this.$store.commit("SET_summary", this.userData.summary);
       this.$store.commit("SET_exhibitions", JSON.stringify(this.exhibitionArr));
       this.$store.commit("SET_customer", JSON.stringify(this.customerArr));

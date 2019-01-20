@@ -45,21 +45,28 @@
               </div>
               <div class="signBgFourproductList">
                 <div class="brochureItem" v-for="(item, index) in AllProducts" :key="index">
-                  <div class="brochureItemImg">
+                  <div class="brochureItemImg" @click="topreview(item.pdfUrl)">
                     <img :src="item.coverUrl" alt>
                   </div>
                   <div class="brochureItemText">
                     <div class="brochureItemmanual">
-                      <p>{{item.title}}</p>
+                      <div class="brochureItemmanualHead">
+                        <span>{{item.title}}</span>
+                        <div class="icon iconDel" @click="delList(item.id)"></div>
+                      </div>
                       <div class="label">
-                        <span v-for="(item, num) in item.label.split(',')" :key="num" v-show="item">{{item}}</span>
+                        <span
+                          v-for="(item, num) in item.label.split(',')"
+                          :key="num"
+                          v-show="item"
+                        >{{item}}</span>
                       </div>
                       <div class="brochureintroduce">{{item.summary}}</div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="brochureItemBtn">我要设计</div>
+              <div class="brochureItemBtn" @click="Design(1)">我要设计</div>
             </div>
           </div>
           <div class="signBgMainFootTwo">
@@ -75,11 +82,18 @@
     <div class="UpproductBox" v-if="showUp">
       <UpProduct v-on:clicehide="clicehide"></UpProduct>
     </div>
+    <div class="SubmissionBox" v-if="SubmissionBox" @click="Design">您的设计需求已提交，我们的品牌架构师会主动与您取得联系！</div>
   </div>
 </template>
 
 <script>
-import { addUserInfo, getAllProducts, ERR_OK } from "@/api/api.js";
+import {
+  addUserInfo,
+  getAllProducts,
+  deleteProduct,
+  needDesign,
+  ERR_OK
+} from "@/api/api.js";
 import UpProduct from "@/base/upproduct/upproduct.vue";
 import { setUser } from "@/utils/auth.js";
 
@@ -88,6 +102,7 @@ export default {
   data() {
     return {
       showUp: false,
+      SubmissionBox: false,
       logoImg: "",
       uplogoImg: "",
       introduceImg: "",
@@ -105,20 +120,19 @@ export default {
     this._getAllProducts();
   },
   methods: {
+    _deleteProduct(id) {
+      deleteProduct(id).then(res => {
+        if (res.data.code === 0) {
+          console.log("删除成功");
+          this._getAllProducts();
+        }
+      });
+    },
     _getAllProducts() {
       getAllProducts(this.$store.state.user.UserID).then(res => {
         if (res.data.code === 0) {
           console.log(res.data.data);
           this.AllProducts = res.data.data;
-          // coverUrl: "http://47.101.165.134/root/picture/product/1547885157181118.jpg"
-          // createDate: "2019-01-19T08:05:57.000+0000"
-          // id: 5
-          // label: "标签,,,,"
-          // pdfUrl: "http://47.101.165.134/root/picture/product/1547885157180187.jpg"
-          // readVolume: 0
-          // summary: "简介"
-          // title: "产品手册"
-          // userId: 38
         }
       });
     },
@@ -133,8 +147,32 @@ export default {
         }
       });
     },
+    _needDesign() {
+      needDesign(this.$store.state.user.UserID).then(res => {
+        if (res.data.code === 0) {
+          console.log('提交成功')
+          this.SubmissionBox = !this.SubmissionBox;
+        }
+      });
+    },
+    delList(id) {
+      console.log(id);
+      this._deleteProduct(id);
+    },
+    Design(id) {
+      if (id) {
+        this._needDesign();
+      } else {
+        this.SubmissionBox = !this.SubmissionBox;
+      }
+    },
     clicehide(hideState) {
       this.showUp = hideState;
+      this._getAllProducts();
+    },
+    topreview(url) {
+      console.log(url);
+      window.open(url, "_blank");
     },
     show() {
       this.showUp = true;
@@ -422,6 +460,7 @@ export default {
                 .brochureItemImg {
                   width: 162px;
                   background: #fff;
+                  cursor: pointer;
                   img {
                     height: 150px;
                   }
@@ -438,9 +477,14 @@ export default {
                     }
                   }
                   .brochureItemmanual {
-                    p {
+                    .brochureItemmanualHead {
+                      display: flex;
+                      justify-content: space-between;
                       font-size: 16px;
                       margin: 6px 0;
+                      div {
+                        cursor: pointer;
+                      }
                     }
                     .label {
                       span {
@@ -529,6 +573,18 @@ export default {
     justify-content: center;
     align-items: center;
     z-index: 99999999999999999999;
+  }
+  .SubmissionBox {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba($color: #000000, $alpha: 0.4);
+    color: #fff;
+    text-align: center;
+    line-height: 100vh;
+    font-size: 40px;
   }
 }
 </style>

@@ -232,7 +232,7 @@ export function setMessageRead(id) {
         }
     });
 }
-// 删除产品手册
+// 删除产品手册 1
 export function deleteProduct(id) {
     return service({
         url: `/product/deleteProduct`,
@@ -242,7 +242,7 @@ export function deleteProduct(id) {
         }
     });
 }
-// 获取所有产品手册
+// 获取所有产品手册 1
 export function getAllProducts(id) {
     return service({
         url: `/product/getAllProducts`,
@@ -252,7 +252,7 @@ export function getAllProducts(id) {
         }
     });
 }
-// 保存产品手册
+// 保存产品手册 1
 export function saveProduct(data) {
     return service({
         url: `/product/saveProduct`,
@@ -302,7 +302,7 @@ export function addUserInfo(data) {
         }
     });
 }
-// 获取用户信息
+// 获取用户信息 1
 export function getCompanyInfo(userId, id) {
     return service({
         url: `/user/getCompanyInfo`,
@@ -323,7 +323,7 @@ export function getInfoPercent(id) {
         }
     });
 }
-// 我需要设计
+// 我需要设计 1
 export function needDesign(id) {
     return service({
         url: `/user/needDesign`,

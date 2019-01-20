@@ -29,7 +29,8 @@ const userData = {
     introductionPic: "",
     introductionPicUrl: "",
     products: [],
-    fansNumber: ""
+    fansNumber: "",
+    Percent: ''
   },
   mutations: {
     SET_NAME: (state, name) => {
@@ -112,6 +113,9 @@ const userData = {
     },
     SET_fansNumber: (state, fansNumber) => {
       state.fansNumber = fansNumber;
+    },
+    SET_Percent: (state, Percent) => {
+      state.Percent = Percent;
     }
   }
 };

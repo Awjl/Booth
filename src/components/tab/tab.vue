@@ -1,9 +1,9 @@
 <template>
   <div class="tab">
     <div class="tabLogo">
-      <img src="../../assets/images/home/logo.png" alt @click="toHome"/>
+      <img src="../../assets/images/home/logo.png" alt @click="toHome">
       <div class="tabSearch">
-        <input type="text" placeholder="搜索你感兴趣的企业/展会" />
+        <input type="text" placeholder="搜索你感兴趣的企业/展会">
         <i class="icon iconSearch" @click="toSearch"></i>
       </div>
     </div>
@@ -15,7 +15,9 @@
       <div @click="toSign" v-if="!this.$store.state.user.UserID">注册</div>
       <div @click="ShowLogin" v-if="!this.$store.state.user.UserID">登陆</div>
       <div class="HeadImg" v-if="!this.$store.state.user.UserID"></div>
-      <div class="HeadImg" @click="toCore" v-if="this.$store.state.user.UserID"></div>
+      <div class="HeadImg" @click="toCore" v-if="this.$store.state.user.UserID">
+        <img :src="`http://47.101.165.134/${this.$store.state.userData.logoPicUrl}`" alt>
+      </div>
     </div>
   </div>
 </template>
@@ -122,6 +124,8 @@ export default {
       color: #fff;
       &.HeadImg {
         width: 40px;
+        text-align: center;
+        line-height: 40px;
         height: 40px;
         background: #fff;
         border-radius: 50%;

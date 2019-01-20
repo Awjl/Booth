@@ -26,6 +26,7 @@ const getters = {
   introductionPic: state => state.userData.introductionPic,
   introductionPicUrl: state => state.userData.introductionPicUrl,
   products: state => state.userData.products,
-  fansNumber: state => state.userData.fansNumber
+  fansNumber: state => state.userData.fansNumber,
+  Percent: state => state.userData.Percent
 };
 export default getters;

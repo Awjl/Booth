@@ -18,11 +18,11 @@
         <div class="coreHeardNameBottom">
           <div class="follow">关注</div>
           <div class="over">
-            <p>企业资料完成度70%</p>
+            <p>企业资料完成度{{this.$store.state.userData.Percent}}%</p>
             <div class="overBox">
               <div
                 class="overBoxItem"
-                style="width:70%;"
+                :style="`width:${this.$store.state.userData.Percent}%;`"
               ></div>
             </div>
           </div>

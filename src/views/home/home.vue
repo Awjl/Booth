@@ -2,15 +2,8 @@
   <div class="home">
     <div class="swiper-container">
       <div class="swiper-wrapper">
-        <div
-          class="swiper-slide"
-          v-for="(item, index) in listImg"
-          :key="index"
-        >
-          <img
-            :src="`http://47.101.165.134${item.bannerUrl.split(',')[0]}`"
-            alt
-          >
+        <div class="swiper-slide" v-for="(item, index) in listImg" :key="index">
+          <img :src="`http://47.101.165.134${item.bannerUrl.split(',')[0]}`" alt>
         </div>
       </div>
       <!-- 如果需要分页器 -->
@@ -19,6 +12,18 @@
       <!-- 如果需要导航按钮 -->
       <div class="swiper-button-prev"></div>
       <div class="swiper-button-next"></div>
+    </div>
+    <div class="Percentage" v-if="this.$store.state.user.UserID">
+      <div class="PercentageHend">
+        <span>企业资料完成度{{this.$store.state.userData.Percent}}%</span>
+        <div>
+          <p>普通会员</p>
+          <p>编辑企业资料</p>
+        </div>
+      </div>
+      <div class="PercentageBox">
+        <div class="PercentageBoxList" :style="`width:${this.$store.state.userData.Percent}%;`"></div>
+      </div>
     </div>
     <div class="mian">
       <div class="mianLeft">
@@ -40,7 +45,12 @@ import "swiper/dist/css/swiper.min.css";
 import HomeLogin from "@/components/homeLogin/homeLogin.vue";
 import HomeList from "@/components/homeList/homeList.vue";
 import HomeRight from "@/components/homeRight/homeRight.vue";
-import { getIndexBanner, getInfoPercent, getCompanyInfo, ERR_OK } from "@/api/api.js";
+import {
+  getIndexBanner,
+  getInfoPercent,
+  getCompanyInfo,
+  ERR_OK
+} from "@/api/api.js";
 import { getUser } from "@/utils/auth.js";
 
 export default {
@@ -60,10 +70,10 @@ export default {
     if (this.$store.state.user.UserID) {
       getInfoPercent(this.$store.state.user.UserID).then(res => {
         if (res.status === ERR_OK) {
-          console.log('获取百分比----------------------')
-          console.log(res.data.data)
+          console.log("获取百分比----------------------");
+          this.$store.commit("SET_Percent", res.data.data);
         }
-      })
+      });
     }
   },
   updated() {
@@ -85,7 +95,7 @@ export default {
         prevEl: ".swiper-button-prev"
       },
       on: {
-        click: function () {
+        click: function() {
           const realIndex = this.realIndex;
           _this.toDetails(realIndex);
         }
@@ -123,6 +133,37 @@ export default {
   .swiper-slide > img {
     width: 100%;
     height: 100%;
+  }
+  .Percentage {
+    margin: 30px 0 10px;
+    padding: 0 40px;
+    box-sizing: border-box;
+    width: 100%;
+    .PercentageHend {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-content: center;
+      color: #2c73a1;
+      span {
+        font-size: 30px;
+      }
+      p {
+        font-size: 12px;
+        text-align: right;
+        height: 20px;
+        line-height: 20px;
+      }
+    }
+    .PercentageBox {
+      width: 100%;
+      height: 10px;
+      border: 1px solid #fff;
+      .PercentageBoxList {
+        height: 10px;
+        background: #326b90;
+      }
+    }
   }
   .mian {
     padding: 30px;

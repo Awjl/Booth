@@ -1,13 +1,15 @@
 <template>
   <div class="productList">
     <div class="productListHeard">
-      <div class="productListHeardLogo"></div>
+      <div class="productListHeardLogo">
+        <img :src="this.$store.state.userData.logoPicUrl" alt>
+      </div>
       <div class="productListHeardName">
         <div class="productListHeardNameTop">
           <div class="productListName">
-            <p>基准方中建筑设计有限公司</p>
-            <p>Sichuan，Chengdu 856 位关注者</p>
-            <p>建筑设计行业</p>
+            <p>{{this.$store.state.userData.name}}</p>
+            <p>{{this.$store.state.userData.fansNumber}}位关注者</p>
+            <p>{{this.$store.state.userData.oneIndustryname}}</p>
           </div>
         </div>
         <div class="productListHeardNameBottom">
@@ -22,303 +24,29 @@
       </div>
     </div>
     <div class="productListMain">
-      <div class="aboutTopItem">
-        <div class="brochureItemImg"></div>
-        <div class="brochureItemText">
-          <div class="brochureItemmanual">
-            <div class="brochureItemmanualHead">
-              <p>某某公司企业宣传手册</p>
-              <div class="label">
-                <span>标签</span>
-                <span>标签</span>
-                <span>标签</span>
-              </div>
-            </div>
-            <div class="brochureintroduce">
-              <p>阅读量3000+</p>
-              <p>2018/07/17</p>
-            </div>
-          </div>
-          <div class="brochuremover">
-            <span>谁读过</span>
-            <span>了解更多</span>
-          </div>
-          <div class="brochureReadLsit">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
+      <div class="aboutTopItem" v-for="(item, index) in AllProducts" :key="index">
+        <div class="brochureItemImg">
+          <img :src="item.coverUrl" alt>
         </div>
-      </div>
-      <div class="aboutTopItem">
-        <div class="brochureItemImg"></div>
         <div class="brochureItemText">
           <div class="brochureItemmanual">
             <div class="brochureItemmanualHead">
-              <p>某某公司企业宣传手册</p>
+              <p>{{item.title}}</p>
               <div class="label">
-                <span>标签</span>
-                <span>标签</span>
-                <span>标签</span>
+                <span v-for="(item, num) in item.label.split(',')" :key="num" v-show="item">{{item}}</span>
               </div>
             </div>
             <div class="brochureintroduce">
-              <p>阅读量3000+</p>
-              <p>2018/07/17</p>
+              <div>阅读量{{item.readVolume}}</div>
+              <div>{{item.createDate}}</div>
             </div>
           </div>
           <div class="brochuremover">
             <span>谁读过</span>
-            <span>了解更多</span>
           </div>
           <div class="brochureReadLsit">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-        </div>
-      </div>
-      <div class="aboutTopItem">
-        <div class="brochureItemImg"></div>
-        <div class="brochureItemText">
-          <div class="brochureItemmanual">
-            <div class="brochureItemmanualHead">
-              <p>某某公司企业宣传手册</p>
-              <div class="label">
-                <span>标签</span>
-                <span>标签</span>
-                <span>标签</span>
-              </div>
-            </div>
-            <div class="brochureintroduce">
-              <p>阅读量3000+</p>
-              <p>2018/07/17</p>
-            </div>
-          </div>
-          <div class="brochuremover">
-            <span>谁读过</span>
-            <span>了解更多</span>
-          </div>
-          <div class="brochureReadLsit">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-        </div>
-      </div>
-      <div class="aboutTopItem">
-        <div class="brochureItemImg"></div>
-        <div class="brochureItemText">
-          <div class="brochureItemmanual">
-            <div class="brochureItemmanualHead">
-              <p>某某公司企业宣传手册</p>
-              <div class="label">
-                <span>标签</span>
-                <span>标签</span>
-                <span>标签</span>
-              </div>
-            </div>
-            <div class="brochureintroduce">
-              <p>阅读量3000+</p>
-              <p>2018/07/17</p>
-            </div>
-          </div>
-          <div class="brochuremover">
-            <span>谁读过</span>
-            <span>了解更多</span>
-          </div>
-          <div class="brochureReadLsit">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-        </div>
-      </div>
-      <div class="aboutTopItem">
-        <div class="brochureItemImg"></div>
-        <div class="brochureItemText">
-          <div class="brochureItemmanual">
-            <div class="brochureItemmanualHead">
-              <p>某某公司企业宣传手册</p>
-              <div class="label">
-                <span>标签</span>
-                <span>标签</span>
-                <span>标签</span>
-              </div>
-            </div>
-            <div class="brochureintroduce">
-              <p>阅读量3000+</p>
-              <p>2018/07/17</p>
-            </div>
-          </div>
-          <div class="brochuremover">
-            <span>谁读过</span>
-            <span>了解更多</span>
-          </div>
-          <div class="brochureReadLsit">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-        </div>
-      </div>
-      <div class="aboutTopItem">
-        <div class="brochureItemImg"></div>
-        <div class="brochureItemText">
-          <div class="brochureItemmanual">
-            <div class="brochureItemmanualHead">
-              <p>某某公司企业宣传手册</p>
-              <div class="label">
-                <span>标签</span>
-                <span>标签</span>
-                <span>标签</span>
-              </div>
-            </div>
-            <div class="brochureintroduce">
-              <p>阅读量3000+</p>
-              <p>2018/07/17</p>
-            </div>
-          </div>
-          <div class="brochuremover">
-            <span>谁读过</span>
-            <span>了解更多</span>
-          </div>
-          <div class="brochureReadLsit">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-        </div>
-      </div>
-      <div class="aboutTopItem">
-        <div class="brochureItemImg"></div>
-        <div class="brochureItemText">
-          <div class="brochureItemmanual">
-            <div class="brochureItemmanualHead">
-              <p>某某公司企业宣传手册</p>
-              <div class="label">
-                <span>标签</span>
-                <span>标签</span>
-                <span>标签</span>
-              </div>
-            </div>
-            <div class="brochureintroduce">
-              <p>阅读量3000+</p>
-              <p>2018/07/17</p>
-            </div>
-          </div>
-          <div class="brochuremover">
-            <span>谁读过</span>
-            <span>了解更多</span>
-          </div>
-          <div class="brochureReadLsit">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-        </div>
-      </div>
-      <div class="aboutTopItem">
-        <div class="brochureItemImg"></div>
-        <div class="brochureItemText">
-          <div class="brochureItemmanual">
-            <div class="brochureItemmanualHead">
-              <p>某某公司企业宣传手册</p>
-              <div class="label">
-                <span>标签</span>
-                <span>标签</span>
-                <span>标签</span>
-              </div>
-            </div>
-            <div class="brochureintroduce">
-              <p>阅读量3000+</p>
-              <p>2018/07/17</p>
-            </div>
-          </div>
-          <div class="brochuremover">
-            <span>谁读过</span>
-            <span>了解更多</span>
-          </div>
-          <div class="brochureReadLsit">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-        </div>
-      </div>
-      <div class="aboutTopItem">
-        <div class="brochureItemImg"></div>
-        <div class="brochureItemText">
-          <div class="brochureItemmanual">
-            <div class="brochureItemmanualHead">
-              <p>某某公司企业宣传手册</p>
-              <div class="label">
-                <span>标签</span>
-                <span>标签</span>
-                <span>标签</span>
-              </div>
-            </div>
-            <div class="brochureintroduce">
-              <p>阅读量3000+</p>
-              <p>2018/07/17</p>
-            </div>
-          </div>
-          <div class="brochuremover">
-            <span>谁读过</span>
-            <span>了解更多</span>
-          </div>
-          <div class="brochureReadLsit">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-        </div>
-      </div>
-      <div class="aboutTopItem">
-        <div class="brochureItemImg"></div>
-        <div class="brochureItemText">
-          <div class="brochureItemmanual">
-            <div class="brochureItemmanualHead">
-              <p>某某公司企业宣传手册</p>
-              <div class="label">
-                <span>标签</span>
-                <span>标签</span>
-                <span>标签</span>
-              </div>
-            </div>
-            <div class="brochureintroduce">
-              <p>阅读量3000+</p>
-              <p>2018/07/17</p>
-            </div>
-          </div>
-          <div class="brochuremover">
-            <span>谁读过</span>
-            <span>了解更多</span>
-          </div>
-          <div class="brochureReadLsit">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
+            <p v-if=" item.users.length === 0">暂无数据</p>
+            <div v-for="(item, index) in item.users" :key="index"></div>
           </div>
         </div>
       </div>
@@ -327,14 +55,32 @@
 </template>
 
 <script>
+import { getAllProducts, ERR_OK } from "@/api/api.js";
 export default {
-  name: "productList"
+  name: "productList",
+  data() {
+    return {
+      AllProducts: []
+    };
+  },
+  created() {
+    this._getAllProducts();
+  },
+  methods: {
+    _getAllProducts() {
+      getAllProducts(this.$store.state.user.UserID).then(res => {
+        if (res.data.code === 0) {
+          console.log(res.data.data);
+          this.AllProducts = res.data.data;
+        }
+      });
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 .productList {
-  padding: 30px 20px;
   box-sizing: border-box;
   .productListTitle {
     text-align: center;
@@ -366,6 +112,7 @@ export default {
     }
   }
   .productListHeard {
+    padding: 30px 20px;
     display: flex;
     .productListHeardLogo {
       width: 100px;
@@ -383,9 +130,10 @@ export default {
         .productListName {
           padding-left: 30px;
           box-sizing: border-box;
+          color: #fff;
           p:nth-child(1) {
             font-size: 28px;
-            font-weight: bold;
+            color: #fff;
           }
           p:nth-child(3) {
             margin-top: 10px;
@@ -401,12 +149,12 @@ export default {
         justify-content: space-between;
         align-items: flex-end;
         .follow {
-          height: 30px;
-          width: 60px;
-          line-height: 30px;
+          height: 24px;
+          width: 50px;
+          line-height: 24px;
           text-align: center;
-          background: #000;
-          color: #fff;
+          background: #fff;
+          color: #000;
           cursor: pointer;
         }
       }
@@ -416,21 +164,20 @@ export default {
     display: flex;
     flex-wrap: wrap;
     box-sizing: border-box;
-    margin: 20px;
-    border-left: 1px solid #707070;
-    border-top: 1px solid #707070;
+    margin: 30px;
     .aboutTopItem {
-      width: 33.33%;
+      width: 31%;
       display: flex;
       justify-content: space-between;
       padding: 10px;
-      border: 1px solid #707070;
       border-left: none;
       border-top: none;
       box-sizing: border-box;
+      background: #fff;
+      margin: 10px 1%;
       .brochureItemImg {
         width: 120px;
-        background: #fff;
+        background: #ddd;
       }
       .brochureItemText {
         width: calc(100% - 120px);
@@ -447,9 +194,10 @@ export default {
           display: flex;
           justify-content: space-between;
           align-items: center;
+          position: relative;
           p {
             font-size: 16px;
-            margin: 6px 0;
+            margin: 6px 0 20px;
           }
           .label {
             span {
@@ -464,9 +212,13 @@ export default {
             }
           }
           .brochureintroduce {
-            p {
+            position: absolute;
+            top: 10px;
+            right: 0;
+            div {
               font-size: 10px;
               text-align: right;
+              margin-bottom: 4px;
             }
           }
         }
@@ -483,7 +235,7 @@ export default {
             width: 18%;
             margin: 0 1%;
             height: 40px;
-            background: #fff;
+            background: #ddd;
           }
         }
       }

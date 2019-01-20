@@ -37,8 +37,6 @@
             <div class="coreAboutHead">关于我们</div>
             <div class="coreAboutText">{{this.$store.state.userData.summary}}</div>
             <div class="coreAboutHead">公司详情</div>
-            <!-- <div class="coreAboutTtile">公司网址</div>
-            <div class="coreAboutlist">wwwbaidu.com</div> -->
             <div class="coreAboutTtile">公司总部</div>
             <div class="coreAboutlist">{{this.$store.state.userData.address}}</div>
             <div class="coreAboutTtile">创立年份</div>

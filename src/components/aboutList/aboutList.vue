@@ -3,51 +3,25 @@
     <div class="aboutListTop">
       <div class="aboutListHead">产品册</div>
       <div class="aboutTopList">
-        <div class="aboutTopItem">
-          <div class="brochureItemImg"></div>
-          <div class="brochureItemText">
-            <div class="brochureItemmanual">
-              <div class="brochureItemmanualHead">
-                <p>某某公司企业宣传手册</p>
-                <div class="label">
-                  <span>标签</span>
-                  <span>标签</span>
-                  <span>标签</span>
-                </div>
-              </div>
-              <div class="brochureintroduce">
-                <p>阅读量3000+</p>
-                <p>2018/07/17</p>
-              </div>
-            </div>
-            <div class="brochuremover">
-              <span>谁读过</span>
-              <span>了解更多</span>
-            </div>
-            <div class="brochureReadLsit">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
+        <div class="aboutTopItem" v-for="(item, index) in aboutTopData" :key="index">
+          <div class="brochureItemImg">
+            <img :src="item.coverUrl" alt>
           </div>
-        </div>
-        <div class="aboutTopItem">
-          <div class="brochureItemImg"></div>
           <div class="brochureItemText">
             <div class="brochureItemmanual">
               <div class="brochureItemmanualHead">
-                <p>某某公司企业宣传手册</p>
+                <p>{{item.title}}</p>
                 <div class="label">
-                  <span>标签</span>
-                  <span>标签</span>
-                  <span>标签</span>
+                  <span
+                    v-for="(item, num) in item.label.split(',')"
+                    :key="num"
+                    v-show="item"
+                  >{{item}}</span>
                 </div>
               </div>
               <div class="brochureintroduce">
-                <p>阅读量3000+</p>
-                <p>2018/07/17</p>
+                <p>阅读量{{item.readVolume}}</p>
+                <p>{{item.createDate}}</p>
               </div>
             </div>
             <div class="brochuremover">
@@ -55,16 +29,13 @@
               <span>了解更多</span>
             </div>
             <div class="brochureReadLsit">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
+              <p v-if=" item.users.length === 0">暂无数据</p>
+              <div v-for="(item, index) in item.users" :key="index"></div>
             </div>
           </div>
         </div>
       </div>
-      <div class="Seemover">查看所有产品册</div>
+      <div class="Seemover" @click="toMover">查看所有产品册</div>
     </div>
     <div class="aboutListMiddle">
       <div class="aboutListHead">
@@ -221,7 +192,19 @@
 </template>
 <script>
 export default {
-  name: "aboutList"
+  name: "aboutList",
+  data() {
+    return {
+      aboutTopData: this.$store.state.userData.products
+    };
+  },
+  methods: {
+    toMover() {
+      this.$router.push({
+        path: `/productList`
+      })
+    }
+  }
 };
 </script>
 
@@ -430,6 +413,7 @@ export default {
       line-height: 42px;
       background: rgba($color: #648aa2, $alpha: 0.5);
       margin: 20px auto 0;
+      cursor: pointer;
     }
   }
   .aboutListMiddle {

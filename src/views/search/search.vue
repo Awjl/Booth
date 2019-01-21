@@ -3,19 +3,19 @@
     <div class="searchNav">
       <div class="searchList">
         <div class="searchItem">
-          <div><span>企业</span><span>300个</span></div>
+          <div><span>企业</span><span>{{searchList.companyNum}}个</span></div>
         </div>
         <div class="searchItem">
-          <div><span>展会</span><span>300个</span></div>
+          <div><span>展会</span><span>{{searchList.exhibitionNum}}个</span></div>
         </div>
         <div class="searchItem">
-          <div><span>企业动态</span><span>300个</span></div>
+          <div><span>企业动态</span><span>{{searchList.eventNum}}个</span></div>
         </div>
         <div class="searchItem">
-          <div><span>产品手册</span><span>300个</span></div>
+          <div><span>产品手册</span><span>{{searchList.brochureNum}}个</span></div>
         </div>
         <div class="searchItem">
-          <div><span>产品图片</span><span>300个</span></div>
+          <div><span>产品图片</span><span>{{searchList.imageNum}}个</span></div>
         </div>
       </div>
       <div class="searchText">
@@ -28,33 +28,27 @@
         <div class="searchMineTop">
           <div class="searchTitle">
             <span>展会 exhibition</span>
-            <div class="mover" @click="toExhibition">
+            <div
+              class="mover"
+              @click="toExhibition"
+            >
               <i class="icon iconTo1"></i>
             </div>
           </div>
           <div class="exhibitionList">
-            <div class="exhibitionItem">
+            <div
+              class="exhibitionItem"
+              v-for="(item, index) in searchList.exhibitions"
+              :key="index"
+            >
               <div class="exhibitionItemImg">
-                <img src="../../assets/images/search/one.png" alt="" />
+                <img
+                  :src="`http://47.101.165.134${item.bannerUrl.split(',')[0]}`"
+                  alt=""
+                />
               </div>
               <div class="exhibitionItemName">
-                HOUSE VISION 2018 BEIJING EXHIBITION 探索家——未来生活大展
-              </div>
-            </div>
-            <div class="exhibitionItem">
-              <div class="exhibitionItemImg">
-                <img src="../../assets/images/search/one.png" alt="" />
-              </div>
-              <div class="exhibitionItemName">
-                HOUSE VISION 2018 BEIJING EXHIBITION 探索家——未来生活大展
-              </div>
-            </div>
-            <div class="exhibitionItem">
-              <div class="exhibitionItemImg">
-                <img src="../../assets/images/search/one.png" alt="" />
-              </div>
-              <div class="exhibitionItemName">
-                HOUSE VISION 2018 BEIJING EXHIBITION 探索家——未来生活大展
+                {{item.nameEng}} {{item.name}}
               </div>
             </div>
           </div>
@@ -62,58 +56,54 @@
         <div class="searchMineBottom">
           <div class="searchTitle">
             <span>产品手册 brochure</span>
-            <div class="mover" @click="toBrochure">
+            <div
+              class="mover"
+              @click="toBrochure"
+            >
               <i class="icon iconTo1"></i>
             </div>
           </div>
           <div class="brochureList">
-            <div class="brochureItem">
-              <div class="brochureItemImg"></div>
-              <div class="brochureItemText">
-                <div class="brochureItemHead">
-                  <div class="brochureItemName">
-                    <div class="brochureItemLogo">
-                      <img src="../../assets/images/home/head2.png" alt="" />
-                    </div>
-                    <div class="brochureLogoName">
-                      <p>某某公司企业宣传手册</p>
-                      <p>Sichuan，Chengdu 856关注者</p>
-                      <p>建筑设计行业</p>
-                    </div>
-                  </div>
-                  <div class="brochureItemNum">阅读量 3000+</div>
-                </div>
-                <div class="brochureItemmanual">
-                  <p>某某公司企业宣传手册</p>
-                  <div class="label">
-                    <span>标签</span><span>标签</span><span>标签</span>
-                  </div>
-                  <div class="brochureintroduce"></div>
-                </div>
+            <div
+              class="brochureItem"
+              v-for="(item, index) in searchList.brochures"
+              :key="index"
+            >
+              <div class="brochureItemImg">
+                <img
+                  :src="`${item.coverUrl}`"
+                  alt=""
+                >
               </div>
-            </div>
-            <div class="brochureItem">
-              <div class="brochureItemImg"></div>
               <div class="brochureItemText">
                 <div class="brochureItemHead">
                   <div class="brochureItemName">
                     <div class="brochureItemLogo">
-                      <img src="../../assets/images/home/head2.png" alt="" />
+                      <img
+                        :src="`${item.logoUrl}`"
+                        alt=""
+                      >
                     </div>
                     <div class="brochureLogoName">
-                      <p>某某公司企业宣传手册</p>
-                      <p>Sichuan，Chengdu 856关注者</p>
-                      <p>建筑设计行业</p>
+                      <p>{{item.name}}</p>
+                      <p>{{item.fansNumber}}关注者</p>
+                      <p>{{item.industryName}}</p>
                     </div>
                   </div>
-                  <div class="brochureItemNum">阅读量 3000+</div>
+                  <div class="brochureItemNum">阅读量 {{item.readVolume}}</div>
                 </div>
                 <div class="brochureItemmanual">
-                  <p>某某公司企业宣传手册</p>
+                  <p>{{item.title}}</p>
                   <div class="label">
-                    <span>标签</span><span>标签</span><span>标签</span>
+                    <span
+                      v-for="(item, num) in item.label.split(',')"
+                      :key="num"
+                      v-show="item"
+                    >{{item}}</span>
                   </div>
-                  <div class="brochureintroduce"></div>
+                  <div class="brochureintroduce">
+                    {{item.summary}}
+                  </div>
                 </div>
               </div>
             </div>
@@ -124,68 +114,30 @@
         <div class="searchRightTop">
           <div class="searchTitle">
             <span>企业 company</span>
-            <div class="mover" @click="toCompany">
+            <div
+              class="mover"
+              @click="toCompany"
+            >
               <i class="icon iconTo1"></i>
             </div>
           </div>
           <div class="companyList">
-            <div class="companyItem">
+            <div
+              class="companyItem"
+              v-for="(item, index) in searchList.companies"
+              :key="index"
+            >
               <div class="enterpriseItemLeft">
                 <div class="enterpriseItemHead">
-                  <img src="../../assets/images/home/TSNHCG_1_.png" alt="" />
+                  <img
+                    :src="`http://47.101.165.134${item.logoUrl}`"
+                    alt=""
+                  />
                 </div>
                 <div class="enterpriseItemLeftTitle">
-                  <p>altiuma</p>
-                  <p>Roubaix 5,246 位关注者</p>
-                  <p>建筑行业</p>
-                </div>
-              </div>
-              <div class="enterpriseItemRight">
-                <div class="InterestListshare">分享</div>
-                <div class="InterestListSee">查看产品手册</div>
-              </div>
-            </div>
-            <div class="companyItem">
-              <div class="enterpriseItemLeft">
-                <div class="enterpriseItemHead">
-                  <img src="../../assets/images/home/TSNHCG_1_.png" alt="" />
-                </div>
-                <div class="enterpriseItemLeftTitle">
-                  <p>altiuma</p>
-                  <p>Roubaix 5,246 位关注者</p>
-                  <p>建筑行业</p>
-                </div>
-              </div>
-              <div class="enterpriseItemRight">
-                <div class="InterestListshare">分享</div>
-                <div class="InterestListSee">查看产品手册</div>
-              </div>
-            </div>
-            <div class="companyItem">
-              <div class="enterpriseItemLeft">
-                <div class="enterpriseItemHead">
-                  <img src="../../assets/images/home/TSNHCG_1_.png" alt="" />
-                </div>
-                <div class="enterpriseItemLeftTitle">
-                  <p>altiuma</p>
-                  <p>Roubaix 5,246 位关注者</p>
-                  <p>建筑行业</p>
-                </div>
-              </div>
-              <div class="enterpriseItemRight">
-                <div class="InterestListshare">分享</div>
-                <div class="InterestListSee">查看产品手册</div>
-              </div>
-            </div>
-            <div class="companyItem">
-              <div class="enterpriseItemLeft">
-                <div class="enterpriseItemHead">
-                  <img src="../../assets/images/home/TSNHCG_1_.png" alt="" />
-                </div>
-                <div class="enterpriseItemLeftTitle">
-                  <p>altiuma</p>
-                  <p>Roubaix 5,246 位关注者</p>
-                  <p>建筑行业</p>
+                  <p>{{item.name}}</p>
+                  <p>{{item.fansNumber}}位关注者</p>
+                  <p>{{item.industryName}}</p>
                 </div>
               </div>
               <div class="enterpriseItemRight">
@@ -198,43 +150,56 @@
         <div class="searchRightmian">
           <div class="searchTitle">
             <span>产品图片 images</span>
-            <div class="mover" @click="toImages">
+            <div
+              class="mover"
+              @click="toImages"
+            >
               <i class="icon iconTo1"></i>
             </div>
           </div>
           <div class="searchimagesList">
-            <div class="searchimagesItem"></div>
-            <div class="searchimagesItem"></div>
-            <div class="searchimagesItem"></div>
-            <div class="searchimagesItem"></div>
-            <div class="searchimagesItem"></div>
-            <div class="searchimagesItem"></div>
-            <div class="searchimagesItem"></div>
-            <div class="searchimagesItem"></div>
-            <div class="searchimagesItem"></div>
+            <div
+              class="searchimagesItem"
+              v-for="(item, index) in searchList.images"
+              :key="index"
+            >
+              <img
+                :src="`http://47.101.165.134${item.url}`"
+                alt=""
+              >
+            </div>
           </div>
         </div>
         <div class="searchRightBottom">
           <div class="searchTitle">
             <span>企业动态 event</span>
-            <div class="mover" @click="toEvent">
+            <div
+              class="mover"
+              @click="toEvent"
+            >
               <i class="icon iconTo1"></i>
             </div>
           </div>
           <div class="eventList">
-            <div class="eventItem">
+            <div
+              class="eventItem"
+              v-for="(item, index) in searchList.events"
+              :key="index"
+            >
               <div class="homeListHead">
                 <div class="homeListImg">
                   <div>
-                    <img src="../../assets/images/home/head2.png" alt="" />
+                    <img
+                      :src="`http://47.101.165.134${item.logoUrl}`"
+                      alt=""
+                    />
                   </div>
-                  <div class="follow">+ 关注</div>
                 </div>
                 <div class="homeListTitle">
-                  <div class="name">基准方中建筑设计有限公司</div>
-                  <div class="nameEN">Sichuan，Chengdu 856关注者</div>
-                  <p class="industry">建筑设计行业</p>
-                  <div class="exhibition">
+                  <div class="name">{{item.name}}</div>
+                  <div class="nameEN">{{item.fansNumber}}关注者</div>
+                  <p class="industry">{{item.industryName}}</p>
+                  <!-- <div class="exhibition">
                     <div class="exhibitionItem">
                       <div class="exhibitionCan">
                         <span>已参与</span>
@@ -250,7 +215,7 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
                 <div class="enterpriseItemRight">
                   <div class="InterestListshare">分享</div>
@@ -258,11 +223,14 @@
                 </div>
               </div>
               <div class="hometext">
-                11月30日下午，由巴适成都联合报花探店、成都生活君、成都那些事儿、触摸成都等成都生活方式类新媒体账号举办的“传媒新势力·2018成都UP榜”在蔚来中心拉开序幕。会上发布了2018年成都UP榜单，基准方中荣获“成都UP榜
+                {{item.summary}}
               </div>
               <div class="moveBtn">更多</div>
               <div class="homeItemImg">
-                <img src="../../assets/images/home/item1.png" alt="" />
+                <img
+                  :src="`http://47.101.165.134${item.introductionUrl}`"
+                  alt=""
+                />
               </div>
             </div>
           </div>
@@ -273,40 +241,82 @@
 </template>
 
 <script>
+import { search } from "@/api/api.js"
 export default {
   name: "searchPag",
   data() {
     return {
-      center: this.$route.query.center
+      center: this.$route.query.center,
+      searchList: {
+        brochureNum: "", // 册子
+        companyNum: "", // 公司
+        eventNum: "", // 动态
+        exhibitionNum: "", // 展会
+        imageNum: "", // 图片
+        brochures: [],
+        companies: [],
+        events: [],
+        exhibitions: [],
+        images: []
+      }
     }
   },
   created() {
     console.log(this.$route.query.center)
+    this._search();
   },
   methods: {
+    _search() {
+      search(this.center).then(res => {
+        if (res.data.code === 0) {
+          this.searchList = res.data.data
+          console.log(res.data.data)
+        }
+      })
+    },
     toExhibition() {
       this.$router.push({
-        path: `/searchExhibition`
+        name: `searchExhibition`,
+        params: {
+          "center": this.center,
+          "searchList": this.searchList,
+        }
       });
     },
     toBrochure() {
       this.$router.push({
-        path: `/searchBrochure`
+        name: `searchBrochure`,
+        params: {
+          "center": this.center,
+          "searchList": this.searchList,
+        }
       });
     },
     toCompany() {
       this.$router.push({
-        path: `/searchCompaby`
+        name: `searchCompaby`,
+        params: {
+          "center": this.center,
+          "searchList": this.searchList,
+        }
       });
     },
     toImages() {
       this.$router.push({
-        path: `/searchImages`
+        name: `searchImages`,
+        params: {
+          "center": this.center,
+          "searchList": this.searchList,
+        }
       });
     },
     toEvent() {
       this.$router.push({
-        path: `/searchEvent`
+        name: `searchEvent`,
+        params: {
+          "center": this.center,
+          "searchList": this.searchList,
+        }
       });
     }
   }
@@ -503,6 +513,9 @@ export default {
             .enterpriseItemLeft {
               display: flex;
               height: 100%;
+              .enterpriseItemHead {
+                width: 66px;
+              }
               .enterpriseItemLeftTitle {
                 height: 100%;
                 margin-left: 10px;
@@ -578,6 +591,7 @@ export default {
         .eventList {
           .eventItem {
             width: 100%;
+            margin-bottom: 20px;
             .homeListHead {
               display: flex;
               justify-content: space-between;

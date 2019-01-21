@@ -1,18 +1,33 @@
 <template>
   <div class="homeLogin">
     <div class="LoginMen">
-      <div class="LoginItem" v-if="!this.$store.state.user.UserID">
+      <div
+        class="LoginItem"
+        v-if="!this.$store.state.user.UserID"
+      >
         <div class="sign">
-          <img src="../../assets/images/home/signUp.png" alt>
+          <img
+            src="../../assets/images/home/signUp.png"
+            alt
+          >
           <div class="signIcon">
-            <img src="../../assets/images/icon/man.png" alt>
+            <img
+              src="../../assets/images/icon/man.png"
+              alt
+            >
           </div>
         </div>
         <div class="signBtn">加入booth</div>
       </div>
-      <div class="LoginItem" v-else>
+      <div
+        class="LoginItem"
+        v-else
+      >
         <div class="LoginItemLogo">
-          <img :src="`http://47.101.165.134/${this.$store.state.userData.logoPicUrl}`" alt>
+          <img
+            :src="`http://47.101.165.134/${this.$store.state.userData.logoPicUrl}`"
+            alt
+          >
         </div>
         <div class="LoginItemTitle">
           <p>{{this.$store.state.userData.name}}</p>
@@ -22,21 +37,33 @@
         <div class="LoginItemUser">
           <p>谁看过我</p>
           <div class="LoginItemUserList">
-            <div class="LoginItemUserImg"></div>
-            <div class="LoginItemUserImg"></div>
-            <div class="LoginItemUserImg"></div>
-            <div class="LoginItemUserImg"></div>
-            <div class="LoginItemUserImg"></div>
+            <p v-if="attentionUserList.attentionMe.length === 0">暂无数据</p>
+            <div
+              class="LoginItemUserImg"
+              v-for="(item, index) in attentionUserList.attentionMe"
+              :key="index"
+            >
+              <img
+                :src="item.logoUrl"
+                alt=""
+              >
+            </div>
           </div>
         </div>
-         <div class="LoginItemUser">
+        <div class="LoginItemUser">
           <p>我看过谁</p>
           <div class="LoginItemUserList">
-            <div class="LoginItemUserImg"></div>
-            <div class="LoginItemUserImg"></div>
-            <div class="LoginItemUserImg"></div>
-            <div class="LoginItemUserImg"></div>
-            <div class="LoginItemUserImg"></div>
+            <p v-if="attentionUserList.attentionTo.length === 0">暂无数据</p>
+            <div
+              class="LoginItemUserImg"
+              v-for="(item, index) in attentionUserList.attentionTo"
+              :key="index"
+            >
+              <img
+                :src="item.logoUrl"
+                alt=""
+              >
+            </div>
           </div>
         </div>
       </div>
@@ -45,13 +72,20 @@
       <div class="InterestItem">
         <div class="InterestHead">
           <span>你可能感兴趣的</span>
-          <span>了解更多</span>
+          <span @click="toenterprise">了解更多</span>
         </div>
         <div class="InterestList">
-          <div class="enterpriseItem" v-for="(item, index) in dataList" :key="index">
+          <div
+            class="enterpriseItem"
+            v-for="(item, index) in dataList"
+            :key="index"
+          >
             <div class="enterpriseItemLeft">
               <div class="enterpriseItemHead">
-                <img :src="`http://47.101.165.134${item.logoUrl}`" alt>
+                <img
+                  :src="`http://47.101.165.134${item.logoUrl}`"
+                  alt
+                >
               </div>
               <div class="enterpriseItemLeftTitle">
                 <p>{{item.name}}</p>
@@ -80,7 +114,10 @@
           <div class="enterpriseItem">
             <div class="enterpriseItemLeft">
               <div class="enterpriseItemHead">
-                <img src="../../assets/images/home/TSNHCG_1_.png" alt>
+                <img
+                  src="../../assets/images/home/TSNHCG_1_.png"
+                  alt
+                >
               </div>
               <div class="enterpriseItemLeftTitle">
                 <p>altiuma</p>
@@ -97,7 +134,10 @@
           <div class="enterpriseItem">
             <div class="enterpriseItemLeft">
               <div class="enterpriseItemHead">
-                <img src="../../assets/images/home/TSNHCG_1_.png" alt>
+                <img
+                  src="../../assets/images/home/TSNHCG_1_.png"
+                  alt
+                >
               </div>
               <div class="enterpriseItemLeftTitle">
                 <p>altiuma</p>
@@ -128,7 +168,10 @@
           <div class="enterpriseItem">
             <div class="enterpriseItemLeft">
               <div class="enterpriseItemHead">
-                <img src="../../assets/images/home/TSNHCG_1_.png" alt>
+                <img
+                  src="../../assets/images/home/TSNHCG_1_.png"
+                  alt
+                >
               </div>
               <div class="enterpriseItemLeftTitle">
                 <p>altiuma</p>
@@ -145,7 +188,10 @@
           <div class="enterpriseItem">
             <div class="enterpriseItemLeft">
               <div class="enterpriseItemHead">
-                <img src="../../assets/images/home/TSNHCG_1_.png" alt>
+                <img
+                  src="../../assets/images/home/TSNHCG_1_.png"
+                  alt
+                >
               </div>
               <div class="enterpriseItemLeftTitle">
                 <p>altiuma</p>
@@ -168,7 +214,7 @@
 </template>
 
 <script>
-import { mayBeInterestedCompany, ERR_OK } from "@/api/api.js";
+import { mayBeInterestedCompany, getAttention, ERR_OK } from "@/api/api.js";
 
 export default {
   name: "homeLogin",
@@ -179,7 +225,11 @@ export default {
         secondIndustryId: "",
         id: ""
       },
-      dataList: []
+      dataList: [],
+      attentionUserList: {
+        attentionMe: [],
+        attentionTo: []
+      }
     };
   },
   created() {
@@ -188,6 +238,7 @@ export default {
       this.userData.secondIndustryId = this.$store.state.userData.twoIndustry;
       this.userData.id = this.$store.state.user.UserID;
       this._mayBeInterestedCompany();
+      this._getAttention();
     } else {
       this.userData.firstIndustryId = this.$store.state.userData.oneIndustry;
       this._mayBeInterestedCompany();
@@ -200,6 +251,20 @@ export default {
           this.dataList = res.data.data;
         }
       });
+    },
+    _getAttention() {
+      getAttention(this.$store.state.user.UserID).then(res => {
+        if (res.data.code === 0) {
+          console.log('谁看过谁-----------------------------------')
+          this.attentionUserList = res.data.data;
+          console.log(this.attentionUserList)
+        }
+      })
+    },
+    toenterprise() {
+      this.$router.push({
+        path: '/enterprise'
+      })
     }
   }
 };
@@ -277,8 +342,11 @@ export default {
         .LoginItemUserList {
           display: flex;
           flex-wrap: wrap;
+          p {
+            font-size: 10px;
+          }
           .LoginItemUserImg {
-            width:18%;
+            width: 18%;
             height: 50px;
             margin-right: 2%;
             background: #fff;

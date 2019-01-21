@@ -3,7 +3,7 @@
     <div class="tabLogo">
       <img src="../../assets/images/home/logo.png" alt @click="toHome">
       <div class="tabSearch">
-        <input type="text" placeholder="搜索你感兴趣的企业/展会">
+        <input type="text" placeholder="搜索你感兴趣的企业/展会" v-model="searchData">
         <i class="icon iconSearch" @click="toSearch"></i>
       </div>
     </div>
@@ -28,7 +28,8 @@ export default {
   data() {
     return {
       LoginState: true,
-      SignState: true
+      SignState: true,
+      searchData: ""
     };
   },
   methods: {
@@ -52,7 +53,8 @@ export default {
     },
     toSearch() {
       this.$router.push({
-        path: `/search`
+        path: `/search`,
+        query: { center: this.searchData }
       });
     },
     toNews() {

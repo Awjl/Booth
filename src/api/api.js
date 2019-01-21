@@ -45,7 +45,7 @@ export function getCollectionRecord(id) {
         url: "/company/getCollectionRecord",
         method: "get",
         params: {
-            id: did
+            id: id
         }
     });
 }
@@ -313,7 +313,7 @@ export function getCompanyInfo(userId, id) {
         }
     });
 }
-// 获取资料百分比 GET /user/getInfoPercent 1
+// 获取资料百分比 1
 export function getInfoPercent(id) {
     return service({
         url: `/user/getInfoPercent`,
@@ -351,6 +351,38 @@ export function matchCode(data) {
         params: {
             username: data.username,
             code: data.code
+        }
+    });
+}
+// 查询谁看过谁  1
+export function getAttention(id) {
+    return service({
+        url: `/user/getAttention`,
+        method: "get",
+        params: {
+            userId: id
+        }
+    });
+}
+// 获取合作伙伴
+// /user/getPartner
+export function getPartner(id, type) {
+    return service({
+        url: `/user/getPartner`,
+        method: "get",
+        params: {
+            userId: id,
+            type: type
+        }
+    });
+}
+// 相似用户/user/getSimilarityCompany
+export function getSimilarityCompany(id) {
+    return service({
+        url: `/user/getSimilarityCompany`,
+        method: "get",
+        params: {
+            userId: id
         }
     });
 }

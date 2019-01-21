@@ -3,38 +3,23 @@
     <div class="searchNav">
       <div class="searchList">
         <div class="searchItem">
-          <div>
-            <span>企业</span>
-            <span>300个</span>
-          </div>
+          <div><span>企业</span><span>{{searchList.companyNum}}个</span></div>
         </div>
         <div class="searchItem">
-          <div>
-            <span>展会</span>
-            <span>300个</span>
-          </div>
+          <div><span>展会</span><span>{{searchList.exhibitionNum}}个</span></div>
         </div>
         <div class="searchItem">
-          <div>
-            <span>企业动态</span>
-            <span>300个</span>
-          </div>
+          <div><span>企业动态</span><span>{{searchList.eventNum}}个</span></div>
         </div>
         <div class="searchItem">
-          <div>
-            <span>产品手册</span>
-            <span>300个</span>
-          </div>
+          <div><span>产品手册</span><span>{{searchList.brochureNum}}个</span></div>
         </div>
         <div class="searchItem">
-          <div>
-            <span>产品图片</span>
-            <span>300个</span>
-          </div>
+          <div><span>产品图片</span><span>{{searchList.imageNum}}个</span></div>
         </div>
       </div>
       <div class="searchText">
-        <p>“金融圈xxxx”</p>
+        <p>{{this.center}}</p>
         <p>相关搜索结果</p>
       </div>
     </div>
@@ -42,100 +27,30 @@
       <div class="searchTitle">
         <span>
           企业 company
-          <span>20个</span>
+          <span>{{searchList.companyNum}}个</span>
         </span>
-        <div class="Back" @click="toBack">返回搜索页</div>
+        <div
+          class="Back"
+          @click="toBack"
+        >返回搜索页</div>
       </div>
       <div class="CoDetailsList">
-        <div class="CoDetailsItem">
+        <div
+          class="CoDetailsItem"
+          v-for="(item, index) in searchList.companies"
+          :key="index"
+        >
           <div class="enterpriseItemLeft">
             <div class="enterpriseItemHead">
-              <img src="../../assets/images/home/TSNHCG_1_.png" alt>
+              <img
+                :src="`http://47.101.165.134${item.logoUrl}`"
+                alt=""
+              />
             </div>
             <div class="enterpriseItemLeftTitle">
-              <p>altiuma</p>
-              <p>Roubaix 5,246 位关注者</p>
-              <p>建筑行业</p>
-            </div>
-          </div>
-          <div class="enterpriseItemRight">
-            <div class="InterestListshare">分享</div>
-            <div class="InterestListSee">查看产品手册</div>
-          </div>
-        </div>
-        <div class="CoDetailsItem">
-          <div class="enterpriseItemLeft">
-            <div class="enterpriseItemHead">
-              <img src="../../assets/images/home/TSNHCG_1_.png" alt>
-            </div>
-            <div class="enterpriseItemLeftTitle">
-              <p>altiuma</p>
-              <p>Roubaix 5,246 位关注者</p>
-              <p>建筑行业</p>
-            </div>
-          </div>
-          <div class="enterpriseItemRight">
-            <div class="InterestListshare">分享</div>
-            <div class="InterestListSee">查看产品手册</div>
-          </div>
-        </div>
-        <div class="CoDetailsItem">
-          <div class="enterpriseItemLeft">
-            <div class="enterpriseItemHead">
-              <img src="../../assets/images/home/TSNHCG_1_.png" alt>
-            </div>
-            <div class="enterpriseItemLeftTitle">
-              <p>altiuma</p>
-              <p>Roubaix 5,246 位关注者</p>
-              <p>建筑行业</p>
-            </div>
-          </div>
-          <div class="enterpriseItemRight">
-            <div class="InterestListshare">分享</div>
-            <div class="InterestListSee">查看产品手册</div>
-          </div>
-        </div>
-        <div class="CoDetailsItem">
-          <div class="enterpriseItemLeft">
-            <div class="enterpriseItemHead">
-              <img src="../../assets/images/home/TSNHCG_1_.png" alt>
-            </div>
-            <div class="enterpriseItemLeftTitle">
-              <p>altiuma</p>
-              <p>Roubaix 5,246 位关注者</p>
-              <p>建筑行业</p>
-            </div>
-          </div>
-          <div class="enterpriseItemRight">
-            <div class="InterestListshare">分享</div>
-            <div class="InterestListSee">查看产品手册</div>
-          </div>
-        </div>
-        <div class="CoDetailsItem">
-          <div class="enterpriseItemLeft">
-            <div class="enterpriseItemHead">
-              <img src="../../assets/images/home/TSNHCG_1_.png" alt>
-            </div>
-            <div class="enterpriseItemLeftTitle">
-              <p>altiuma</p>
-              <p>Roubaix 5,246 位关注者</p>
-              <p>建筑行业</p>
-            </div>
-          </div>
-          <div class="enterpriseItemRight">
-            <div class="InterestListshare">分享</div>
-            <div class="InterestListSee">查看产品手册</div>
-          </div>
-        </div>
-        <div class="CoDetailsItem">
-          <div class="enterpriseItemLeft">
-            <div class="enterpriseItemHead">
-              <img src="../../assets/images/home/TSNHCG_1_.png" alt>
-            </div>
-            <div class="enterpriseItemLeftTitle">
-              <p>altiuma</p>
-              <p>Roubaix 5,246 位关注者</p>
-              <p>建筑行业</p>
+              <p>{{item.name}}</p>
+              <p>{{item.fansNumber}}位关注者</p>
+              <p>{{item.industryName}}</p>
             </div>
           </div>
           <div class="enterpriseItemRight">
@@ -151,11 +66,17 @@
 <script>
 export default {
   name: "searchPag",
+  data() {
+    return {
+      center: this.$route.params.center,
+      searchList: this.$route.params.searchList
+    }
+  },
   methods: {
     toBack() {
-      console.log("123");
       this.$router.push({
-        path: `/search`
+        name: `search`,
+        query: { center: this.center }
       });
     }
   }
@@ -236,6 +157,9 @@ export default {
         .enterpriseItemLeft {
           display: flex;
           height: 100%;
+          .enterpriseItemHead {
+            width: 88px;
+          }
           .enterpriseItemLeftTitle {
             height: 100%;
             margin-left: 10px;

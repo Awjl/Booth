@@ -10,9 +10,15 @@
       <div class="coreHeardName">
         <div class="coreHeardNameTop">
           <div class="coreName">
-            <p>{{this.$store.state.userData.name}}</p>
+            <div class="coreNamehead">
+              <span>{{this.$store.state.userData.name}}</span>
+              <div>
+                <p>普通会员</p>
+                <p @click="toInfo">修改资料</p>
+              </div>
+            </div>
             <p>{{this.$store.state.userData.fansNumber}}位关注者</p>
-            <p>{{this.$store.state.userData.oneIndustryname}}</p>
+            <p class="Industry">{{this.$store.state.userData.oneIndustryname}}</p>
           </div>
         </div>
         <div class="coreHeardNameBottom">
@@ -28,7 +34,6 @@
           </div>
         </div>
       </div>
-      <div @click="toInfo">修改资料</div>
     </div>
     <div class="coreMain">
       <div class="coreAbout">
@@ -52,8 +57,15 @@
             </div>
           </div>
           <div class="coreAboutintroductionImg">
-            <div class="ItemImg" v-for="(item, index) in this.$store.state.userData.imgListUrl" :key="index">
-              <img :src="item.url" alt="">
+            <div
+              class="ItemImg"
+              v-for="(item, index) in this.$store.state.userData.imgListUrl"
+              :key="index"
+            >
+              <img
+                :src="item.url"
+                alt=""
+              >
             </div>
           </div>
         </div>
@@ -63,16 +75,16 @@
               <div class="homeListImg">
                 <div>
                   <img
-                    src="../../assets/images/home/head2.png"
-                    alt
+                    :src="this.$store.state.userData.logoPicUrl"
+                    alt=""
                   >
                 </div>
                 <div class="follow">+ 关注</div>
               </div>
               <div class="homeListTitle">
-                <div class="name">基准方中建筑设计有限公司</div>
-                <div class="nameEN">Sichuan，Chengdu 856关注者</div>
-                <p class="industry">建筑设计行业</p>
+                <div class="name">{{this.$store.state.userData.name}}</div>
+                <div class="nameEN">{{this.$store.state.userData.fansNumber}}位关注者</div>
+                <p class="industry">{{this.$store.state.userData.oneIndustryname}}</p>
                 <div class="exhibition">
                   <div class="exhibitionItem">
                     <div class="exhibitionCan">
@@ -97,13 +109,13 @@
                 <div class="InterestListSee">查看产品手册</div>
               </div>
             </div>
-            <div class="hometext">11月30日下午，由巴适成都联合报花探店、成都生活君、成都那些事儿、触摸成都等成都生活方式类新媒体账号举办的“传媒新势力·2018成都UP榜”在蔚来中心拉开序幕。会上发布了2018年成都UP榜单，基准方中荣获“成都UP榜</div>
+            <div class="hometext">{{this.$store.state.userData.summary}}</div>
             <div class="moveBtn">更多</div>
             <div class="homeItemImg">
               <img
-                src="../../assets/images/home/item1.png"
-                alt
-              >
+                :src="`http://47.101.165.134${this.$store.state.userData.introductionPicUrl}`"
+                alt=""
+              />
             </div>
           </div>
         </div>
@@ -176,13 +188,28 @@ export default {
         display: flex;
         width: 100%;
         .coreName {
+          width: 100%;
           padding-left: 30px;
           box-sizing: border-box;
-          p:nth-child(1) {
-            font-size: 28px;
-            font-weight: bold;
+          .coreNamehead {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            div {
+              p {
+                margin-top: 4px;
+                color: #648aa2;
+              }
+              p:nth-child(2) {
+                cursor: pointer;
+              }
+            }
+            span {
+              font-size: 28px;
+              font-weight: bold;
+            }
           }
-          p:nth-child(3) {
+          .Industry {
             margin-top: 10px;
             color: #648aa2;
           }
@@ -383,7 +410,6 @@ export default {
             height: auto;
             img {
               width: 100%;
-              
             }
           }
         }

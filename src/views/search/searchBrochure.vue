@@ -3,38 +3,23 @@
     <div class="searchNav">
       <div class="searchList">
         <div class="searchItem">
-          <div>
-            <span>企业</span>
-            <span>300个</span>
-          </div>
+          <div><span>企业</span><span>{{searchList.companyNum}}个</span></div>
         </div>
         <div class="searchItem">
-          <div>
-            <span>展会</span>
-            <span>300个</span>
-          </div>
+          <div><span>展会</span><span>{{searchList.exhibitionNum}}个</span></div>
         </div>
         <div class="searchItem">
-          <div>
-            <span>企业动态</span>
-            <span>300个</span>
-          </div>
+          <div><span>企业动态</span><span>{{searchList.eventNum}}个</span></div>
         </div>
         <div class="searchItem">
-          <div>
-            <span>产品手册</span>
-            <span>300个</span>
-          </div>
+          <div><span>产品手册</span><span>{{searchList.brochureNum}}个</span></div>
         </div>
         <div class="searchItem">
-          <div>
-            <span>产品图片</span>
-            <span>300个</span>
-          </div>
+          <div><span>产品图片</span><span>{{searchList.imageNum}}个</span></div>
         </div>
       </div>
       <div class="searchText">
-        <p>“金融圈xxxx”</p>
+        <p>{{this.center}}</p>
         <p>相关搜索结果</p>
       </div>
     </div>
@@ -42,143 +27,54 @@
       <div class="searchTitle">
         <span>
           产品手册 brochure
-          <span>20个</span>
+          <span>{{searchList.brochureNum}}个</span>
         </span>
-        <div class="Back" @click="toBack">返回搜索页</div>
+        <div
+          class="Back"
+          @click="toBack"
+        >返回搜索页</div>
       </div>
       <div class="BrDetailsList">
-        <div class="BrDetailsItem">
-          <div class="brochureItemImg"></div>
-          <div class="brochureItemText">
-            <div class="brochureItemHead">
-              <div class="brochureItemName">
-                <div class="brochureItemLogo">
-                  <img src="../../assets/images/home/head2.png" alt>
-                </div>
-                <div class="brochureLogoName">
-                  <p>某某公司企业宣传手册</p>
-                  <p>Sichuan，Chengdu 856关注者</p>
-                  <p>建筑设计行业</p>
-                </div>
-              </div>
-              <div class="brochureItemNum">阅读量 3000+</div>
-            </div>
-            <div class="brochureItemmanual">
-              <p>某某公司企业宣传手册</p>
-              <div class="label">
-                <span>标签</span>
-                <span>标签</span>
-                <span>标签</span>
-              </div>
-              <div class="brochureintroduce"></div>
-            </div>
+        <div
+          class="BrDetailsItem"
+          v-for="(item, index) in searchList.brochures"
+          :key="index"
+        >
+          <div class="brochureItemImg">
+            <img
+              :src="`${item.coverUrl}`"
+              alt=""
+            >
           </div>
-        </div>
-        <div class="BrDetailsItem">
-          <div class="brochureItemImg"></div>
           <div class="brochureItemText">
             <div class="brochureItemHead">
               <div class="brochureItemName">
                 <div class="brochureItemLogo">
-                  <img src="../../assets/images/home/head2.png" alt>
+                  <img
+                    :src="`${item.logoUrl}`"
+                    alt=""
+                  >
                 </div>
                 <div class="brochureLogoName">
-                  <p>某某公司企业宣传手册</p>
-                  <p>Sichuan，Chengdu 856关注者</p>
-                  <p>建筑设计行业</p>
+                  <p>{{item.name}}</p>
+                  <p>{{item.fansNumber}}关注者</p>
+                  <p>{{item.industryName}}</p>
                 </div>
               </div>
-              <div class="brochureItemNum">阅读量 3000+</div>
+              <div class="brochureItemNum">阅读量 {{item.readVolume}}</div>
             </div>
             <div class="brochureItemmanual">
-              <p>某某公司企业宣传手册</p>
+              <p>{{item.title}}</p>
               <div class="label">
-                <span>标签</span>
-                <span>标签</span>
-                <span>标签</span>
+                <span
+                  v-for="(item, num) in item.label.split(',')"
+                  :key="num"
+                  v-show="item"
+                >{{item}}</span>
               </div>
-              <div class="brochureintroduce"></div>
-            </div>
-          </div>
-        </div>
-        <div class="BrDetailsItem">
-          <div class="brochureItemImg"></div>
-          <div class="brochureItemText">
-            <div class="brochureItemHead">
-              <div class="brochureItemName">
-                <div class="brochureItemLogo">
-                  <img src="../../assets/images/home/head2.png" alt>
-                </div>
-                <div class="brochureLogoName">
-                  <p>某某公司企业宣传手册</p>
-                  <p>Sichuan，Chengdu 856关注者</p>
-                  <p>建筑设计行业</p>
-                </div>
+              <div class="brochureintroduce">
+                {{item.summary}}
               </div>
-              <div class="brochureItemNum">阅读量 3000+</div>
-            </div>
-            <div class="brochureItemmanual">
-              <p>某某公司企业宣传手册</p>
-              <div class="label">
-                <span>标签</span>
-                <span>标签</span>
-                <span>标签</span>
-              </div>
-              <div class="brochureintroduce"></div>
-            </div>
-          </div>
-        </div>
-        <div class="BrDetailsItem">
-          <div class="brochureItemImg"></div>
-          <div class="brochureItemText">
-            <div class="brochureItemHead">
-              <div class="brochureItemName">
-                <div class="brochureItemLogo">
-                  <img src="../../assets/images/home/head2.png" alt>
-                </div>
-                <div class="brochureLogoName">
-                  <p>某某公司企业宣传手册</p>
-                  <p>Sichuan，Chengdu 856关注者</p>
-                  <p>建筑设计行业</p>
-                </div>
-              </div>
-              <div class="brochureItemNum">阅读量 3000+</div>
-            </div>
-            <div class="brochureItemmanual">
-              <p>某某公司企业宣传手册</p>
-              <div class="label">
-                <span>标签</span>
-                <span>标签</span>
-                <span>标签</span>
-              </div>
-              <div class="brochureintroduce"></div>
-            </div>
-          </div>
-        </div>
-        <div class="BrDetailsItem">
-          <div class="brochureItemImg"></div>
-          <div class="brochureItemText">
-            <div class="brochureItemHead">
-              <div class="brochureItemName">
-                <div class="brochureItemLogo">
-                  <img src="../../assets/images/home/head2.png" alt>
-                </div>
-                <div class="brochureLogoName">
-                  <p>某某公司企业宣传手册</p>
-                  <p>Sichuan，Chengdu 856关注者</p>
-                  <p>建筑设计行业</p>
-                </div>
-              </div>
-              <div class="brochureItemNum">阅读量 3000+</div>
-            </div>
-            <div class="brochureItemmanual">
-              <p>某某公司企业宣传手册</p>
-              <div class="label">
-                <span>标签</span>
-                <span>标签</span>
-                <span>标签</span>
-              </div>
-              <div class="brochureintroduce"></div>
             </div>
           </div>
         </div>
@@ -190,11 +86,18 @@
 <script>
 export default {
   name: "searchPag",
+  data() {
+    return {
+      center: this.$route.params.center,
+      searchList: this.$route.params.searchList
+    }
+  },
   methods: {
     toBack() {
       console.log("123");
       this.$router.push({
-        path: `/search`
+        name: `search`,
+        query: { center: this.center }
       });
     }
   }
@@ -268,7 +171,7 @@ export default {
         width: 48%;
         display: flex;
         margin: 0 auto;
-        margin:0 1% 20px;
+        margin: 0 1% 20px;
         .brochureItemImg {
           width: 162px;
           background: #fff;

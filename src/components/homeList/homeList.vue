@@ -117,15 +117,15 @@ export default {
       })
     },
     followId(id) {
-      if (this.$store.state.user.UserID()) {
-        this.followData.userId = this.$store.state.user.UserID()
+      if (this.$store.state.user.UserID) {
+        this.followData.userId = this.$store.state.user.UserID
         this.followData.concernedId = id
         this._focus()
       }
     },
     cancelfollowId(id) {
-      if (this.$store.state.user.UserID()) {
-        this.followData.userId = this.$store.state.user.UserID()
+      if (this.$store.state.user.UserID) {
+        this.followData.userId = this.$store.state.user.UserID
         this.followData.concernedId = id
         this._cancelFocus()
       }

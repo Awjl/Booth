@@ -1,0 +1,42 @@
+<template>
+  <div class="success">
+    <p v-if="success">激活成功</p>
+  </div>
+</template>
+
+<script>
+import { activate, ERR_OK } from "@/api/api.js";
+
+export default {
+  data() {
+    return {
+      success: "",
+      timer: '',
+      url: window.location.href.split("?")[1]
+    };
+  },
+  created() {
+    console.log(this.url)
+    let splictStr = this.url.split("&")
+    let urlObj = {}
+    for (var i = 0; i < splictStr.length; i++) {
+      urlObj[splictStr[i].split("=")[0]] = splictStr[i].split("=")[1];
+    }
+    activate(urlObj.key).then((res) => {
+      if (res.data.code === 0) {
+        this.success = res.data
+        let _this = this
+        this.timer = setTimeout(() => {
+          this.$router.push({
+            name: `infoOne`,
+            params: { "id": urlObj.code }
+          });
+        }, 5000);
+      }
+    })
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+</style>

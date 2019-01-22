@@ -215,7 +215,7 @@ export function sendCode(username) {
         }
     });
 }
-// 获取所有消息通知
+// 获取所有消息通知 1
 export function getAllMessage(id) {
     return service({
         url: `/getAllMessage`,
@@ -225,7 +225,7 @@ export function getAllMessage(id) {
         }
     });
 }
-// 设置已读 
+// 设置已读  1
 export function setMessageRead(id) {
     return service({
         url: `/setMessageRead`,

@@ -6,6 +6,8 @@
         <input
           type="text"
           placeholder="搜索企业"
+          v-model="infoData.name"
+          v-on:input="inputFunc"
         />
       </div>
       <div class="enterpriseNavBottom">
@@ -33,33 +35,47 @@
     </div>
     <div class="enterpriseBox">
       <div class="enterpriseBoxList">
-        <div class="enterpriseBoxItem">
+        <div
+          class="enterpriseBoxItem"
+          v-for="(item, index) in dataList"
+          :key="index"
+        >
           <div class="homeListHead">
             <div class="homeListImg">
               <div><img
-                  src="../../assets/images/home/head2.png"
-                  alt
+                  :src="`http://47.101.165.134${item.user.logoUrl}`"
+                  alt=""
                 /></div>
-              <div class="follow">+ 关注</div>
+              <div
+                class="follow"
+                v-if="item.isConcerned === 2"
+                @click="followId(item.user.id)"
+              >+ 关注</div>
+              <div
+                class="follow"
+                v-if="item.isConcerned === 1"
+                @click="cancelfollowId(item.user.id)"
+              >+ 已关注</div>
             </div>
             <div class="homeListTitle">
-              <div class="name">基准方中建筑设计有限公司</div>
-              <div class="nameEN">Sichuan，Chengdu 856关注者</div>
-              <p class="industry">建筑设计行业</p>
-              <div class="exhibition">
+              <div class="name">{{item.user.name}}</div>
+              <div class="nameEN">{{item.user.fansNumber}}关注者</div>
+              <p class="industry">{{item.user.industryName}}</p>
+              <div
+                class="exhibition"
+                v-if="item.participation !== null"
+              >
                 <div class="exhibitionItem">
                   <div class="exhibitionCan">
                     <span>已参与</span>
                     <div class="exhibitionName">
-                      HOUSE VISION 2018 BEIJING EXHIBITION
-                      <br />探索家——未来生活大展
+                      {{item.participation.nameEng}} <br />
+                      {{item.participation.name}}
                     </div>
                   </div>
                   <div class="exhibitionTime">
-                    <span>2018年9月21日<br />11月6日</span>
-                    <div class="exhibitionDetali">
-                      <i class="icon iconTo"></i>
-                    </div>
+                    <span>{{item.participation.date}}</span>
+                    <div class="exhibitionDetali"><i class="icon iconTo"></i></div>
                   </div>
                 </div>
               </div>
@@ -70,13 +86,13 @@
             </div>
           </div>
           <div class="hometext">
-            11月30日下午，由巴适成都联合报花探店、成都生活君、成都那些事儿、触摸成都等成都生活方式类新媒体账号举办的“传媒新势力·2018成都UP榜”在蔚来中心拉开序幕。会上发布了2018年成都UP榜单，基准方中荣获“成都UP榜
+            {{item.user.summary}}
           </div>
           <div class="moveBtn">更多</div>
           <div class="homeItemImg">
             <img
-              src="../../assets/images/home/item1.png"
-              alt
+              :src="`http://47.101.165.134${item.user.introductionUrl}`"
+              alt=""
             />
           </div>
         </div>
@@ -84,8 +100,8 @@
       <div class="enterpriseBoxBaner">
         <div class="homeRight">
           <img
-            src="../../assets/images/home/banner1.png"
-            alt
+            :src="`http://47.101.165.134${dataAll.areaA.url}`"
+            alt=""
           />
           <div class="homeTitle">
             <img
@@ -98,8 +114,8 @@
             />
           </div>
           <img
-            src="../../assets/images/home/banner2.png"
-            alt
+            :src="`http://47.101.165.134${dataAll.areaB.url}`"
+            alt=""
           />
         </div>
       </div>
@@ -108,9 +124,85 @@
 </template>
 
 <script>
+import { discoverOtherCompanyByCondition, getAdvert, focus, cancelFocus, ERR_OK } from "@/api/api.js";
+
 export default {
   name: "enterprise",
+  data() {
+    return {
+      timer: "",
+      infoData: {
+        id: this.$store.state.user.UserID,
+        name: "",
+        firstIndustryId: "",
+        secondIndustryId: ""
+      },
+      dataList: [],
+      followData: {
+        userId: "",
+        concernedId: ""
+      },
+      dataAll: {
+        areaA: { id: 2, url: "" },
+        areaB: { id: 2, url: "" }
+      }
+    }
+  },
+  created() {
+    getAdvert(this.$store.state.userData.twoIndustry).then((res) => {
+      if (res.status === 200) {
+        this.dataAll = res.data.data
+      }
+    })
+    this._discoverOtherCompanyByCondition()
+  },
   methods: {
+    _focus() {
+      focus(this.followData).then((res) => {
+        if (res.status === ERR_OK) {
+          this._discoverOtherCompanyByCondition()
+        }
+      })
+    },
+    _cancelFocus() {
+      cancelFocus(this.followData).then((res) => {
+        if (res.status === ERR_OK) {
+          this._discoverOtherCompanyByCondition()
+        }
+      })
+    },
+    _discoverOtherCompanyByCondition() {
+      discoverOtherCompanyByCondition(this.infoData).then(res => {
+        if (res.data.code === 0) {
+          console.log("发现--------------------------------------")
+          console.log(res.data.data)
+          this.dataList = res.data.data
+        }
+      })
+    },
+    setTime() {
+      this.timer = setTimeout(() => {
+        this._discoverOtherCompanyByCondition();
+      }, 1000);
+    },
+    followId(id) {
+      if (this.$store.state.user.UserID) {
+        this.followData.userId = this.$store.state.user.UserID
+        this.followData.concernedId = id
+        this._focus()
+      }
+    },
+    cancelfollowId(id) {
+      if (this.$store.state.user.UserID) {
+        this.followData.userId = this.$store.state.user.UserID
+        this.followData.concernedId = id
+        this._cancelFocus()
+      }
+    },
+    inputFunc() {
+      clearInterval(this.timer);
+      this.setTime();
+    },
     toEnterprise() {
       this.$router.push({
         path: `/enterprise`
@@ -224,6 +316,9 @@ export default {
       box-sizing: border-box;
       .enterpriseBoxItem {
         width: 100%;
+        background: #fff;
+        padding: 30px;
+        box-sizing: border-box;
         .homeListHead {
           display: flex;
           justify-content: space-between;
@@ -243,6 +338,7 @@ export default {
               color: #fff;
               font-size: 10px;
               margin-top: 10px;
+              cursor: pointer;
             }
           }
           .homeListTitle {

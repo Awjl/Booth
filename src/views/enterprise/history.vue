@@ -2,9 +2,18 @@
   <div class="history">
     <div class="historyNav">
       <div class="historyList">
-        <div class="historyItem" @click="toEnterprise">发现</div>
-        <div class="historyItem ItemAct" @click="toHistory">历史记录</div>
-        <div class="historyItem" @click="toCollection">收藏</div>
+        <div
+          class="historyItem"
+          @click="toEnterprise"
+        >发现</div>
+        <div
+          class="historyItem ItemAct"
+          @click="toHistory"
+        >历史记录</div>
+        <div
+          class="historyItem"
+          @click="toCollection"
+        >收藏</div>
       </div>
     </div>
     <div class="historyBox">
@@ -12,54 +21,21 @@
         <div class="historyItemName">企业</div>
         <div class="historyItem">
           <div class="historyItemA">
-            <div class="historyItemAItem">
+            <div
+              class="historyItemAItem"
+              v-for="(item, index) in dataList.users"
+              :key="index"
+            >
               <div class="historyItemHead">
-                <img src="../../assets/images/home/TSNHCG_1_.png" alt />
+                <img
+                  :src="`http://47.101.165.134${item.logoUrl}`"
+                  alt
+                />
               </div>
               <div class="historyItemLeftTitle">
-                <p>altiuma</p>
-                <p>5,246 位关注者</p>
-                <p>建筑行业</p>
-              </div>
-            </div>
-            <div class="historyItemAItem">
-              <div class="historyItemHead">
-                <img src="../../assets/images/home/TSNHCG_1_.png" alt />
-              </div>
-              <div class="historyItemLeftTitle">
-                <p>altiuma</p>
-                <p>5,246 位关注者</p>
-                <p>建筑行业</p>
-              </div>
-            </div>
-            <div class="historyItemAItem">
-              <div class="historyItemHead">
-                <img src="../../assets/images/home/TSNHCG_1_.png" alt />
-              </div>
-              <div class="historyItemLeftTitle">
-                <p>altiuma</p>
-                <p>5,246 位关注者</p>
-                <p>建筑行业</p>
-              </div>
-            </div>
-            <div class="historyItemAItem">
-              <div class="historyItemHead">
-                <img src="../../assets/images/home/TSNHCG_1_.png" alt />
-              </div>
-              <div class="historyItemLeftTitle">
-                <p>altiuma</p>
-                <p>5,246 位关注者</p>
-                <p>建筑行业</p>
-              </div>
-            </div>
-            <div class="historyItemAItem">
-              <div class="historyItemHead">
-                <img src="../../assets/images/home/TSNHCG_1_.png" alt />
-              </div>
-              <div class="historyItemLeftTitle">
-                <p>altiuma</p>
-                <p>5,246 位关注者</p>
-                <p>建筑行业</p>
+                <p>{{item.name}}</p>
+                <p>{{item.fansNumber}} 位关注者</p>
+                <p>{{item.industryName}}</p>
               </div>
             </div>
           </div>
@@ -69,53 +45,46 @@
         <div class="historyItemName">产品册</div>
         <div class="historyItem">
           <div class="historyItemB">
-            <div class="historyItemBItem">
-              <div class="brochureItemImg"></div>
-              <div class="brochureItemText">
-                <div class="brochureItemHead">
-                  <div class="brochureItemName">
-                    <div class="brochureItemLogo">
-                      <img src="../../assets/images/home/head2.png" alt />
-                    </div>
-                    <div class="brochureLogoName">
-                      <p>某某公司企业宣传手册</p>
-                      <p>Sichuan，Chengdu 856关注者</p>
-                      <p>建筑设计行业</p>
-                    </div>
-                  </div>
-                  <div class="brochureItemNum">阅读量 3000+</div>
-                </div>
-                <div class="brochureItemmanual">
-                  <p>某某公司企业宣传手册</p>
-                  <div class="label">
-                    <span>标签</span><span>标签</span><span>标签</span>
-                  </div>
-                  <div class="brochureintroduce"></div>
-                </div>
+            <div
+              class="historyItemBItem"
+              v-for="(item, index) in dataList.products"
+              :key="index"
+            >
+              <div class="brochureItemImg">
+                <img
+                  :src="`${item.coverUrl}`"
+                  alt
+                />
               </div>
-            </div>
-            <div class="historyItemBItem">
-              <div class="brochureItemImg"></div>
               <div class="brochureItemText">
                 <div class="brochureItemHead">
                   <div class="brochureItemName">
                     <div class="brochureItemLogo">
-                      <img src="../../assets/images/home/head2.png" alt />
+                      <img
+                        :src="`http://47.101.165.134${item.logoUrl}`"
+                        alt
+                      />
                     </div>
                     <div class="brochureLogoName">
-                      <p>某某公司企业宣传手册</p>
-                      <p>Sichuan，Chengdu 856关注者</p>
-                      <p>建筑设计行业</p>
+                      <p>{{item.name}}</p>
+                      <p>{{item.fansNumber}}关注者</p>
+                      <p>{{item.industryName}}</p>
                     </div>
                   </div>
-                  <div class="brochureItemNum">阅读量 3000+</div>
+                  <div class="brochureItemNum">阅读量 {{item.readVolume}}</div>
                 </div>
                 <div class="brochureItemmanual">
-                  <p>某某公司企业宣传手册</p>
+                  <p>{{item.title}}</p>
                   <div class="label">
-                    <span>标签</span><span>标签</span><span>标签</span>
+                    <span
+                      v-for="(item, num) in item.label.split(',')"
+                      :key="num"
+                      v-show="item"
+                    >{{item}}</span>
                   </div>
-                  <div class="brochureintroduce"></div>
+                  <div class="brochureintroduce">
+                    {{item.summary}}
+                  </div>
                 </div>
               </div>
             </div>
@@ -125,16 +94,16 @@
       <div class="HBoxThree">
         <div class="historyItemName">图片</div>
         <div class="historyItem">
-          <div class="historyItemImg"></div>
-          <div class="historyItemImg"></div>
-          <div class="historyItemImg"></div>
-          <div class="historyItemImg"></div>
-          <div class="historyItemImg"></div>
-          <div class="historyItemImg"></div>
-          <div class="historyItemImg"></div>
-          <div class="historyItemImg"></div>
-          <div class="historyItemImg"></div>
-          <div class="historyItemImg"></div>
+          <div
+            class="historyItemImg"
+            v-for="(item, index) in dataList.pictures"
+            :key="index"
+          >
+            <img
+              :src="item.url"
+              alt=""
+            >
+          </div>
         </div>
       </div>
     </div>
@@ -142,9 +111,31 @@
 </template>
 
 <script>
+import { getHistoryRecord, ERR_OK } from "@/api/api.js";
+
 export default {
   name: "history",
+  data() {
+    return {
+      dataList: {
+        pictures: [],
+        products: [],
+        users: []
+      }
+    }
+  },
+  created() {
+    this._getHistoryRecord()
+  },
   methods: {
+    _getHistoryRecord() {
+      getHistoryRecord(this.$store.state.user.UserID).then(res => {
+        if (res.data.code === 0) {
+          console.log(res.data.data)
+          this.dataList = res.data.data
+        }
+      })
+    },
     toEnterprise() {
       this.$router.push({
         path: `/enterprise`
@@ -216,6 +207,9 @@ export default {
           display: flex;
           height: 100%;
           margin-bottom: 10px;
+          .historyItemHead {
+            width: 88px;
+          }
           .historyItemLeftTitle {
             height: 100%;
             margin-left: 10px;
@@ -256,6 +250,9 @@ export default {
           background: #f2f2f2;
           .brochureItemName {
             display: flex;
+            .brochureItemLogo {
+              width: 88px;
+            }
             .brochureLogoName {
               margin-left: 10px;
               p:nth-child(1) {

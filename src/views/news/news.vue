@@ -2,32 +2,33 @@
   <div class="news">
     <div class="newsList">
       <div class="newLogo">
-        <img src="../../assets/images/new/logo.png" alt="" />
+        <img
+          src="../../assets/images/new/logo.png"
+          alt=""
+        />
         <p>最新消息推送！</p>
       </div>
-      <div class="newsItem" @click="showDetails">
-        <span>您的注册信息已经完成。</span><span>未读</span>
-      </div>
-      <div class="newsItem">
-        <span>您的注册信息已经完成。</span><span>未读</span>
-      </div>
-      <div class="newsItem">
-        <span>您的注册信息已经完成。</span><span>未读</span>
-      </div>
-      <div class="newsItem">
-        <span>您的注册信息已经完成。</span><span>未读</span>
-      </div>
-      <div class="newsItem">
-        <span>您的注册信息已经完成。</span><span>未读</span>
-      </div>
-      <div class="newsItem">
-        <span>您的注册信息已经完成。</span><span>未读</span>
+      <div
+        class="newsItem"
+        @click="showDetails(item.id)"
+        v-for="(item, index) in dataList"
+        :key='index'
+      >
+        <span>{{item.title}}</span><span v-if="item.isRead === 1">未读</span>
+        <span v-if="item.isRead === 2">已读</span>
       </div>
     </div>
-    <div class="newsDetailsBox" v-if="showBox" @click="hidebox">
+    <div
+      class="newsDetailsBox"
+      v-if="showBox"
+      @click="hidebox"
+    >
       <div class="newBox">
         <div class="newBoxHead">
-          <div><img src="../../assets/images/new/logo.png" alt="" /></div>
+          <div><img
+              src="../../assets/images/new/logo.png"
+              alt=""
+            /></div>
           <div>
             <p>
               Basics contains components and complex blocks which can easily be
@@ -36,9 +37,8 @@
             <p>into almost any design.</p>
           </div>
         </div>
-        <div class="newBoxTitle"><span>您的注册信息已经完成。</span></div>
-        <div class="newBoxMian">
-          11月30日下午，由巴适成都联合报花探店、成都生活君、成都那些事儿、触摸成都等成都生活方式类新媒体账号举办的“传媒新势力·2018成都UP榜”在蔚来中心拉开序幕。会上发布了2018年成都UP榜单，基准方中荣获“成都UP榜
+        <div class="newBoxTitle"><span>{{detailes.title}}</span></div>
+        <div class="newBoxMian" v-html="detailes.message">
         </div>
       </div>
     </div>
@@ -46,16 +46,42 @@
 </template>
 
 <script>
+import { getAllMessage, setMessageRead } from "@/api/api.js"
 export default {
   name: "news",
   data() {
     return {
-      showBox: false
+      showBox: false,
+      dataList: [],
+      detailes: {
+        message: "",
+        title: "",
+      }
     };
   },
+  created() {
+    this._getAllMessage()
+  },
   methods: {
-    showDetails() {
+    _getAllMessage() {
+      getAllMessage(this.$store.state.user.UserID).then(res => {
+        if (res.data.code === 0) {
+          console.log(res.data.data)
+          this.dataList = res.data.data
+        }
+      })
+    },
+    _setMessageRead(id) {
+      setMessageRead(id).then(res => {
+        if (res.data.code === 0) {
+          console.log(res.data.data)
+          this.detailes = res.data.data
+        }
+      })
+    },
+    showDetails(id) {
       this.showBox = true;
+      this._setMessageRead(id);
     },
     hidebox() {
       this.showBox = false;

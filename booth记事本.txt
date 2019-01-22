@@ -11,3 +11,9 @@ https://lanhuapp.com/url/C4BP0 企业主页区 1
 // this.$store.state.xxx
 // this.$store.dispatch
 // this.$store.commit
+市场及销售
+采购
+管理
+技术
+生产及运营
+其他

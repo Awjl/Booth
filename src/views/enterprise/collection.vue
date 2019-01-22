@@ -34,156 +34,48 @@
       <div class="collectionBoxLeft">
         <div class="collectHead">
           <span>产品册</span>
-          <input type="text">
         </div>
         <div class="leftList">
-          <div class="leftListItem">
-            <div class="brochureItemImg"></div>
-            <div class="brochureItemText">
-              <div class="brochureItemHead">
-                <div class="brochureItemName">
-                  <div class="brochureItemLogo">
-                    <img
-                      src="../../assets/images/home/head2.png"
-                      alt
-                    >
-                  </div>
-                  <div class="brochureLogoName">
-                    <p>某某公司企业宣传手册</p>
-                    <p>Sichuan，Chengdu 856关注者</p>
-                    <p>建筑设计行业</p>
-                  </div>
-                </div>
-                <div class="brochureItemNum">阅读量 3000+</div>
-              </div>
-              <div class="brochureItemmanual">
-                <p>某某公司企业宣传手册</p>
-                <div class="label">
-                  <span>标签</span>
-                  <span>标签</span>
-                  <span>标签</span>
-                </div>
-                <div class="brochureintroduce"></div>
-              </div>
+          <div
+            class="leftListItem"
+            v-for="(item, index) in dataList.products"
+            :key="index"
+          >
+            <div class="brochureItemImg">
+              <img
+                :src="`${item.coverUrl}`"
+                alt
+              />
             </div>
-          </div>
-          <div class="leftListItem">
-            <div class="brochureItemImg"></div>
             <div class="brochureItemText">
               <div class="brochureItemHead">
                 <div class="brochureItemName">
                   <div class="brochureItemLogo">
                     <img
-                      src="../../assets/images/home/head2.png"
+                      :src="`http://47.101.165.134${item.logoUrl}`"
                       alt
-                    >
+                    />
                   </div>
                   <div class="brochureLogoName">
-                    <p>某某公司企业宣传手册</p>
-                    <p>Sichuan，Chengdu 856关注者</p>
-                    <p>建筑设计行业</p>
+                    <p>{{item.name}}</p>
+                    <p>{{item.fansNumber}}关注者</p>
+                    <p>{{item.industryName}}</p>
                   </div>
                 </div>
-                <div class="brochureItemNum">阅读量 3000+</div>
+                <div class="brochureItemNum">阅读量 {{item.readVolume}}</div>
               </div>
               <div class="brochureItemmanual">
-                <p>某某公司企业宣传手册</p>
+                <p>{{item.title}}</p>
                 <div class="label">
-                  <span>标签</span>
-                  <span>标签</span>
-                  <span>标签</span>
+                  <span
+                    v-for="(item, num) in item.label.split(',')"
+                    :key="num"
+                    v-show="item"
+                  >{{item}}</span>
                 </div>
-                <div class="brochureintroduce"></div>
-              </div>
-            </div>
-          </div>
-          <div class="leftListItem">
-            <div class="brochureItemImg"></div>
-            <div class="brochureItemText">
-              <div class="brochureItemHead">
-                <div class="brochureItemName">
-                  <div class="brochureItemLogo">
-                    <img
-                      src="../../assets/images/home/head2.png"
-                      alt
-                    >
-                  </div>
-                  <div class="brochureLogoName">
-                    <p>某某公司企业宣传手册</p>
-                    <p>Sichuan，Chengdu 856关注者</p>
-                    <p>建筑设计行业</p>
-                  </div>
+                <div class="brochureintroduce">
+                  {{item.summary}}
                 </div>
-                <div class="brochureItemNum">阅读量 3000+</div>
-              </div>
-              <div class="brochureItemmanual">
-                <p>某某公司企业宣传手册</p>
-                <div class="label">
-                  <span>标签</span>
-                  <span>标签</span>
-                  <span>标签</span>
-                </div>
-                <div class="brochureintroduce"></div>
-              </div>
-            </div>
-          </div>
-          <div class="leftListItem">
-            <div class="brochureItemImg"></div>
-            <div class="brochureItemText">
-              <div class="brochureItemHead">
-                <div class="brochureItemName">
-                  <div class="brochureItemLogo">
-                    <img
-                      src="../../assets/images/home/head2.png"
-                      alt
-                    >
-                  </div>
-                  <div class="brochureLogoName">
-                    <p>某某公司企业宣传手册</p>
-                    <p>Sichuan，Chengdu 856关注者</p>
-                    <p>建筑设计行业</p>
-                  </div>
-                </div>
-                <div class="brochureItemNum">阅读量 3000+</div>
-              </div>
-              <div class="brochureItemmanual">
-                <p>某某公司企业宣传手册</p>
-                <div class="label">
-                  <span>标签</span>
-                  <span>标签</span>
-                  <span>标签</span>
-                </div>
-                <div class="brochureintroduce"></div>
-              </div>
-            </div>
-          </div>
-          <div class="leftListItem">
-            <div class="brochureItemImg"></div>
-            <div class="brochureItemText">
-              <div class="brochureItemHead">
-                <div class="brochureItemName">
-                  <div class="brochureItemLogo">
-                    <img
-                      src="../../assets/images/home/head2.png"
-                      alt
-                    >
-                  </div>
-                  <div class="brochureLogoName">
-                    <p>某某公司企业宣传手册</p>
-                    <p>Sichuan，Chengdu 856关注者</p>
-                    <p>建筑设计行业</p>
-                  </div>
-                </div>
-                <div class="brochureItemNum">阅读量 3000+</div>
-              </div>
-              <div class="brochureItemmanual">
-                <p>某某公司企业宣传手册</p>
-                <div class="label">
-                  <span>标签</span>
-                  <span>标签</span>
-                  <span>标签</span>
-                </div>
-                <div class="brochureintroduce"></div>
               </div>
             </div>
           </div>
@@ -192,21 +84,18 @@
       <div class="collectionBoxRight">
         <div class="collectHead">
           <span>图片</span>
-          <input type="text">
         </div>
         <div class="rightimgList">
-          <div class="rightImgItem"></div>
-          <div class="rightImgItem"></div>
-          <div class="rightImgItem"></div>
-          <div class="rightImgItem"></div>
-          <div class="rightImgItem"></div>
-          <div class="rightImgItem"></div>
-          <div class="rightImgItem"></div>
-          <div class="rightImgItem"></div>
-          <div class="rightImgItem"></div>
-          <div class="rightImgItem"></div>
-          <div class="rightImgItem"></div>
-          <div class="rightImgItem"></div>
+          <div
+            class="rightImgItem"
+            v-for="(item, index) in dataList.pictures"
+            :key="index"
+          >
+            <img
+              :src="item.url"
+              alt=""
+            >
+          </div>
         </div>
       </div>
     </div>
@@ -214,9 +103,37 @@
 </template>
 
 <script>
+import { getCollectionRecord, ERR_OK } from "@/api/api.js";
+
 export default {
   name: "collection",
+  data() {
+    return {
+      dataList: {
+        pictures: [],
+        products: [],
+      },
+      infoData: {
+        id: this.$store.state.user.UserID,
+        name: "",
+        firstIndustryId: "",
+        secondIndustryId: ""
+      },
+    }
+  },
+  created() {
+    this._getCollectionRecord()
+  },
   methods: {
+    _getCollectionRecord() {
+      getCollectionRecord(this.infoData).then(res => {
+        if (res.data.code === 0) {
+          console.log('收藏列表-------------------------------------')
+          console.log(res.data.data)
+          this.dataList = res.data.data
+        }
+      })
+    },
     toEnterprise() {
       this.$router.push({
         path: `/enterprise`
@@ -366,6 +283,9 @@ export default {
             margin-left: 20px;
             .brochureItemName {
               display: flex;
+              .brochureItemLogo {
+                width: 88px;
+              }
               .brochureLogoName {
                 margin-left: 10px;
                 p:nth-child(1) {

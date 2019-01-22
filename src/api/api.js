@@ -26,7 +26,7 @@ export function getAdvert(id) {
         }
     });
 }
-// 企业页面
+// 企业页面 1
 export function discoverOtherCompanyByCondition(data) {
     return service({
         url: "/company/discoverOtherCompanyByCondition",
@@ -39,17 +39,20 @@ export function discoverOtherCompanyByCondition(data) {
         }
     });
 }
-// 获取收藏页面
-export function getCollectionRecord(id) {
+// 获取收藏页面 1
+export function getCollectionRecord(data) {
     return service({
         url: "/company/getCollectionRecord",
         method: "get",
         params: {
-            id: id
+            id: data.id,
+            companyName: data.name,
+            firstIndustryId: data.firstIndustryId,
+            secondIndustryId: data.secondIndustryId
         }
     });
 }
-// 获取历史记录
+// 获取历史记录 1
 export function getHistoryRecord(id) {
     return service({
         url: "/company/getHistoryRecord",
@@ -260,7 +263,7 @@ export function saveProduct(data) {
         data: data
     });
 }
-// 搜索
+// 搜索 1
 export function search(content) {
     return service({
         url: `/search`,
@@ -364,7 +367,7 @@ export function getAttention(id) {
         }
     });
 }
-// 获取合作伙伴
+// 获取合作伙伴 1
 // /user/getPartner
 export function getPartner(id, type) {
     return service({
@@ -376,7 +379,7 @@ export function getPartner(id, type) {
         }
     });
 }
-// 相似用户/user/getSimilarityCompany
+// 相似用户 1
 export function getSimilarityCompany(id) {
     return service({
         url: `/user/getSimilarityCompany`,

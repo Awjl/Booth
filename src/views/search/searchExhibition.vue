@@ -3,19 +3,34 @@
     <div class="searchNav">
       <div class="searchList">
         <div class="searchItem">
-          <div><span>企业</span><span>{{searchList.companyNum}}个</span></div>
+          <div>
+            <span>企业</span>
+            <span>{{searchList.companyNum}}个</span>
+          </div>
         </div>
         <div class="searchItem">
-          <div><span>展会</span><span>{{searchList.exhibitionNum}}个</span></div>
+          <div>
+            <span>展会</span>
+            <span>{{searchList.exhibitionNum}}个</span>
+          </div>
         </div>
         <div class="searchItem">
-          <div><span>企业动态</span><span>{{searchList.eventNum}}个</span></div>
+          <div>
+            <span>企业动态</span>
+            <span>{{searchList.eventNum}}个</span>
+          </div>
         </div>
         <div class="searchItem">
-          <div><span>产品手册</span><span>{{searchList.brochureNum}}个</span></div>
+          <div>
+            <span>产品手册</span>
+            <span>{{searchList.brochureNum}}个</span>
+          </div>
         </div>
         <div class="searchItem">
-          <div><span>产品图片</span><span>{{searchList.imageNum}}个</span></div>
+          <div>
+            <span>产品图片</span>
+            <span>{{searchList.imageNum}}个</span>
+          </div>
         </div>
       </div>
       <div class="searchText">
@@ -25,54 +40,79 @@
     </div>
     <div class="searchDetails">
       <div class="searchTitle">
-        <span>展会 exhibition<span>{{searchList.exhibitionNum}}个</span></span>
-        <div
-          class="Back"
-          @click="toBack"
-        >返回搜索页</div>
+        <span>
+          展会 exhibition
+          <span>{{searchList.exhibitionNum}}个</span>
+        </span>
+        <div class="Back" @click="toBack">返回搜索页</div>
       </div>
       <div class="ExDetailsList">
         <div
           class="ExDetailsItem"
           v-for="(item, index) in searchList.exhibitions"
           :key="index"
+          @click="toDetailsOne(item.id)"
         >
           <div class="ExDetailsItemImg">
-            <img
-              :src="`http://47.101.165.134${item.bannerUrl.split(',')[0]}`"
-              alt=""
-            />
+            <img :src="`http://47.101.165.134${item.bannerUrl.split(',')[0]}`" alt>
           </div>
           <div class="ExDetailsItemName">
             <p>{{item.nameEng}} {{item.name}}</p>
             <div class="ExBtn">分享</div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { search } from "@/api/api.js";
+
 export default {
   name: "searchPag",
   data() {
     return {
-      center: this.$route.params.center,
-      searchList: this.$route.params.searchList
-    }
+      center: this.$route.query.center,
+      searchList: {
+        brochureNum: "", // 册子
+        companyNum: "", // 公司
+        eventNum: "", // 动态
+        exhibitionNum: "", // 展会
+        imageNum: "", // 图片
+        brochures: [],
+        companies: [],
+        events: [],
+        exhibitions: [],
+        images: []
+      }
+    };
   },
   created() {
-    console.log(this.center)
-    console.log(this.searchList)
+    console.log(this.center);
+    console.log(this.searchList);
+    this._search();
   },
   methods: {
+    _search() {
+      search(this.center).then(res => {
+        if (res.data.code === 0) {
+          this.searchList = res.data.data;
+          console.log(res.data.data);
+        }
+      });
+    },
     toBack() {
-      console.log('123');
+      console.log("123");
       this.$router.push({
         name: `search`,
         query: { center: this.center }
+      });
+    },
+    toDetailsOne(id) {
+      this.$router.push({
+        path: `/exhibitionDetails`,
+        query: { id: id }
       });
     }
   }
@@ -83,6 +123,7 @@ export default {
 .searchPag {
   width: 100%;
   height: calc(100vh - 218px);
+  min-height: 585px;
   background: #fff;
   padding: 20px;
   box-sizing: border-box;
@@ -142,6 +183,7 @@ export default {
       display: flex;
       justify-content: space-between;
       margin-bottom: 10px;
+      cursor: pointer;
       .ExDetailsItemImg {
         width: 80%;
         img {

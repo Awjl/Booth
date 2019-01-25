@@ -3,19 +3,34 @@
     <div class="searchNav">
       <div class="searchList">
         <div class="searchItem">
-          <div><span>企业</span><span>{{searchList.companyNum}}个</span></div>
+          <div>
+            <span>企业</span>
+            <span>{{searchList.companyNum}}个</span>
+          </div>
         </div>
         <div class="searchItem">
-          <div><span>展会</span><span>{{searchList.exhibitionNum}}个</span></div>
+          <div>
+            <span>展会</span>
+            <span>{{searchList.exhibitionNum}}个</span>
+          </div>
         </div>
         <div class="searchItem">
-          <div><span>企业动态</span><span>{{searchList.eventNum}}个</span></div>
+          <div>
+            <span>企业动态</span>
+            <span>{{searchList.eventNum}}个</span>
+          </div>
         </div>
         <div class="searchItem">
-          <div><span>产品手册</span><span>{{searchList.brochureNum}}个</span></div>
+          <div>
+            <span>产品手册</span>
+            <span>{{searchList.brochureNum}}个</span>
+          </div>
         </div>
         <div class="searchItem">
-          <div><span>产品图片</span><span>{{searchList.imageNum}}个</span></div>
+          <div>
+            <span>产品图片</span>
+            <span>{{searchList.imageNum}}个</span>
+          </div>
         </div>
       </div>
       <div class="searchText">
@@ -29,23 +44,13 @@
           企业 company
           <span>{{searchList.companyNum}}个</span>
         </span>
-        <div
-          class="Back"
-          @click="toBack"
-        >返回搜索页</div>
+        <div class="Back" @click="toBack">返回搜索页</div>
       </div>
       <div class="CoDetailsList">
-        <div
-          class="CoDetailsItem"
-          v-for="(item, index) in searchList.companies"
-          :key="index"
-        >
+        <div class="CoDetailsItem" v-for="(item, index) in searchList.companies" :key="index">
           <div class="enterpriseItemLeft">
             <div class="enterpriseItemHead">
-              <img
-                :src="`http://47.101.165.134${item.logoUrl}`"
-                alt=""
-              />
+              <img :src="`http://47.101.165.134${item.logoUrl}`" alt>
             </div>
             <div class="enterpriseItemLeftTitle">
               <p>{{item.name}}</p>
@@ -64,15 +69,39 @@
 </template>
 
 <script>
+import { search } from "@/api/api.js";
+
 export default {
   name: "searchPag",
   data() {
     return {
-      center: this.$route.params.center,
-      searchList: this.$route.params.searchList
-    }
+      center: this.$route.query.center,
+      searchList: {
+        brochureNum: "", // 册子
+        companyNum: "", // 公司
+        eventNum: "", // 动态
+        exhibitionNum: "", // 展会
+        imageNum: "", // 图片
+        brochures: [],
+        companies: [],
+        events: [],
+        exhibitions: [],
+        images: []
+      }
+    };
+  },
+  created() {
+    this._search();
   },
   methods: {
+    _search() {
+      search(this.center).then(res => {
+        if (res.data.code === 0) {
+          this.searchList = res.data.data;
+          console.log(res.data.data);
+        }
+      });
+    },
     toBack() {
       this.$router.push({
         name: `search`,
@@ -87,6 +116,7 @@ export default {
 .searchPag {
   width: 100%;
   height: calc(100vh - 218px);
+  min-height: 585px;
   background: #fff;
   padding: 20px;
   box-sizing: border-box;

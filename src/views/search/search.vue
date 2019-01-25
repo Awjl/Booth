@@ -3,19 +3,34 @@
     <div class="searchNav">
       <div class="searchList">
         <div class="searchItem">
-          <div><span>企业</span><span>{{searchList.companyNum}}个</span></div>
+          <div>
+            <span>企业</span>
+            <span>{{searchList.companyNum}}个</span>
+          </div>
         </div>
         <div class="searchItem">
-          <div><span>展会</span><span>{{searchList.exhibitionNum}}个</span></div>
+          <div>
+            <span>展会</span>
+            <span>{{searchList.exhibitionNum}}个</span>
+          </div>
         </div>
         <div class="searchItem">
-          <div><span>企业动态</span><span>{{searchList.eventNum}}个</span></div>
+          <div>
+            <span>企业动态</span>
+            <span>{{searchList.eventNum}}个</span>
+          </div>
         </div>
         <div class="searchItem">
-          <div><span>产品手册</span><span>{{searchList.brochureNum}}个</span></div>
+          <div>
+            <span>产品手册</span>
+            <span>{{searchList.brochureNum}}个</span>
+          </div>
         </div>
         <div class="searchItem">
-          <div><span>产品图片</span><span>{{searchList.imageNum}}个</span></div>
+          <div>
+            <span>产品图片</span>
+            <span>{{searchList.imageNum}}个</span>
+          </div>
         </div>
       </div>
       <div class="searchText">
@@ -28,10 +43,7 @@
         <div class="searchMineTop">
           <div class="searchTitle">
             <span>展会 exhibition</span>
-            <div
-              class="mover"
-              @click="toExhibition"
-            >
+            <div class="mover" @click="toExhibition">
               <i class="icon iconTo1"></i>
             </div>
           </div>
@@ -40,49 +52,32 @@
               class="exhibitionItem"
               v-for="(item, index) in searchList.exhibitions"
               :key="index"
+              @click="toDetailsOne(item.id)"
             >
               <div class="exhibitionItemImg">
-                <img
-                  :src="`http://47.101.165.134${item.bannerUrl.split(',')[0]}`"
-                  alt=""
-                />
+                <img :src="`http://47.101.165.134${item.bannerUrl.split(',')[0]}`" alt>
               </div>
-              <div class="exhibitionItemName">
-                {{item.nameEng}} {{item.name}}
-              </div>
+              <div class="exhibitionItemName">{{item.nameEng}} {{item.name}}</div>
             </div>
           </div>
         </div>
         <div class="searchMineBottom">
           <div class="searchTitle">
             <span>产品手册 brochure</span>
-            <div
-              class="mover"
-              @click="toBrochure"
-            >
+            <div class="mover" @click="toBrochure">
               <i class="icon iconTo1"></i>
             </div>
           </div>
           <div class="brochureList">
-            <div
-              class="brochureItem"
-              v-for="(item, index) in searchList.brochures"
-              :key="index"
-            >
-              <div class="brochureItemImg">
-                <img
-                  :src="`${item.coverUrl}`"
-                  alt=""
-                >
+            <div class="brochureItem" v-for="(item, index) in searchList.brochures" :key="index">
+              <div class="brochureItemImg" @click="lookbrochure()">
+                <img :src="`${item.coverUrl}`" alt>
               </div>
               <div class="brochureItemText">
                 <div class="brochureItemHead">
                   <div class="brochureItemName">
                     <div class="brochureItemLogo">
-                      <img
-                        :src="`${item.logoUrl}`"
-                        alt=""
-                      >
+                      <img :src="`http://47.101.165.134${item.logoUrl}`" alt>
                     </div>
                     <div class="brochureLogoName">
                       <p>{{item.name}}</p>
@@ -101,9 +96,7 @@
                       v-show="item"
                     >{{item}}</span>
                   </div>
-                  <div class="brochureintroduce">
-                    {{item.summary}}
-                  </div>
+                  <div class="brochureintroduce">{{item.summary}}</div>
                 </div>
               </div>
             </div>
@@ -114,25 +107,15 @@
         <div class="searchRightTop">
           <div class="searchTitle">
             <span>企业 company</span>
-            <div
-              class="mover"
-              @click="toCompany"
-            >
+            <div class="mover" @click="toCompany">
               <i class="icon iconTo1"></i>
             </div>
           </div>
           <div class="companyList">
-            <div
-              class="companyItem"
-              v-for="(item, index) in searchList.companies"
-              :key="index"
-            >
+            <div class="companyItem" v-for="(item, index) in searchList.companies" :key="index">
               <div class="enterpriseItemLeft">
                 <div class="enterpriseItemHead">
-                  <img
-                    :src="`http://47.101.165.134${item.logoUrl}`"
-                    alt=""
-                  />
+                  <img :src="`http://47.101.165.134${item.logoUrl}`" alt>
                 </div>
                 <div class="enterpriseItemLeftTitle">
                   <p>{{item.name}}</p>
@@ -142,7 +125,7 @@
               </div>
               <div class="enterpriseItemRight">
                 <div class="InterestListshare">分享</div>
-                <div class="InterestListSee">查看产品手册</div>
+                <div class="InterestListSee" @click="toBrochureList(item.id)">查看产品手册</div>
               </div>
             </div>
           </div>
@@ -150,49 +133,29 @@
         <div class="searchRightmian">
           <div class="searchTitle">
             <span>产品图片 images</span>
-            <div
-              class="mover"
-              @click="toImages"
-            >
+            <div class="mover" @click="toImages">
               <i class="icon iconTo1"></i>
             </div>
           </div>
           <div class="searchimagesList">
-            <div
-              class="searchimagesItem"
-              v-for="(item, index) in searchList.images"
-              :key="index"
-            >
-              <img
-                :src="`http://47.101.165.134${item.url}`"
-                alt=""
-              >
+            <div class="searchimagesItem" v-for="(item, index) in searchList.images" :key="index">
+              <img :src="`http://47.101.165.134${item.url}`" alt>
             </div>
           </div>
         </div>
         <div class="searchRightBottom">
           <div class="searchTitle">
             <span>企业动态 event</span>
-            <div
-              class="mover"
-              @click="toEvent"
-            >
+            <div class="mover" @click="toEvent">
               <i class="icon iconTo1"></i>
             </div>
           </div>
           <div class="eventList">
-            <div
-              class="eventItem"
-              v-for="(item, index) in searchList.events"
-              :key="index"
-            >
+            <div class="eventItem" v-for="(item, index) in searchList.events" :key="index">
               <div class="homeListHead">
                 <div class="homeListImg">
                   <div>
-                    <img
-                      :src="`http://47.101.165.134${item.logoUrl}`"
-                      alt=""
-                    />
+                    <img :src="`http://47.101.165.134${item.logoUrl}`" alt>
                   </div>
                 </div>
                 <div class="homeListTitle">
@@ -215,22 +178,17 @@
                         </div>
                       </div>
                     </div>
-                  </div> -->
+                  </div>-->
                 </div>
                 <div class="enterpriseItemRight">
                   <div class="InterestListshare">分享</div>
-                  <div class="InterestListSee">查看产品手册</div>
+                  <div class="InterestListSee" @click="toBrochureList(item.id)">查看产品手册</div>
                 </div>
               </div>
-              <div class="hometext">
-                {{item.summary}}
-              </div>
+              <div class="hometext">{{item.summary}}</div>
               <div class="moveBtn">更多</div>
               <div class="homeItemImg">
-                <img
-                  :src="`http://47.101.165.134${item.introductionUrl}`"
-                  alt=""
-                />
+                <img :src="`http://47.101.165.134${item.introductionUrl}`" alt>
               </div>
             </div>
           </div>
@@ -241,7 +199,7 @@
 </template>
 
 <script>
-import { search } from "@/api/api.js"
+import { search } from "@/api/api.js";
 export default {
   name: "searchPag",
   data() {
@@ -259,63 +217,70 @@ export default {
         exhibitions: [],
         images: []
       }
-    }
+    };
   },
   created() {
-    console.log(this.$route.query.center)
+    console.log(this.$route.query.center);
     this._search();
   },
   methods: {
     _search() {
       search(this.center).then(res => {
         if (res.data.code === 0) {
-          this.searchList = res.data.data
-          console.log(res.data.data)
+          this.searchList = res.data.data;
+          console.log(res.data.data);
         }
-      })
+      });
+    },
+    toDetailsOne(id) {
+      this.$router.push({
+        path: `/exhibitionDetails`,
+        query: { id: id }
+      });
+    },
+    toBrochureList(id) {
+      this.$router.push({
+        name: `productList`,
+        query: { id: id }
+      });
     },
     toExhibition() {
       this.$router.push({
         name: `searchExhibition`,
-        params: {
-          "center": this.center,
-          "searchList": this.searchList,
+        query: {
+          center: this.center
         }
       });
     },
     toBrochure() {
       this.$router.push({
         name: `searchBrochure`,
-        params: {
-          "center": this.center,
-          "searchList": this.searchList,
+        query: {
+          center: this.center
         }
       });
     },
     toCompany() {
       this.$router.push({
         name: `searchCompaby`,
-        params: {
-          "center": this.center,
-          "searchList": this.searchList,
+        query: {
+          center: this.center
         }
       });
     },
     toImages() {
       this.$router.push({
         name: `searchImages`,
-        params: {
-          "center": this.center,
-          "searchList": this.searchList,
+        query: {
+          center: this.center
         }
       });
     },
     toEvent() {
       this.$router.push({
         name: `searchEvent`,
-        params: {
-          "center": this.center,
-          "searchList": this.searchList,
+        query: {
+          center: this.center
         }
       });
     }
@@ -398,6 +363,7 @@ export default {
           justify-content: space-between;
           align-items: center;
           margin-bottom: 10px;
+          cursor: pointer;
           .exhibitionItemImg {
             width: 45%;
             img {
@@ -427,7 +393,11 @@ export default {
           margin-bottom: 10px;
           .brochureItemImg {
             width: 162px;
+            height: 210px;
             background: #fff;
+            img {
+              height: 100%;
+            }
           }
           .brochureItemText {
             width: calc(100% - 182px);
@@ -435,6 +405,9 @@ export default {
             background: #f2f2f2;
             .brochureItemName {
               display: flex;
+              .brochureItemLogo {
+                width: 88px;
+              }
               .brochureLogoName {
                 margin-left: 10px;
                 p:nth-child(1) {
@@ -505,8 +478,8 @@ export default {
           display: flex;
           flex-wrap: wrap;
           .companyItem {
-            width: 48%;
-            margin-right: 2%;
+            width: 49%;
+            margin-right: 1%;
             height: 66px;
             margin-bottom: 20px;
             display: flex;
@@ -529,7 +502,7 @@ export default {
                   margin-top: 10px;
                 }
                 p:nth-child(3) {
-                  font-size: 12px;
+                  font-size: 10px;
                   margin-top: 6px;
                   color: #326b90;
                 }
@@ -550,13 +523,14 @@ export default {
                 font-size: 10px;
               }
               .InterestListSee {
-                width: 90px;
+                width: 80px;
                 height: 30px;
                 text-align: center;
                 line-height: 30px;
                 color: #fff;
                 background: #326b90;
                 font-size: 10px;
+                cursor: pointer;
               }
             }
           }
@@ -639,6 +613,7 @@ export default {
                     background: rgba($color: #c8d3db, $alpha: 0.32);
                     display: flex;
                     justify-content: space-between;
+                    // cursor: pointer;
                     .exhibitionCan {
                       display: flex;
                       span {
@@ -709,6 +684,7 @@ export default {
                   background: #326b90;
                   font-size: 10px;
                   margin-top: 5px;
+                  cursor: pointer;
                 }
               }
             }

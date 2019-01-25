@@ -3,19 +3,34 @@
     <div class="searchNav">
       <div class="searchList">
         <div class="searchItem">
-          <div><span>企业</span><span>{{searchList.companyNum}}个</span></div>
+          <div>
+            <span>企业</span>
+            <span>{{searchList.companyNum}}个</span>
+          </div>
         </div>
         <div class="searchItem">
-          <div><span>展会</span><span>{{searchList.exhibitionNum}}个</span></div>
+          <div>
+            <span>展会</span>
+            <span>{{searchList.exhibitionNum}}个</span>
+          </div>
         </div>
         <div class="searchItem">
-          <div><span>企业动态</span><span>{{searchList.eventNum}}个</span></div>
+          <div>
+            <span>企业动态</span>
+            <span>{{searchList.eventNum}}个</span>
+          </div>
         </div>
         <div class="searchItem">
-          <div><span>产品手册</span><span>{{searchList.brochureNum}}个</span></div>
+          <div>
+            <span>产品手册</span>
+            <span>{{searchList.brochureNum}}个</span>
+          </div>
         </div>
         <div class="searchItem">
-          <div><span>产品图片</span><span>{{searchList.imageNum}}个</span></div>
+          <div>
+            <span>产品图片</span>
+            <span>{{searchList.imageNum}}个</span>
+          </div>
         </div>
       </div>
       <div class="searchText">
@@ -29,31 +44,18 @@
           产品手册 brochure
           <span>{{searchList.brochureNum}}个</span>
         </span>
-        <div
-          class="Back"
-          @click="toBack"
-        >返回搜索页</div>
+        <div class="Back" @click="toBack">返回搜索页</div>
       </div>
       <div class="BrDetailsList">
-        <div
-          class="BrDetailsItem"
-          v-for="(item, index) in searchList.brochures"
-          :key="index"
-        >
+        <div class="BrDetailsItem" v-for="(item, index) in searchList.brochures" :key="index">
           <div class="brochureItemImg">
-            <img
-              :src="`${item.coverUrl}`"
-              alt=""
-            >
+            <img :src="`${item.coverUrl}`" alt>
           </div>
           <div class="brochureItemText">
             <div class="brochureItemHead">
               <div class="brochureItemName">
                 <div class="brochureItemLogo">
-                  <img
-                    :src="`${item.logoUrl}`"
-                    alt=""
-                  >
+                  <img :src="`${item.logoUrl}`" alt>
                 </div>
                 <div class="brochureLogoName">
                   <p>{{item.name}}</p>
@@ -66,15 +68,9 @@
             <div class="brochureItemmanual">
               <p>{{item.title}}</p>
               <div class="label">
-                <span
-                  v-for="(item, num) in item.label.split(',')"
-                  :key="num"
-                  v-show="item"
-                >{{item}}</span>
+                <span v-for="(item, num) in item.label.split(',')" :key="num" v-show="item">{{item}}</span>
               </div>
-              <div class="brochureintroduce">
-                {{item.summary}}
-              </div>
+              <div class="brochureintroduce">{{item.summary}}</div>
             </div>
           </div>
         </div>
@@ -84,15 +80,39 @@
 </template>
 
 <script>
+import { search } from "@/api/api.js";
+
 export default {
   name: "searchPag",
   data() {
     return {
-      center: this.$route.params.center,
-      searchList: this.$route.params.searchList
-    }
+      center: this.$route.query.center,
+      searchList: {
+        brochureNum: "", // 册子
+        companyNum: "", // 公司
+        eventNum: "", // 动态
+        exhibitionNum: "", // 展会
+        imageNum: "", // 图片
+        brochures: [],
+        companies: [],
+        events: [],
+        exhibitions: [],
+        images: []
+      }
+    };
+  },
+  created() {
+    this._search();
   },
   methods: {
+    _search() {
+      search(this.center).then(res => {
+        if (res.data.code === 0) {
+          this.searchList = res.data.data;
+          console.log(res.data.data);
+        }
+      });
+    },
     toBack() {
       console.log("123");
       this.$router.push({
@@ -108,6 +128,7 @@ export default {
 .searchPag {
   width: 100%;
   height: calc(100vh - 218px);
+  min-height: 585px;
   background: #fff;
   padding: 20px;
   box-sizing: border-box;

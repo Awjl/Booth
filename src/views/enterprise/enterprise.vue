@@ -8,8 +8,26 @@
       <div class="enterpriseNavBottom">
         <div class="enterpriseMian">
           <div class="enterpriseMianOne">一级分类</div>
+          <div class="enterpriseMianOneAll">
+            <div
+              class="enterpriseMianOne"
+              :class="{ Oneact: index == typeindex }"
+              v-for="(items, index) in industryData"
+              @click="mouseOver(index, items)"
+              :key="index"
+            >{{ items.industryName }}</div>
+          </div>
           <div class="enterpriseMiantwo">二级分类</div>
-          <div class="enterpriseMianthree">三级分类</div>
+          <div class="enterpriseMiantwoAll">
+            <div
+              class="enterpriseMiantwo"
+              v-for="(items, index) in items"
+              :class="{ Oneact: index == typeTwoindex }"
+              @click="mouseOverTwo(index, items.id)"
+              :key="index"
+            >{{ items.industryName }}</div>
+          </div>
+          <!-- <div class="enterpriseMianthree">三级分类</div> -->
         </div>
         <div class="enterpriseList">
           <div class="enterpriseItem ItemAct" @click="toEnterprise">发现</div>
@@ -86,6 +104,7 @@
 import {
   discoverOtherCompanyByCondition,
   getAdvert,
+  getIndustry,
   focus,
   cancelFocus,
   ERR_OK
@@ -96,6 +115,8 @@ export default {
   data() {
     return {
       timer: "",
+      typeindex: "",
+      typeTwoindex: "",
       infoData: {
         id: this.$store.state.user.UserID,
         name: "",
@@ -110,7 +131,9 @@ export default {
       dataAll: {
         areaA: { id: 2, url: "" },
         areaB: { id: 2, url: "" }
-      }
+      },
+      industryData: [],
+      items: []
     };
   },
   created() {
@@ -120,8 +143,19 @@ export default {
       }
     });
     this._discoverOtherCompanyByCondition();
+    this._getIndustry();
   },
   methods: {
+    _getIndustry() {
+      getIndustry().then(res => {
+        if (res.status === ERR_OK) {
+          this.typeindex = null;
+          this.typeTwoindex = null;
+          this.industryData = res.data.data;
+          this.items = this.industryData[0].secondIndustries;
+        }
+      });
+    },
     _focus() {
       focus(this.followData).then(res => {
         if (res.status === ERR_OK) {
@@ -144,6 +178,19 @@ export default {
           this.dataList = res.data.data;
         }
       });
+    },
+    mouseOver(index, data) {
+      this.typeindex = index;
+      this.typeTwoindex = 0;
+      this.items = data.secondIndustries;
+      this.infoData.firstIndustryId = data.id;
+      this.infoData.secondIndustryId = data.secondIndustries[0].id;
+      this._discoverOtherCompanyByCondition();
+    },
+    mouseOverTwo(index, id) {
+      this.typeTwoindex = index;
+      this.infoData.secondIndustryId = id;
+      this._discoverOtherCompanyByCondition();
     },
     setTime() {
       this.timer = setTimeout(() => {
@@ -189,6 +236,7 @@ export default {
 
 <style lang="scss">
 .enterprise {
+  min-height: 585px;
   padding: 20px;
   box-sizing: border-box;
   display: flex;
@@ -196,6 +244,7 @@ export default {
   .enterpriseNav {
     width: 240px;
     height: calc(100vh - 218px);
+    min-height: 585px;
     padding: 0 10px;
     box-sizing: border-box;
     border-right: 1px dashed #707070;
@@ -237,11 +286,31 @@ export default {
         background: #326b90;
         font-size: 14px;
       }
+      .enterpriseMianOneAll,
+      .enterpriseMiantwoAll {
+        height: 144px;
+        line-height: 16px;
+        overflow: auto;
+        .Oneact {
+          background: rgba($color: #326b90, $alpha: 0);
+        }
+        .enterpriseMianOne,
+        .enterpriseMiantwo {
+          padding: 0 16px;
+          width: 100%;
+          height: 20px;
+          line-height: 20px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          cursor: pointer;
+        }
+      }
       .enterpriseMiantwo {
         width: 100%;
         height: 36px;
         line-height: 36px;
-        padding: 0 28px;
+        padding: 0 10px;
         box-sizing: border-box;
         background: rgba($color: #326b90, $alpha: 0.6);
         font-size: 10px;

@@ -3,30 +3,35 @@
     <div class="collectionNav">
       <div class="collectionNavSeach">
         <span>筛选器/行业分类列表</span>
-        <input
-          type="text"
-          placeholder="搜索企业"
-        >
+        <input type="text" placeholder="搜索企业">
       </div>
       <div class="collectionNavBottom">
         <div class="collectionMian">
           <div class="collectionMianOne">一级分类</div>
+          <div class="enterpriseMianOneAll">
+            <div
+              class="collectionMianOne"
+              :class="{ Oneact: index == typeindex }"
+              v-for="(items, index) in industryData"
+              @click="mouseOver(index, items)"
+              :key="index"
+            >{{ items.industryName }}</div>
+          </div>
           <div class="collectionMiantwo">二级分类</div>
-          <div class="collectionMianthree">三级分类</div>
+          <div class="enterpriseMiantwoAll">
+            <div
+              class="collectionMiantwo"
+              v-for="(items, index) in items"
+              :class="{ Oneact: index == typeTwoindex }"
+              @click="mouseOverTwo(index, items.id)"
+              :key="index"
+            >{{ items.industryName }}</div>
+          </div>
         </div>
         <div class="collectionList">
-          <div
-            class="collectionItem"
-            @click="toEnterprise"
-          >发现</div>
-          <div
-            class="collectionItem"
-            @click="toHistory"
-          >历史记录</div>
-          <div
-            class="collectionItem ItemAct"
-            @click="toCollection"
-          >收藏</div>
+          <div class="collectionItem" @click="toEnterprise">发现</div>
+          <div class="collectionItem" @click="toHistory">历史记录</div>
+          <div class="collectionItem ItemAct" @click="toCollection">收藏</div>
         </div>
       </div>
     </div>
@@ -36,25 +41,15 @@
           <span>产品册</span>
         </div>
         <div class="leftList">
-          <div
-            class="leftListItem"
-            v-for="(item, index) in dataList.products"
-            :key="index"
-          >
+          <div class="leftListItem" v-for="(item, index) in dataList.products" :key="index">
             <div class="brochureItemImg">
-              <img
-                :src="`${item.coverUrl}`"
-                alt
-              />
+              <img :src="`${item.coverUrl}`" alt>
             </div>
             <div class="brochureItemText">
               <div class="brochureItemHead">
                 <div class="brochureItemName">
                   <div class="brochureItemLogo">
-                    <img
-                      :src="`http://47.101.165.134${item.logoUrl}`"
-                      alt
-                    />
+                    <img :src="`http://47.101.165.134${item.logoUrl}`" alt>
                   </div>
                   <div class="brochureLogoName">
                     <p>{{item.name}}</p>
@@ -73,9 +68,7 @@
                     v-show="item"
                   >{{item}}</span>
                 </div>
-                <div class="brochureintroduce">
-                  {{item.summary}}
-                </div>
+                <div class="brochureintroduce">{{item.summary}}</div>
               </div>
             </div>
           </div>
@@ -86,15 +79,8 @@
           <span>图片</span>
         </div>
         <div class="rightimgList">
-          <div
-            class="rightImgItem"
-            v-for="(item, index) in dataList.pictures"
-            :key="index"
-          >
-            <img
-              :src="item.url"
-              alt=""
-            >
+          <div class="rightImgItem" v-for="(item, index) in dataList.pictures" :key="index">
+            <img :src="item.url" alt>
           </div>
         </div>
       </div>
@@ -103,7 +89,7 @@
 </template>
 
 <script>
-import { getCollectionRecord, ERR_OK } from "@/api/api.js";
+import { getCollectionRecord, getIndustry, ERR_OK } from "@/api/api.js";
 
 export default {
   name: "collection",
@@ -111,28 +97,56 @@ export default {
     return {
       dataList: {
         pictures: [],
-        products: [],
+        products: []
       },
+      typeindex: "",
+      typeTwoindex: "",
+      industryData: [],
+      items: [],
       infoData: {
         id: this.$store.state.user.UserID,
         name: "",
         firstIndustryId: "",
         secondIndustryId: ""
-      },
-    }
+      }
+    };
   },
   created() {
-    this._getCollectionRecord()
+    this._getCollectionRecord();
+    this._getIndustry();
   },
   methods: {
+    _getIndustry() {
+      getIndustry().then(res => {
+        if (res.status === ERR_OK) {
+          this.typeindex = null;
+          this.typeTwoindex = null;
+          this.industryData = res.data.data;
+          this.items = this.industryData[0].secondIndustries;
+        }
+      });
+    },
     _getCollectionRecord() {
       getCollectionRecord(this.infoData).then(res => {
         if (res.data.code === 0) {
-          console.log('收藏列表-------------------------------------')
-          console.log(res.data.data)
-          this.dataList = res.data.data
+          console.log("收藏列表-------------------------------------");
+          console.log(res.data.data);
+          this.dataList = res.data.data;
         }
-      })
+      });
+    },
+    mouseOver(index, data) {
+      this.typeindex = index;
+      this.typeTwoindex = 0;
+      this.items = data.secondIndustries;
+      this.infoData.firstIndustryId = data.id;
+      this.infoData.secondIndustryId = data.secondIndustries[0].id;
+      this._getCollectionRecord();
+    },
+    mouseOverTwo(index, id) {
+      this.typeTwoindex = index;
+      this.infoData.secondIndustryId = id;
+      this._getCollectionRecord();
     },
     toEnterprise() {
       this.$router.push({
@@ -156,6 +170,7 @@ export default {
 <style lang="scss">
 .collection {
   height: calc(100vh - 218px);
+  min-height: 585px;
   padding: 20px;
   box-sizing: border-box;
   display: flex;
@@ -204,11 +219,31 @@ export default {
         background: #326b90;
         font-size: 14px;
       }
+      .enterpriseMianOneAll,
+      .enterpriseMiantwoAll {
+        height: 144px;
+        line-height: 16px;
+        overflow: auto;
+        .Oneact {
+          background: rgba($color: #326b90, $alpha: 0);
+        }
+        .collectionMiantwo,
+        .collectionMianOne {
+          padding: 0 16px;
+          width: 100%;
+          height: 20px;
+          line-height: 20px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          cursor: pointer;
+        }
+      }
       .collectionMiantwo {
         width: 100%;
         height: 36px;
         line-height: 36px;
-        padding: 0 28px;
+        padding: 0 10px;
         box-sizing: border-box;
         background: rgba($color: #326b90, $alpha: 0.6);
         font-size: 10px;
@@ -241,7 +276,8 @@ export default {
   }
   .collectionBox {
     width: calc(100% - 240px);
-    height: calc(100vh - 218px);
+    height: 100%;
+    // min-height: 585px;
     display: flex;
     .collectHead {
       font-size: 20px;
@@ -261,12 +297,12 @@ export default {
     }
     .collectionBoxLeft {
       width: 60%;
-      height: calc(100vh - 248px);
+      height: 100%;
       padding: 0 20px;
       box-sizing: border-box;
       border-right: 1px dashed #707070;
       .leftList {
-        height: calc(100vh - 288px);
+        height: calc(100% - 30px);
         overflow: auto;
         .leftListItem {
           width: 100%;
@@ -346,7 +382,7 @@ export default {
       padding: 0 20px;
       box-sizing: border-box;
       .rightimgList {
-        height: 520px;
+        height: calc(100% - 30px);
         overflow: auto;
         .rightImgItem {
           width: 80px;

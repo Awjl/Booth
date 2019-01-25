@@ -2,18 +2,9 @@
   <div class="history">
     <div class="historyNav">
       <div class="historyList">
-        <div
-          class="historyItem"
-          @click="toEnterprise"
-        >发现</div>
-        <div
-          class="historyItem ItemAct"
-          @click="toHistory"
-        >历史记录</div>
-        <div
-          class="historyItem"
-          @click="toCollection"
-        >收藏</div>
+        <div class="historyItem" @click="toEnterprise">发现</div>
+        <div class="historyItem ItemAct" @click="toHistory">历史记录</div>
+        <div class="historyItem" @click="toCollection">收藏</div>
       </div>
     </div>
     <div class="historyBox">
@@ -21,16 +12,9 @@
         <div class="historyItemName">企业</div>
         <div class="historyItem">
           <div class="historyItemA">
-            <div
-              class="historyItemAItem"
-              v-for="(item, index) in dataList.users"
-              :key="index"
-            >
+            <div class="historyItemAItem" v-for="(item, index) in dataList.users" :key="index">
               <div class="historyItemHead">
-                <img
-                  :src="`http://47.101.165.134${item.logoUrl}`"
-                  alt
-                />
+                <img :src="`http://47.101.165.134${item.logoUrl}`" alt>
               </div>
               <div class="historyItemLeftTitle">
                 <p>{{item.name}}</p>
@@ -45,25 +29,15 @@
         <div class="historyItemName">产品册</div>
         <div class="historyItem">
           <div class="historyItemB">
-            <div
-              class="historyItemBItem"
-              v-for="(item, index) in dataList.products"
-              :key="index"
-            >
+            <div class="historyItemBItem" v-for="(item, index) in dataList.products" :key="index">
               <div class="brochureItemImg">
-                <img
-                  :src="`${item.coverUrl}`"
-                  alt
-                />
+                <img :src="`${item.coverUrl}`" alt>
               </div>
               <div class="brochureItemText">
                 <div class="brochureItemHead">
                   <div class="brochureItemName">
                     <div class="brochureItemLogo">
-                      <img
-                        :src="`http://47.101.165.134${item.logoUrl}`"
-                        alt
-                      />
+                      <img :src="`http://47.101.165.134${item.logoUrl}`" alt>
                     </div>
                     <div class="brochureLogoName">
                       <p>{{item.name}}</p>
@@ -82,9 +56,7 @@
                       v-show="item"
                     >{{item}}</span>
                   </div>
-                  <div class="brochureintroduce">
-                    {{item.summary}}
-                  </div>
+                  <div class="brochureintroduce">{{item.summary}}</div>
                 </div>
               </div>
             </div>
@@ -94,15 +66,8 @@
       <div class="HBoxThree">
         <div class="historyItemName">图片</div>
         <div class="historyItem">
-          <div
-            class="historyItemImg"
-            v-for="(item, index) in dataList.pictures"
-            :key="index"
-          >
-            <img
-              :src="item.url"
-              alt=""
-            >
+          <div class="historyItemImg" v-for="(item, index) in dataList.pictures" :key="index">
+            <img :src="item.url" alt>
           </div>
         </div>
       </div>
@@ -122,19 +87,19 @@ export default {
         products: [],
         users: []
       }
-    }
+    };
   },
   created() {
-    this._getHistoryRecord()
+    this._getHistoryRecord();
   },
   methods: {
     _getHistoryRecord() {
       getHistoryRecord(this.$store.state.user.UserID).then(res => {
         if (res.data.code === 0) {
-          console.log(res.data.data)
-          this.dataList = res.data.data
+          console.log(res.data.data);
+          this.dataList = res.data.data;
         }
-      })
+      });
     },
     toEnterprise() {
       this.$router.push({
@@ -159,6 +124,7 @@ export default {
 .history {
   padding: 20px;
   height: calc(100vh - 218px);
+  min-height: 585px;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;

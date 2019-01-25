@@ -1,6 +1,19 @@
 <template>
   <div class="exhibitionDetails">
-    <Swiper></Swiper>
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div
+          class="swiper-slide"
+          v-for="(item, index) in detailsData.bannerUrl.split(',')"
+          :key="index"
+        >
+          <img :src="`http://47.101.165.134${item}`" alt>
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
     <div class="signUp" @click="showBox">参加报名</div>
     <div class="exhibitionTitle">
       <div class="exhibitionLeft">
@@ -183,8 +196,15 @@
 </template>
 
 <script>
-import Swiper from "@/base/swiper/swiper.vue";
-import { getExhibitionInfoById, enrollExhibition, ERR_OK } from "@/api/api.js";
+import Swiper from "swiper";
+import "swiper/dist/css/swiper.min.css";
+import {
+  getExhibitionInfoById,
+  enrollExhibition,
+  getAllExhibitiors,
+  getAllVisitors,
+  ERR_OK
+} from "@/api/api.js";
 import { getUser } from "@/utils/auth.js";
 
 export default {
@@ -215,16 +235,64 @@ export default {
         nameEng: "",
         name: "",
         location: ""
+      },
+      AllExh: {
+        exhibitionId: this.$route.query.id,
+        userId: this.$store.state.user.UserID,
+        content: ""
+      },
+      AllVis: {
+        exhibitionId: this.$route.query.id,
+        userId: this.$store.state.user.UserID,
+        content: ""
       }
     };
   },
   created() {
     this._getExhibitionInfoById(this.$route.query.id);
+    this._getAllExhibitiors();
+    this._getAllVisitors();
+  },
+  updated() {
+    let _this = this;
+    var swiper = new Swiper(".swiper-container", {
+      slidesPerView: 1,
+      spaceBetween: 30,
+      loop: true,
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev"
+      }
+    });
   },
   methods: {
+    _getAllExhibitiors() {
+      getAllExhibitiors(this.AllExh).then(res => {
+        if (res.data.code === 0) {
+          console.log("获取参展商-------")
+          console.log(res.data.data);
+        }
+      });
+    },
+    _getAllVisitors() {
+      getAllVisitors(this.AllVis).then(res => {
+        if (res.data.code === 0) {
+          console.log("获取到访商-------")
+          console.log(res.data.data);
+        }
+      });
+    },
     _enrollExhibition() {
       enrollExhibition(this.signUp).then(res => {
-        if (res.status === ERR_OK) {
+        if (res.data.code === 0) {
           console.log("报名成功");
           this.show = false;
         }
@@ -233,7 +301,7 @@ export default {
     _getExhibitionInfoById(id) {
       getExhibitionInfoById(id).then(res => {
         console.log(res);
-        if (res.status === ERR_OK) {
+        if (res.data.code === 0) {
           this.detailsData = res.data.data;
         }
       });
@@ -255,9 +323,6 @@ export default {
     showBox() {
       this.show = !this.show;
     }
-  },
-  components: {
-    Swiper
   }
 };
 </script>
@@ -265,6 +330,20 @@ export default {
 <style lang="scss">
 .exhibitionDetails {
   background: #fff;
+  .swiper-container {
+    width: 100%;
+    height: 472px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .swiper-slide {
+    width: 100%;
+    height: 100%;
+  }
+  .swiper-slide > img {
+    width: 100%;
+    height: 100%;
+  }
 }
 .signUpBox {
   position: fixed;
@@ -387,7 +466,9 @@ export default {
   .exhibitionRight {
     width: 50%;
     height: 326px;
-    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 .TitleHead {

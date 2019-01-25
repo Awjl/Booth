@@ -80,13 +80,29 @@ export function getAllExhibitions() {
         method: "get"
     });
 }
+
 // 获取所有参展商 
-export function getAllExhibitiors(id) {
+export function getAllExhibitiors(data) {
     return service({
         url: "/getAllExhibitiors",
         method: "get",
         params: {
-            exhibitionId: id
+            exhibitionId: data.exhibitionId,
+            userId: data.userId,
+            content: data.content
+        }
+    });
+}
+
+// 获取所有到访商 
+export function getAllVisitors(data) {
+    return service({
+        url: "/getAllVisitors",
+        method: "get",
+        params: {
+            exhibitionId: data.exhibitionId,
+            userId: data.userId,
+            content: data.content
         }
     });
 }

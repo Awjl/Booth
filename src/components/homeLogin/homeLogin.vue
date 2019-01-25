@@ -30,7 +30,7 @@
               v-for="(item, index) in attentionUserList.attentionMe"
               :key="index"
             >
-              <img :src="item.logoUrl" alt>
+              <img :src="`http://47.101.165.134/${item.logoUrl}`" alt>
             </div>
           </div>
         </div>
@@ -43,7 +43,7 @@
               v-for="(item, index) in attentionUserList.attentionTo"
               :key="index"
             >
-              <img :src="item.logoUrl" alt>
+              <img :src="`http://47.101.165.134/${item.logoUrl}`" alt>
             </div>
           </div>
         </div>
@@ -142,9 +142,13 @@ export default {
       });
     },
     toenterprise() {
-      this.$router.push({
-        path: "/enterprise"
-      });
+      if (this.$store.state.user.UserID) {
+        this.$router.push({
+          path: "/enterprise"
+        });
+      } else {
+        alert("请登录")
+      }
     },
     toSign() {
       this.$router.push({

@@ -3,12 +3,7 @@
     <div class="enterpriseNav">
       <div class="enterpriseNavSeach">
         <span>筛选器/行业分类列表</span>
-        <input
-          type="text"
-          placeholder="搜索企业"
-          v-model="infoData.name"
-          v-on:input="inputFunc"
-        />
+        <input type="text" placeholder="搜索企业" v-model="infoData.name" v-on:input="inputFunc">
       </div>
       <div class="enterpriseNavBottom">
         <div class="enterpriseMian">
@@ -17,40 +12,21 @@
           <div class="enterpriseMianthree">三级分类</div>
         </div>
         <div class="enterpriseList">
-          <div
-            class="enterpriseItem ItemAct"
-            @click="toEnterprise"
-          >发现</div>
-          <div
-            class="enterpriseItem"
-            @click="toHistory"
-          >历史记录</div>
-          <div
-            class="enterpriseItem"
-            @click="toCollection"
-          >收藏</div>
+          <div class="enterpriseItem ItemAct" @click="toEnterprise">发现</div>
+          <div class="enterpriseItem" @click="toHistory">历史记录</div>
+          <div class="enterpriseItem" @click="toCollection">收藏</div>
         </div>
       </div>
-
     </div>
     <div class="enterpriseBox">
       <div class="enterpriseBoxList">
-        <div
-          class="enterpriseBoxItem"
-          v-for="(item, index) in dataList"
-          :key="index"
-        >
+        <div class="enterpriseBoxItem" v-for="(item, index) in dataList" :key="index">
           <div class="homeListHead">
             <div class="homeListImg">
-              <div><img
-                  :src="`http://47.101.165.134${item.user.logoUrl}`"
-                  alt=""
-                /></div>
-              <div
-                class="follow"
-                v-if="item.isConcerned === 2"
-                @click="followId(item.user.id)"
-              >+ 关注</div>
+              <div>
+                <img :src="`http://47.101.165.134${item.user.logoUrl}`" alt>
+              </div>
+              <div class="follow" v-if="item.isConcerned === 2" @click="followId(item.user.id)">+ 关注</div>
               <div
                 class="follow"
                 v-if="item.isConcerned === 1"
@@ -61,21 +37,21 @@
               <div class="name">{{item.user.name}}</div>
               <div class="nameEN">{{item.user.fansNumber}}关注者</div>
               <p class="industry">{{item.user.industryName}}</p>
-              <div
-                class="exhibition"
-                v-if="item.participation !== null"
-              >
+              <div class="exhibition" v-if="item.participation !== null">
                 <div class="exhibitionItem">
                   <div class="exhibitionCan">
                     <span>已参与</span>
                     <div class="exhibitionName">
-                      {{item.participation.nameEng}} <br />
+                      {{item.participation.nameEng}}
+                      <br>
                       {{item.participation.name}}
                     </div>
                   </div>
                   <div class="exhibitionTime">
                     <span>{{item.participation.date}}</span>
-                    <div class="exhibitionDetali"><i class="icon iconTo"></i></div>
+                    <div class="exhibitionDetali">
+                      <i class="icon iconTo"></i>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -85,38 +61,21 @@
               <div class="InterestListSee">查看产品手册</div>
             </div>
           </div>
-          <div class="hometext">
-            {{item.user.summary}}
-          </div>
+          <div class="hometext">{{item.user.summary}}</div>
           <div class="moveBtn">更多</div>
           <div class="homeItemImg">
-            <img
-              :src="`http://47.101.165.134${item.user.introductionUrl}`"
-              alt=""
-            />
+            <img :src="`http://47.101.165.134${item.user.introductionUrl}`" alt>
           </div>
         </div>
       </div>
       <div class="enterpriseBoxBaner">
         <div class="homeRight">
-          <img
-            :src="`http://47.101.165.134${dataAll.areaA.url}`"
-            alt=""
-          />
+          <img :src="`http://47.101.165.134${dataAll.areaA.url}`" alt>
           <div class="homeTitle">
-            <img
-              src="../../assets/images/home/logo.png"
-              alt
-            />
-            <img
-              src="../../assets/images/home/logoText.png"
-              alt
-            />
+            <img src="../../assets/images/home/logo.png" alt>
+            <img src="../../assets/images/home/logoText.png" alt>
           </div>
-          <img
-            :src="`http://47.101.165.134${dataAll.areaB.url}`"
-            alt=""
-          />
+          <img :src="`http://47.101.165.134${dataAll.areaB.url}`" alt>
         </div>
       </div>
     </div>
@@ -124,7 +83,13 @@
 </template>
 
 <script>
-import { discoverOtherCompanyByCondition, getAdvert, focus, cancelFocus, ERR_OK } from "@/api/api.js";
+import {
+  discoverOtherCompanyByCondition,
+  getAdvert,
+  focus,
+  cancelFocus,
+  ERR_OK
+} from "@/api/api.js";
 
 export default {
   name: "enterprise",
@@ -146,39 +111,39 @@ export default {
         areaA: { id: 2, url: "" },
         areaB: { id: 2, url: "" }
       }
-    }
+    };
   },
   created() {
-    getAdvert(this.$store.state.userData.twoIndustry).then((res) => {
+    getAdvert(this.$store.state.userData.twoIndustry).then(res => {
       if (res.status === 200) {
-        this.dataAll = res.data.data
+        this.dataAll = res.data.data;
       }
-    })
-    this._discoverOtherCompanyByCondition()
+    });
+    this._discoverOtherCompanyByCondition();
   },
   methods: {
     _focus() {
-      focus(this.followData).then((res) => {
+      focus(this.followData).then(res => {
         if (res.status === ERR_OK) {
-          this._discoverOtherCompanyByCondition()
+          this._discoverOtherCompanyByCondition();
         }
-      })
+      });
     },
     _cancelFocus() {
-      cancelFocus(this.followData).then((res) => {
+      cancelFocus(this.followData).then(res => {
         if (res.status === ERR_OK) {
-          this._discoverOtherCompanyByCondition()
+          this._discoverOtherCompanyByCondition();
         }
-      })
+      });
     },
     _discoverOtherCompanyByCondition() {
       discoverOtherCompanyByCondition(this.infoData).then(res => {
         if (res.data.code === 0) {
-          console.log("发现--------------------------------------")
-          console.log(res.data.data)
-          this.dataList = res.data.data
+          console.log("发现--------------------------------------");
+          console.log(res.data.data);
+          this.dataList = res.data.data;
         }
-      })
+      });
     },
     setTime() {
       this.timer = setTimeout(() => {
@@ -187,16 +152,16 @@ export default {
     },
     followId(id) {
       if (this.$store.state.user.UserID) {
-        this.followData.userId = this.$store.state.user.UserID
-        this.followData.concernedId = id
-        this._focus()
+        this.followData.userId = this.$store.state.user.UserID;
+        this.followData.concernedId = id;
+        this._focus();
       }
     },
     cancelfollowId(id) {
       if (this.$store.state.user.UserID) {
-        this.followData.userId = this.$store.state.user.UserID
-        this.followData.concernedId = id
-        this._cancelFocus()
+        this.followData.userId = this.$store.state.user.UserID;
+        this.followData.concernedId = id;
+        this._cancelFocus();
       }
     },
     inputFunc() {

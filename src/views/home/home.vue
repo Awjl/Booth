@@ -15,7 +15,7 @@
         <span>企业资料完成度{{this.$store.state.userData.Percent}}%</span>
         <div>
           <p>普通会员</p>
-          <p>编辑企业资料</p>
+          <p @click="toSing">编辑企业资料</p>
         </div>
       </div>
       <div class="PercentageBox">
@@ -105,6 +105,11 @@ export default {
         path: `/exhibitionDetails`,
         query: { id: this.listImg[id].id }
       });
+    },
+    toSing() {
+      this.$router.push({
+        name: `infoOne`
+      });
     }
   },
   components: {
@@ -150,6 +155,7 @@ export default {
         text-align: right;
         height: 20px;
         line-height: 20px;
+        cursor: pointer;
       }
     }
     .PercentageBox {

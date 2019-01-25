@@ -1,23 +1,11 @@
 <template>
   <div class="homeRight">
-    <img
-      :src="`http://47.101.165.134${dataAll.areaA.url}`"
-      alt=""
-    />
+    <img :src="`http://47.101.165.134${dataAll.areaA.url}`" alt>
     <div class="homeTitle">
-      <img
-        src="../../assets/images/home/logo.png"
-        alt=""
-      />
-      <img
-        src="../../assets/images/home/logoText.png"
-        alt=""
-      />
+      <img src="../../assets/images/home/logo.png" alt>
+      <img src="../../assets/images/home/logoText.png" alt>
     </div>
-    <img
-      :src="`http://47.101.165.134${dataAll.areaB.url}`"
-      alt=""
-    />
+    <img :src="`http://47.101.165.134${dataAll.areaB.url}`" alt>
   </div>
 </template>
 
@@ -32,21 +20,21 @@ export default {
         areaA: { id: 2, url: "" },
         areaB: { id: 2, url: "" }
       }
-    }
+    };
   },
   created() {
     if (!this.$store.state.user.UserID) {
-      getAdvert(this.$store.state.userData.oneIndustry).then((res) => {
+      getAdvert(this.$store.state.userData.oneIndustry).then(res => {
         if (res.status === ERR_OK) {
-          this.dataAll = res.data.data
+          this.dataAll = res.data.data;
         }
-      })
+      });
     } else {
-      getAdvert(this.$store.state.userData.twoIndustry).then((res) => {
+      getAdvert(this.$store.state.userData.twoIndustry).then(res => {
         if (res.status === ERR_OK) {
-          this.dataAll = res.data.data
+          this.dataAll = res.data.data;
         }
-      })
+      });
     }
   }
 };

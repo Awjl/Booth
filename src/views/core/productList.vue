@@ -64,11 +64,16 @@ export default {
     };
   },
   created() {
-    this._getAllProducts();
+    console.log(this.$route.query.id)
+    if (this.$route.query.id) {
+      this._getAllProducts(this.$route.query.id);
+    } else {
+      this._getAllProducts(this.$store.state.user.UserID);
+    }
   },
   methods: {
-    _getAllProducts() {
-      getAllProducts(this.$store.state.user.UserID).then(res => {
+    _getAllProducts(userid) {
+      getAllProducts(userid).then(res => {
         if (res.data.code === 0) {
           console.log(res.data.data);
           this.AllProducts = res.data.data;

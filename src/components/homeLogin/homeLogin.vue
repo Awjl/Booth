@@ -1,33 +1,20 @@
 <template>
   <div class="homeLogin">
     <div class="LoginMen">
-      <div
-        class="LoginItem"
-        v-if="!this.$store.state.user.UserID"
-      >
+      <!-- 无用户 -->
+      <div class="LoginItem" v-if="!this.$store.state.user.UserID">
         <div class="sign">
-          <img
-            src="../../assets/images/home/signUp.png"
-            alt
-          >
+          <img src="../../assets/images/home/signUp.png" alt>
           <div class="signIcon">
-            <img
-              src="../../assets/images/icon/man.png"
-              alt
-            >
+            <img src="../../assets/images/icon/man.png" alt>
           </div>
         </div>
-        <div class="signBtn">加入booth</div>
+        <div class="signBtn" @click="toSign">加入booth</div>
       </div>
-      <div
-        class="LoginItem"
-        v-else
-      >
+      <!-- 有用户 -->
+      <div class="LoginItem" v-else>
         <div class="LoginItemLogo">
-          <img
-            :src="`http://47.101.165.134/${this.$store.state.userData.logoPicUrl}`"
-            alt
-          >
+          <img :src="`http://47.101.165.134/${this.$store.state.userData.logoPicUrl}`" alt>
         </div>
         <div class="LoginItemTitle">
           <p>{{this.$store.state.userData.name}}</p>
@@ -43,10 +30,7 @@
               v-for="(item, index) in attentionUserList.attentionMe"
               :key="index"
             >
-              <img
-                :src="item.logoUrl"
-                alt=""
-              >
+              <img :src="item.logoUrl" alt>
             </div>
           </div>
         </div>
@@ -59,10 +43,7 @@
               v-for="(item, index) in attentionUserList.attentionTo"
               :key="index"
             >
-              <img
-                :src="item.logoUrl"
-                alt=""
-              >
+              <img :src="item.logoUrl" alt>
             </div>
           </div>
         </div>
@@ -74,138 +55,36 @@
           <span>你可能感兴趣的</span>
           <span @click="toenterprise">了解更多</span>
         </div>
-        <div class="InterestList">
-          <div
-            class="enterpriseItem"
-            v-for="(item, index) in dataList"
-            :key="index"
-          >
-            <div class="enterpriseItemLeft">
-              <div class="enterpriseItemHead">
-                <img
-                  :src="`http://47.101.165.134${item.logoUrl}`"
-                  alt
-                >
-              </div>
-              <div class="enterpriseItemLeftTitle">
-                <p>{{item.name}}</p>
-                <p>{{item.fansNumber}}位关注者</p>
-                <p>{{item.industryName}}</p>
-              </div>
-            </div>
-            <div class="enterpriseItemRight">
-              <div class="InterestListshare">分享</div>
-              <div class="InterestListSee">查看产品手册</div>
-            </div>
-          </div>
-        </div>
-        <div class="he40"></div>
-        <div class="already">
-          <div class="alreadyHead">
-            <span>已参加</span>
-            <p>HOUSE VISION 2018 BEIJING EXHIBITION
-              <br>探索家——未来生活大展
-            </p>
-          </div>
-          <div class="alreadyTime">2018年9月21日</div>
-        </div>
-        <div class="InterestList">
-          <p class="boothNum">A2022</p>
+        <div class="InterestList" v-for="(item, index) in dataList" :key="index">
+          <!-- <div class="InterestList" v-if="item.exhibition">
+            <p class="boothNum">A2022</p>
+          </div>-->
           <div class="enterpriseItem">
             <div class="enterpriseItemLeft">
               <div class="enterpriseItemHead">
-                <img
-                  src="../../assets/images/home/TSNHCG_1_.png"
-                  alt
-                >
+                <img :src="`http://47.101.165.134${item.user.logoUrl}`" alt>
               </div>
               <div class="enterpriseItemLeftTitle">
-                <p>altiuma</p>
-                <p>Roubaix 5,246 位关注者</p>
-                <p>建筑行业</p>
+                <p>{{item.user.name}}</p>
+                <p>{{item.user.fansNumber}}位关注者</p>
+                <p>{{item.user.industryName}}</p>
               </div>
             </div>
             <div class="enterpriseItemRight">
               <div class="InterestListshare">分享</div>
-              <div class="InterestListSee">查看产品手册</div>
+              <div class="InterestListSee" @click="toMover(item.user.id)">查看产品手册</div>
             </div>
           </div>
-          <p class="boothNum">A2022</p>
-          <div class="enterpriseItem">
-            <div class="enterpriseItemLeft">
-              <div class="enterpriseItemHead">
-                <img
-                  src="../../assets/images/home/TSNHCG_1_.png"
-                  alt
-                >
-              </div>
-              <div class="enterpriseItemLeftTitle">
-                <p>altiuma</p>
-                <p>Roubaix 5,246 位关注者</p>
-                <p>建筑行业</p>
-              </div>
+          <div class="already" v-if="item.exhibition">
+            <div class="alreadyHead">
+              <span>已参加</span>
+              <p>
+                {{item.exhibition.nameEng}}
+                <br>
+                {{item.exhibition.name}}
+              </p>
             </div>
-            <div class="enterpriseItemRight">
-              <div class="InterestListshare">分享</div>
-              <div class="InterestListSee">查看产品手册</div>
-            </div>
-          </div>
-          <div class="InterestListMove">
-            <i class="icon iconMover"></i>
-          </div>
-        </div>
-        <div class="already">
-          <div class="alreadyHead">
-            <span>已参加</span>
-            <p>HOUSE VISION 2018 BEIJING EXHIBITION
-              <br>探索家——未来生活大展
-            </p>
-          </div>
-          <div class="alreadyTime">2018年9月21日</div>
-        </div>
-        <div class="InterestList">
-          <p class="boothNum">A2022</p>
-          <div class="enterpriseItem">
-            <div class="enterpriseItemLeft">
-              <div class="enterpriseItemHead">
-                <img
-                  src="../../assets/images/home/TSNHCG_1_.png"
-                  alt
-                >
-              </div>
-              <div class="enterpriseItemLeftTitle">
-                <p>altiuma</p>
-                <p>Roubaix 5,246 位关注者</p>
-                <p>建筑行业</p>
-              </div>
-            </div>
-            <div class="enterpriseItemRight">
-              <div class="InterestListshare">分享</div>
-              <div class="InterestListSee">查看产品手册</div>
-            </div>
-          </div>
-          <p class="boothNum">A2022</p>
-          <div class="enterpriseItem">
-            <div class="enterpriseItemLeft">
-              <div class="enterpriseItemHead">
-                <img
-                  src="../../assets/images/home/TSNHCG_1_.png"
-                  alt
-                >
-              </div>
-              <div class="enterpriseItemLeftTitle">
-                <p>altiuma</p>
-                <p>Roubaix 5,246 位关注者</p>
-                <p>建筑行业</p>
-              </div>
-            </div>
-            <div class="enterpriseItemRight">
-              <div class="InterestListshare">分享</div>
-              <div class="InterestListSee">查看产品手册</div>
-            </div>
-          </div>
-          <div class="InterestListMove">
-            <i class="icon iconMover"></i>
+            <div class="alreadyTime">{{item.exhibition.date}}</div>
           </div>
         </div>
       </div>
@@ -221,9 +100,9 @@ export default {
   data() {
     return {
       userData: {
-        firstIndustryId: "",
-        secondIndustryId: "",
-        id: ""
+        firstIndustryId: this.$store.state.userData.oneIndustry,
+        secondIndustryId: this.$store.state.userData.twoIndustry,
+        id: this.$store.state.user.UserID
       },
       dataList: [],
       attentionUserList: {
@@ -234,37 +113,50 @@ export default {
   },
   created() {
     console.log(this.$store.state.user.UserID);
+    console.log(this.userData);
     if (this.$store.state.user.UserID) {
-      this.userData.secondIndustryId = this.$store.state.userData.twoIndustry;
-      this.userData.id = this.$store.state.user.UserID;
       this._mayBeInterestedCompany();
       this._getAttention();
     } else {
-      this.userData.firstIndustryId = this.$store.state.userData.oneIndustry;
+      this.userData.secondIndustryId = "";
       this._mayBeInterestedCompany();
     }
   },
   methods: {
     _mayBeInterestedCompany() {
+      console.log(this.userData);
       mayBeInterestedCompany(this.userData).then(res => {
         if (res.status === ERR_OK) {
           this.dataList = res.data.data;
+          console.log(res.data.data);
         }
       });
     },
     _getAttention() {
       getAttention(this.$store.state.user.UserID).then(res => {
         if (res.data.code === 0) {
-          console.log('谁看过谁-----------------------------------')
+          console.log("谁看过谁-----------------------------------");
           this.attentionUserList = res.data.data;
-          console.log(this.attentionUserList)
+          console.log(this.attentionUserList);
         }
-      })
+      });
     },
     toenterprise() {
       this.$router.push({
-        path: '/enterprise'
-      })
+        path: "/enterprise"
+      });
+    },
+    toSign() {
+      this.$router.push({
+        path: `/sign`
+      });
+    },
+    toMover(id) {
+      console.log(id);
+      this.$router.push({
+        name: `productList`,
+        query: { id: id }
+      });
     }
   }
 };
@@ -438,6 +330,7 @@ export default {
             color: #fff;
             background: #326b90;
             font-size: 10px;
+            cursor: pointer;
           }
           .InterestListSee {
             width: 90px;
@@ -447,6 +340,7 @@ export default {
             color: #fff;
             background: #326b90;
             font-size: 10px;
+            cursor: pointer;
           }
         }
       }

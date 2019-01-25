@@ -2,14 +2,8 @@
   <div class="signDetails">
     <div class="signBgTwo">
       <div class="signBgInfoLog">
-        <div
-          class="infoLog"
-          @click="tohome"
-        >
-          <img
-            src="../../assets/images/home/logo.png"
-            alt
-          >
+        <div class="infoLog" @click="tohome">
+          <img src="../../assets/images/home/logo.png" alt>
         </div>
         <div class="infoLog">
           <p>入驻booth</p>
@@ -28,17 +22,11 @@
           <div class="signBgMainList">
             <div class="signBgMainRightItem">
               <p>企业中文全称</p>
-              <input
-                type="text"
-                v-model="userData.name"
-              >
+              <input type="text" v-model="userData.name">
             </div>
             <div class="signBgMainRightItem">
               <p>企业英文全称</p>
-              <input
-                type="text"
-                v-model="userData.nameEng"
-              >
+              <input type="text" v-model="userData.nameEng">
             </div>
             <div class="signBgMainRightItem">
               <p>人数规模（勾选）</p>
@@ -52,17 +40,11 @@
             </div>
             <div class="signBgMainRightItem">
               <p>企业所在地</p>
-              <input
-                type="text"
-                v-model="userData.address"
-              >
+              <input type="text" v-model="userData.address">
             </div>
             <div class="signBgMainRightItem">
               <p>联系人</p>
-              <input
-                type="text"
-                v-model="userData.linkman"
-              >
+              <input type="text" v-model="userData.linkman">
             </div>
             <div class="signBgMainRightItem">
               <p>联系人职位（勾选）</p>
@@ -74,17 +56,11 @@
             </div>
             <div class="signBgMainRightItem">
               <p>联系人手机号码</p>
-              <input
-                type="text"
-                v-model="userData.mobile"
-              >
+              <input type="text" v-model="userData.mobile">
             </div>
             <div class="signBgMainRightItem">
               <p>联系人邮件</p>
-              <input
-                type="text"
-                v-model="userData.linkmanEmail"
-              >
+              <input type="text" v-model="userData.linkmanEmail">
             </div>
           </div>
           <div class="signBgMainFoot">
@@ -123,7 +99,7 @@ export default {
     ...mapGetters(["UserID"])
   },
   created() {
-    console.log(this.$route.params.id)
+    console.log(this.$route.params.id);
     if (this.$route.params.id) {
       this.$store.commit("SET_USERID", this.$route.params.id);
     }
@@ -133,7 +109,7 @@ export default {
     _addUserInfo() {
       addUserInfo(this.formData).then(res => {
         if (res.data.code === 0) {
-          setUser(this.$store.state.user.UserID)
+          setUser(this.$store.state.user.UserID);
           this.$router.push({
             path: `/home`
           });
@@ -170,36 +146,34 @@ export default {
         "twoIndustry",
         this.$store.state.userData.twoIndustry
       );
+      this.formData.append("competitor", this.$store.state.userData.competitor);
+      this.formData.append("keywords", this.$store.state.userData.keywords);
       this.formData.append(
-        "competitor", this.$store.state.userData.competitor
+        "mainProcess",
+        this.$store.state.userData.mainProcess
       );
       this.formData.append(
-        "keywords", this.$store.state.userData.keywords
-      );
-      this.formData.append(
-        "mainProcess", this.$store.state.userData.mainProcess
-      );
-      this.formData.append(
-        "facilitator", this.$store.state.userData.facilitator
+        "facilitator",
+        this.$store.state.userData.facilitator
       );
       this.formData.append("summary", this.$store.state.userData.summary);
       this.formData.append(
-        "exhibitions", this.$store.state.userData.exhibitions
+        "exhibitions",
+        this.$store.state.userData.exhibitions
       );
-      this.formData.append(
-        "customer", this.$store.state.userData.customer
-      );
+      this.formData.append("customer", this.$store.state.userData.customer);
       for (let i = 0; i <= this.$store.state.userData.imgList.length; i++) {
-        this.formData.append("companyPics", this.$store.state.userData.imgList[i]);
+        this.formData.append(
+          "companyPics",
+          this.$store.state.userData.imgList[i]
+        );
       }
       this.formData.append("logoPic", this.$store.state.userData.logoPic);
       this.formData.append(
         "introductionPic",
         this.$store.state.userData.introductionPic
       );
-      this.formData.append(
-        "supplier", this.$store.state.userData.supplier
-      );
+      this.formData.append("supplier", this.$store.state.userData.supplier);
       this._addUserInfo();
     },
     toNext() {

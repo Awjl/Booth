@@ -1,21 +1,12 @@
 <template>
   <div class="homeList">
-    <div
-      class="homleListItem"
-      v-for="(item, index) in dataList"
-      :key="index"
-    >
+    <div class="homleListItem" v-for="(item, index) in dataList" :key="index">
       <div class="homeListHead">
         <div class="homeListImg">
-          <div><img
-              :src="`http://47.101.165.134${item.user.logoUrl}`"
-              alt=""
-            /></div>
-          <div
-            class="follow"
-            v-if="item.isConcerned === 2"
-            @click="followId(item.user.id)"
-          >+ 关注</div>
+          <div>
+            <img :src="`http://47.101.165.134${item.user.logoUrl}`" alt>
+          </div>
+          <div class="follow" v-if="item.isConcerned === 2" @click="followId(item.user.id)">+ 关注</div>
           <div
             class="follow"
             v-if="item.isConcerned === 1"
@@ -26,39 +17,34 @@
           <div class="name">{{item.user.name}}</div>
           <div class="nameEN">{{item.user.fansNumber}}关注者</div>
           <p class="industry">{{item.user.industryName}}</p>
-          <div
-            class="exhibition"
-            v-if="item.participation !== null"
-          >
+          <div class="exhibition" v-if="item.participation !== null">
             <div class="exhibitionItem">
               <div class="exhibitionCan">
                 <span>已参与</span>
                 <div class="exhibitionName">
-                  {{item.participation.nameEng}} <br />
+                  {{item.participation.nameEng}}
+                  <br>
                   {{item.participation.name}}
                 </div>
               </div>
               <div class="exhibitionTime">
                 <span>{{item.participation.date}}</span>
-                <div class="exhibitionDetali"><i class="icon iconTo"></i></div>
+                <div class="exhibitionDetali">
+                  <i class="icon iconTo"></i>
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div class="enterpriseItemRight">
           <div class="InterestListshare">分享</div>
-          <div class="InterestListSee">查看产品手册</div>
+          <div class="InterestListSee"  @click="toMover(item.user.id)">查看产品手册</div>
         </div>
       </div>
-      <div class="hometext">
-        {{item.user.summary}}
-      </div>
+      <div class="hometext">{{item.user.summary}}</div>
       <div class="moveBtn">更多</div>
       <div class="homeItemImg">
-        <img
-          :src="`http://47.101.165.134${item.user.introductionUrl}`"
-          alt=""
-        />
+        <img :src="`http://47.101.165.134${item.user.introductionUrl}`" alt>
       </div>
     </div>
   </div>
@@ -78,57 +64,68 @@ export default {
       upList: {
         firstIndustryId: "",
         secondIndustryId: "",
-        id: "",
+        id: ""
       },
       dataList: []
     };
   },
   created() {
-    console.log(this.$store.state.userData)
+    // console.log(this.$store.state.userData);
     if (this.$store.state.user.UserID) {
       this.upList.secondIndustryId = this.$store.state.userData.twoIndustry;
-      this.upList.id = this.$store.state.user.UserID
-      this._getRecommendCompany()
+      this.upList.id = this.$store.state.user.UserID;
+      this._getRecommendCompany();
     } else {
       this.upList.firstIndustryId = this.$store.state.userData.oneIndustry;
-      this._getRecommendCompany()
+      this._getRecommendCompany();
     }
   },
   methods: {
     _getRecommendCompany() {
-      getRecommendCompany(this.upList).then((res) => {
+      getRecommendCompany(this.upList).then(res => {
         if (res.status === ERR_OK) {
-          this.dataList = res.data.data
+          this.dataList = res.data.data;
         }
-      })
+      });
     },
     _focus() {
-      focus(this.followData).then((res) => {
+      focus(this.followData).then(res => {
         if (res.status === ERR_OK) {
-          this._getRecommendCompany()
+          this._getRecommendCompany();
         }
-      })
+      });
     },
     _cancelFocus() {
-      cancelFocus(this.followData).then((res) => {
+      cancelFocus(this.followData).then(res => {
         if (res.status === ERR_OK) {
-          this._getRecommendCompany()
+          this._getRecommendCompany();
         }
-      })
+      });
     },
     followId(id) {
       if (this.$store.state.user.UserID) {
-        this.followData.userId = this.$store.state.user.UserID
-        this.followData.concernedId = id
-        this._focus()
+        this.followData.userId = this.$store.state.user.UserID;
+        this.followData.concernedId = id;
+        this._focus();
+      } else {
+        alert("请登录")
       }
     },
     cancelfollowId(id) {
       if (this.$store.state.user.UserID) {
-        this.followData.userId = this.$store.state.user.UserID
-        this.followData.concernedId = id
-        this._cancelFocus()
+        this.followData.userId = this.$store.state.user.UserID;
+        this.followData.concernedId = id;
+        this._cancelFocus();
+      } else {
+        alert("请登录")
       }
+    },
+    toMover(id) {
+      console.log(id);
+      this.$router.push({
+        name: `productList`,
+        query: { id: id }
+      });
     }
   }
 };

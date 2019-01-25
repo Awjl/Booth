@@ -14,7 +14,9 @@
       <div @click="toNews">消息</div>
       <div @click="toSign" v-if="!this.$store.state.user.UserID">注册</div>
       <div @click="ShowLogin" v-if="!this.$store.state.user.UserID">登陆</div>
-      <div class="HeadImg" v-if="!this.$store.state.user.UserID"></div>
+      <div class="HeadImg HeadImgLogo" v-if="!this.$store.state.user.UserID">
+        <img src="../../assets/images/icon/man.png" alt>
+      </div>
       <div class="HeadImg" @click="toCore" v-if="this.$store.state.user.UserID">
         <img :src="`http://47.101.165.134/${this.$store.state.userData.logoPicUrl}`" alt>
       </div>
@@ -126,12 +128,16 @@ export default {
       color: #fff;
       &.HeadImg {
         width: 40px;
-        text-align: center;
-        line-height: 40px;
         height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         background: #fff;
         border-radius: 50%;
         overflow: hidden;
+      }
+      &.HeadImgLogo img{
+        width: 20px;
       }
     }
   }

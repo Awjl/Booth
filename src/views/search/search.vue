@@ -327,6 +327,7 @@ export default {
 .searchPag {
   width: 100%;
   height: calc(100vh - 218px);
+  min-height: 585px;
   background: #fff;
   padding: 20px;
   box-sizing: border-box;

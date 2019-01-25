@@ -151,6 +151,7 @@ export function mayBeInterestedCompany(data) {
         url: "/index/mayBeInterestedCompany",
         method: "get",
         params: {
+            firstIndustryId: data.firstIndustryId,
             secondIndustryId: data.secondIndustryId,
             id: data.id
         }

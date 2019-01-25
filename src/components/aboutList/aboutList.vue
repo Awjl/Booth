@@ -3,16 +3,9 @@
     <div class="aboutListTop">
       <div class="aboutListHead">产品册</div>
       <div class="aboutTopList">
-        <div
-          class="aboutTopItem"
-          v-for="(item, index) in aboutTopData"
-          :key="index"
-        >
+        <div class="aboutTopItem" v-for="(item, index) in aboutTopData" :key="index">
           <div class="brochureItemImg">
-            <img
-              :src="item.coverUrl"
-              alt
-            >
+            <img :src="item.coverUrl" alt>
           </div>
           <div class="brochureItemText">
             <div class="brochureItemmanual">
@@ -37,18 +30,12 @@
             </div>
             <div class="brochureReadLsit">
               <p v-if=" item.users.length === 0">暂无数据</p>
-              <div
-                v-for="(item, index) in item.users"
-                :key="index"
-              ></div>
+              <div v-for="(item, index) in item.users" :key="index"></div>
             </div>
           </div>
         </div>
       </div>
-      <div
-        class="Seemover"
-        @click="toMover"
-      >查看所有产品册</div>
+      <div class="Seemover" @click="toMover">查看所有产品册</div>
     </div>
     <div class="aboutListMiddle">
       <div class="aboutListHead">
@@ -56,31 +43,16 @@
         <span>更多</span>
       </div>
       <div class="aboutListMiddleNav">
-        <span
-          :class="{act: indexType === 1}"
-          @click="_getPartner(1)"
-        >主要顾客</span>
-        <span
-          :class="{act: indexType === 2}"
-          @click="_getPartner(2)"
-        >主要供应商</span>
-        <span
-          :class="{act: indexType === 3}"
-          @click="_getPartner(3)"
-        >主要第三方服务</span>
+        <span :class="{act: indexType === 1}" @click="_getPartner(1)">主要顾客</span>
+        <span :class="{act: indexType === 2}" @click="_getPartner(2)">主要供应商</span>
+        <span :class="{act: indexType === 3}" @click="_getPartner(3)">主要第三方服务</span>
       </div>
       <div class="aboutListMiddlelist">
-        <div
-          v-for="(item, index) in cooperationData"
-          :key="index"
-        >
+        <div v-for="(item, index) in cooperationData" :key="index">
           <div class="enterpriseItem" v-if="item.user">
             <div class="enterpriseItemLeft">
               <div class="enterpriseItemHead">
-                <img
-                  :src="`http://47.101.165.134${item.user.logoUrl}`"
-                  alt
-                >
+                <img :src="`http://47.101.165.134${item.user.logoUrl}`" alt>
               </div>
               <div class="enterpriseItemLeftTitle">
                 <p v-if="item.user">{{item.user.name}}</p>
@@ -93,10 +65,7 @@
               <div class="InterestListSee">查看产品手册</div>
             </div>
           </div>
-          <div
-            class="already"
-            v-if="item.exhibitions"
-          >
+          <div class="already" v-if="item.exhibitions">
             <div class="alreadyHead">
               <span>已参加</span>
               <p>HOUSE VISION 2018 BEIJING EXHIBITION
@@ -114,18 +83,12 @@
         <span @click="_getSimilarityCompany()">换一批</span>
       </div>
       <div class="aboutListMiddlelist">
-        <div
-          v-for="(item, index) in SimilarityCompanyData"
-          :key="index"
-        >
+        <div v-for="(item, index) in SimilarityCompanyData" :key="index">
           <div class="aboutListMiddleItem">
             <div class="enterpriseItem">
               <div class="enterpriseItemLeft">
                 <div class="enterpriseItemHead">
-                  <img
-                    :src="`http://47.101.165.134${item.user.logoUrl}`"
-                    alt
-                  >
+                  <img :src="`http://47.101.165.134${item.user.logoUrl}`" alt>
                 </div>
                 <div class="enterpriseItemLeftTitle">
                   <p>{{item.user.name}}</p>
@@ -139,10 +102,7 @@
               </div>
             </div>
           </div>
-          <div
-            class="already"
-            v-if="item.exhibitions.length !== 0"
-          >
+          <div class="already" v-if="item.exhibitions.length !== 0">
             <div class="alreadyHead">
               <span>已参加</span>
               <p>HOUSE VISION 2018 BEIJING EXHIBITION
@@ -157,7 +117,7 @@
   </div>
 </template>
 <script>
-import { getPartner, getSimilarityCompany } from "@/api/api.js"
+import { getPartner, getSimilarityCompany } from "@/api/api.js";
 export default {
   name: "aboutList",
   data() {
@@ -176,31 +136,31 @@ export default {
   methods: {
     _getSimilarityCompany(id) {
       if (id) {
-        this.ID = id
+        this.ID = id;
       } else {
-        this.ID = this.$store.state.user.UserID
+        this.ID = this.$store.state.user.UserID;
       }
       getSimilarityCompany(this.ID).then(res => {
         if (res.data.code === 0) {
-          this.SimilarityCompanyData = res.data.data
-          console.log(res.data.data)
+          this.SimilarityCompanyData = res.data.data;
+          console.log(res.data.data);
         }
-      })
+      });
     },
     _getPartner(type) {
-      this.indexType = type
-      console.log(type)
+      this.indexType = type;
+      console.log(type);
       getPartner(this.$store.state.user.UserID, type).then(res => {
         if (res.data.code === 0) {
-          this.cooperationData = res.data.data
-          console.log(res.data.data)
+          this.cooperationData = res.data.data;
+          console.log(res.data.data);
         }
-      })
+      });
     },
     toMover() {
       this.$router.push({
         path: `/productList`
-      })
+      });
     }
   }
 };

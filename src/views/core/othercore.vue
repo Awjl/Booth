@@ -1,75 +1,69 @@
 <template>
-  <div class="core">
-    <div class="coreHeard">
-      <div class="coreHeardLogo">
-        <img :src="this.$store.state.userData.logoPicUrl" alt>
+  <div class="othercore">
+    <div class="othercoreHeard">
+      <div class="othercoreHeardLogo">
+        <img :src="`http://47.101.165.134${datalist.user.logoUrl}`" alt>
       </div>
-      <div class="coreHeardName">
-        <div class="coreHeardNameTop">
-          <div class="coreName">
-            <div class="coreNamehead">
-              <span>{{this.$store.state.userData.name}}</span>
-              <div>
-                <p>普通会员</p>
-                <p @click="toInfo">修改资料</p>
-              </div>
-            </div>
-            <p>{{this.$store.state.userData.fansNumber}}位关注者</p>
-            <p class="Industry">{{this.$store.state.userData.oneIndustryname}}</p>
-          </div>
-        </div>
-        <div class="coreHeardNameBottom">
-          <div class="follow"></div>
-          <div class="over">
-            <p>企业资料完成度{{this.$store.state.userData.Percent}}%</p>
-            <div class="overBox">
-              <div class="overBoxItem" :style="`width:${this.$store.state.userData.Percent}%;`"></div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <p class="name">{{datalist.user.name}}</p>
+      <p class="fans">{{datalist.user.fansNumber}}关注者</p>
+      <p class="industryName">{{datalist.user.industryName}}</p>
+      <div class="btn" v-if="datalist.isConcerned === 2" @click="followId(datalist.user.id)">+ 关注</div>
+      <div
+        class="btn"
+        v-if="datalist.isConcerned === 1"
+        @click="cancelfollowId(datalist.user.id)"
+      >+ 已关注</div>
     </div>
-    <div class="coreMain">
-      <div class="coreAbout">
-        <div class="coreAboutTop">
-          <div class="coreAboutintroduction">
-            <div class="coreAboutHead">关于我们</div>
-            <div class="coreAboutText">{{this.$store.state.userData.summary}}</div>
-            <div class="coreAboutHead">公司详情</div>
-            <div class="coreAboutTtile">公司总部</div>
-            <div class="coreAboutlist">{{this.$store.state.userData.address}}</div>
-            <div class="coreAboutTtile">创立年份</div>
-            <div class="coreAboutlist">2019</div>
-            <div class="coreAboutTtile">公司规模</div>
-            <div class="coreAboutlist">11-50</div>
-            <div class="coreAboutTtile">专注领域</div>
-            <div class="coreAboutlist">
-              <span v-for="(item, index) in main" :key="index">{{item}}</span>
+    <div class="othercoreMain">
+      <div class="othercoreAbout">
+        <div class="othercoreAboutTop">
+          <div class="othercoreAboutintroduction">
+            <div class="othercoreAboutHead">关于我们</div>
+            <div class="othercoreAboutText">{{datalist.user.summary}}</div>
+            <div class="othercoreAboutHead">公司详情</div>
+            <div class="othercoreAboutTtile">公司总部</div>
+            <div class="othercoreAboutlist">{{datalist.user.address}}</div>
+            <div class="othercoreAboutTtile">公司规模</div>
+            <div class="othercoreAboutlist">11-50</div>
+            <div class="othercoreAboutTtile">专注领域</div>
+            <div class="othercoreAboutlist">
+              <span v-for="(item, index) in mian" :key="index">{{item}}</span>
             </div>
+            <div class="othercoreAboutTtile">联系人</div>
+            <div class="othercoreAboutlist">{{datalist.user.linkman}}</div>
+            <div class="othercoreAboutTtile">联系电话</div>
+            <div class="othercoreAboutlist">{{datalist.user.linkmanMobile}}</div>
+            <div class="othercoreAboutTtile">联系邮箱</div>
+            <div class="othercoreAboutlist">{{datalist.user.linkmanEmail}}</div>
           </div>
-          <div class="coreAboutintroductionImg">
-            <div
-              class="ItemImg"
-              v-for="(item, index) in this.$store.state.userData.imgListUrl"
-              :key="index"
-            >
-              <img :src="item.url" alt>
+          <div class="othercoreAboutintroductionImg">
+            <div class="ItemImg" v-for="(item, index) in datalist.pictures" :key="index">
+              <img :src="`http://47.101.165.134${item.url}`" alt>
             </div>
           </div>
         </div>
-        <div class="coreAboutBottom">
-          <div class="coreAboutBottomItem">
+        <div class="othercoreAboutBottom">
+          <div class="othercoreAboutBottomItem">
             <div class="homeListHead">
               <div class="homeListImg">
                 <div>
-                  <img :src="this.$store.state.userData.logoPicUrl" alt>
+                  <img :src="`http://47.101.165.134${datalist.user.logoUrl}`" alt>
                 </div>
-                <div class="follow"></div>
+                <div
+                  class="follow"
+                  v-if="datalist.isConcerned === 2"
+                  @click="followId(datalist.user.id)"
+                >+ 关注</div>
+                <div
+                  class="follow"
+                  v-if="datalist.isConcerned === 1"
+                  @click="cancelfollowId(datalist.user.id)"
+                >+ 已关注</div>
               </div>
               <div class="homeListTitle">
-                <div class="name">{{this.$store.state.userData.name}}</div>
-                <div class="nameEN">{{this.$store.state.userData.fansNumber}}位关注者</div>
-                <p class="industry">{{this.$store.state.userData.oneIndustryname}}</p>
+                <div class="name">{{datalist.user.name}}</div>
+                <div class="nameEN">{{datalist.user.fansNumber}}位关注者</div>
+                <p class="industry">{{datalist.user.industryName}}</p>
                 <div class="exhibition">
                   <div class="exhibitionItem">
                     <div class="exhibitionCan">
@@ -91,167 +85,178 @@
               </div>
               <div class="enterpriseItemRight">
                 <div class="InterestListshare">分享</div>
-                <div class="InterestListSee">查看产品手册</div>
+                <div class="InterestListSee" @click="toMover(datalist.user.id)">查看产品手册</div>
               </div>
             </div>
-            <div class="hometext">{{this.$store.state.userData.summary}}</div>
-            <div class="moveBtn">更多</div>
+            <div class="hometext">{{datalist.user.summary}}</div>
+            <!-- <div class="moveBtn">更多</div> -->
             <div class="homeItemImg">
-              <img
-                :src="`http://47.101.165.134${this.$store.state.userData.introductionPicUrl}`"
-                alt
-              >
+              <img :src="`http://47.101.165.134${datalist.user.introductionUrl}`" alt>
             </div>
           </div>
         </div>
       </div>
-      <div class="coreAboutLeft">
-        <AboutList></AboutList>
+      <div class="othercoreAboutLeft">
+        <AboutItem :products="datalist.products" :id="this.$route.query.id"></AboutItem>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import AboutList from "@/components/aboutList/aboutList.vue";
-// import {  } from "@/api/api.js";
+import AboutItem from "@/components/aboutList/aboutItem.vue";
+import { getCompanyInfo, focus, cancelFocus, ERR_OK } from "@/api/api.js";
 
 export default {
-  name: "core",
+  name: "othercore",
   data() {
     return {
-      main: [],
-      listMain: this.$store.state.userData.mainProcess
+      mian: [],
+      followData: {
+        userId: "",
+        concernedId: ""
+      },
+      datalist: {
+        isConcerned: "",
+        pictures: [],
+        products: [],
+        user: {
+          address: "",
+          id: "",
+          industryName: "",
+          logoUrl: "",
+          summary: "",
+          introductionUrl: "",
+          fansNumber: "",
+          name: "",
+          mainProcess: []
+        }
+      }
     };
   },
-  mounted() {
-    this.arr();
+  created() {
+    this._getCompanyInfo();
   },
   methods: {
-    toInfo() {
-      this.$router.push({
-        name: `infoOne`,
-        params: { id: this.$store.state.user.UserID }
+    _getCompanyInfo() {
+      console.log("其他用户信息--------------------------------");
+      getCompanyInfo(this.$store.state.user.UserID, this.$route.query.id).then(
+        res => {
+          if (res.status === ERR_OK) {
+            console.log(res.data.data);
+            this.datalist = res.data.data;
+            let _this = this;
+            let arr = [];
+            JSON.parse(this.datalist.user.mainProcess).forEach(e => {
+              console.log(e);
+              if (e.key != "点击输入") {
+                arr.push(e.key);
+              }
+              _this.main = arr;
+            });
+          }
+        }
+      );
+    },
+    _focus() {
+      focus(this.followData).then(res => {
+        if (res.status === ERR_OK) {
+          this._getCompanyInfo();
+        }
       });
     },
-    arr() {
-      let _this = this;
-      let arr = [];
-      JSON.parse(this.listMain).forEach(e => {
-        // _this.mian = e.key
-        // console.log(e)
-        if (e.key != "点击输入") {
-          arr.push(e.key);
+    _cancelFocus() {
+      cancelFocus(this.followData).then(res => {
+        if (res.status === ERR_OK) {
+          this._getCompanyInfo();
         }
-        _this.main = arr;
       });
+    },
+    toMover(id) {
+      console.log(id);
+      this.$router.push({
+        path: `/productList`,
+        query: { id: id }
+      });
+    },
+    followId(id) {
+      if (this.$store.state.user.UserID) {
+        this.followData.userId = this.$store.state.user.UserID;
+        this.followData.concernedId = id;
+        this._focus();
+      } else {
+        alert("请登录");
+      }
+    },
+    cancelfollowId(id) {
+      if (this.$store.state.user.UserID) {
+        this.followData.userId = this.$store.state.user.UserID;
+        this.followData.concernedId = id;
+        this._cancelFocus();
+      } else {
+        alert("请登录");
+      }
     }
   },
   components: {
-    AboutList
+    AboutItem
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.core {
-  padding: 30px 20px;
-  box-sizing: border-box;
-  .coreHeard {
+.othercore {
+  .othercoreHeard {
+    width: 100%;
+    height: 256px;
     display: flex;
-    .coreHeardLogo {
-      width: 170px;
-      height: 170px;
-      background: #fff;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    .othercoreHeardLogo {
+      width: 66px;
     }
-    .coreHeardName {
-      width: calc(100% - 170px);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      .coreHeardNameTop {
-        display: flex;
-        width: 100%;
-        .coreName {
-          width: 100%;
-          padding-left: 30px;
-          box-sizing: border-box;
-          .coreNamehead {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            div {
-              p {
-                margin-top: 4px;
-                color: #648aa2;
-              }
-              p:nth-child(2) {
-                cursor: pointer;
-              }
-            }
-            span {
-              font-size: 28px;
-              font-weight: bold;
-            }
-          }
-          .Industry {
-            margin-top: 10px;
-            color: #648aa2;
-          }
-        }
-      }
-      .coreHeardNameBottom {
-        padding-left: 30px;
-        box-sizing: border-box;
-        display: flex;
-        width: 100%;
-        justify-content: space-between;
-        align-items: flex-end;
-        .follow {
-          height: 30px;
-          width: 60px;
-          // line-height: 30px;
-          // text-align: center;
-          // background: #000;
-          // color: #fff;
-          // cursor: pointer;
-        }
-        .over {
-          p {
-            width: 100%;
-            text-align: right;
-            font-size: 28px;
-            color: #2c73a1;
-            margin-bottom: 20px;
-          }
-          .overBox {
-            width: 500px;
-            height: 12px;
-            background: #fff;
-            .overBoxItem {
-              height: 12px;
-              background: #326b90;
-            }
-          }
-        }
-      }
+    .name {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 20px 0 4px;
+    }
+    .fans {
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+    .industryName {
+      font-size: 10px;
+      margin-bottom: 20px;
+    }
+    .btn {
+      width: 80px;
+      height: 24px;
+      background: #fff;
+      color: #000;
+      text-align: center;
+      line-height: 24px;
+      cursor: pointer;
     }
   }
-  .coreMain {
+  .othercoreMain {
+    padding: 30px 20px;
+    box-sizing: border-box;
     display: flex;
     width: 100%;
     margin-top: 80px;
-    .coreAbout {
+    .othercoreAbout {
       width: 60%;
-      .coreAboutTop {
+      .othercoreAboutTop {
         width: 100%;
         padding: 30px 40px;
         background: rgba($color: #648aa2, $alpha: 0.3);
         box-sizing: border-box;
       }
-      .coreAboutBottom {
+      .othercoreAboutBottom {
         width: 100%;
-        .coreAboutBottomItem {
+        .othercoreAboutBottomItem {
           width: 100%;
           background: #fff;
           padding: 20px;
@@ -270,12 +275,13 @@ export default {
               .follow {
                 width: 50px;
                 height: 20px;
-                // text-align: center;
-                // line-height: 20px;
-                // background: #000;
-                // color: #fff;
+                text-align: center;
+                line-height: 20px;
+                background: #000;
+                color: #fff;
                 font-size: 10px;
                 margin-top: 10px;
+                cursor: pointer;
               }
             }
             .homeListTitle {
@@ -374,6 +380,7 @@ export default {
                 background: #326b90;
                 font-size: 10px;
                 margin-top: 5px;
+                cursor: pointer;
               }
             }
           }
@@ -399,10 +406,10 @@ export default {
           }
         }
       }
-      .coreAboutintroduction {
+      .othercoreAboutintroduction {
         width: 90%;
       }
-      .coreAboutintroductionImg {
+      .othercoreAboutintroductionImg {
         width: 100%;
         margin-top: 40px;
         display: flex;
@@ -416,20 +423,20 @@ export default {
           margin-bottom: 10px;
         }
       }
-      .coreAboutHead {
+      .othercoreAboutHead {
         font-size: 26px;
         margin: 20px 0 30px;
       }
-      .coreAboutText {
+      .othercoreAboutText {
         font-size: 16px;
         line-height: 26px;
         margin: 10px 0;
       }
-      .coreAboutTtile {
+      .othercoreAboutTtile {
         font-size: 16px;
         line-height: 26px;
       }
-      .coreAboutlist {
+      .othercoreAboutlist {
         font-size: 16px;
         line-height: 26px;
         span {
@@ -437,7 +444,7 @@ export default {
         }
       }
     }
-    .coreAboutLeft {
+    .othercoreAboutLeft {
       width: 40%;
       min-width: 463px;
       padding-left: 30px;

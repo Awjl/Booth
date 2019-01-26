@@ -2,8 +2,8 @@
   <div class="aboutList">
     <div class="aboutListTop">
       <div class="aboutListHead">产品册</div>
-      <div class="aboutTopList">
-        <div class="aboutTopItem" v-for="(item, index) in aboutTopData" :key="index">
+      <div class="aboutTopList" v-if="products.length > 0">
+        <div class="aboutTopItem" v-for="(item, index) in products" :key="index">
           <div class="brochureItemImg">
             <img :src="item.coverUrl" alt>
           </div>
@@ -37,7 +37,10 @@
           </div>
         </div>
       </div>
-      <div class="Seemover" @click="toMover()">查看所有产品册</div>
+      <div class="aboutTopList" v-else>
+        暂无数据
+      </div>
+      <div class="Seemover" @click="toMover(id)">查看所有产品册</div>
     </div>
     <div class="aboutListMiddle">
       <div class="aboutListHead">
@@ -126,9 +129,10 @@
 import { getPartner, getSimilarityCompany } from "@/api/api.js";
 export default {
   name: "aboutList",
+  props: ["products", "id"],
   data() {
     return {
-      aboutTopData: this.$store.state.userData.products,
+      // aboutTopData: this.$store.state.userData.products,
       cooperationData: [],
       SimilarityCompanyData: [],
       indexType: 1,
@@ -138,7 +142,7 @@ export default {
   },
   created() {
     this._getPartner(1);
-    this._getSimilarityCompany();
+    this._getSimilarityCompany(this.$route.query.id);
   },
   methods: {
     _getSimilarityCompany(id) {
@@ -156,7 +160,7 @@ export default {
     },
     _getPartner(type) {
       this.indexType = type;
-      getPartner(this.$store.state.user.UserID, type).then(res => {
+      getPartner(this.$route.query.id, type).then(res => {
         if (res.data.code === 0) {
           this.cooperationData = res.data.data;
           console.log("这是合作伙伴-----");
@@ -168,7 +172,7 @@ export default {
       console.log(id);
       this.$router.push({
         path: `/productList`,
-        query: {id: id}
+        query: { id: id }
       });
     }
   }
@@ -210,6 +214,7 @@ export default {
     .aboutTopList {
       width: 100%;
       box-sizing: border-box;
+      text-align: center;
       .aboutTopItem {
         display: flex;
         justify-content: space-between;

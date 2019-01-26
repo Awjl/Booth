@@ -172,6 +172,14 @@ export default new Router({
           }
         },
         {
+          path: "/othercore",
+          component: () => import("./views/core/othercore.vue"),
+          name: "othercore",
+          meta: {
+            title: "企业主页"
+          }
+        },
+        {
           path: "/productList",
           component: () => import("./views/core/productList.vue"),
           name: "productList",

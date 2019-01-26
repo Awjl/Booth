@@ -38,7 +38,7 @@
         </div>
         <div class="enterpriseItemRight">
           <div class="InterestListshare">分享</div>
-          <div class="InterestListSee"  @click="toMover(item.user.id)">查看产品手册</div>
+          <div class="InterestListSee" @click="toMover(item.user.id)">查看产品手册</div>
         </div>
       </div>
       <div class="hometext">{{item.user.summary}}</div>
@@ -108,7 +108,7 @@ export default {
         this.followData.concernedId = id;
         this._focus();
       } else {
-        alert("请登录")
+        alert("请登录");
       }
     },
     cancelfollowId(id) {
@@ -117,7 +117,7 @@ export default {
         this.followData.concernedId = id;
         this._cancelFocus();
       } else {
-        alert("请登录")
+        alert("请登录");
       }
     },
     toMover(id) {

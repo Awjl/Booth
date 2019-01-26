@@ -691,7 +691,7 @@ export default {
           flex-wrap: wrap;
           justify-content: center;
           align-items: center;
-          overflow: hidden;
+          // overflow: hidden;
         }
         .signExhibition {
           padding: 0 20px;

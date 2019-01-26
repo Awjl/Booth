@@ -54,8 +54,8 @@
           <div class="brochureItemText">
             <div class="brochureItemHead">
               <div class="brochureItemName">
-                <div class="brochureItemLogo">
-                  <img :src="`${item.logoUrl}`" alt>
+                <div class="brochureItemLogo" @click="toOthercore(item.id)">
+                  <img :src="`http://47.101.165.134${item.logoUrl}`" alt>
                 </div>
                 <div class="brochureLogoName">
                   <p>{{item.name}}</p>
@@ -111,6 +111,12 @@ export default {
           this.searchList = res.data.data;
           console.log(res.data.data);
         }
+      });
+    },
+    toOthercore(id) {
+      this.$router.push({
+        path: `/othercore`,
+        query: { id: id }
       });
     },
     toBack() {
@@ -196,6 +202,7 @@ export default {
         .brochureItemImg {
           width: 162px;
           background: #fff;
+          cursor: pointer;
         }
         .brochureItemText {
           width: calc(100% - 182px);
@@ -203,6 +210,10 @@ export default {
           background: #f2f2f2;
           .brochureItemName {
             display: flex;
+            .brochureItemLogo {
+              width: 66px;
+              cursor: pointer;
+            }
             .brochureLogoName {
               margin-left: 10px;
               p:nth-child(1) {

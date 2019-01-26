@@ -150,7 +150,7 @@ export default {
     _needDesign() {
       needDesign(this.$store.state.user.UserID).then(res => {
         if (res.data.code === 0) {
-          console.log('提交成功')
+          console.log("提交成功");
           this.SubmissionBox = !this.SubmissionBox;
         }
       });

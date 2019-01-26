@@ -49,7 +49,7 @@
       <div class="CoDetailsList">
         <div class="CoDetailsItem" v-for="(item, index) in searchList.companies" :key="index">
           <div class="enterpriseItemLeft">
-            <div class="enterpriseItemHead">
+            <div class="enterpriseItemHead" @click="toOthercore(item.id)">
               <img :src="`http://47.101.165.134${item.logoUrl}`" alt>
             </div>
             <div class="enterpriseItemLeftTitle">
@@ -60,7 +60,7 @@
           </div>
           <div class="enterpriseItemRight">
             <div class="InterestListshare">分享</div>
-            <div class="InterestListSee">查看产品手册</div>
+            <div class="InterestListSee" @click="toBrochureList(item.id)">查看产品手册</div>
           </div>
         </div>
       </div>
@@ -100,6 +100,18 @@ export default {
           this.searchList = res.data.data;
           console.log(res.data.data);
         }
+      });
+    },
+    toOthercore(id) {
+      this.$router.push({
+        path: `/othercore`,
+        query: { id: id }
+      });
+    },
+    toBrochureList(id) {
+      this.$router.push({
+        name: `productList`,
+        query: { id: id }
       });
     },
     toBack() {
@@ -189,6 +201,7 @@ export default {
           height: 100%;
           .enterpriseItemHead {
             width: 88px;
+            cursor: pointer;
           }
           .enterpriseItemLeftTitle {
             height: 100%;
@@ -230,6 +243,7 @@ export default {
             color: #fff;
             background: #326b90;
             font-size: 10px;
+            cursor: pointer;
           }
         }
       }

@@ -3,7 +3,7 @@
     <div class="homleListItem" v-for="(item, index) in dataList" :key="index">
       <div class="homeListHead">
         <div class="homeListImg">
-          <div>
+          <div @click="toOthercore(item.user.id)">
             <img :src="`http://47.101.165.134${item.user.logoUrl}`" alt>
           </div>
           <div class="follow" v-if="item.isConcerned === 2" @click="followId(item.user.id)">+ 关注</div>
@@ -17,7 +17,11 @@
           <div class="name">{{item.user.name}}</div>
           <div class="nameEN">{{item.user.fansNumber}}关注者</div>
           <p class="industry">{{item.user.industryName}}</p>
-          <div class="exhibition" v-if="item.participation !== null">
+          <div
+            class="exhibition"
+            v-if="item.participation !== null"
+            @click="toExt(item.participation.id)"
+          >
             <div class="exhibitionItem">
               <div class="exhibitionCan">
                 <span>已参与</span>
@@ -42,7 +46,7 @@
         </div>
       </div>
       <div class="hometext">{{item.user.summary}}</div>
-      <div class="moveBtn">更多</div>
+      <div class="moveBtn" @click="toOthercore(item.user.id)">更多</div>
       <div class="homeItemImg">
         <img :src="`http://47.101.165.134${item.user.introductionUrl}`" alt>
       </div>
@@ -102,6 +106,18 @@ export default {
         }
       });
     },
+    toOthercore(id) {
+      this.$router.push({
+        path: `/othercore`,
+        query: { id: id }
+      });
+    },
+    toExt(id) {
+      this.$router.push({
+        path: `/exhibitionDetails`,
+        query: { id: id }
+      });
+    },
     followId(id) {
       if (this.$store.state.user.UserID) {
         this.followData.userId = this.$store.state.user.UserID;
@@ -149,6 +165,7 @@ export default {
         width: 66px;
         img {
           width: 100%;
+          cursor: pointer;
         }
         .follow {
           width: 60px;
@@ -182,6 +199,7 @@ export default {
           height: 52px;
           background: #fff;
           margin-top: 20px;
+          cursor: pointer;
           .exhibitionItem {
             width: 100%;
             height: 100%;

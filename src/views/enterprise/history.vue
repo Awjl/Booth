@@ -13,7 +13,7 @@
         <div class="historyItem">
           <div class="historyItemA">
             <div class="historyItemAItem" v-for="(item, index) in dataList.users" :key="index">
-              <div class="historyItemHead">
+              <div class="historyItemHead" @click="toOthercore(item.id)">
                 <img :src="`http://47.101.165.134${item.logoUrl}`" alt>
               </div>
               <div class="historyItemLeftTitle">
@@ -30,13 +30,13 @@
         <div class="historyItem">
           <div class="historyItemB">
             <div class="historyItemBItem" v-for="(item, index) in dataList.products" :key="index">
-              <div class="brochureItemImg">
+              <div class="brochureItemImg" @click="pdfUrlUrL(item.pdfUrl)">
                 <img :src="`${item.coverUrl}`" alt>
               </div>
               <div class="brochureItemText">
                 <div class="brochureItemHead">
                   <div class="brochureItemName">
-                    <div class="brochureItemLogo">
+                    <div class="brochureItemLogo"  @click="toOthercore(item.id)">
                       <img :src="`http://47.101.165.134${item.logoUrl}`" alt>
                     </div>
                     <div class="brochureLogoName">
@@ -100,6 +100,15 @@ export default {
           this.dataList = res.data.data;
         }
       });
+    },
+    toOthercore(id) {
+      this.$router.push({
+        path: `/othercore`,
+        query: { id: id }
+      });
+    },
+    pdfUrlUrL(url) {
+      window.open(url, "_blank");
     },
     toEnterprise() {
       this.$router.push({
@@ -174,7 +183,8 @@ export default {
           height: 100%;
           margin-bottom: 10px;
           .historyItemHead {
-            width: 88px;
+            width: 66px;
+            cursor: pointer;
           }
           .historyItemLeftTitle {
             height: 100%;
@@ -209,6 +219,7 @@ export default {
         .brochureItemImg {
           width: 162px;
           background: #fff;
+          cursor: pointer;
         }
         .brochureItemText {
           width: calc(100% - 182px);
@@ -218,6 +229,7 @@ export default {
             display: flex;
             .brochureItemLogo {
               width: 88px;
+              cursor: pointer;
             }
             .brochureLogoName {
               margin-left: 10px;

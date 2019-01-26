@@ -41,7 +41,7 @@
         <div class="enterpriseBoxItem" v-for="(item, index) in dataList" :key="index">
           <div class="homeListHead">
             <div class="homeListImg">
-              <div>
+              <div @click="toOthercore(item.user.id)">
                 <img :src="`http://47.101.165.134${item.user.logoUrl}`" alt>
               </div>
               <div class="follow" v-if="item.isConcerned === 2" @click="followId(item.user.id)">+ 关注</div>
@@ -84,7 +84,7 @@
             </div>
           </div>
           <div class="hometext">{{item.user.summary}}</div>
-          <div class="moveBtn">更多</div>
+          <div class="moveBtn" @click="toOthercore(item.user.id)">更多</div>
           <div class="homeItemImg">
             <img :src="`http://47.101.165.134${item.user.introductionUrl}`" alt>
           </div>
@@ -181,6 +181,12 @@ export default {
           console.log(res.data.data);
           this.dataList = res.data.data;
         }
+      });
+    },
+    toOthercore(id) {
+      this.$router.push({
+        path: `/othercore`,
+        query: { id: id }
       });
     },
     toBrochureList(id) {
@@ -378,6 +384,7 @@ export default {
             width: 66px;
             img {
               width: 100%;
+              cursor: pointer;
             }
             .follow {
               width: 50px;

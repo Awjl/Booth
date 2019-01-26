@@ -76,7 +76,7 @@
               <div class="brochureItemText">
                 <div class="brochureItemHead">
                   <div class="brochureItemName">
-                    <div class="brochureItemLogo">
+                    <div class="brochureItemLogo" @click="toOthercore(item.id)">
                       <img :src="`http://47.101.165.134${item.logoUrl}`" alt>
                     </div>
                     <div class="brochureLogoName">
@@ -114,7 +114,7 @@
           <div class="companyList">
             <div class="companyItem" v-for="(item, index) in searchList.companies" :key="index">
               <div class="enterpriseItemLeft">
-                <div class="enterpriseItemHead">
+                <div class="enterpriseItemHead" @click="toOthercore(item.id)">
                   <img :src="`http://47.101.165.134${item.logoUrl}`" alt>
                 </div>
                 <div class="enterpriseItemLeftTitle">
@@ -154,7 +154,7 @@
             <div class="eventItem" v-for="(item, index) in searchList.events" :key="index">
               <div class="homeListHead">
                 <div class="homeListImg">
-                  <div>
+                  <div @click="toOthercore(item.id)">
                     <img :src="`http://47.101.165.134${item.logoUrl}`" alt>
                   </div>
                 </div>
@@ -186,7 +186,7 @@
                 </div>
               </div>
               <div class="hometext">{{item.summary}}</div>
-              <div class="moveBtn">更多</div>
+              <div class="moveBtn" @click="toOthercore(item.id)">更多</div>
               <div class="homeItemImg">
                 <img :src="`http://47.101.165.134${item.introductionUrl}`" alt>
               </div>
@@ -230,6 +230,12 @@ export default {
           this.searchList = res.data.data;
           console.log(res.data.data);
         }
+      });
+    },
+    toOthercore(id) {
+      this.$router.push({
+        path: `/othercore`,
+        query: { id: id }
       });
     },
     toDetailsOne(id) {
@@ -407,6 +413,7 @@ export default {
               display: flex;
               .brochureItemLogo {
                 width: 88px;
+                cursor: pointer;
               }
               .brochureLogoName {
                 margin-left: 10px;
@@ -489,6 +496,7 @@ export default {
               height: 100%;
               .enterpriseItemHead {
                 width: 66px;
+                cursor: pointer;
               }
               .enterpriseItemLeftTitle {
                 height: 100%;
@@ -576,6 +584,7 @@ export default {
                 width: 66px;
                 img {
                   width: 100%;
+                  cursor: pointer;
                 }
                 .follow {
                   width: 50px;

@@ -42,13 +42,13 @@
         </div>
         <div class="leftList">
           <div class="leftListItem" v-for="(item, index) in dataList.products" :key="index">
-            <div class="brochureItemImg">
+            <div class="brochureItemImg" @click="pdfUrlUrL(item.pdfUrl)">
               <img :src="`${item.coverUrl}`" alt>
             </div>
             <div class="brochureItemText">
               <div class="brochureItemHead">
                 <div class="brochureItemName">
-                  <div class="brochureItemLogo">
+                  <div class="brochureItemLogo" @click="toOthercore(item.id)">
                     <img :src="`http://47.101.165.134${item.logoUrl}`" alt>
                   </div>
                   <div class="brochureLogoName">
@@ -133,6 +133,15 @@ export default {
           console.log(res.data.data);
           this.dataList = res.data.data;
         }
+      });
+    },
+    pdfUrlUrL(url) {
+      window.open(url, "_blank");
+    },
+    toOthercore(id) {
+      this.$router.push({
+        path: `/othercore`,
+        query: { id: id }
       });
     },
     mouseOver(index, data) {
@@ -313,6 +322,7 @@ export default {
           .brochureItemImg {
             width: 162px;
             background: #fff;
+            cursor: pointer;
           }
           .brochureItemText {
             width: calc(100% - 182px);
@@ -321,6 +331,7 @@ export default {
               display: flex;
               .brochureItemLogo {
                 width: 88px;
+                cursor: pointer;
               }
               .brochureLogoName {
                 margin-left: 10px;

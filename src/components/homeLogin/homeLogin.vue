@@ -29,6 +29,7 @@
               class="LoginItemUserImg"
               v-for="(item, index) in attentionUserList.attentionMe"
               :key="index"
+              @click="toOthercore(item.id)"
             >
               <img :src="`http://47.101.165.134/${item.logoUrl}`" alt>
             </div>
@@ -42,6 +43,7 @@
               class="LoginItemUserImg"
               v-for="(item, index) in attentionUserList.attentionTo"
               :key="index"
+              @click="toOthercore(item.id)"
             >
               <img :src="`http://47.101.165.134/${item.logoUrl}`" alt>
             </div>
@@ -61,7 +63,7 @@
           </div>-->
           <div class="enterpriseItem">
             <div class="enterpriseItemLeft">
-              <div class="enterpriseItemHead">
+              <div class="enterpriseItemHead" @click="toOthercore(item.user.id)">
                 <img :src="`http://47.101.165.134${item.user.logoUrl}`" alt>
               </div>
               <div class="enterpriseItemLeftTitle">
@@ -141,13 +143,19 @@ export default {
         }
       });
     },
+    toOthercore(id) {
+      this.$router.push({
+        path: `/othercore`,
+        query: { id: id }
+      });
+    },
     toenterprise() {
       if (this.$store.state.user.UserID) {
         this.$router.push({
           path: "/enterprise"
         });
       } else {
-        alert("请登录")
+        alert("请登录");
       }
     },
     toSign() {
@@ -247,6 +255,7 @@ export default {
             margin-right: 2%;
             background: #fff;
             margin-bottom: 10px;
+            cursor: pointer;
           }
         }
       }
@@ -267,7 +276,7 @@ export default {
         display: flex;
         justify-content: space-between;
         span:nth-child(1) {
-          font-size: 18px;  
+          font-size: 18px;
         }
         span:nth-child(2) {
           font-size: 14px;
@@ -301,6 +310,7 @@ export default {
             img {
               width: 66px;
               height: 66px;
+              cursor: pointer;
             }
           }
           .enterpriseItemLeftTitle {

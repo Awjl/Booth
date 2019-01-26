@@ -267,7 +267,7 @@ export default {
         display: flex;
         justify-content: space-between;
         span:nth-child(1) {
-          font-size: 18px;
+          font-size: 18px;  
         }
         span:nth-child(2) {
           font-size: 14px;

@@ -55,7 +55,11 @@
               <div class="name">{{item.user.name}}</div>
               <div class="nameEN">{{item.user.fansNumber}}关注者</div>
               <p class="industry">{{item.user.industryName}}</p>
-              <div class="exhibition" v-if="item.participation !== null">
+              <div
+                class="exhibition"
+                v-if="item.participation !== null"
+                @click="toparticipation(item.participation.id)"
+              >
                 <div class="exhibitionItem">
                   <div class="exhibitionCan">
                     <span>已参与</span>
@@ -76,7 +80,7 @@
             </div>
             <div class="enterpriseItemRight">
               <div class="InterestListshare">分享</div>
-              <div class="InterestListSee">查看产品手册</div>
+              <div class="InterestListSee" @click="toBrochureList(item.user.id)">查看产品手册</div>
             </div>
           </div>
           <div class="hometext">{{item.user.summary}}</div>
@@ -177,6 +181,18 @@ export default {
           console.log(res.data.data);
           this.dataList = res.data.data;
         }
+      });
+    },
+    toBrochureList(id) {
+      this.$router.push({
+        name: `productList`,
+        query: { id: id }
+      });
+    },
+    toparticipation(id) {
+      this.$router.push({
+        path: `/exhibitionDetails`,
+        query: { id: id }
       });
     },
     mouseOver(index, data) {
@@ -395,6 +411,7 @@ export default {
               height: 52px;
               background: #fff;
               margin-top: 20px;
+              cursor: pointer;
               .exhibitionItem {
                 width: 100%;
                 height: 100%;
@@ -471,6 +488,7 @@ export default {
               background: #326b90;
               font-size: 10px;
               margin-top: 5px;
+              cursor: pointer;
             }
           }
         }

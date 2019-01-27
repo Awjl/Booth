@@ -22,7 +22,15 @@
           <div class="signBgMainList">
             <div class="signBgMainRightItem">
               <p>企业中文全称</p>
-              <input type="text" v-model="userData.name">
+              <input type="text" v-model="userData.name" v-on:input="inputFunc">
+              <div class="SearchIndustry">
+                <div
+                  class="SearchIndustryList"
+                  v-for="(item, index) in serachList"
+                  :key="index"
+                  @click="tureBoxOne(item)"
+                >{{item.screenName}}</div>
+              </div>
             </div>
             <div class="signBgMainRightItem">
               <p>企业英文全称</p>
@@ -49,9 +57,12 @@
             <div class="signBgMainRightItem">
               <p>联系人职位（勾选）</p>
               <select v-model="userData.position">
-                <option value="1">销售</option>
+                <option value="1">市场及销售</option>
                 <option value="2">采购</option>
-                <option value="3">经理</option>
+                <option value="3">管理</option>
+                <option value="3">技术</option>
+                <option value="3">生产及运营</option>
+                <option value="3">其他</option>
               </select>
             </div>
             <div class="signBgMainRightItem">
@@ -74,7 +85,7 @@
 </template>
 
 <script>
-import { addUserInfo, ERR_OK } from "@/api/api.js";
+import { addUserInfo, searchCompany, ERR_OK } from "@/api/api.js";
 import { setUser } from "@/utils/auth.js";
 import { mapGetters } from "vuex";
 
@@ -83,6 +94,8 @@ export default {
   data() {
     return {
       formData: new FormData(),
+      timer: "",
+      serachList: [],
       userData: {
         name: "",
         nameEng: "",
@@ -106,6 +119,14 @@ export default {
     this.userData = this.$store.state.userData;
   },
   methods: {
+    _searchCompany() {
+      searchCompany(this.userData.name).then(res => {
+        if (res.status === ERR_OK) {
+          this.serachList = res.data.data;
+        }
+        console.log(res.data.data);
+      });
+    },
     _addUserInfo() {
       addUserInfo(this.formData).then(res => {
         if (res.data.code === 0) {
@@ -115,6 +136,23 @@ export default {
           });
         }
       });
+    },
+    setTime() {
+      this.timer = setTimeout(() => {
+        console.log("1232");
+        this._searchCompany();
+      }, 1000);
+    },
+    tureBoxOne(item) {
+      console.log(item)
+      this.userData.name = item.screenName
+      this.userData.address = item.address
+      this.serachList = []
+    },
+    inputFunc() {
+      // 搜索 1
+      clearInterval(this.timer);
+      this.setTime();
     },
     preservation() {
       this.$store.commit("SET_NAME", this.userData.name);
@@ -278,6 +316,7 @@ export default {
           flex-direction: column;
           align-items: flex-end;
           box-sizing: border-box;
+          position: relative;
           p {
             font-size: 16px;
             color: #fff;
@@ -299,6 +338,23 @@ export default {
             height: 32px;
             outline: none;
             background: rgba($color: #fff, $alpha: 0.5);
+          }
+          .SearchIndustry {
+            position: absolute;
+            top: 64px;
+            left: 20px;
+            width: calc(100% - 40px);
+            max-height: 200px;
+            background: #fff;
+            z-index: 999999;
+            overflow: auto;
+            .SearchIndustryList {
+              width: 100%;
+              padding: 0 20px;
+              margin: 10px 0;
+              box-sizing: border-box;
+              cursor: pointer;
+            }
           }
         }
         .signBgMainFoot {

@@ -117,6 +117,7 @@ export default {
   created() {
     this.logoImg = this.$store.state.userData.logoPicUrl;
     this.introduceImg = this.$store.state.userData.introductionPicUrl;
+    console.log(this.$store.state.userData.introductionPic, this.$store.state.userData.logoPic);
     this._getAllProducts();
   },
   methods: {
@@ -237,6 +238,8 @@ export default {
       this.$router.push({
         path: `/infoFive`
       });
+      this.$store.commit("SET_logoPicUrl", this.logoImg);
+      this.$store.commit("SET_introductionPicUrl", this.introduceImg);
       this.$store.commit("SET_logoPic", this.uplogoImg);
       this.$store.commit("SET_introductionPic", this.upintroduceImg);
       console.log(this.$store.state.userData);
@@ -306,6 +309,10 @@ export default {
       }
     },
     toBack() {
+      this.$store.commit("SET_logoPicUrl", this.logoImg);
+      this.$store.commit("SET_introductionPicUrl", this.introduceImg);
+      this.$store.commit("SET_logoPic", this.uplogoImg);
+      this.$store.commit("SET_introductionPic", this.upintroduceImg);
       this.$router.push({
         path: `/infoThree`
       });

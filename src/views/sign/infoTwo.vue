@@ -207,7 +207,19 @@
               <div class="ExhibitionallList" v-for="(item, index) in exhibitionArr" :key="index">
                 <div class="ExhibitionallLeft">
                   <p>展会名称</p>
-                  <input type="text" v-model="item.name">
+                  <input
+                    type="text"
+                    v-model="item.name"
+                    v-on:input="inputFuncServer(item.name, index)"
+                  >
+                  <div class="ExhibitionallLeftBox" v-if="index == Exhibitionindex">
+                    <div
+                      class="ExhibitionallLeftBoxList"
+                      v-for="(item, index) in searchExh"
+                      :key="index"
+                      @click="trueExhibitionall(item)"
+                    >{{item.name}}</div>
+                  </div>
                 </div>
                 <div class="Exhibitionallmind">
                   <p>是否参加</p>
@@ -238,7 +250,13 @@
 </template>
 
 <script>
-import { getIndustry, searchCompany, addUserInfo, ERR_OK } from "@/api/api.js";
+import {
+  getIndustry,
+  searchCompany,
+  addUserInfo,
+  searchExhibition,
+  ERR_OK
+} from "@/api/api.js";
 import { setUser } from "@/utils/auth.js";
 import { mapGetters } from "vuex";
 
@@ -257,11 +275,12 @@ export default {
       index: "",
       serachCenter: "",
       serachList: [],
+      searchExh: [],
       industryData: [],
       items: [],
       typeindex: 0,
       stateBox: false,
-      exhibitionArr: [{ name: "", state: 1, numID: "", id: 0}],
+      exhibitionArr: [{ name: "", state: 1, numID: "", id: 0 }],
       competitorArr: [
         { key: "点击输入" },
         { key: "点击输入" },
@@ -309,7 +328,8 @@ export default {
         oneIndustry: "", // 一级
         twoIndustry: "", // 二级
         summary: "" // 简介
-      }
+      },
+      Exhibitionindex: 0
     };
   },
   created() {
@@ -431,9 +451,16 @@ export default {
         console.log(res.data.data);
       });
     },
+    _searchExhibition(name) {
+      searchExhibition(name).then(res => {
+        if (res.status === ERR_OK) {
+          this.searchExh = res.data.data;
+        }
+      });
+    },
     addEx() {
       // 增加会展
-      let arr = { name: "", state: 1, numID: "" };
+      let arr = { name: "", state: 1, numID: "", id: 0 };
       this.exhibitionArr.push(arr);
     },
     delList(index) {
@@ -441,6 +468,16 @@ export default {
       if (this.exhibitionArr.length > 1) {
         this.exhibitionArr.splice(index, 1);
       }
+    },
+    trueExhibitionall(item) {
+      this.exhibitionArr[this.Exhibitionindex].id = item.id;
+      this.exhibitionArr[this.Exhibitionindex].name = item.name;
+      this.searchExh = [];
+    },
+    inputFuncServer(name, index) {
+      this.searchExh = [];
+      this._searchExhibition(name);
+      this.Exhibitionindex = index;
     },
     mouseOver(index, data) {
       // 切换
@@ -458,13 +495,17 @@ export default {
     },
     setTime() {
       this.timer = setTimeout(() => {
-        console.log("1232");
         this._searchCompany(this.serachCenter);
-      }, 1000);
+      }, 500);
     },
     selOne(index) {
       this.serachList = [];
       this.one = true;
+      this.two = false;
+      this.Three = false;
+      this.Fore = false;
+      this.Five = false;
+      this.Six = false;
       this.index = index;
       this.serachCenter = this.competitorArr[this.index].key;
     },
@@ -488,6 +529,11 @@ export default {
     },
     selTwo(index) {
       this.two = true;
+      this.one = false;
+      this.Three = false;
+      this.Fore = false;
+      this.Five = false;
+      this.Six = false;
       this.index = index;
       this.serachCenter = this.keywordsArr[this.index].key;
     },
@@ -504,6 +550,11 @@ export default {
     selThree(index) {
       this.serachList = [];
       this.Three = true;
+      this.two = false;
+      this.one = false;
+      this.Fore = false;
+      this.Five = false;
+      this.Six = false;
       this.index = index;
       this.serachCenter = this.supplierArr[this.index].key;
     },
@@ -527,6 +578,11 @@ export default {
     },
     selFore(index) {
       this.Fore = true;
+      this.Three = false;
+      this.two = false;
+      this.one = false;
+      this.Five = false;
+      this.Six = false;
       this.index = index;
       this.serachCenter = this.mainProcess[this.index].key;
     },
@@ -543,6 +599,11 @@ export default {
     selFive(index) {
       this.serachList = [];
       this.Five = true;
+      this.Fore = false;
+      this.Three = false;
+      this.two = false;
+      this.one = false;
+      this.Six = false;
       this.index = index;
       this.serachCenter = this.customerArr[this.index].key;
     },
@@ -567,6 +628,11 @@ export default {
     selSix(index) {
       this.serachList = [];
       this.Six = true;
+      this.Five = false;
+      this.Fore = false;
+      this.Three = false;
+      this.two = false;
+      this.one = false;
       this.index = index;
       this.serachCenter = this.facilitatorArr[this.index].key;
     },
@@ -609,6 +675,20 @@ export default {
     },
 
     toBack() {
+      this.$store.commit("SET_oneIndustryname", this.name);
+      this.$store.commit("SET_oneIndustry", this.userData.oneIndustry);
+      this.$store.commit("SET_twoIndustry", this.userData.twoIndustry);
+      this.$store.commit("SET_competitor", JSON.stringify(this.competitorArr));
+      this.$store.commit("SET_keywords", JSON.stringify(this.keywordsArr));
+      this.$store.commit("SET_supplier", JSON.stringify(this.supplierArr));
+      this.$store.commit("SET_mainProcess", JSON.stringify(this.mainProcess));
+      this.$store.commit(
+        "SET_facilitator",
+        JSON.stringify(this.facilitatorArr)
+      );
+      this.$store.commit("SET_summary", this.userData.summary);
+      this.$store.commit("SET_exhibitions", JSON.stringify(this.exhibitionArr));
+      this.$store.commit("SET_customer", JSON.stringify(this.customerArr));
       this.$router.push({
         path: `/infoOne`
       });
@@ -740,6 +820,20 @@ export default {
             }
             .ExhibitionallLeft {
               width: 40%;
+              position: relative;
+              .ExhibitionallLeftBox {
+                position: absolute;
+                width: 100%;
+                background: #fff;
+                max-height: 150px;
+                bottom: 36px;
+                overflow: auto;
+                .ExhibitionallLeftBoxList {
+                  box-sizing: border-box;
+                  padding: 10px;
+                  width: 100%;
+                }
+              }
             }
             .Exhibitionallmind {
               width: 15%;

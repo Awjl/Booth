@@ -2,14 +2,8 @@ res.data.data.<template>
   <div class="signDetails">
     <div class="signBgTwo">
       <div class="signBgInfoLog">
-        <div
-          class="infoLog"
-          @click="tohome"
-        >
-          <img
-            src="../../assets/images/home/logo.png"
-            alt
-          >
+        <div class="infoLog" @click="tohome">
+          <img src="../../assets/images/home/logo.png" alt>
         </div>
         <div class="infoLog">
           <p>入驻booth</p>
@@ -31,24 +25,11 @@ res.data.data.<template>
             <div class="UpImg">
               <div class="UpimgList">
                 <label for="upTop">+</label>
-                <input
-                  @change="upImg"
-                  type="file"
-                  id="upTop"
-                  value="图片上传预览"
-                  multiple
-                >
+                <input @change="upImg" type="file" id="upTop" value="图片上传预览" multiple>
               </div>
               <div class="imgList">
-                <div
-                  class="imgListItem"
-                  v-for="(item, index) in imgList"
-                  :key="index"
-                >
-                  <img
-                    :src="item"
-                    alt
-                  >
+                <div class="imgListItem" v-for="(item, index) in imgList" :key="index">
+                  <img :src="item" alt>
                 </div>
               </div>
             </div>
@@ -83,13 +64,13 @@ export default {
     };
   },
   created() {
-    this.imgList = this.$store.state.userData.imgListUrl
+    this.imgList = this.$store.state.userData.imgListUrl;
   },
   methods: {
     _addUserInfo() {
       addUserInfo(this.formData).then(res => {
         if (res.data.code === 0) {
-          setUser(this.$store.state.user.UserID)
+          setUser(this.$store.state.user.UserID);
           this.$router.push({
             path: `/home`
           });
@@ -120,36 +101,34 @@ export default {
         "twoIndustry",
         this.$store.state.userData.twoIndustry
       );
+      this.formData.append("competitor", this.$store.state.userData.competitor);
+      this.formData.append("keywords", this.$store.state.userData.keywords);
       this.formData.append(
-        "competitor", this.$store.state.userData.competitor
+        "mainProcess",
+        this.$store.state.userData.mainProcess
       );
       this.formData.append(
-        "keywords", this.$store.state.userData.keywords
-      );
-      this.formData.append(
-        "mainProcess", this.$store.state.userData.mainProcess
-      );
-      this.formData.append(
-        "facilitator", this.$store.state.userData.facilitator
+        "facilitator",
+        this.$store.state.userData.facilitator
       );
       this.formData.append("summary", this.$store.state.userData.summary);
       this.formData.append(
-        "exhibitions", this.$store.state.userData.exhibitions
+        "exhibitions",
+        this.$store.state.userData.exhibitions
       );
-      this.formData.append(
-        "customer", this.$store.state.userData.customer
-      );
+      this.formData.append("customer", this.$store.state.userData.customer);
       for (let i = 0; i <= this.$store.state.userData.imgList.length; i++) {
-        this.formData.append("companyPics", this.$store.state.userData.imgList[i]);
+        this.formData.append(
+          "companyPics",
+          this.$store.state.userData.imgList[i]
+        );
       }
       this.formData.append("logoPic", this.$store.state.userData.logoPic);
       this.formData.append(
         "introductionPic",
         this.$store.state.userData.introductionPic
       );
-      this.formData.append(
-        "supplier", this.$store.state.userData.supplier
-      );
+      this.formData.append("supplier", this.$store.state.userData.supplier);
       this._addUserInfo();
     },
     toNext() {
@@ -172,7 +151,7 @@ export default {
           if (!e || !window.FileReader) return;
           const reader = new FileReader();
           reader.readAsDataURL(Img);
-          reader.onload = function (e) {
+          reader.onload = function(e) {
             _this.imgList.push(e.target.result);
           };
           this.upImgList.push(Img);
@@ -181,6 +160,7 @@ export default {
     },
 
     toBack() {
+      this.$store.commit("SET_imgList", this.upImgList);
       this.$router.push({
         path: `/infoTwo`
       });

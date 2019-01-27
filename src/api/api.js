@@ -290,6 +290,17 @@ export function search(content) {
         }
     });
 }
+// 搜索展会名称 1
+
+export function searchExhibition(name) {
+    return service({
+        url: `/search/searchExhibition`,
+        method: "get",
+        params: {
+            name: name
+        }
+    });
+}
 // 搜索工商 1
 export function searchCompany(content) {
     return service({

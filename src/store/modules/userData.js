@@ -5,10 +5,10 @@ const userData = {
   state: {
     name: "",
     nameEng: "",
-    member: "",
+    member: "1",
     address: "", // 地点
     linkman: "",
-    position: "",
+    position: "1",
     mobile: "",
     linkmanEmail: "",
     oneIndustry: getOne(), // 一级

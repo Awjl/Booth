@@ -261,7 +261,7 @@ export default {
       items: [],
       typeindex: 0,
       stateBox: false,
-      exhibitionArr: [{ name: "", state: 1, numID: "" }],
+      exhibitionArr: [{ name: "", state: 1, numID: "", id: 0}],
       competitorArr: [
         { key: "点击输入" },
         { key: "点击输入" },

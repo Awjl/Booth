@@ -33,7 +33,7 @@ export default {
     _addUserInfo() {
       console.log(this.formData);
       addUserInfo(this.formData).then(res => {
-        if (res.status === ERR_OK) {
+        if (res.data.code === 0) {
           console.log("保存成功");
         }
       });

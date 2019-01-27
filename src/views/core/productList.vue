@@ -1,6 +1,23 @@
 <template>
   <div class="productList">
-    <div class="productListHeard">
+    <div class="productListHeard" v-if="this.$route.query.id">
+      <div class="productListHeardLogo">
+        <img :src="datalist.user.logoUrl" alt>
+      </div>
+      <div class="productListHeardName">
+        <div class="productListHeardNameTop">
+          <div class="productListName">
+            <p>{{datalist.user.name}}</p>
+            <p>{{datalist.user.fansNumber}}位关注者</p>
+            <p>{{datalist.user.industryName}}</p>
+          </div>
+        </div>
+        <div class="productListHeardNameBottom">
+          <div class="follow">关注</div>
+        </div>
+      </div>
+    </div>
+    <div class="productListHeard" v-if="!this.$route.query.id">
       <div class="productListHeardLogo">
         <img :src="this.$store.state.userData.logoPicUrl" alt>
       </div>
@@ -12,13 +29,13 @@
             <p>{{this.$store.state.userData.oneIndustryname}}</p>
           </div>
         </div>
-        <div class="productListHeardNameBottom">
+        <!-- <div class="productListHeardNameBottom">
           <div class="follow">关注</div>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="productListTitle">产品册
-      <div class="productListTitleBtn">
+      <div class="productListTitleBtn" v-if="!this.$route.query.id">
         +
         <span>更多</span>
       </div>
@@ -55,23 +72,43 @@
 </template>
 
 <script>
-import { getAllProducts, ERR_OK } from "@/api/api.js";
+import { getAllProducts, getCompanyInfo, ERR_OK } from "@/api/api.js";
 export default {
   name: "productList",
   data() {
     return {
-      AllProducts: []
+      AllProducts: [],
+      datalist: {
+        isConcerned: "",
+        user: {
+          id: "",
+          industryName: "",
+          logoUrl: "",
+          fansNumber: "",
+          name: "",
+        }
+      }
     };
   },
   created() {
-    console.log(this.$route.query.id)
+    console.log(this.$route.query.id);
     if (this.$route.query.id) {
       this._getAllProducts(this.$route.query.id);
+      this._getCompanyInfo();
     } else {
       this._getAllProducts(this.$store.state.user.UserID);
     }
   },
   methods: {
+    _getCompanyInfo() {
+      getCompanyInfo(this.$store.state.user.UserID, this.$route.query.id).then(
+        res => {
+          if (res.status === ERR_OK) {
+            this.datalist = res.data.data;
+          }
+        }
+      );
+    },
     _getAllProducts(userid) {
       getAllProducts(userid).then(res => {
         if (res.data.code === 0) {
@@ -86,6 +123,8 @@ export default {
 
 <style lang="scss" scoped>
 .productList {
+  height: calc(100vh - 218px);
+  min-height: 582px;
   box-sizing: border-box;
   .productListTitle {
     text-align: center;

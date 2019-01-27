@@ -41,8 +41,8 @@
     </div>
     <div class="signBox" v-if="successbox">
       <div class="signBoxTrue" @click="tureFlase">验证成功</div>
-      <div class="signBoxTrue">验证失败，重新验证</div>
-      <div class="signBoxTrue">未收到邮箱</div>
+      <div class="signBoxTrue" @click="flaseFlase">验证失败，重新验证</div>
+      <div class="signBoxTrue" @click="flaseFlase">未收到邮箱</div>
     </div>
   </div>
 </template>
@@ -66,7 +66,7 @@ export default {
   methods: {
     _isActivate() {
       isActivate(this.userID).then(res => {
-        if (res.status === ERR_OK) {
+        if (res.data.code === 0) {
           this.$router.push({
             name: `infoOne`,
             params: { id: this.userID }
@@ -76,14 +76,14 @@ export default {
     },
     _register() {
       register(this.user).then(res => {
-        if (res.status === ERR_OK) {
+        if (res.data.code === 0) {
           this.userID = res.data.data;
         }
       });
     },
     _checkEmail() {
       checkEmail(this.userID).then(res => {
-        if (res.status === ERR_OK) {
+        if (res.data.code === 0) {
           console.log("发送成功");
           this.successbox = !this.successbox;
         }
@@ -91,6 +91,9 @@ export default {
     },
     tureFlase() {
       this._isActivate();
+    },
+    flaseFlase() {
+      this.successbox = false;
     },
     toSign() {
       this._register();

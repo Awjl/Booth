@@ -33,127 +33,58 @@
       <img :src="`${detailsData.mapUrl}`" alt>
     </div>
     <div class="exhibitionDetailsList">
-      <div class="TitleHead">参展商列表</div>
-      <div class="DetailsListBox">
-        <div class="companyItem">
-          <p>A201
-            <br>展位
-          </p>
-          <div class="enterpriseItemLeft">
-            <div class="enterpriseItemHead">
-              <img src="../../assets/images/home/TSNHCG_1_.png" alt>
-            </div>
-            <div class="enterpriseItemLeftTitle">
-              <p>altiuma</p>
-              <p>Roubaix 5,246 位关注者</p>
-              <p>建筑行业</p>
-            </div>
-          </div>
-          <div class="enterpriseItemRight">
-            <div class="InterestListshare">分享</div>
-            <div class="InterestListSee">查看产品手册</div>
-          </div>
+      <div class="TitleHead TitleHeadOne">
+        <span :class="{act: indexType}" @click="TabNav(1)">参展商列表</span>
+        <span :class="{act: !indexType}" @click="TabNav(2)">到访商</span>
+        <div class="inputBox">
+          <input type="text" placeholder="搜索展位/展商" v-model="content">
+          <i class="icon iconSearch1" @click="search()"></i>
         </div>
-        <div class="companyItem">
-          <p>A201
-            <br>展位
-          </p>
+      </div>
+      <div class="DetailsListBox" v-if="indexType">
+        <div class="companyItem" v-for="(item, index) in ExhList" :key="index">
+          <p>{{item.stand}}</p>
           <div class="enterpriseItemLeft">
-            <div class="enterpriseItemHead">
-              <img src="../../assets/images/home/TSNHCG_1_.png" alt>
+            <div class="enterpriseItemHead" @click="toOthercore(item.id)">
+              <img :src="item.logoUrl" alt>
             </div>
             <div class="enterpriseItemLeftTitle">
-              <p>altiuma</p>
-              <p>Roubaix 5,246 位关注者</p>
-              <p>建筑行业</p>
+              <p>{{item.name}}</p>
+              <p>{{item.fansNumber}}位关注者</p>
+              <p>{{item.industryName}}</p>
             </div>
           </div>
           <div class="enterpriseItemRight">
             <div class="InterestListshare">分享</div>
-            <div class="InterestListSee">查看产品手册</div>
-          </div>
-        </div>
-        <div class="companyItem">
-          <p>A201
-            <br>展位
-          </p>
-          <div class="enterpriseItemLeft">
-            <div class="enterpriseItemHead">
-              <img src="../../assets/images/home/TSNHCG_1_.png" alt>
-            </div>
-            <div class="enterpriseItemLeftTitle">
-              <p>altiuma</p>
-              <p>Roubaix 5,246 位关注者</p>
-              <p>建筑行业</p>
-            </div>
-          </div>
-          <div class="enterpriseItemRight">
-            <div class="InterestListshare">分享</div>
-            <div class="InterestListSee">查看产品手册</div>
-          </div>
-        </div>
-        <div class="companyItem">
-          <p>A201
-            <br>展位
-          </p>
-          <div class="enterpriseItemLeft">
-            <div class="enterpriseItemHead">
-              <img src="../../assets/images/home/TSNHCG_1_.png" alt>
-            </div>
-            <div class="enterpriseItemLeftTitle">
-              <p>altiuma</p>
-              <p>Roubaix 5,246 位关注者</p>
-              <p>建筑行业</p>
-            </div>
-          </div>
-          <div class="enterpriseItemRight">
-            <div class="InterestListshare">分享</div>
-            <div class="InterestListSee">查看产品手册</div>
-          </div>
-        </div>
-        <div class="companyItem">
-          <p>A201
-            <br>展位
-          </p>
-          <div class="enterpriseItemLeft">
-            <div class="enterpriseItemHead">
-              <img src="../../assets/images/home/TSNHCG_1_.png" alt>
-            </div>
-            <div class="enterpriseItemLeftTitle">
-              <p>altiuma</p>
-              <p>Roubaix 5,246 位关注者</p>
-              <p>建筑行业</p>
-            </div>
-          </div>
-          <div class="enterpriseItemRight">
-            <div class="InterestListshare">分享</div>
-            <div class="InterestListSee">查看产品手册</div>
-          </div>
-        </div>
-        <div class="companyItem">
-          <p>A201
-            <br>展位
-          </p>
-          <div class="enterpriseItemLeft">
-            <div class="enterpriseItemHead">
-              <img src="../../assets/images/home/TSNHCG_1_.png" alt>
-            </div>
-            <div class="enterpriseItemLeftTitle">
-              <p>altiuma</p>
-              <p>Roubaix 5,246 位关注者</p>
-              <p>建筑行业</p>
-            </div>
-          </div>
-          <div class="enterpriseItemRight">
-            <div class="InterestListshare">分享</div>
-            <div class="InterestListSee">查看产品手册</div>
+            <div class="InterestListSee" @click="toMover(item.id)">查看产品手册</div>
           </div>
         </div>
       </div>
-      <div class="moverBtn">
+      <div class="DetailsListBox" v-if="!indexType">
+        <div class="companyItemTwo" v-for="(item, index) in VisList" :key="index">
+          <div class="companyItemTwoLeft">
+            <div class="companyItemTwoLeftImg" @click="toOthercore(item.id)">
+              <img :src="item.logoUrl" alt>
+            </div>
+            <div class="companyItemTwoLeftname">
+              <p>{{item.name}}</p>
+              <p>{{item.fansNumber}}关注者</p>
+              <p>{{item.industryName}}</p>
+            </div>
+            <div class="companyItemTwoLeftshare">
+              <div class="InterestListshare">分享</div>
+              <div class="InterestListSee" @click="toMover(item.id)">查看产品手册</div>
+            </div>
+          </div>
+          <div class="companyItemTwoRight">
+            <span>邀请</span>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="moverBtn">
         <div>展开</div>
         <i class="icon iconMover1"></i>
-      </div>
+      </div>-->
     </div>
     <div class="timebox">
       <P>{{detailsData.date}}</P>
@@ -210,7 +141,9 @@ import { getUser } from "@/utils/auth.js";
 export default {
   data() {
     return {
+      content: "",
       show: false,
+      indexType: true,
       signUp: [
         {
           exhibitionId: this.$route.query.id,
@@ -245,7 +178,9 @@ export default {
         exhibitionId: this.$route.query.id,
         userId: this.$store.state.user.UserID,
         content: ""
-      }
+      },
+      ExhList: [],
+      VisList: []
     };
   },
   created() {
@@ -277,16 +212,18 @@ export default {
     _getAllExhibitiors() {
       getAllExhibitiors(this.AllExh).then(res => {
         if (res.data.code === 0) {
-          console.log("获取参展商-------")
+          console.log("获取参展商-------");
           console.log(res.data.data);
+          this.ExhList = res.data.data;
         }
       });
     },
     _getAllVisitors() {
       getAllVisitors(this.AllVis).then(res => {
         if (res.data.code === 0) {
-          console.log("获取到访商-------")
+          console.log("获取到访商-------");
           console.log(res.data.data);
+          this.VisList = res.data.data;
         }
       });
     },
@@ -305,6 +242,39 @@ export default {
           this.detailsData = res.data.data;
         }
       });
+    },
+    toOthercore(id) {
+      this.$router.push({
+        path: `/othercore`,
+        query: { id: id }
+      });
+    },
+    toMover(id) {
+      console.log(id);
+      this.$router.push({
+        name: `productList`,
+        query: { id: id }
+      });
+    },
+    TabNav(num) {
+      this.AllExh.content = "";
+      this.AllVis.content = "";
+      if (num === 1) {
+        this.indexType = true;
+        this._getAllExhibitiors();
+      } else {
+        this.indexType = false;
+        this._getAllVisitors();
+      }
+    },
+    search() {
+      if (this.indexType) {
+        this.AllExh.content = this.content;
+        this._getAllExhibitiors();
+      } else {
+        this.AllVis.content = this.content;
+        this._getAllVisitors();
+      }
     },
     UpList() {
       this._enrollExhibition();
@@ -473,7 +443,41 @@ export default {
 }
 .TitleHead {
   padding: 70px 70px 30px;
-  font-size: 34px;
+  font-size: 30px;
+}
+.TitleHeadOne {
+  display: flex;
+  span {
+    margin-right: 30px;
+  }
+  .act {
+    font-weight: bold;
+  }
+  .inputBox {
+    width: 320px;
+    height: 34px;
+    // background: #fff;
+    border: 1px solid #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    box-sizing: border-box;
+    input {
+      background: initial;
+      outline: none;
+      color: #000;
+      width: 100%;
+      height: 34px;
+      font-size: 16px;
+      padding: 0 10px;
+      box-sizing: border-box;
+      &::-webkit-input-placeholder {
+        color: #000;
+        font-size: 16px;
+      }
+    }
+  }
 }
 .Map {
   margin-top: 30px;
@@ -485,7 +489,7 @@ export default {
 .exhibitionDetailsList {
   margin-top: 80px;
   background: #eaeaea;
-  padding-bottom: 10px;
+  padding-bottom: 50px;
   .DetailsListBox {
     width: 100%;
     padding: 0 70px;
@@ -503,6 +507,12 @@ export default {
       .enterpriseItemLeft {
         display: flex;
         height: 100%;
+        width: 80%;
+        .enterpriseItemHead {
+          width: 66px;
+          margin-left: 10px;
+          cursor: pointer;
+        }
         .enterpriseItemLeftTitle {
           height: 100%;
           margin-left: 10px;
@@ -522,6 +532,7 @@ export default {
         }
       }
       .enterpriseItemRight {
+        width: 20%;
         display: flex;
         flex-direction: column;
         align-items: flex-end;
@@ -544,6 +555,88 @@ export default {
           color: #fff;
           background: #326b90;
           font-size: 10px;
+          cursor: pointer;
+        }
+      }
+    }
+    .companyItemTwo {
+      width: 48%;
+      margin: 0 1%;
+      box-sizing: border-box;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #000;
+      border-bottom: 1px solid #000;
+      .companyItemTwoLeft {
+        width: 70%;
+        margin: 20px 0;
+        display: flex;
+        align-items: center;
+        .companyItemTwoLeftImg {
+          width: 66px;
+          cursor: pointer;
+        }
+        .companyItemTwoLeftname {
+          width: calc(80% - 100px);
+          margin-left: 10px;
+          p:nth-child(1) {
+            font-size: 26px;
+            font-weight: bold;
+          }
+          p:nth-child(2) {
+            font-size: 14px;
+            margin-top: 10px;
+          }
+          p:nth-child(3) {
+            font-size: 12px;
+            margin-top: 6px;
+            color: #326b90;
+          }
+        }
+        .companyItemTwoLeftshare {
+          width: 20%;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          justify-content: space-between;
+          .InterestListshare {
+            width: 50px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            color: #fff;
+            background: #326b90;
+            font-size: 10px;
+            margin-bottom: 4px;
+          }
+          .InterestListSee {
+            width: 90px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            color: #fff;
+            background: #326b90;
+            font-size: 10px;
+            cursor: pointer;
+          }
+        }
+      }
+      .companyItemTwoRight {
+        width: 30%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-left: 1px solid #000;
+        span {
+          display: block;
+          width: 94px;
+          height: 30px;
+          background: #fff;
+          text-align: center;
+          line-height: 30px;
         }
       }
     }

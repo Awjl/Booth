@@ -14,7 +14,7 @@
       <!-- 有用户 -->
       <div class="LoginItem" v-else>
         <div class="LoginItemLogo">
-          <img :src="`http://47.101.165.134/${this.$store.state.userData.logoPicUrl}`" alt>
+          <img :src="`${this.$store.state.userData.logoPicUrl}`" alt>
         </div>
         <div class="LoginItemTitle">
           <p>{{this.$store.state.userData.name}}</p>
@@ -31,7 +31,7 @@
               :key="index"
               @click="toOthercore(item.id)"
             >
-              <img :src="`http://47.101.165.134/${item.logoUrl}`" alt>
+              <img :src="`${item.logoUrl}`" alt>
             </div>
           </div>
         </div>
@@ -45,7 +45,7 @@
               :key="index"
               @click="toOthercore(item.id)"
             >
-              <img :src="`http://47.101.165.134/${item.logoUrl}`" alt>
+              <img :src="`${item.logoUrl}`" alt>
             </div>
           </div>
         </div>
@@ -64,7 +64,7 @@
           <div class="enterpriseItem">
             <div class="enterpriseItemLeft">
               <div class="enterpriseItemHead" @click="toOthercore(item.user.id)">
-                <img :src="`http://47.101.165.134${item.user.logoUrl}`" alt>
+                <img :src="`${item.user.logoUrl}`" alt>
               </div>
               <div class="enterpriseItemLeftTitle">
                 <p>{{item.user.name}}</p>

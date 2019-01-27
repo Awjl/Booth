@@ -31,7 +31,7 @@
             <div class="brochureReadLsit">
               <p v-if=" item.users.length === 0">暂无数据</p>
               <div v-for="(item, index) in item.users" :key="index">
-                <img :src="`http://47.101.165.134${item.logoUrl}`" alt>
+                <img :src="`${item.logoUrl}`" alt>
               </div>
             </div>
           </div>
@@ -55,7 +55,7 @@
             <div class="enterpriseItemLeft">
               <div class="enterpriseItemHead">
                 <img src="../../assets/images/home/head2.png" alt v-if="item.isRegister == 1">
-                <img :src="`http://47.101.165.134${item.user.logoUrl}`" alt v-else>
+                <img :src="`${item.user.logoUrl}`" alt v-else>
               </div>
               <div class="enterpriseItemLeftTitle">
                 <p v-if="item.user">{{item.user.name}}</p>
@@ -95,7 +95,7 @@
           <div class="enterpriseItem">
             <div class="enterpriseItemLeft">
               <div class="enterpriseItemHead">
-                <img :src="`http://47.101.165.134${item.user.logoUrl}`" alt>
+                <img :src="`${item.user.logoUrl}`" alt>
               </div>
               <div class="enterpriseItemLeftTitle">
                 <p>{{item.user.name}}</p>
@@ -108,7 +108,7 @@
               <div class="InterestListSee" @click="toMover(item.user.id)">查看产品手册</div>
             </div>
           </div>
-          <div class="already" v-if="item.exhibition.id">
+          <div class="already" v-if="item.exhibition">
             <div class="alreadyHead">
               <span>已参加</span>
               <p>HOUSE VISION 2018 BEIJING EXHIBITION
@@ -132,7 +132,7 @@ export default {
       cooperationData: [],
       SimilarityCompanyData: [],
       indexType: 1,
-      ID: "",
+      id: "",
       heiline: "auto"
     };
   },
@@ -141,13 +141,13 @@ export default {
     this._getSimilarityCompany();
   },
   methods: {
-    _getSimilarityCompany(id) {
-      if (id) {
-        this.ID = id;
-      } else {
-        this.ID = this.$store.state.user.UserID;
-      }
-      getSimilarityCompany(this.ID).then(res => {
+    _getSimilarityCompany() {
+      // if (id) {
+      //   this.ID = id;
+      // } else {
+      //   this.ID = this.$store.state.user.UserID;
+      // }
+      getSimilarityCompany( this.$store.state.user.UserID).then(res => {
         if (res.data.code === 0) {
           this.SimilarityCompanyData = res.data.data;
           console.log(res.data.data);

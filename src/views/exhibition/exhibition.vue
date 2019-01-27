@@ -8,7 +8,7 @@
           :key="index"
         >
           <img
-            :src="`http://47.101.165.134${item.bannerUrl.split(',')[0]}`"
+            :src="`${item.bannerUrl.split(',')[0]}`"
             alt
           >
           <div class="exhibitionBottom">

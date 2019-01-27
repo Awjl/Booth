@@ -2,7 +2,7 @@
   <div class="othercore">
     <div class="othercoreHeard">
       <div class="othercoreHeardLogo">
-        <img :src="`http://47.101.165.134${datalist.user.logoUrl}`" alt>
+        <img :src="`${datalist.user.logoUrl}`" alt>
       </div>
       <p class="name">{{datalist.user.name}}</p>
       <p class="fans">{{datalist.user.fansNumber}}关注者</p>
@@ -38,7 +38,7 @@
           </div>
           <div class="othercoreAboutintroductionImg">
             <div class="ItemImg" v-for="(item, index) in datalist.pictures" :key="index">
-              <img :src="`http://47.101.165.134${item.url}`" alt>
+              <img :src="`${item.url}`" alt>
             </div>
           </div>
         </div>
@@ -47,7 +47,7 @@
             <div class="homeListHead">
               <div class="homeListImg">
                 <div>
-                  <img :src="`http://47.101.165.134${datalist.user.logoUrl}`" alt>
+                  <img :src="`${datalist.user.logoUrl}`" alt>
                 </div>
                 <div
                   class="follow"
@@ -91,7 +91,7 @@
             <div class="hometext">{{datalist.user.summary}}</div>
             <!-- <div class="moveBtn">更多</div> -->
             <div class="homeItemImg">
-              <img :src="`http://47.101.165.134${datalist.user.introductionUrl}`" alt>
+              <img :src="`${datalist.user.introductionUrl}`" alt>
             </div>
           </div>
         </div>
@@ -139,16 +139,13 @@ export default {
   },
   methods: {
     _getCompanyInfo() {
-      console.log("其他用户信息--------------------------------");
       getCompanyInfo(this.$store.state.user.UserID, this.$route.query.id).then(
         res => {
           if (res.status === ERR_OK) {
-            console.log(res.data.data);
             this.datalist = res.data.data;
             let _this = this;
             let arr = [];
             JSON.parse(this.datalist.user.mainProcess).forEach(e => {
-              console.log(e);
               if (e.key != "点击输入") {
                 arr.push(e.key);
               }
@@ -173,7 +170,6 @@ export default {
       });
     },
     toMover(id) {
-      console.log(id);
       this.$router.push({
         path: `/productList`,
         query: { id: id }

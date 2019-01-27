@@ -1,11 +1,11 @@
 <template>
   <div class="homeRight">
-    <img :src="`http://47.101.165.134${dataAll.areaA.url}`" alt>
+    <img :src="`${dataAll.areaA.url}`" alt>
     <div class="homeTitle">
       <img src="../../assets/images/home/logo.png" alt>
       <img src="../../assets/images/home/logoText.png" alt>
     </div>
-    <img :src="`http://47.101.165.134${dataAll.areaB.url}`" alt>
+    <img :src="`${dataAll.areaB.url}`" alt>
   </div>
 </template>
 

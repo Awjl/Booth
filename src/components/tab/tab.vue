@@ -18,7 +18,7 @@
         <img src="../../assets/images/icon/man.png" alt>
       </div>
       <div class="HeadImg" @click="toCore" v-if="this.$store.state.user.UserID">
-        <img :src="`http://47.101.165.134/${this.$store.state.userData.logoPicUrl}`" alt>
+        <img :src="`${this.$store.state.userData.logoPicUrl}`" alt>
       </div>
     </div>
   </div>

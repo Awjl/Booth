@@ -49,7 +49,7 @@
               <div class="brochureItemHead">
                 <div class="brochureItemName">
                   <div class="brochureItemLogo" @click="toOthercore(item.id)">
-                    <img :src="`http://47.101.165.134${item.logoUrl}`" alt>
+                    <img :src="`${item.logoUrl}`" alt>
                   </div>
                   <div class="brochureLogoName">
                     <p>{{item.name}}</p>

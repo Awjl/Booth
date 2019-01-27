@@ -98,7 +98,7 @@
             <div class="moveBtn">更多</div>
             <div class="homeItemImg">
               <img
-                :src="`http://47.101.165.134${this.$store.state.userData.introductionPicUrl}`"
+                :src="`${this.$store.state.userData.introductionPicUrl}`"
                 alt
               >
             </div>

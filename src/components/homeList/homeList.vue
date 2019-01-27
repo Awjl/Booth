@@ -4,7 +4,7 @@
       <div class="homeListHead">
         <div class="homeListImg">
           <div @click="toOthercore(item.user.id)">
-            <img :src="`http://47.101.165.134${item.user.logoUrl}`" alt>
+            <img :src="`${item.user.logoUrl}`" alt>
           </div>
           <div class="follow" v-if="item.isConcerned === 2" @click="followId(item.user.id)">+ 关注</div>
           <div
@@ -48,7 +48,7 @@
       <div class="hometext">{{item.user.summary}}</div>
       <div class="moveBtn" @click="toOthercore(item.user.id)">更多</div>
       <div class="homeItemImg">
-        <img :src="`http://47.101.165.134${item.user.introductionUrl}`" alt>
+        <img :src="`${item.user.introductionUrl}`" alt>
       </div>
     </div>
   </div>

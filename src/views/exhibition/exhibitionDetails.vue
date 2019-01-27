@@ -7,7 +7,7 @@
           v-for="(item, index) in detailsData.bannerUrl.split(',')"
           :key="index"
         >
-          <img :src="`http://47.101.165.134${item}`" alt>
+          <img :src="`${item}`" alt>
         </div>
       </div>
       <div class="swiper-pagination"></div>
@@ -25,12 +25,12 @@
         <div>简述：{{detailsData.summary}}</div>
       </div>
       <div class="exhibitionRight">
-        <img :src="`http://47.101.165.134${detailsData.summaryPicture}`" alt>
+        <img :src="`${detailsData.summaryPicture}`" alt>
       </div>
     </div>
     <div class="TitleHead">展会地图</div>
     <div class="Map">
-      <img :src="`http://47.101.165.134${detailsData.mapUrl}`" alt>
+      <img :src="`${detailsData.mapUrl}`" alt>
     </div>
     <div class="exhibitionDetailsList">
       <div class="TitleHead">参展商列表</div>
@@ -160,7 +160,7 @@
       <p>{{detailsData.dateEng}}</p>
     </div>
     <div class="Map1">
-      <img :src="`http://47.101.165.134${detailsData.trafficUrl}`" alt>
+      <img :src="`${detailsData.trafficUrl}`" alt>
     </div>
     <div class="signUpBox" v-if="show">
       <div class="signUpBoxItem">

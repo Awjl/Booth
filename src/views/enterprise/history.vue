@@ -187,10 +187,11 @@ export default {
             cursor: pointer;
           }
           .historyItemLeftTitle {
+            width: calc(100% - 66px);
             height: 100%;
             margin-left: 10px;
             p:nth-child(1) {
-              font-size: 26px;
+              font-size: 18px;
               font-weight: bold;
             }
             p:nth-child(2) {

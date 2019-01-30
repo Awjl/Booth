@@ -36,9 +36,9 @@ export default {
           this.$store.commit("SET_facilitator", res.data.data.user.facilitator);
           this.$store.commit("SET_summary", res.data.data.user.summary);
           this.$store.commit("SET_exhibitions", res.data.data.user.interestedExhibitions);
+          this.$store.commit("SET_exhibitionOne", res.data.data.exhibition);
           this.$store.commit("SET_customer", res.data.data.user.customer);
-          console.log(res.data.data.pictures)
-          this.$store.commit("SET_imgListUrl", res.data.data.pictures);
+          this.$store.commit("SET_imgListUrlArr", res.data.data.pictures);
           this.$store.commit("SET_logoPicUrl", res.data.data.user.logoUrl);
           this.$store.commit("SET_introductionPicUrl", res.data.data.user.introductionUrl);
           this.$store.commit("SET_products", res.data.data.products);

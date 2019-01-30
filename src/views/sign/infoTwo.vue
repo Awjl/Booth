@@ -507,7 +507,11 @@ export default {
       this.Five = false;
       this.Six = false;
       this.index = index;
-      this.serachCenter = this.competitorArr[this.index].key;
+      if (this.competitorArr[this.index].key == "点击输入") {
+        this.serachCenter = ""
+      } else {
+        this.serachCenter = this.competitorArr[this.index].key;
+      }
     },
     hideone() {
       this.one = false;
@@ -535,10 +539,15 @@ export default {
       this.Five = false;
       this.Six = false;
       this.index = index;
-      this.serachCenter = this.keywordsArr[this.index].key;
+      if (this.keywordsArr[this.index].key == "点击输入") {
+        this.serachCenter = ""
+      } else {
+        this.serachCenter = this.keywordsArr[this.index].key;
+      }
     },
     inputFuncTwo() {
       if (this.serachCenter == "") {
+        console.log(this.serachCenter)
         this.keywordsArr[this.index].key = "点击输入";
       }
       this.keywordsArr[this.index].key = this.serachCenter;
@@ -556,7 +565,11 @@ export default {
       this.Five = false;
       this.Six = false;
       this.index = index;
-      this.serachCenter = this.supplierArr[this.index].key;
+      if (this.supplierArr[this.index].key == "点击输入") {
+        this.serachCenter = ""
+      } else {
+        this.serachCenter = this.supplierArr[this.index].key;
+      }
     },
     hideThree() {
       this.Three = false;
@@ -584,7 +597,11 @@ export default {
       this.Five = false;
       this.Six = false;
       this.index = index;
-      this.serachCenter = this.mainProcess[this.index].key;
+      if (this.mainProcess[this.index].key == "点击输入") {
+        this.serachCenter = ""
+      } else {
+        this.serachCenter = this.mainProcess[this.index].key;
+      }
     },
     inputFuncFore() {
       if (this.serachCenter == "") {
@@ -605,7 +622,11 @@ export default {
       this.one = false;
       this.Six = false;
       this.index = index;
-      this.serachCenter = this.customerArr[this.index].key;
+       if (this.customerArr[this.index].key == "点击输入") {
+        this.serachCenter = ""
+      } else {
+        this.serachCenter = this.customerArr[this.index].key;
+      }
     },
     hideFive() {
       this.Five = false;
@@ -634,7 +655,11 @@ export default {
       this.two = false;
       this.one = false;
       this.index = index;
-      this.serachCenter = this.facilitatorArr[this.index].key;
+      if (this.facilitatorArr[this.index].key == "点击输入") {
+        this.serachCenter = ""
+      } else {
+        this.serachCenter = this.facilitatorArr[this.index].key;
+      }
     },
     hideSix() {
       this.Six = false;
@@ -961,7 +986,7 @@ export default {
             span {
               display: inline-block;
               padding: 4px 10px;
-              background: rgba($color: #000, $alpha: 0.3);
+              background: rgba($color: #000, $alpha: 0.15);
               margin: 10px;
               cursor: pointer;
             }

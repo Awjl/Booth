@@ -37,7 +37,12 @@
             <div class="othercoreAboutlist">{{datalist.user.linkmanEmail}}</div>
           </div>
           <div class="othercoreAboutintroductionImg">
-            <div class="ItemImg" v-for="(item, index) in datalist.pictures" :key="index">
+            <div
+              class="ItemImg"
+              v-for="(item, index) in datalist.pictures"
+              :key="index"
+              @click="lookImg(item.url, item.id)"
+            >
               <img :src="`${item.url}`" alt>
             </div>
           </div>
@@ -64,17 +69,21 @@
                 <div class="name">{{datalist.user.name}}</div>
                 <div class="nameEN">{{datalist.user.fansNumber}}位关注者</div>
                 <p class="industry">{{datalist.user.industryName}}</p>
-                <div class="exhibition">
+                <div
+                  class="exhibition"
+                  v-if="datalist.exhibition !== null"
+                  @click="toExt(datalist.exhibition.id)"
+                >
                   <div class="exhibitionItem">
                     <div class="exhibitionCan">
                       <span>已参与</span>
-                      <div class="exhibitionName">HOUSE VISION 2018 BEIJING EXHIBITION
-                        <br>探索家——未来生活大展
+                      <div class="exhibitionName">{{datalist.exhibition.nameEng}}
+                        <br>{{datalist.exhibition.name}}
                       </div>
                     </div>
                     <div class="exhibitionTime">
-                      <span>2018年9月21日
-                        <br>11月6日
+                      <span>
+                        {{datalist.exhibition.date}}
                       </span>
                       <div class="exhibitionDetali">
                         <i class="icon iconTo"></i>
@@ -100,17 +109,28 @@
         <AboutItem :products="datalist.products" :id="this.$route.query.id"></AboutItem>
       </div>
     </div>
+    <div class="ImgBox" v-if="imgBoxShow" @click="lookImg() ">
+      <img :src="imgList" alt>
+    </div>
   </div>
 </template>
 
 <script>
 import AboutItem from "@/components/aboutList/aboutItem.vue";
-import { getCompanyInfo, focus, cancelFocus, ERR_OK } from "@/api/api.js";
+import {
+  getCompanyInfo,
+  focus,
+  cancelFocus,
+  viewPicture,
+  ERR_OK
+} from "@/api/api.js";
 
 export default {
   name: "othercore",
   data() {
     return {
+      imgBoxShow: false,
+      imgList: "",
       mian: [],
       followData: {
         userId: "",
@@ -169,6 +189,21 @@ export default {
         }
       });
     },
+    lookImg(url, id) {
+      this.imgBoxShow = !this.imgBoxShow;
+      this.imgList = url;
+      viewPicture(id, this.$store.state.user.UserID).then(res => {
+        if (res.data.code === 0) {
+          console.log("查看成功");
+        }
+      });
+    },
+    toExt(id) {
+      this.$router.push({
+        path: `/exhibitionDetails`,
+        query: { id: id }
+      });
+    },
     toMover(id) {
       this.$router.push({
         path: `/productList`,
@@ -202,6 +237,20 @@ export default {
 
 <style lang="scss" scoped>
 .othercore {
+  .ImgBox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba($color: #000000, $alpha: 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      width: 30%;
+    }
+  }
   .othercoreHeard {
     width: 100%;
     height: 256px;

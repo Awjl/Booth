@@ -13,7 +13,13 @@
           </div>
         </div>
         <div class="productListHeardNameBottom">
-          <div class="follow">关注</div>
+          <!-- <div class="follow">关注</div> -->
+          <div class="follow" v-if="datalist.isConcerned === 2" @click="followId(datalist.user.id)">+ 关注</div>
+          <div
+            class="follow"
+            v-if="datalist.isConcerned === 1"
+            @click="cancelfollowId(datalist.user.id)"
+          >+ 已关注</div>
         </div>
       </div>
     </div>
@@ -31,18 +37,18 @@
         </div>
         <!-- <div class="productListHeardNameBottom">
           <div class="follow">关注</div>
-        </div> -->
+        </div>-->
       </div>
     </div>
     <div class="productListTitle">产品册
       <div class="productListTitleBtn" v-if="!this.$route.query.id">
-        +
-        <span>更多</span>
+        <span @click="toInfofour">更多</span>
       </div>
     </div>
     <div class="productListMain">
+      <p v-if="AllProducts.length === 0">暂无数据</p>
       <div class="aboutTopItem" v-for="(item, index) in AllProducts" :key="index">
-        <div class="brochureItemImg">
+        <div class="brochureItemImg" @click="looKcoverUrl(item.pdfUrl, item.id)">
           <img :src="item.coverUrl" alt>
         </div>
         <div class="brochureItemText">
@@ -54,8 +60,8 @@
               </div>
             </div>
             <div class="brochureintroduce">
-              <div>阅读量{{item.readVolume}}</div>
-              <div>{{item.createDate}}</div>
+              <p>阅读量{{item.readVolume}}</p>
+              <p>{{`${new Date(item.createDate).getFullYear()}-${ 10 > (new Date(item.createDate).getMonth() + 1) ? '0' + (new Date(item.createDate).getMonth()+ 1) : new Date(item.createDate).getMonth()}-${ 10 > new Date(item.createDate).getDate() ? '0' + new Date(item.createDate).getDate() : new Date(item.createDate).getDate()}`}}</p>
             </div>
           </div>
           <div class="brochuremover">
@@ -63,7 +69,9 @@
           </div>
           <div class="brochureReadLsit">
             <p v-if=" item.users.length === 0">暂无数据</p>
-            <div v-for="(item, index) in item.users" :key="index"></div>
+            <div v-for="(item, index) in item.users" :key="index">
+              <img :src="`${item.logoUrl}`" alt>
+            </div>
           </div>
         </div>
       </div>
@@ -72,7 +80,14 @@
 </template>
 
 <script>
-import { getAllProducts, getCompanyInfo, ERR_OK } from "@/api/api.js";
+import {
+  getAllProducts,
+  getCompanyInfo,
+  getProductById,
+  focus,
+  cancelFocus,
+  ERR_OK
+} from "@/api/api.js";
 export default {
   name: "productList",
   data() {
@@ -85,8 +100,12 @@ export default {
           industryName: "",
           logoUrl: "",
           fansNumber: "",
-          name: "",
+          name: ""
         }
+      },
+      followData: {
+        userId: "",
+        concernedId: ""
       }
     };
   },
@@ -100,6 +119,20 @@ export default {
     }
   },
   methods: {
+    _focus() {
+      focus(this.followData).then(res => {
+        if (res.status === ERR_OK) {
+          this._getCompanyInfo();
+        }
+      });
+    },
+    _cancelFocus() {
+      cancelFocus(this.followData).then(res => {
+        if (res.status === ERR_OK) {
+          this._getCompanyInfo();
+        }
+      });
+    },
     _getCompanyInfo() {
       getCompanyInfo(this.$store.state.user.UserID, this.$route.query.id).then(
         res => {
@@ -116,6 +149,37 @@ export default {
           this.AllProducts = res.data.data;
         }
       });
+    },
+    looKcoverUrl(url, id) {
+      getProductById(id, this.$store.state.user.UserID).then(res => {
+        if (res.data.code === 0) {
+          console.log("查看成功");
+        }
+      });
+      window.open(url, "_blank");
+    },
+    toInfofour() {
+      this.$router.push({
+        path: `/infofour`
+      });
+    },
+    followId(id) {
+      if (this.$store.state.user.UserID) {
+        this.followData.userId = this.$store.state.user.UserID;
+        this.followData.concernedId = id;
+        this._focus();
+      } else {
+        alert("请登录");
+      }
+    },
+    cancelfollowId(id) {
+      if (this.$store.state.user.UserID) {
+        this.followData.userId = this.$store.state.user.UserID;
+        this.followData.concernedId = id;
+        this._cancelFocus();
+      } else {
+        alert("请登录");
+      }
     }
   }
 };
@@ -162,6 +226,9 @@ export default {
       width: 100px;
       height: 100px;
       background: #fff;
+      img {
+        width: 100%;
+      }
     }
     .productListHeardName {
       width: calc(100% - 66px);
@@ -193,16 +260,21 @@ export default {
         justify-content: space-between;
         align-items: flex-end;
         .follow {
-          height: 24px;
-          width: 50px;
-          line-height: 24px;
+          padding: 6px 10px;
           text-align: center;
           background: #fff;
           color: #000;
           cursor: pointer;
+          font-size: 10px;
         }
       }
     }
+  }
+  .productListMain > p {
+    width: 100%;
+
+    text-align: center;
+    margin-top: 30px;
   }
   .productListMain {
     display: flex;
@@ -210,18 +282,16 @@ export default {
     box-sizing: border-box;
     margin: 30px;
     .aboutTopItem {
-      width: 31%;
+      width: 30%;
       display: flex;
       justify-content: space-between;
-      padding: 10px;
-      border-left: none;
-      border-top: none;
-      box-sizing: border-box;
+      margin-bottom: 10px;
       background: #fff;
-      margin: 10px 1%;
+      padding: 10px;
+      box-sizing: border-box;
       .brochureItemImg {
         width: 120px;
-        background: #ddd;
+        background: #fff;
       }
       .brochureItemText {
         width: calc(100% - 120px);
@@ -238,48 +308,54 @@ export default {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          position: relative;
+          .brochureItemmanualHead {
+            width: 70%;
+          }
           p {
             font-size: 16px;
-            margin: 6px 0 20px;
+            margin: 6px 0;
+            text-align: left;
           }
           .label {
+            display: flex;
+            flex-wrap: wrap;
             span {
               display: inline-block;
-              width: 60px;
-              height: 24px;
+              font-size: 10px;
+              padding: 4px;
               text-align: center;
-              line-height: 24px;
               margin-right: 4px;
               background: rgba($color: #000000, $alpha: 0.2);
               color: #fff;
             }
           }
           .brochureintroduce {
-            position: absolute;
-            top: 10px;
-            right: 0;
-            div {
+            width: 30%;
+            text-align: right;
+            p {
               font-size: 10px;
               text-align: right;
-              margin-bottom: 4px;
             }
           }
         }
         .brochuremover {
           display: flex;
           justify-content: space-between;
-          font-size: 12px;
+          font-size: 14px;
           margin: 10px 0;
+          span:nth-child(2) {
+            cursor: pointer;
+          }
         }
         .brochureReadLsit {
           display: flex;
           flex-wrap: wrap;
+          font-size: 10px;
           div {
             width: 18%;
             margin: 0 1%;
             height: 40px;
-            background: #ddd;
+            background: #fff;
           }
         }
       }

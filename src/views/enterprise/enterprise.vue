@@ -17,10 +17,10 @@
               :key="index"
             >{{ items.industryName }}</div>
           </div>
-          <div class="enterpriseMiantwo">二级分类</div>
-          <div class="enterpriseMiantwoAll">
+          <div class="enterpriseMianTwo">二级分类</div>
+          <div class="enterpriseMianTwoAll">
             <div
-              class="enterpriseMiantwo"
+              class="enterpriseMianTwo"
               v-for="(items, index) in items"
               :class="{ Oneact: index == typeTwoindex }"
               @click="mouseOverTwo(index, items.id)"
@@ -306,10 +306,19 @@ export default {
         padding: 0 10px;
         box-sizing: border-box;
         background: #326b90;
-        font-size: 14px;
+        font-size: 10px;
+      }
+      .enterpriseMianTwo {
+        width: 100%;
+        height: 36px;
+        line-height: 36px;
+        padding: 0 10px;
+        box-sizing: border-box;
+        background: rgba($color: #326b90, $alpha: 0.6);
+        font-size: 10px;
       }
       .enterpriseMianOneAll,
-      .enterpriseMiantwoAll {
+      .enterpriseMianTwoAll {
         height: 144px;
         line-height: 16px;
         overflow: auto;
@@ -317,7 +326,7 @@ export default {
           background: rgba($color: #326b90, $alpha: 0);
         }
         .enterpriseMianOne,
-        .enterpriseMiantwo {
+        .enterpriseMianTwo {
           padding: 0 16px;
           width: 100%;
           height: 20px;
@@ -327,15 +336,6 @@ export default {
           white-space: nowrap;
           cursor: pointer;
         }
-      }
-      .enterpriseMiantwo {
-        width: 100%;
-        height: 36px;
-        line-height: 36px;
-        padding: 0 10px;
-        box-sizing: border-box;
-        background: rgba($color: #326b90, $alpha: 0.6);
-        font-size: 10px;
       }
       .enterpriseMianthree {
         width: 100%;

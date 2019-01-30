@@ -4,7 +4,7 @@
       <div class="aboutListHead">产品册</div>
       <div class="aboutTopList" v-if="products.length > 0">
         <div class="aboutTopItem" v-for="(item, index) in products" :key="index">
-          <div class="brochureItemImg">
+          <div class="brochureItemImg" @click="looKcoverUrl(item.pdfUrl, item.id)">
             <img :src="item.coverUrl" alt>
           </div>
           <div class="brochureItemText">
@@ -21,7 +21,7 @@
               </div>
               <div class="brochureintroduce">
                 <p>阅读量{{item.readVolume}}</p>
-                <p>{{item.createDate}}</p>
+                <p>{{`${new Date(item.createDate).getFullYear()}-${ 10 > (new Date(item.createDate).getMonth() + 1) ? '0' + (new Date(item.createDate).getMonth()+ 1) : new Date(item.createDate).getMonth()}-${ 10 > new Date(item.createDate).getDate() ? '0' + new Date(item.createDate).getDate() : new Date(item.createDate).getDate()}`}}</p>
               </div>
             </div>
             <div class="brochuremover">
@@ -37,15 +37,12 @@
           </div>
         </div>
       </div>
-      <div class="aboutTopList" v-else>
-        暂无数据
-      </div>
+      <div class="aboutTopList" v-else>暂无数据</div>
       <div class="Seemover" @click="toMover(id)">查看所有产品册</div>
     </div>
     <div class="aboutListMiddle">
       <div class="aboutListHead">
         <span>合作伙伴</span>
-        <!-- <span>更多</span> -->
       </div>
       <div class="aboutListMiddleNav">
         <span :class="{act: indexType === 1}" @click="_getPartner(1)">主要顾客</span>
@@ -126,7 +123,7 @@
   </div>
 </template>
 <script>
-import { getPartner, getSimilarityCompany } from "@/api/api.js";
+import { getPartner, getSimilarityCompany, getProductById } from "@/api/api.js";
 export default {
   name: "aboutList",
   props: ["products", "id"],
@@ -139,6 +136,7 @@ export default {
       heiline: "auto"
     };
   },
+
   created() {
     this._getPartner(1);
     this._getSimilarityCompany();
@@ -158,6 +156,14 @@ export default {
           this.cooperationData = res.data.data;
         }
       });
+    },
+    looKcoverUrl(url, id) {
+      getProductById(id, this.$store.state.user.UserID).then(res => {
+        if (res.data.code === 0) {
+          console.log("查看成功");
+        }
+      });
+      window.open(url, "_blank");
     },
     toMover(id) {
       this.$router.push({
@@ -228,23 +234,29 @@ export default {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            .brochureItemmanualHead {
+              width: 70%;
+            }
             p {
               font-size: 16px;
               margin: 6px 0;
+              text-align: left;
             }
             .label {
+              display: flex;
+              flex-wrap: wrap;
               span {
                 display: inline-block;
-                width: 60px;
-                height: 24px;
+                font-size: 10px;
+                padding: 4px;
                 text-align: center;
-                line-height: 24px;
                 margin-right: 4px;
                 background: rgba($color: #000000, $alpha: 0.2);
                 color: #fff;
               }
             }
             .brochureintroduce {
+              width: 30%;
               p {
                 font-size: 10px;
                 text-align: right;
@@ -254,7 +266,7 @@ export default {
           .brochuremover {
             display: flex;
             justify-content: space-between;
-            font-size: 12px;
+            font-size: 14px;
             margin: 10px 0;
             span:nth-child(2) {
               cursor: pointer;
@@ -263,6 +275,7 @@ export default {
           .brochureReadLsit {
             display: flex;
             flex-wrap: wrap;
+            font-size: 10px;
             div {
               width: 18%;
               margin: 0 1%;
@@ -310,27 +323,7 @@ export default {
     background: rgba($color: #d6d6d6, $alpha: 0.5);
     margin-bottom: 10px;
   }
-
-  // .aboutListMiddleItem {
-  //   padding: 0 10px 0 20px;
-  //   box-sizing: border-box;
-  //   .boothNum {
-  //     font-size: 14px;
-  //     font-weight: bold;
-  //     height: 30px;
-  //     line-height: 30px;
-  //   }
-  //   .InterestListMove {
-  //     margin: 20px 0;
-  //     display: flex;
-  //     justify-content: center;
-  //   }
-  // }
-  .aboutListMiddlelist {
-    overflow: hidden;
-  }
   .enterpriseItem {
-    height: 66px;
     margin-bottom: 10px;
     display: flex;
     .enterpriseItemLeft {
@@ -346,7 +339,7 @@ export default {
         height: 100%;
         margin-left: 10px;
         p:nth-child(1) {
-          font-size: 20px;
+          font-size: 18px;
           font-weight: bold;
         }
         p:nth-child(2) {
@@ -362,6 +355,7 @@ export default {
     }
     .enterpriseItemRight {
       width: 20%;
+      height: 66px;
       display: flex;
       flex-direction: column;
       align-items: flex-end;

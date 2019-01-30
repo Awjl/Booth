@@ -417,3 +417,25 @@ export function getSimilarityCompany(id) {
         }
     });
 }
+// 查看产品手册
+export function getProductById(productId, userId) {
+    return service({
+        url: `/product/getProductById`,
+        method: "get",
+        params: {
+            productId: productId,
+            userId: userId
+        }
+    });
+}
+// 查看图片
+export function viewPicture(picId, userId) {
+    return service({
+        url: `/user/viewPicture`,
+        method: "get",
+        params: {
+            picId: picId,
+            userId: userId
+        }
+    });
+}

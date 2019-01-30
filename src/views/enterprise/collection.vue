@@ -7,20 +7,20 @@
       </div>
       <div class="collectionNavBottom">
         <div class="collectionMian">
-          <div class="collectionMianOne">一级分类</div>
+         <div class="enterpriseMianOne">一级分类</div>
           <div class="enterpriseMianOneAll">
             <div
-              class="collectionMianOne"
+              class="enterpriseMianOne"
               :class="{ Oneact: index == typeindex }"
               v-for="(items, index) in industryData"
               @click="mouseOver(index, items)"
               :key="index"
             >{{ items.industryName }}</div>
           </div>
-          <div class="collectionMiantwo">二级分类</div>
-          <div class="enterpriseMiantwoAll">
+          <div class="enterpriseMianTwo">二级分类</div>
+          <div class="enterpriseMianTwoAll">
             <div
-              class="collectionMiantwo"
+              class="enterpriseMianTwo"
               v-for="(items, index) in items"
               :class="{ Oneact: index == typeTwoindex }"
               @click="mouseOverTwo(index, items.id)"
@@ -219,25 +219,34 @@ export default {
       width: 100%;
       margin-top: 20px;
       background: rgba($color: #326b90, $alpha: 0.1);
-      .collectionMianOne {
+      .enterpriseMianOne {
         width: 100%;
         height: 36px;
         line-height: 36px;
         padding: 0 10px;
         box-sizing: border-box;
         background: #326b90;
-        font-size: 14px;
+        font-size: 10px;
+      }
+      .enterpriseMianTwo {
+        width: 100%;
+        height: 36px;
+        line-height: 36px;
+        padding: 0 10px;
+        box-sizing: border-box;
+        background: rgba($color: #326b90, $alpha: 0.6);
+        font-size: 10px;
       }
       .enterpriseMianOneAll,
-      .enterpriseMiantwoAll {
+      .enterpriseMianTwoAll {
         height: 144px;
         line-height: 16px;
         overflow: auto;
         .Oneact {
           background: rgba($color: #326b90, $alpha: 0);
         }
-        .collectionMiantwo,
-        .collectionMianOne {
+        .enterpriseMianOne,
+        .enterpriseMianTwo {
           padding: 0 16px;
           width: 100%;
           height: 20px;
@@ -247,15 +256,6 @@ export default {
           white-space: nowrap;
           cursor: pointer;
         }
-      }
-      .collectionMiantwo {
-        width: 100%;
-        height: 36px;
-        line-height: 36px;
-        padding: 0 10px;
-        box-sizing: border-box;
-        background: rgba($color: #326b90, $alpha: 0.6);
-        font-size: 10px;
       }
       .collectionMianthree {
         width: 100%;

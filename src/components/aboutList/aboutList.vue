@@ -3,8 +3,9 @@
     <div class="aboutListTop">
       <div class="aboutListHead">产品册</div>
       <div class="aboutTopList">
+        <p v-if="aboutTopData.length == 0" style="text-align: center;">暂无数据</p>
         <div class="aboutTopItem" v-for="(item, index) in aboutTopData" :key="index">
-          <div class="brochureItemImg">
+          <div class="brochureItemImg" @click="looKcoverUrl(item.pdfUrl, item.id)">
             <img :src="item.coverUrl" alt>
           </div>
           <div class="brochureItemText">
@@ -21,7 +22,7 @@
               </div>
               <div class="brochureintroduce">
                 <p>阅读量{{item.readVolume}}</p>
-                <p>{{item.createDate}}</p>
+                <p>{{`${new Date(item.createDate).getFullYear()}-${ 10 > (new Date(item.createDate).getMonth() + 1) ? '0' + (new Date(item.createDate).getMonth()+ 1) : new Date(item.createDate).getMonth()}-${ 10 > new Date(item.createDate).getDate() ? '0' + new Date(item.createDate).getDate() : new Date(item.createDate).getDate()}`}}</p>
               </div>
             </div>
             <div class="brochuremover">
@@ -73,14 +74,16 @@
               >查看产品手册</div>
             </div>
           </div>
-          <div class="already" v-if="item.exhibitions">
+          <div class="already" v-if="item.exhibition">
             <div class="alreadyHead">
               <span>已参加</span>
-              <p>HOUSE VISION 2018 BEIJING EXHIBITION
-                <br>探索家——未来生活大展
+              <p>
+                {{item.exhibition.nameEng}}
+                <br>
+                {{item.exhibition.name}}
               </p>
             </div>
-            <div class="alreadyTime">2018年9月21日</div>
+            <div class="alreadyTime">{{item.exhibition.date}}</div>
           </div>
         </div>
       </div>
@@ -123,7 +126,7 @@
   </div>
 </template>
 <script>
-import { getPartner, getSimilarityCompany } from "@/api/api.js";
+import { getPartner, getSimilarityCompany, getProductById } from "@/api/api.js";
 export default {
   name: "aboutList",
   data() {
@@ -142,12 +145,7 @@ export default {
   },
   methods: {
     _getSimilarityCompany() {
-      // if (id) {
-      //   this.ID = id;
-      // } else {
-      //   this.ID = this.$store.state.user.UserID;
-      // }
-      getSimilarityCompany( this.$store.state.user.UserID).then(res => {
+      getSimilarityCompany(this.$store.state.user.UserID).then(res => {
         if (res.data.code === 0) {
           this.SimilarityCompanyData = res.data.data;
           console.log(res.data.data);
@@ -164,11 +162,19 @@ export default {
         }
       });
     },
+    looKcoverUrl(url, id) {
+      getProductById(id, this.$store.state.user.UserID).then(res => {
+        if (res.data.code === 0) {
+          console.log("查看成功");
+        }
+      });
+      window.open(url, "_blank");
+    },
     toMover(id) {
       console.log(id);
       this.$router.push({
         path: `/productList`,
-        query: {id: id}
+        query: { id: id }
       });
     }
   }
@@ -178,6 +184,7 @@ export default {
 <style lang="scss">
 .aboutList {
   width: 100%;
+
   // 标题 统一
   .aboutListHead {
     font-size: 18px;
@@ -233,23 +240,29 @@ export default {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            .brochureItemmanualHead {
+              width: 70%;
+            }
             p {
               font-size: 16px;
               margin: 6px 0;
+              text-align: left;
             }
             .label {
+              display: flex;
+              flex-wrap: wrap;
               span {
                 display: inline-block;
-                width: 60px;
-                height: 24px;
+                font-size: 10px;
+                padding: 4px;
                 text-align: center;
-                line-height: 24px;
                 margin-right: 4px;
                 background: rgba($color: #000000, $alpha: 0.2);
                 color: #fff;
               }
             }
             .brochureintroduce {
+              width: 30%;
               p {
                 font-size: 10px;
                 text-align: right;
@@ -259,7 +272,7 @@ export default {
           .brochuremover {
             display: flex;
             justify-content: space-between;
-            font-size: 12px;
+            font-size: 14px;
             margin: 10px 0;
             span:nth-child(2) {
               cursor: pointer;
@@ -268,6 +281,7 @@ export default {
           .brochureReadLsit {
             display: flex;
             flex-wrap: wrap;
+            font-size: 10px;
             div {
               width: 18%;
               margin: 0 1%;
@@ -331,11 +345,8 @@ export default {
   //     justify-content: center;
   //   }
   // }
-  .aboutListMiddlelist {
-    overflow: hidden;
-  }
+
   .enterpriseItem {
-    height: 66px;
     margin-bottom: 10px;
     display: flex;
     .enterpriseItemLeft {
@@ -366,6 +377,7 @@ export default {
       }
     }
     .enterpriseItemRight {
+      height: 66px;
       width: 20%;
       display: flex;
       flex-direction: column;

@@ -2,7 +2,7 @@
   <div class="success">
     <p v-if="success">激活成功</p>
     <p v-if="!success">激活失败</p>
-    <p v-if="success">5秒后自动返回...</p>
+    <p v-if="success">3秒后自动返回...</p>
   </div>
 </template>
 
@@ -33,7 +33,7 @@ export default {
             name: `infoOne`,
             params: { "id": urlObj.code }
           });
-        }, 5000);
+        }, 3000);
       }
     })
   }
@@ -41,4 +41,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.success {
+  margin-top: 30px;
+}
+.success p {
+  width: 100%;
+  text-align: center;
+  font-size: 18px
+}
 </style>

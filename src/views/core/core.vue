@@ -50,8 +50,9 @@
           <div class="coreAboutintroductionImg">
             <div
               class="ItemImg"
-              v-for="(item, index) in this.$store.state.userData.imgListUrl"
+              v-for="(item, index) in this.$store.state.userData.imgListUrlArr"
               :key="index"
+              @click="lookImg(item.url, item.id)"
             >
               <img :src="item.url" alt>
             </div>
@@ -70,18 +71,22 @@
                 <div class="name">{{this.$store.state.userData.name}}</div>
                 <div class="nameEN">{{this.$store.state.userData.fansNumber}}位关注者</div>
                 <p class="industry">{{this.$store.state.userData.oneIndustryname}}</p>
-                <div class="exhibition">
+                <div
+                  class="exhibition"
+                  v-if="this.$store.state.userData.exhibitionOne"
+                  @click="toExt(this.$store.state.userData.exhibitionOne.id)"
+                >
                   <div class="exhibitionItem">
                     <div class="exhibitionCan">
                       <span>已参与</span>
-                      <div class="exhibitionName">HOUSE VISION 2018 BEIJING EXHIBITION
-                        <br>探索家——未来生活大展
+                      <div class="exhibitionName">
+                        {{this.$store.state.userData.exhibitionOne.nameEng}}
+                        <br>
+                        {{this.$store.state.userData.exhibitionOne.name}}
                       </div>
                     </div>
                     <div class="exhibitionTime">
-                      <span>2018年9月21日
-                        <br>11月6日
-                      </span>
+                      <span>{{this.$store.state.userData.exhibitionOne.date}}</span>
                       <div class="exhibitionDetali">
                         <i class="icon iconTo"></i>
                       </div>
@@ -95,12 +100,9 @@
               </div>
             </div>
             <div class="hometext">{{this.$store.state.userData.summary}}</div>
-            <div class="moveBtn">更多</div>
+            <!-- <div class="moveBtn">更多</div> -->
             <div class="homeItemImg">
-              <img
-                :src="`${this.$store.state.userData.introductionPicUrl}`"
-                alt
-              >
+              <img :src="`${this.$store.state.userData.introductionPicUrl}`" alt>
             </div>
           </div>
         </div>
@@ -109,25 +111,48 @@
         <AboutList></AboutList>
       </div>
     </div>
+    <div class="ImgBox" v-if="imgBoxShow" @click="lookImg() ">
+      <img :src="imgList" alt>
+    </div>
   </div>
 </template>
 
 <script>
 import AboutList from "@/components/aboutList/aboutList.vue";
-// import {  } from "@/api/api.js";
+import { viewPicture } from "@/api/api.js";
 
 export default {
   name: "core",
   data() {
     return {
+      imgBoxShow: false,
+      imgList: "",
       main: [],
       listMain: this.$store.state.userData.mainProcess
     };
+  },
+  created() {
+    console.log(this.$store.state.userData.fansNumber);
   },
   mounted() {
     this.arr();
   },
   methods: {
+    lookImg(url, id) {
+      this.imgBoxShow = !this.imgBoxShow;
+      this.imgList = url;
+      viewPicture(id, this.$store.state.user.UserID).then(res => {
+        if (res.data.code === 0) {
+          console.log("查看成功");
+        }
+      });
+    },
+    toExt(id) {
+      this.$router.push({
+        path: `/exhibitionDetails`,
+        query: { id: id }
+      });
+    },
     toInfo() {
       this.$router.push({
         name: `infoOne`,
@@ -163,6 +188,9 @@ export default {
       width: 170px;
       height: 170px;
       background: #fff;
+      img {
+        width: 100%;
+      }
     }
     .coreHeardName {
       width: calc(100% - 170px);
@@ -442,6 +470,20 @@ export default {
       min-width: 463px;
       padding-left: 30px;
       box-sizing: border-box;
+    }
+  }
+  .ImgBox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba($color: #000000, $alpha: 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      width: 30%;
     }
   }
 }

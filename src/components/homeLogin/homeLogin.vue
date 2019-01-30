@@ -299,7 +299,6 @@ export default {
         justify-content: center;
       }
       .enterpriseItem {
-        height: 66px;
         margin-bottom: 10px;
         display: flex;
         justify-content: space-between;
@@ -307,9 +306,9 @@ export default {
           display: flex;
           height: 100%;
           .enterpriseItemHead {
+            width: 66px;
+            height: 66px;
             img {
-              width: 66px;
-              height: 66px;
               cursor: pointer;
             }
           }
@@ -317,7 +316,7 @@ export default {
             height: 100%;
             margin-left: 10px;
             p:nth-child(1) {
-              font-size: 26px;
+              font-size: 18px;
               font-weight: bold;
             }
             p:nth-child(2) {
@@ -332,6 +331,7 @@ export default {
           }
         }
         .enterpriseItemRight {
+          height: 66px;
           display: flex;
           flex-direction: column;
           align-items: flex-end;

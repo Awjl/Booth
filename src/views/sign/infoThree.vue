@@ -28,6 +28,9 @@ res.data.data.<template>
                 <input @change="upImg" type="file" id="upTop" value="图片上传预览" multiple>
               </div>
               <div class="imgList">
+                <div class="imgListItem" v-for="(item, index) in imgListArr" :key="index">
+                  <img :src="item.url" alt>
+                </div>
                 <div class="imgListItem" v-for="(item, index) in imgList" :key="index">
                   <img :src="item" alt>
                 </div>
@@ -56,6 +59,7 @@ export default {
   data() {
     return {
       imgList: [],
+      imgListArr: [],
       upImgList: [],
       formData: new FormData(),
       imgType: {
@@ -64,7 +68,8 @@ export default {
     };
   },
   created() {
-    this.imgList = this.$store.state.userData.imgListUrl;
+    this.imgListArr = this.$store.state.userData.imgListUrlArr;
+    console.log(this.imgListArr)
   },
   methods: {
     _addUserInfo() {

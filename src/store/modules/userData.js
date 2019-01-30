@@ -21,9 +21,11 @@ const userData = {
     facilitator: "", // 服务商
     summary: "", // 简介
     exhibitions: "", // 会展
+    exhibitionOne: "",
     customer: "", // 客户/
     imgList: [],
     imgListUrl: [],
+    imgListUrlArr: [],
     logoPic: "",
     logoPicUrl: "",
     introductionPic: "",
@@ -87,6 +89,10 @@ const userData = {
     SET_exhibitions: (state, exhibitions) => {
       state.exhibitions = exhibitions;
     },
+    // exhibitionOne
+    SET_exhibitionOne: (state, exhibitionOne) => {
+      state.exhibitionOne = exhibitionOne;
+    },
     SET_customer: (state, customer) => {
       state.customer = customer;
     },
@@ -95,6 +101,9 @@ const userData = {
     },
     SET_imgListUrl: (state, imgListUrl) => {
       state.imgListUrl = imgListUrl;
+    },
+    SET_imgListUrlArr: (state, imgListUrlArr) => {
+      state.imgListUrlArr = imgListUrlArr;
     },
     SET_logoPic: (state, logoPic) => {
       state.logoPic = logoPic;

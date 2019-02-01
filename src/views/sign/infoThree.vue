@@ -29,7 +29,7 @@ res.data.data.<template>
               </div>
               <div class="imgList">
                 <div class="imgListItem" v-for="(item, index) in imgListArr" :key="index">
-                  <img :src="item.url" alt>
+                  <img :src="item.picture.url" alt>
                 </div>
                 <div class="imgListItem" v-for="(item, index) in imgList" :key="index">
                   <img :src="item" alt>

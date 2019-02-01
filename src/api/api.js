@@ -263,12 +263,14 @@ export function deleteProduct(id) {
     });
 }
 // 获取所有产品手册 1
-export function getAllProducts(id) {
+export function getAllProducts(id, userId) {
+    console.log(id, userId)
     return service({
         url: `/product/getAllProducts`,
         method: "get",
         params: {
-            id: id
+            id: id,
+            userId: userId
         }
     });
 }
@@ -436,6 +438,49 @@ export function viewPicture(picId, userId) {
         params: {
             picId: picId,
             userId: userId
+        }
+    });
+}
+// 认证
+export function sendRelationMsg(data) {
+    return service({
+        url: "/sendRelationMsg",
+        method: "post",
+        data: data
+    });
+}
+// 认证/sendAuthEmail
+export function sendAuthEmail(data) {
+    return service({
+        url: "/sendAuthEmail",
+        method: "post",
+        data: data
+    });
+}
+// 收藏
+export function collection(data) {
+    return service({
+        url: "/collection",
+        method: "post",
+        data: data
+    });
+}
+// 取消收藏
+export function cancelCollection(data) {
+    return service({
+        url: "/cancelCollection",
+        method: "post",
+        data: data
+    });
+}
+// 同意或拒绝  /isAgreeMsg
+export function isAgreeMsg(token, isAgree) {
+    return service({
+        url: `/isAgreeMsg`,
+        method: "get",
+        params: {
+            token: token,
+            isAgree: isAgree
         }
     });
 }

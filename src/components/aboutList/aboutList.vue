@@ -3,8 +3,8 @@
     <div class="aboutListTop">
       <div class="aboutListHead">产品册</div>
       <div class="aboutTopList">
-        <p v-if="aboutTopData.length == 0" style="text-align: center;">暂无数据</p>
-        <div class="aboutTopItem" v-for="(item, index) in aboutTopData" :key="index">
+        <p v-if="products.length == 0" style="text-align: center;">暂无数据</p>
+        <div class="aboutTopItem" v-for="(item, index) in products" :key="index">
           <div class="brochureItemImg" @click="looKcoverUrl(item.pdfUrl, item.id)">
             <img :src="item.coverUrl" alt>
           </div>
@@ -21,8 +21,10 @@
                 </div>
               </div>
               <div class="brochureintroduce">
-                <p>阅读量{{item.readVolume}}</p>
-                <p>{{`${new Date(item.createDate).getFullYear()}-${ 10 > (new Date(item.createDate).getMonth() + 1) ? '0' + (new Date(item.createDate).getMonth()+ 1) : new Date(item.createDate).getMonth()}-${ 10 > new Date(item.createDate).getDate() ? '0' + new Date(item.createDate).getDate() : new Date(item.createDate).getDate()}`}}</p>
+                <p style="font-weight: bold;">阅读量&nbsp;&nbsp;{{item.readVolume}}</p>
+                <p
+                  style="font-weight: bold;"
+                >{{`${new Date(item.createDate).getFullYear()}/${ 10 > (new Date(item.createDate).getMonth() + 1) ? '0' + (new Date(item.createDate).getMonth()+ 1) : new Date(item.createDate).getMonth()}/${ 10 > new Date(item.createDate).getDate() ? '0' + new Date(item.createDate).getDate() : new Date(item.createDate).getDate()}`}}</p>
               </div>
             </div>
             <div class="brochuremover">
@@ -59,14 +61,39 @@
                 <img :src="`${item.user.logoUrl}`" alt v-else>
               </div>
               <div class="enterpriseItemLeftTitle">
-                <p v-if="item.user">{{item.user.name}}</p>
+                <p v-if="item.user">
+                  {{item.user.name}}
+                  <span
+                    v-if="item.user && item.isRegister != 1 && item.isAuth == 0 "
+                  >未认证</span>
+                  <span v-if="item.user && item.isRegister != 1 && item.isAuth == 2 ">未认证</span>
+                  <span
+                    v-if="item.user && item.isRegister != 1 && item.isAuth == 1 "
+                    class="act"
+                  >已认证</span>
+                </p>
                 <p v-if="item.user && item.isRegister != 1">{{item.user.fansNumber}}位关注者</p>
                 <p v-if="item.user && item.isRegister != 1">{{item.user.industryName}}</p>
               </div>
             </div>
             <div class="enterpriseItemRight">
-              <div class="InterestListshare" v-if="item.user && item.isRegister != 1">分享</div>
-              <!-- <div class="InterestListshare" v-if="item.user && item.isRegister == 1">邀请</div> -->
+              <div class="enterpriseItemRightTop">
+                <div
+                  class="InterestListshareTrue"
+                  v-if="item.user && item.isRegister != 1 && item.isAuth == 0 "
+                >认证中</div>
+                <div
+                  class="InterestListshareTrue"
+                  v-if="item.user && item.isRegister != 1 && item.isAuth == 2 "
+                  @click="_sendRelationMsg(item.user.id)"
+                >认证</div>
+                <div class="InterestListshare" v-if="item.user && item.isRegister != 1">分享</div>
+                <div
+                  class="InterestListshare"
+                  v-if="item.user && item.isRegister == 1"
+                  @click="Invitation()"
+                >邀请</div>
+              </div>
               <div
                 class="InterestListSee"
                 v-if="item.user && item.isRegister != 1"
@@ -86,6 +113,7 @@
             <div class="alreadyTime">{{item.exhibition.date}}</div>
           </div>
         </div>
+        <div v-if="ind == 5">暂无数据</div>
       </div>
     </div>
     <div class="aboutListBootm">
@@ -93,7 +121,7 @@
         <span>相似企业</span>
         <span @click="_getSimilarityCompany()">换一批</span>
       </div>
-      <div class="aboutListMiddlelist">
+      <div class="aboutListMiddlelist" v-if="SimilarityCompanyData.length > 0">
         <div v-for="(item, index) in SimilarityCompanyData" :key="index">
           <div class="enterpriseItem">
             <div class="enterpriseItemLeft">
@@ -114,29 +142,66 @@
           <div class="already" v-if="item.exhibition">
             <div class="alreadyHead">
               <span>已参加</span>
-              <p>HOUSE VISION 2018 BEIJING EXHIBITION
-                <br>探索家——未来生活大展
+              <p>
+                {{item.exhibition.nameEng}}
+                <br>
+                {{item.exhibition.name}}
               </p>
             </div>
-            <div class="alreadyTime">2018年9月21日</div>
+            <div class="alreadyTime">{{item.exhibition.date}}</div>
           </div>
         </div>
       </div>
+      <div class="aboutListMiddlelist" v-else style="text-align: center;">暂无相似企业</div>
+    </div>
+    <div class="aboutListBootm" style="background: #C1CCD4;">
+      <div class="aboutListHead">
+        <span>感兴趣的展会</span>
+      </div>
+      <div class="aboutListMiddlelist" v-if="interestedExhibitions.length > 0">
+        <div
+          class="InterestItem"
+          v-for="(item, index) in interestedExhibitions"
+          :key="index"
+        >{{item.name}}</div>
+      </div>
+      <div class="aboutListMiddlelist" style="text-align: center;" v-else>暂无感兴趣的展会</div>
     </div>
   </div>
 </template>
 <script>
-import { getPartner, getSimilarityCompany, getProductById } from "@/api/api.js";
+import {
+  getPartner,
+  getSimilarityCompany,
+  getProductById,
+  sendRelationMsg,
+  sendAuthEmail
+} from "@/api/api.js";
+
 export default {
   name: "aboutList",
+  props: ["products", "interestedExhibitions"],
   data() {
     return {
       aboutTopData: this.$store.state.userData.products,
       cooperationData: [],
+      ind: 0,
       SimilarityCompanyData: [],
       indexType: 1,
       id: "",
-      heiline: "auto"
+      heiline: "auto",
+      Updata: {
+        relationId: 0,
+        relationType: 0,
+        userId: this.$store.state.user.UserID
+      },
+      UpdataList: {
+        email: "",
+        companyName: "",
+        id: this.$store.state.user.UserID,
+        name: "",
+        type: 1
+      }
     };
   },
   created() {
@@ -144,11 +209,22 @@ export default {
     this._getSimilarityCompany();
   },
   methods: {
+    _sendRelationMsg(id) {
+      this.Updata.relationType = this.indexType;
+      this.Updata.relationId = id;
+      sendRelationMsg(this.Updata).then(res => {
+        if (res.data.code === 0) {
+          this.$router.push({
+            path: `/register`,
+            query: { id: "over" }
+          });
+        }
+      });
+    },
     _getSimilarityCompany() {
       getSimilarityCompany(this.$store.state.user.UserID).then(res => {
         if (res.data.code === 0) {
           this.SimilarityCompanyData = res.data.data;
-          console.log(res.data.data);
         }
       });
     },
@@ -157,21 +233,28 @@ export default {
       getPartner(this.$store.state.user.UserID, type).then(res => {
         if (res.data.code === 0) {
           this.cooperationData = res.data.data;
-          console.log("这是合作伙伴-----");
-          console.log(res.data.data);
+          this.ind = 0;
+          for (let i = 0; i < this.cooperationData.length; i++) {
+            if (!this.cooperationData[i].user) {
+              this.ind++;
+            }
+          }
         }
       });
     },
     looKcoverUrl(url, id) {
       getProductById(id, this.$store.state.user.UserID).then(res => {
         if (res.data.code === 0) {
-          console.log("查看成功");
         }
       });
       window.open(url, "_blank");
     },
+    Invitation() {
+      this.$router.push({
+        path: `/register`
+      });
+    },
     toMover(id) {
-      console.log(id);
       this.$router.push({
         path: `/productList`,
         query: { id: id }
@@ -184,7 +267,75 @@ export default {
 <style lang="scss">
 .aboutList {
   width: 100%;
+  .InvitationBox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba($color: #000, $alpha: 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .InvitationBoxItem {
+      width: 400px;
+      background: #2c73a1;
+      padding: 24px 36px;
+      box-sizing: border-box;
+      position: relative;
 
+      .InvitationBoxItemInput {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        height: 40px;
+        border: 2px solid #000;
+        margin-bottom: 20px;
+        position: relative;
+        box-sizing: border-box;
+        padding: 0 10px;
+        box-sizing: border-box;
+        label {
+          display: block;
+          width: 70px;
+          text-align: center;
+        }
+        select,
+        input {
+          display: block;
+          width: 200px;
+          background: rgba($color: #000, $alpha: 0);
+          outline: none;
+          color: #000;
+          &::-webkit-input-placeholder {
+            color: #000;
+          }
+        }
+      }
+      .InvitationBoxItemBtn {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        span {
+          display: block;
+          width: 100px;
+          height: 30px;
+          text-align: center;
+          line-height: 30px;
+          cursor: pointer;
+          box-sizing: border-box;
+          &.qu {
+            border: 1px solid #000;
+            margin-right: 20px;
+          }
+          &.true {
+            background: #000;
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
   // 标题 统一
   .aboutListHead {
     font-size: 18px;
@@ -328,42 +479,38 @@ export default {
     box-sizing: border-box;
     background: rgba($color: #d6d6d6, $alpha: 0.5);
     margin-bottom: 10px;
+    .InterestItem {
+      padding: 10px;
+      font-size: 16px;
+      font-weight: bold;
+    }
   }
-
-  // .aboutListMiddleItem {
-  //   padding: 0 10px 0 20px;
-  //   box-sizing: border-box;
-  //   .boothNum {
-  //     font-size: 14px;
-  //     font-weight: bold;
-  //     height: 30px;
-  //     line-height: 30px;
-  //   }
-  //   .InterestListMove {
-  //     margin: 20px 0;
-  //     display: flex;
-  //     justify-content: center;
-  //   }
-  // }
-
   .enterpriseItem {
     margin-bottom: 10px;
     display: flex;
     .enterpriseItemLeft {
       display: flex;
-      width: 80%;
+      width: 75%;
       // justify-content: space-between;
-      height: 100%;
       .enterpriseItemHead {
         width: 66px;
       }
       .enterpriseItemLeftTitle {
         width: calc(100% - 66px);
-        height: 100%;
         margin-left: 10px;
         p:nth-child(1) {
           font-size: 20px;
           font-weight: bold;
+          line-height: 22px;
+          span {
+            font-size: 10px;
+            display: inline-block;
+            vertical-align: super;
+            color: #969696;
+            &.act {
+              color: #af8c1a;
+            }
+          }
         }
         p:nth-child(2) {
           font-size: 14px;
@@ -378,11 +525,29 @@ export default {
     }
     .enterpriseItemRight {
       height: 66px;
-      width: 20%;
+      width: 25%;
       display: flex;
       flex-direction: column;
       align-items: flex-end;
       justify-content: space-between;
+      .enterpriseItemRightTop {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        padding-left: 10px;
+        box-sizing: border-box;
+        .InterestListshareTrue {
+          background: #000;
+          color: #fff;
+          width: 50px;
+          height: 30px;
+          text-align: center;
+          line-height: 30px;
+          font-size: 10px;
+          cursor: pointer;
+          margin-right: 10px;
+        }
+      }
       .InterestListshare {
         width: 50px;
         height: 30px;
@@ -391,6 +556,7 @@ export default {
         color: #fff;
         background: #326b90;
         font-size: 10px;
+        cursor: pointer;
       }
       .InterestListSee {
         width: 90px;
@@ -400,6 +566,7 @@ export default {
         color: #fff;
         background: #326b90;
         font-size: 10px;
+        cursor: pointer;
       }
     }
   }

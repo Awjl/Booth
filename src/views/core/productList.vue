@@ -14,7 +14,11 @@
         </div>
         <div class="productListHeardNameBottom">
           <!-- <div class="follow">关注</div> -->
-          <div class="follow" v-if="datalist.isConcerned === 2" @click="followId(datalist.user.id)">+ 关注</div>
+          <div
+            class="follow"
+            v-if="datalist.isConcerned === 2"
+            @click="followId(datalist.user.id)"
+          >+ 关注</div>
           <div
             class="follow"
             v-if="datalist.isConcerned === 1"
@@ -60,12 +64,16 @@
               </div>
             </div>
             <div class="brochureintroduce">
-              <p>阅读量{{item.readVolume}}</p>
-              <p>{{`${new Date(item.createDate).getFullYear()}-${ 10 > (new Date(item.createDate).getMonth() + 1) ? '0' + (new Date(item.createDate).getMonth()+ 1) : new Date(item.createDate).getMonth()}-${ 10 > new Date(item.createDate).getDate() ? '0' + new Date(item.createDate).getDate() : new Date(item.createDate).getDate()}`}}</p>
+              <p style="font-weight: bold;">阅读量&nbsp;&nbsp;{{item.readVolume}}</p>
+              <p
+                style="font-weight: bold;"
+              >{{`${new Date(item.createDate).getFullYear()}/${ 10 > (new Date(item.createDate).getMonth() + 1) ? '0' + (new Date(item.createDate).getMonth()+ 1) : new Date(item.createDate).getMonth()}/${ 10 > new Date(item.createDate).getDate() ? '0' + new Date(item.createDate).getDate() : new Date(item.createDate).getDate()}`}}</p>
             </div>
           </div>
           <div class="brochuremover">
             <span>谁读过</span>
+            <span @click="_cancelCollection(item.id)" v-if="item.isCollected == 1">已收藏</span>
+            <span @click="_collection(item.id)" v-if="item.isCollected == 2">收藏</span>
           </div>
           <div class="brochureReadLsit">
             <p v-if=" item.users.length === 0">暂无数据</p>
@@ -86,6 +94,8 @@ import {
   getProductById,
   focus,
   cancelFocus,
+  collection,
+  cancelCollection,
   ERR_OK
 } from "@/api/api.js";
 export default {
@@ -106,19 +116,39 @@ export default {
       followData: {
         userId: "",
         concernedId: ""
+      },
+      collectionData: {
+        otherId: "",
+        type: 1,
+        userId: this.$store.state.user.UserID
       }
     };
   },
   created() {
     console.log(this.$route.query.id);
     if (this.$route.query.id) {
-      this._getAllProducts(this.$route.query.id);
+      this._getAllProducts(this.$route.query.id, this.$store.state.user.UserID);
       this._getCompanyInfo();
     } else {
-      this._getAllProducts(this.$store.state.user.UserID);
+      this._getAllProducts(
+        this.$store.state.user.UserID,
+        this.$store.state.user.UserID
+      );
     }
   },
   methods: {
+    _collection(id) {
+      this.collectionData.otherId = id;
+      collection(this.collectionData).then(res => {
+        this._getAllProducts(this.$route.query.id, this.$store.state.user.UserID);
+      });
+    },
+    _cancelCollection(id) {
+      this.collectionData.otherId = id;
+      cancelCollection(this.collectionData).then(res => {
+        this._getAllProducts(this.$route.query.id, this.$store.state.user.UserID);
+      });
+    },
     _focus() {
       focus(this.followData).then(res => {
         if (res.status === ERR_OK) {
@@ -142,8 +172,8 @@ export default {
         }
       );
     },
-    _getAllProducts(userid) {
-      getAllProducts(userid).then(res => {
+    _getAllProducts(id, userID) {
+      getAllProducts(id, userID).then(res => {
         if (res.data.code === 0) {
           console.log(res.data.data);
           this.AllProducts = res.data.data;
@@ -245,6 +275,7 @@ export default {
           p:nth-child(1) {
             font-size: 28px;
             color: #fff;
+            margin-bottom: 6px;
           }
           p:nth-child(3) {
             margin-top: 10px;
@@ -341,10 +372,15 @@ export default {
         .brochuremover {
           display: flex;
           justify-content: space-between;
+          align-items: center;
           font-size: 14px;
           margin: 10px 0;
           span:nth-child(2) {
             cursor: pointer;
+            background: #000;
+            color: #fff;
+            font-size: 10px;
+            padding: 4px 10px;
           }
         }
         .brochureReadLsit {

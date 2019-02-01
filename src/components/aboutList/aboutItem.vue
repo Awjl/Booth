@@ -20,13 +20,15 @@
                 </div>
               </div>
               <div class="brochureintroduce">
-                <p>阅读量{{item.readVolume}}</p>
-                <p>{{`${new Date(item.createDate).getFullYear()}-${ 10 > (new Date(item.createDate).getMonth() + 1) ? '0' + (new Date(item.createDate).getMonth()+ 1) : new Date(item.createDate).getMonth()}-${ 10 > new Date(item.createDate).getDate() ? '0' + new Date(item.createDate).getDate() : new Date(item.createDate).getDate()}`}}</p>
+                <p style="font-weight: bold;">阅读量&nbsp;&nbsp;{{item.readVolume}}</p>
+                <p
+                  style="font-weight: bold;"
+                >{{`${new Date(item.createDate).getFullYear()}/${ 10 > (new Date(item.createDate).getMonth() + 1) ? '0' + (new Date(item.createDate).getMonth()+ 1) : new Date(item.createDate).getMonth()}/${ 10 > new Date(item.createDate).getDate() ? '0' + new Date(item.createDate).getDate() : new Date(item.createDate).getDate()}`}}</p>
               </div>
             </div>
             <div class="brochuremover">
               <span>谁读过</span>
-              <span @click="toMover()">了解更多</span>
+              <span @click="toMover(id)">了解更多</span>
             </div>
             <div class="brochureReadLsit">
               <p v-if=" item.users.length === 0">暂无数据</p>
@@ -65,7 +67,6 @@
             </div>
             <div class="enterpriseItemRight">
               <div class="InterestListshare" v-if="item.user && item.isRegister != 1">分享</div>
-              <!-- <div class="InterestListshare" v-if="item.user && item.isRegister == 1">邀请</div> -->
               <div
                 class="InterestListSee"
                 v-if="item.user && item.isRegister != 1"
@@ -76,13 +77,16 @@
           <div class="already" v-if="item.exhibitions">
             <div class="alreadyHead">
               <span>已参加</span>
-              <p>HOUSE VISION 2018 BEIJING EXHIBITION
-                <br>探索家——未来生活大展
+              <p>
+                {{item.exhibition.nameEng}}
+                <br>
+                {{item.exhibition.name}}
               </p>
             </div>
-            <div class="alreadyTime">2018年9月21日</div>
+            <div class="alreadyTime">{{item.exhibition.date}}</div>
           </div>
         </div>
+        <div v-if="ind == 5">暂无数据</div>
       </div>
     </div>
     <div class="aboutListBootm">
@@ -90,7 +94,7 @@
         <span>相似企业</span>
         <span @click="_getSimilarityCompany()">换一批</span>
       </div>
-      <div class="aboutListMiddlelist">
+      <div class="aboutListMiddlelist" v-if="SimilarityCompanyData.length > 0">
         <div v-for="(item, index) in SimilarityCompanyData" :key="index">
           <div class="enterpriseItem">
             <div class="enterpriseItemLeft">
@@ -119,6 +123,20 @@
           </div>
         </div>
       </div>
+      <div class="aboutListMiddlelist" v-else style="text-align: center;">暂无相似企业</div>
+    </div>
+    <div class="aboutListBootm" style="background: #C1CCD4;">
+      <div class="aboutListHead">
+        <span>感兴趣的展会</span>
+      </div>
+      <div class="aboutListMiddlelist" v-if="interestedExhibitions.length > 0">
+        <div
+          class="InterestItem"
+          v-for="(item, index) in interestedExhibitions"
+          :key="index"
+        >{{item.name}}</div>
+      </div>
+      <div class="aboutListMiddlelist" style="text-align: center;" v-else>暂无感兴趣的展会</div>
     </div>
   </div>
 </template>
@@ -126,12 +144,13 @@
 import { getPartner, getSimilarityCompany, getProductById } from "@/api/api.js";
 export default {
   name: "aboutList",
-  props: ["products", "id"],
+  props: ["products", "id", "interestedExhibitions"],
   data() {
     return {
       cooperationData: [],
       SimilarityCompanyData: [],
       indexType: 1,
+      ind: 0,
       ID: "",
       heiline: "auto"
     };
@@ -151,9 +170,15 @@ export default {
     },
     _getPartner(type) {
       this.indexType = type;
+      this.ind = 0;
       getPartner(this.$route.query.id, type).then(res => {
         if (res.data.code === 0) {
           this.cooperationData = res.data.data;
+          for (let i = 0; i < this.cooperationData.length; i++) {
+            if (!this.cooperationData[i].user) {
+              this.ind++;
+            }
+          }
         }
       });
     },
@@ -322,6 +347,11 @@ export default {
     box-sizing: border-box;
     background: rgba($color: #d6d6d6, $alpha: 0.5);
     margin-bottom: 10px;
+    .InterestItem {
+      padding: 10px;
+      font-size: 16px;
+      font-weight: bold;
+    }
   }
   .enterpriseItem {
     margin-bottom: 10px;

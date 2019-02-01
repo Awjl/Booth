@@ -60,9 +60,9 @@
                 <option value="1">市场及销售</option>
                 <option value="2">采购</option>
                 <option value="3">管理</option>
-                <option value="3">技术</option>
-                <option value="3">生产及运营</option>
-                <option value="3">其他</option>
+                <option value="4">技术</option>
+                <option value="5">生产及运营</option>
+                <option value="6">其他</option>
               </select>
             </div>
             <div class="signBgMainRightItem">

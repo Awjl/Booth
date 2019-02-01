@@ -31,11 +31,35 @@ export default new Router({
       }
     },
     {
+      path: "/register",
+      name: "register",
+      component: () => import("./views/register/Forregister.vue"),
+      meta: {
+        title: "未注册用户"
+      }
+    },
+    {
+      path: "/Authentication",
+      name: "Authentication",
+      component: () => import("./views/success/Authentication.vue"),
+      meta: {
+        title: "申请认证"
+      }
+    },
+    {
       path: "/infoOne",
       name: "infoOne",
       component: () => import("./views/sign/infoOne.vue"),
       meta: {
         title: "基础信息"
+      }
+    },
+    {
+      path: "/info",
+      name: "info",
+      component: () => import("./views/sign/info.vue"),
+      meta: {
+        title: "简易信息"
       }
     },
     {

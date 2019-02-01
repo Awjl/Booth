@@ -49,6 +49,7 @@
 
 <script>
 import { register, checkEmail, isActivate, ERR_OK } from "@/api/api.js";
+import { getway } from "@/utils/auth.js";
 export default {
   name: "sign",
   data() {
@@ -67,10 +68,17 @@ export default {
     _isActivate() {
       isActivate(this.userID).then(res => {
         if (res.data.code === 0) {
-          this.$router.push({
-            name: `infoOne`,
-            params: { id: this.userID }
-          });
+          if (getway() == "1") {
+            this.$router.push({
+              name: `info`,
+              params: { id: this.userID }
+            });
+          } else {
+            this.$router.push({
+              name: `infoOne`,
+              params: { id: this.userID }
+            });
+          }
         }
       });
     },

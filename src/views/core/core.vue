@@ -2,20 +2,20 @@
   <div class="core">
     <div class="coreHeard">
       <div class="coreHeardLogo">
-        <img :src="this.$store.state.userData.logoPicUrl" alt>
+        <img :src="`${datalist.user.logoUrl}`" alt>
       </div>
       <div class="coreHeardName">
         <div class="coreHeardNameTop">
           <div class="coreName">
             <div class="coreNamehead">
-              <span>{{this.$store.state.userData.name}}</span>
+              <span>{{datalist.user.name}}</span>
               <div>
                 <p>普通会员</p>
                 <p @click="toInfo">修改资料</p>
               </div>
             </div>
-            <p>{{this.$store.state.userData.fansNumber}}位关注者</p>
-            <p class="Industry">{{this.$store.state.userData.oneIndustryname}}</p>
+            <p>{{datalist.user.fansNumber}}位关注者</p>
+            <p class="Industry">{{datalist.user.industryName}}</p>
           </div>
         </div>
         <div class="coreHeardNameBottom">
@@ -34,27 +34,50 @@
         <div class="coreAboutTop">
           <div class="coreAboutintroduction">
             <div class="coreAboutHead">关于我们</div>
-            <div class="coreAboutText">{{this.$store.state.userData.summary}}</div>
+            <div class="coreAboutText">{{datalist.user.summary}}</div>
             <div class="coreAboutHead">公司详情</div>
             <div class="coreAboutTtile">公司总部</div>
-            <div class="coreAboutlist">{{this.$store.state.userData.address}}</div>
-            <div class="coreAboutTtile">创立年份</div>
-            <div class="coreAboutlist">2019</div>
+            <div class="coreAboutlist">{{datalist.user.address}}</div>
             <div class="coreAboutTtile">公司规模</div>
-            <div class="coreAboutlist">11-50</div>
+            <div class="coreAboutlist">
+              <span v-if="datalist.user.member == 1">10-50</span>
+              <span v-if="datalist.user.member == 2">50-100</span>
+              <span v-if="datalist.user.member == 3">100-200</span>
+              <span v-if="datalist.user.member == 4">200-500</span>
+              <span v-if="datalist.user.member == 5">500以上</span>
+            </div>
             <div class="coreAboutTtile">专注领域</div>
             <div class="coreAboutlist">
-              <span v-for="(item, index) in main" :key="index">{{item}}</span>
+              <span
+                v-for="(item, index) in datalist.user.mainProcess"
+                :key="index"
+                v-show="item.key != '点击输入'"
+              >{{item.key}}</span>
             </div>
+            <div class="coreAboutTtile">联系人</div>
+            <div class="coreAboutlist">{{datalist.user.linkman}}</div>
+            <div class="coreAboutTtile">职位</div>
+            <div class="coreAboutlist">
+              <span v-if="datalist.user.member == 1">市场及销售</span>
+              <span v-if="datalist.user.member == 2">采购</span>
+              <span v-if="datalist.user.member == 3">管理</span>
+              <span v-if="datalist.user.member == 4">技术</span>
+              <span v-if="datalist.user.member == 5">生产及运营</span>
+              <span v-if="datalist.user.member == 6">其他</span>
+            </div>
+            <div class="coreAboutTtile">联系电话</div>
+            <div class="coreAboutlist">{{datalist.user.linkmanMobile}}</div>
+            <div class="coreAboutTtile">联系邮箱</div>
+            <div class="coreAboutlist">{{datalist.user.linkmanEmail}}</div>
           </div>
           <div class="coreAboutintroductionImg">
             <div
               class="ItemImg"
-              v-for="(item, index) in this.$store.state.userData.imgListUrlArr"
+              v-for="(item, index) in datalist.pictures"
               :key="index"
-              @click="lookImg(item.url, item.id)"
+              @click="lookImg(item.picture.url, item.id)"
             >
-              <img :src="item.url" alt>
+              <img :src="`${item.picture.url}`" alt>
             </div>
           </div>
         </div>
@@ -63,30 +86,29 @@
             <div class="homeListHead">
               <div class="homeListImg">
                 <div>
-                  <img :src="this.$store.state.userData.logoPicUrl" alt>
+                  <img :src="`${datalist.user.logoUrl}`" alt>
                 </div>
-                <div class="follow"></div>
               </div>
               <div class="homeListTitle">
-                <div class="name">{{this.$store.state.userData.name}}</div>
-                <div class="nameEN">{{this.$store.state.userData.fansNumber}}位关注者</div>
-                <p class="industry">{{this.$store.state.userData.oneIndustryname}}</p>
+                <div class="name">{{datalist.user.name}}</div>
+                <div class="nameEN">{{datalist.user.fansNumber}}位关注者</div>
+                <p class="industry">{{datalist.user.industryName}}</p>
                 <div
                   class="exhibition"
-                  v-if="this.$store.state.userData.exhibitionOne"
-                  @click="toExt(this.$store.state.userData.exhibitionOne.id)"
+                  v-if="datalist.exhibition"
+                  @click="toExt(datalist.exhibition.id)"
                 >
                   <div class="exhibitionItem">
                     <div class="exhibitionCan">
                       <span>已参与</span>
                       <div class="exhibitionName">
-                        {{this.$store.state.userData.exhibitionOne.nameEng}}
+                        {{datalist.exhibition.nameEng}}
                         <br>
                         {{this.$store.state.userData.exhibitionOne.name}}
                       </div>
                     </div>
                     <div class="exhibitionTime">
-                      <span>{{this.$store.state.userData.exhibitionOne.date}}</span>
+                      <span>{{datalist.exhibition.date}}</span>
                       <div class="exhibitionDetali">
                         <i class="icon iconTo"></i>
                       </div>
@@ -96,19 +118,19 @@
               </div>
               <div class="enterpriseItemRight">
                 <div class="InterestListshare">分享</div>
-                <div class="InterestListSee">查看产品手册</div>
+                <div class="InterestListSee" @click="toMover(datalist.user.id)">查看产品手册</div>
               </div>
             </div>
-            <div class="hometext">{{this.$store.state.userData.summary}}</div>
+            <div class="hometext">{{datalist.user.summary}}</div>
             <!-- <div class="moveBtn">更多</div> -->
             <div class="homeItemImg">
-              <img :src="`${this.$store.state.userData.introductionPicUrl}`" alt>
+              <img :src="`${datalist.user.introductionUrl}`" alt>
             </div>
           </div>
         </div>
       </div>
       <div class="coreAboutLeft">
-        <AboutList></AboutList>
+        <AboutList :products="datalist.products" :interestedExhibitions="Exhibitions"></AboutList>
       </div>
     </div>
     <div class="ImgBox" v-if="imgBoxShow" @click="lookImg() ">
@@ -119,7 +141,12 @@
 
 <script>
 import AboutList from "@/components/aboutList/aboutList.vue";
-import { viewPicture } from "@/api/api.js";
+import {
+  getCompanyInfo,
+  viewPicture,
+  getInfoPercent,
+  ERR_OK
+} from "@/api/api.js";
 
 export default {
   name: "core",
@@ -127,17 +154,60 @@ export default {
     return {
       imgBoxShow: false,
       imgList: "",
-      main: [],
-      listMain: this.$store.state.userData.mainProcess
+      mian: [],
+      listMain: this.$store.state.userData.mainProcess,
+      datalist: {
+        exhibition: {
+          id: "",
+          name: "",
+          nameEng: "",
+          date: ""
+        },
+        isConcerned: "",
+        pictures: [],
+        products: [],
+        user: {
+          address: "",
+          id: "",
+          industryName: "",
+          logoUrl: "",
+          summary: "",
+          introductionUrl: "",
+          fansNumber: "",
+          name: "",
+          mainProcess: "",
+          interestedExhibitions: ""
+        }
+      },
+      Exhibitions: []
     };
   },
   created() {
-    console.log(this.$store.state.userData.fansNumber);
-  },
-  mounted() {
-    this.arr();
+    this._getCompanyInfo();
+    getInfoPercent(this.$store.state.user.UserID).then(res => {
+      if (res.status === ERR_OK) {
+        console.log("获取百分比----------------------");
+        this.$store.commit("SET_Percent", res.data.data);
+      }
+    });
   },
   methods: {
+    _getCompanyInfo() {
+      getCompanyInfo(
+        this.$store.state.user.UserID,
+        this.$store.state.user.UserID
+      ).then(res => {
+        if (res.status === ERR_OK) {
+          this.datalist = res.data.data;
+          this.datalist.user.mainProcess = JSON.parse(
+            this.datalist.user.mainProcess
+          );
+          this.Exhibitions = JSON.parse(
+            this.datalist.user.interestedExhibitions
+          );
+        }
+      });
+    },
     lookImg(url, id) {
       this.imgBoxShow = !this.imgBoxShow;
       this.imgList = url;
@@ -157,18 +227,6 @@ export default {
       this.$router.push({
         name: `infoOne`,
         params: { id: this.$store.state.user.UserID }
-      });
-    },
-    arr() {
-      let _this = this;
-      let arr = [];
-      JSON.parse(this.listMain).forEach(e => {
-        // _this.mian = e.key
-        // console.log(e)
-        if (e.key != "点击输入") {
-          arr.push(e.key);
-        }
-        _this.main = arr;
       });
     }
   },
@@ -456,10 +514,12 @@ export default {
       .coreAboutTtile {
         font-size: 16px;
         line-height: 26px;
+        font-weight: bold;
       }
       .coreAboutlist {
         font-size: 16px;
         line-height: 26px;
+        margin: 4px 0;
         span {
           margin-right: 20px;
         }

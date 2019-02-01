@@ -13,7 +13,7 @@
         <div class="historyItem">
           <div class="historyItemA">
             <div class="historyItemAItem" v-for="(item, index) in dataList.users" :key="index">
-              <div class="historyItemHead" @click="toOthercore(item.id)">
+              <div class="historyItemHead" @click="toOthercore(item.userId)">
                 <img :src="`${item.logoUrl}`" alt>
               </div>
               <div class="historyItemLeftTitle">
@@ -36,7 +36,7 @@
               <div class="brochureItemText">
                 <div class="brochureItemHead">
                   <div class="brochureItemName">
-                    <div class="brochureItemLogo"  @click="toOthercore(item.id)">
+                    <div class="brochureItemLogo" @click="toOthercore(item.userId)">
                       <img :src="`${item.logoUrl}`" alt>
                     </div>
                     <div class="brochureLogoName">
@@ -223,9 +223,9 @@ export default {
           cursor: pointer;
         }
         .brochureItemText {
-          width: calc(100% - 182px);
-          margin-left: 20px;
-          background: #f2f2f2;
+          width: calc(100% - 172px);
+          margin-left: 10px;
+          // background: #f2f2f2;
           .brochureItemName {
             display: flex;
             .brochureItemLogo {
@@ -236,7 +236,7 @@ export default {
               margin-left: 10px;
               p:nth-child(1) {
                 margin-top: 4px;
-                font-size: 16px;
+                font-size: 14px;
                 font-weight: bold;
               }
               p:nth-child(2) {
@@ -255,7 +255,8 @@ export default {
             justify-content: space-between;
             .brochureItemNum {
               font-weight: bold;
-              margin-top: 30px;
+              margin-top: 5px;
+              vertical-align: super;
             }
           }
           .brochureItemmanual {
@@ -264,12 +265,13 @@ export default {
               margin: 6px 0;
             }
             .label {
+              display: flex;
+              flex-wrap: wrap;
               span {
                 display: inline-block;
-                width: 60px;
-                height: 24px;
+                font-size: 10px;
+                padding: 4px;
                 text-align: center;
-                line-height: 24px;
                 margin-right: 4px;
                 background: rgba($color: #000000, $alpha: 0.2);
                 color: #fff;
@@ -280,6 +282,8 @@ export default {
               height: 64px;
               background: rgba($color: #000000, $alpha: 0.2);
               margin-top: 10px;
+              padding: 10px;
+              box-sizing: border-box;
             }
           }
         }

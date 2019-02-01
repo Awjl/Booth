@@ -24,13 +24,32 @@
             <div class="othercoreAboutTtile">公司总部</div>
             <div class="othercoreAboutlist">{{datalist.user.address}}</div>
             <div class="othercoreAboutTtile">公司规模</div>
-            <div class="othercoreAboutlist">11-50</div>
+            <div class="othercoreAboutlist">
+              <span v-if="datalist.user.member == 1">10-50</span>
+              <span v-if="datalist.user.member == 2">50-100</span>
+              <span v-if="datalist.user.member == 3">100-200</span>
+              <span v-if="datalist.user.member == 4">200-500</span>
+              <span v-if="datalist.user.member == 5">500以上</span>
+            </div>
             <div class="othercoreAboutTtile">专注领域</div>
             <div class="othercoreAboutlist">
-              <span v-for="(item, index) in mian" :key="index">{{item}}</span>
+              <span
+                v-for="(item, index) in datalist.user.mainProcess"
+                :key="index"
+                v-show="item.key != '点击输入'"
+              >{{item.key}}</span>
             </div>
             <div class="othercoreAboutTtile">联系人</div>
             <div class="othercoreAboutlist">{{datalist.user.linkman}}</div>
+            <div class="othercoreAboutTtile">职位</div>
+            <div class="othercoreAboutlist">
+              <span v-if="datalist.user.member == 1">市场及销售</span>
+              <span v-if="datalist.user.member == 2">采购</span>
+              <span v-if="datalist.user.member == 3">管理</span>
+              <span v-if="datalist.user.member == 4">技术</span>
+              <span v-if="datalist.user.member == 5">生产及运营</span>
+              <span v-if="datalist.user.member == 6">其他</span>
+            </div>
             <div class="othercoreAboutTtile">联系电话</div>
             <div class="othercoreAboutlist">{{datalist.user.linkmanMobile}}</div>
             <div class="othercoreAboutTtile">联系邮箱</div>
@@ -41,9 +60,9 @@
               class="ItemImg"
               v-for="(item, index) in datalist.pictures"
               :key="index"
-              @click="lookImg(item.url, item.id)"
+              @click="lookImg(item.picture.url, item.picture.id, item.isCollected)"
             >
-              <img :src="`${item.url}`" alt>
+              <img :src="`${item.picture.url}`" alt>
             </div>
           </div>
         </div>
@@ -77,14 +96,14 @@
                   <div class="exhibitionItem">
                     <div class="exhibitionCan">
                       <span>已参与</span>
-                      <div class="exhibitionName">{{datalist.exhibition.nameEng}}
-                        <br>{{datalist.exhibition.name}}
+                      <div class="exhibitionName">
+                        {{datalist.exhibition.nameEng}}
+                        <br>
+                        {{datalist.exhibition.name}}
                       </div>
                     </div>
                     <div class="exhibitionTime">
-                      <span>
-                        {{datalist.exhibition.date}}
-                      </span>
+                      <span>{{datalist.exhibition.date}}</span>
                       <div class="exhibitionDetali">
                         <i class="icon iconTo"></i>
                       </div>
@@ -106,11 +125,17 @@
         </div>
       </div>
       <div class="othercoreAboutLeft">
-        <AboutItem :products="datalist.products" :id="this.$route.query.id"></AboutItem>
+        <AboutItem
+          :products="datalist.products"
+          :id="this.$route.query.id"
+          :interestedExhibitions="Exhibitions"
+        ></AboutItem>
       </div>
     </div>
-    <div class="ImgBox" v-if="imgBoxShow" @click="lookImg() ">
+    <div class="ImgBox" v-if="imgBoxShow" @click="quxiao">
       <img :src="imgList" alt>
+      <div v-if="isCollected == 1" @click.stop="_cancelCollection()">已收藏</div>
+      <div v-if="isCollected == 2" @click.stop="_collection()">收藏</div>
     </div>
   </div>
 </template>
@@ -122,6 +147,8 @@ import {
   focus,
   cancelFocus,
   viewPicture,
+  collection,
+  cancelCollection,
   ERR_OK
 } from "@/api/api.js";
 
@@ -131,12 +158,19 @@ export default {
     return {
       imgBoxShow: false,
       imgList: "",
+      isCollected: "",
       mian: [],
       followData: {
         userId: "",
         concernedId: ""
       },
       datalist: {
+        exhibition: {
+          id: "",
+          name: "",
+          nameEng: "",
+          date: ""
+        },
         isConcerned: "",
         pictures: [],
         products: [],
@@ -149,8 +183,15 @@ export default {
           introductionUrl: "",
           fansNumber: "",
           name: "",
-          mainProcess: []
+          mainProcess: [],
+          interestedExhibitions: ""
         }
+      },
+      Exhibitions: [],
+      collectionData: {
+        otherId: "",
+        type: 2,
+        userId: this.$store.state.user.UserID
       }
     };
   },
@@ -158,19 +199,34 @@ export default {
     this._getCompanyInfo();
   },
   methods: {
+    _collection() {
+      collection(this.collectionData).then(res => {
+        if (res.status === ERR_OK) {
+          this.isCollected = 1;
+          this._getCompanyInfo();
+        }
+      });
+    },
+    _cancelCollection() {
+      console.log(this.collectionData);
+      cancelCollection(this.collectionData).then(res => {
+        if (res.status === ERR_OK) {
+          this.isCollected = 2;
+          this._getCompanyInfo();
+        }
+      });
+    },
     _getCompanyInfo() {
       getCompanyInfo(this.$store.state.user.UserID, this.$route.query.id).then(
         res => {
           if (res.status === ERR_OK) {
             this.datalist = res.data.data;
-            let _this = this;
-            let arr = [];
-            JSON.parse(this.datalist.user.mainProcess).forEach(e => {
-              if (e.key != "点击输入") {
-                arr.push(e.key);
-              }
-              _this.main = arr;
-            });
+            this.Exhibitions = JSON.parse(
+              this.datalist.user.interestedExhibitions
+            );
+            this.datalist.user.mainProcess = JSON.parse(
+              this.datalist.user.mainProcess
+            );
           }
         }
       );
@@ -189,9 +245,15 @@ export default {
         }
       });
     },
-    lookImg(url, id) {
+    quxiao() {
+      this.imgBoxShow = false;
+    },
+    lookImg(url, id, isCollected) {
       this.imgBoxShow = !this.imgBoxShow;
       this.imgList = url;
+      this.isCollected = isCollected;
+      this.collectionData.otherId = id;
+      console.log(id);
       viewPicture(id, this.$store.state.user.UserID).then(res => {
         if (res.data.code === 0) {
           console.log("查看成功");
@@ -247,6 +309,14 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    div {
+      border: 1px solid red;
+      color: red;
+      margin-top: 30px;
+      padding: 6px 30px;
+      cursor: pointer;
+    }
     img {
       width: 30%;
     }
@@ -480,10 +550,12 @@ export default {
       .othercoreAboutTtile {
         font-size: 16px;
         line-height: 26px;
+        font-weight: bold;
       }
       .othercoreAboutlist {
         font-size: 16px;
         line-height: 26px;
+        margin: 4px 0;
         span {
           margin-right: 20px;
         }

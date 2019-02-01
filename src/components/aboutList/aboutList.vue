@@ -91,7 +91,7 @@
                 <div
                   class="InterestListshare"
                   v-if="item.user && item.isRegister == 1"
-                  @click="Invitation()"
+                  @click="Invitation( item.user.name)"
                 >邀请</div>
               </div>
               <div
@@ -121,7 +121,7 @@
         <span>相似企业</span>
         <span @click="_getSimilarityCompany()">换一批</span>
       </div>
-      <div class="aboutListMiddlelist" v-if="SimilarityCompanyData.length > 0">
+      <div class="aboutListMiddlelist" v-if="SimilarityCompanyData">
         <div v-for="(item, index) in SimilarityCompanyData" :key="index">
           <div class="enterpriseItem">
             <div class="enterpriseItemLeft">
@@ -215,8 +215,7 @@ export default {
       sendRelationMsg(this.Updata).then(res => {
         if (res.data.code === 0) {
           this.$router.push({
-            path: `/register`,
-            query: { id: "over" }
+            path: `/register`
           });
         }
       });
@@ -249,9 +248,10 @@ export default {
       });
       window.open(url, "_blank");
     },
-    Invitation() {
+    Invitation(name) {
       this.$router.push({
-        path: `/register`
+        path: `/register`,
+        query: { id: this.indexType, name: name }
       });
     },
     toMover(id) {

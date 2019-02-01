@@ -79,7 +79,7 @@
             </div>
           </div>
           <div class="infoFoot">
-            <span @click="preservation">保存并返回认证</span>
+            <span @click="_addUserInfoByEmail">保存并返回认证</span>
           </div>
         </div>
       </div>
@@ -88,9 +88,8 @@
 </template>
 
 <script>
-import { getIndustry, ERR_OK } from "@/api/api.js";
-import { setUser } from "@/utils/auth.js";
-import { mapGetters } from "vuex";
+import { getIndustry, addUserInfoByEmail, ERR_OK } from "@/api/api.js";
+import { getname, setUser } from "@/utils/auth.js";
 
 export default {
   name: "sign",
@@ -103,19 +102,20 @@ export default {
       typeindex: 0,
       name: "",
       userData: {
-        name: "",
-        nameEng: "",
+        id: this.$route.params.id,
+        name: getname(),
         member: "1",
         address: "",
         linkman: "",
         position: "1",
         mobile: "",
-        linkmanEmail: ""
+        linkmanEmail: "",
+        oneIndustry: 1, // 一级
+        twoIndustry: "" // 二级
       }
     };
   },
   created() {
-    console.log(this.$route.params.id);
     getIndustry().then(res => {
       if (res.status === ERR_OK) {
         this.industryData = res.data.data;
@@ -138,17 +138,17 @@ export default {
       this.name = name;
       this.userData.twoIndustry = id;
     },
-    _addUserInfo() {
-      addUserInfo(this.formData).then(res => {
+    _addUserInfoByEmail() {
+      addUserInfoByEmail(this.userData).then(res => {
         if (res.data.code === 0) {
-          setUser(this.$store.state.user.UserID);
+          setUser(this.$route.params.id);
           this.$router.push({
-            path: `/Authentication`
+            path: `/Authentication`,
+            query: { id: this.$route.params.id }
           });
         }
       });
     },
-    preservation() {},
     tohome() {
       this.$router.push({
         path: `/home`

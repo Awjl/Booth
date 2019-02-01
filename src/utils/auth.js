@@ -32,6 +32,7 @@ export function setTwo(Two) {
 
 const Token = "token";
 const Name = "name";
+const NameTwo = "nametwo";
 const Way = "way";
 const Type = "type";
 export function gettoken() {
@@ -49,6 +50,14 @@ export function getname() {
 export function setname(name) {
   return Cookies.set(Name, name);
 }
+export function getnameTwo() {
+  return Cookies.get(NameTwo);
+}
+
+export function setnameTwo(name) {
+  return Cookies.set(NameTwo, name);
+}
+
 export function getway() {
   return Cookies.get(Way);
 }

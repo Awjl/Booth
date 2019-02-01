@@ -23,7 +23,7 @@
             </div>
             <div class="BoxItemList">
               <p>合作类型</p>
-              <select v-model="UpdataList.type">
+              <select v-model="UpdataList.type" disabled>
                 <option value="1">主要顾客</option>
                 <option value="2">供应商</option>
                 <option value="3">第三方服务</option>
@@ -31,7 +31,7 @@
             </div>
             <div class="BoxItemList">
               <p>公司名称</p>
-              <input type="text" placeholder="请输入公司名称" v-model="UpdataList.companyName">
+              <input type="text" placeholder="请输入公司名称" v-model="UpdataList.companyName" disabled>
             </div>
             <div class="BoxItemList">
               <p>公司邮箱</p>
@@ -60,22 +60,24 @@ export default {
       overBoxone: false,
       UpdataList: {
         email: "",
-        companyName: "",
+        companyName: this.$route.query.name,
         id: this.$store.state.user.UserID,
         name: "",
-        type: 1
+        type: this.$route.query.id
       }
     };
   },
   created() {
-    if (this.$route.query.id === "over") {
+    if (this.$route.query.id && this.$route.query.name ) {
+      this.overBoxone = false;
+    } else {
       this.overBoxone = true;
     }
   },
   methods: {
     queding() {
       sendAuthEmail(this.UpdataList).then(res => {
-        console.log(res)
+        console.log(res);
         if (res.data.data.msg === "成功") {
           this.overBoxone = true;
         }

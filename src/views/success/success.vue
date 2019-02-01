@@ -2,7 +2,7 @@
   <div class="success">
     <p v-if="success">激活成功</p>
     <p v-if="!success">激活失败</p>
-    <p v-if="success">3秒后自动返回...</p>
+    <p v-if="success">3秒后自动关闭...</p>
   </div>
 </template>
 
@@ -13,31 +13,27 @@ export default {
   data() {
     return {
       success: "",
-      timer: '',
+      timer: "",
       url: window.location.href.split("?")[1]
     };
   },
   created() {
-    console.log(this.url)
-    let splictStr = this.url.split("&")
-    let urlObj = {}
+    console.log(this.url);
+    let splictStr = this.url.split("&");
+    let urlObj = {};
     for (var i = 0; i < splictStr.length; i++) {
       urlObj[splictStr[i].split("=")[0]] = splictStr[i].split("=")[1];
     }
-    activate(urlObj.key).then((res) => {
+    activate(urlObj.key).then(res => {
       if (res.data.code === 0) {
-        this.success = res.data
-        let _this = this
+        this.success = res.data;
         this.timer = setTimeout(() => {
-          this.$router.push({
-            name: `infoOne`,
-            params: { "id": urlObj.code }
-          });
+          window.opener = null;
         }, 3000);
       }
-    })
+    });
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -47,6 +43,6 @@ export default {
 .success p {
   width: 100%;
   text-align: center;
-  font-size: 18px
+  font-size: 18px;
 }
 </style>

@@ -5,7 +5,10 @@
         <i class="icon iconClose"></i>
       </div>
       <div class="LoginImg">
-        <img src="../../assets/images/home/signUp.png" alt>
+        <div>
+          <p>login</p>
+          <p>登陆</p>
+        </div>
         <div class="LoginIcon">
           <img src="../../assets/images/icon/man.png" alt>
         </div>
@@ -122,6 +125,10 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      font-size: 30px;
+      p {
+        margin-bottom: 6px;
+      }
       .LoginIcon {
         width: 78px;
         height: 78px;

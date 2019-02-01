@@ -474,13 +474,24 @@ export function cancelCollection(data) {
     });
 }
 // 同意或拒绝  /isAgreeMsg
-export function isAgreeMsg(token, isAgree) {
+export function isAgreeMsg(token, isAgree, id) {
     return service({
         url: `/isAgreeMsg`,
         method: "get",
         params: {
             token: token,
-            isAgree: isAgree
+            isAgree: isAgree,
+            id: id
         }
+    });
+}
+
+// 新保存接口
+// /user/addUserInfoByEmail
+export function addUserInfoByEmail(data) {
+    return service({
+        url: "/user/addUserInfoByEmail",
+        method: "post",
+        data: data
     });
 }

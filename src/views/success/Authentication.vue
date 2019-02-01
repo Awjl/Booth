@@ -15,8 +15,8 @@
           <p class="Authenticationboxhead">{{name}}</p>
           <div class="Authenticationboxtext">
             <p>
-              {{name}}已经您设置为其
-              <span v-if="type == '1'">伙伴</span>
+              {{nameTwo}}已经您设置为其
+              <span v-if="type == '1'">主要顾客</span>
               <span v-if="type == '2'">主要供应商</span>
               <span v-if="type == '3'">第三方服务</span>，为了维持真实的合作伙伴关系网络，
             </p>
@@ -42,7 +42,9 @@ import {
   getway,
   setway,
   gettype,
-  settype
+  settype,
+  getnameTwo,
+  setnameTwo
 } from "@/utils/auth.js";
 
 export default {
@@ -51,10 +53,11 @@ export default {
     return {
       overBoxone: false,
       token: "",
+      nameTwo: "",
       name: "",
       way: "",
       type: "",
-      id: ""
+      id: this.$route.query.id 
     };
   },
   created() {
@@ -70,21 +73,26 @@ export default {
     if (this.$route.query.type) {
       settype(this.$route.query.type);
     }
+    if (this.$route.query.companyName) {
+      // nameTwo
+      setnameTwo(this.$route.query.companyName);
+    }
     this.token = gettoken();
     this.name = getname();
     this.way = getway();
     this.type = gettype();
+    this.nameTwo = getnameTwo();
   },
   methods: {
     toTrue() {
       if (this.way === 2) {
         isAgreeMsg(this.token, 1).then(res => {
-          console.log(res);
+          alert("点击成功");
         });
       } else {
         if (this.id) {
-          isAgreeMsg(this.token, 1, id).then(res => {
-            console.log(res);
+          isAgreeMsg(this.token, 1, this.id).then(res => {
+            alert("点击成功");
           });
         } else {
           this.$router.push({

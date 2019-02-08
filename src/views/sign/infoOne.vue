@@ -23,6 +23,7 @@
             <div class="signBgMainRightItem">
               <p>企业中文全称</p>
               <input type="text" v-model="userData.name" v-on:input="inputFunc">
+              <p class="Err">{{nameERR}}</p>
               <div class="SearchIndustry">
                 <div
                   class="SearchIndustryList"
@@ -34,6 +35,7 @@
             </div>
             <div class="signBgMainRightItem">
               <p>企业英文全称</p>
+              <p class="Err">{{nameEngERR}}</p>
               <input type="text" v-model="userData.nameEng">
             </div>
             <div class="signBgMainRightItem">
@@ -48,10 +50,11 @@
             </div>
             <div class="signBgMainRightItem">
               <p>企业所在地</p>
-              <input type="text" v-model="userData.address">
+              <input type="text" v-model="userData.address" disabled>
             </div>
             <div class="signBgMainRightItem">
               <p>联系人</p>
+              <p class="Err">{{linkmanERR}}</p>
               <input type="text" v-model="userData.linkman">
             </div>
             <div class="signBgMainRightItem">
@@ -67,10 +70,12 @@
             </div>
             <div class="signBgMainRightItem">
               <p>联系人手机号码</p>
+              <p class="Err">{{mobileERR}}</p>
               <input type="text" v-model="userData.mobile">
             </div>
             <div class="signBgMainRightItem">
               <p>联系人邮件</p>
+              <p class="Err">{{linkmanEmailERR}}</p>
               <input type="text" v-model="userData.linkmanEmail">
             </div>
           </div>
@@ -96,6 +101,11 @@ export default {
       formData: new FormData(),
       timer: "",
       serachList: [],
+      nameERR: "",
+      nameEngERR: "",
+      linkmanERR: "",
+      mobileERR: "",
+      linkmanEmailERR: "",
       userData: {
         name: "",
         nameEng: "",
@@ -109,7 +119,17 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["UserID"])
+    ...mapGetters(["UserID"]),
+    pokerHistory() {
+      return this.userData.name;
+    }
+  },
+  watch: {
+    pokerHistory(newValue, oldValue) {
+      if (!newValue) {
+        this.userData.address = "";
+      }
+    }
   },
   created() {
     console.log(this.$route.params.id);
@@ -137,17 +157,65 @@ export default {
         }
       });
     },
+    yanzheng() {
+      let emli = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+      if (!this.$store.state.userData.name) {
+        this.nameERR = "请输入中文名称";
+      } else {
+        this.nameERR = "";
+      }
+      if (!this.$store.state.userData.nameEng) {
+        this.nameEngERR = "请输入英文名称";
+      } else {
+        this.nameEngERR = "";
+      }
+      if (!this.$store.state.userData.linkman) {
+        this.linkmanERR = "请输入联系人";
+      } else {
+        this.linkmanERR = "";
+      }
+      if (!this.$store.state.userData.mobile) {
+        this.mobileERR = "请输入联系方式";
+      } else {
+        this.mobileERR = "";
+      }
+      if (!this.$store.state.userData.linkmanEmail) {
+        this.linkmanEmailERR = "请输入联系邮箱";
+      } else {
+        if (!emli.test(this.$store.state.userData.linkmanEmail)) {
+          this.linkmanEmailERR = "格式不正确";
+        } else {
+          this.linkmanEmailERR = "";
+        }
+      }
+      if (
+        this.$store.state.userData.name &&
+        this.$store.state.userData.nameEng &&
+        this.$store.state.userData.linkman &&
+        this.$store.state.userData.mobile &&
+        this.$store.state.userData.linkmanEmail &&
+        emli.test(this.$store.state.userData.linkmanEmail)
+      ) {
+        if (this.$store.state.userData.twoIndustry) {
+          this._addUserInfo();
+        } else {
+          alert("请选择行业！");
+          this.$router.push({
+            path: `/infoTwo`
+          });
+        }
+      }
+    },
     setTime() {
       this.timer = setTimeout(() => {
-        console.log("1232");
         this._searchCompany();
       }, 1000);
     },
     tureBoxOne(item) {
-      console.log(item)
-      this.userData.name = item.screenName
-      this.userData.address = item.address
-      this.serachList = []
+      console.log(item);
+      this.userData.name = item.screenName;
+      this.userData.address = item.address;
+      this.serachList = [];
     },
     inputFunc() {
       // 搜索 1
@@ -212,7 +280,7 @@ export default {
         this.$store.state.userData.introductionPic
       );
       this.formData.append("supplier", this.$store.state.userData.supplier);
-      this._addUserInfo();
+      this.yanzheng();
     },
     toNext() {
       this.$store.commit("SET_NAME", this.userData.name);
@@ -288,7 +356,7 @@ export default {
           font-size: 16px;
           color: #ddd;
           margin-bottom: 20px;
-          cursor: pointer;
+          // cursor: pointer;
         }
         .ListAct {
           color: #fff;
@@ -322,6 +390,13 @@ export default {
             color: #fff;
             margin: 6px 0;
             width: 100%;
+          }
+          .Err {
+            position: absolute;
+            top: 60px;
+            left: 20px;
+            color: red;
+            font-size: 12px;
           }
           input {
             padding: 0 10px;

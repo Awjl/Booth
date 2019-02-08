@@ -23,6 +23,7 @@
             <div class="signBgMainTRightItem" @click.stop="showBoxList">
               <p>行业类型（勾选）</p>
               <input type="text" disabled="true" v-model="name">
+              <p class="Err">{{IndustryERR}}</p>
               <div class="Industry" v-if="stateBox">
                 <div class="IndustryLeft">
                   <div
@@ -264,6 +265,7 @@ export default {
   name: "sign",
   data() {
     return {
+      IndustryERR: "",
       one: false,
       two: false,
       Three: false,
@@ -377,6 +379,28 @@ export default {
         }
       });
     },
+    yanzheng() {
+      let emli = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+      if (
+        this.$store.state.userData.name &&
+        this.$store.state.userData.nameEng &&
+        this.$store.state.userData.linkman &&
+        this.$store.state.userData.mobile &&
+        this.$store.state.userData.linkmanEmail &&
+        emli.test(this.$store.state.userData.linkmanEmail)
+      ) {
+        if (this.$store.state.userData.twoIndustry) {
+          this._addUserInfo();
+        } else {
+          this.IndustryERR = "请选择行业";
+        }
+      } else {
+        alert("基本信息有错！");
+        this.$router.push({
+          path: `/infoOne`
+        });
+      }
+    },
     preservation() {
       this.$store.commit("SET_oneIndustryname", this.name);
       this.$store.commit("SET_oneIndustry", this.userData.oneIndustry);
@@ -441,7 +465,7 @@ export default {
         this.$store.state.userData.introductionPic
       );
       this.formData.append("supplier", this.$store.state.userData.supplier);
-      this._addUserInfo();
+      this.yanzheng();
     },
     _searchCompany(center) {
       searchCompany(center).then(res => {
@@ -508,7 +532,7 @@ export default {
       this.Six = false;
       this.index = index;
       if (this.competitorArr[this.index].key == "点击输入") {
-        this.serachCenter = ""
+        this.serachCenter = "";
       } else {
         this.serachCenter = this.competitorArr[this.index].key;
       }
@@ -540,14 +564,14 @@ export default {
       this.Six = false;
       this.index = index;
       if (this.keywordsArr[this.index].key == "点击输入") {
-        this.serachCenter = ""
+        this.serachCenter = "";
       } else {
         this.serachCenter = this.keywordsArr[this.index].key;
       }
     },
     inputFuncTwo() {
       if (this.serachCenter == "") {
-        console.log(this.serachCenter)
+        console.log(this.serachCenter);
         this.keywordsArr[this.index].key = "点击输入";
       }
       this.keywordsArr[this.index].key = this.serachCenter;
@@ -566,7 +590,7 @@ export default {
       this.Six = false;
       this.index = index;
       if (this.supplierArr[this.index].key == "点击输入") {
-        this.serachCenter = ""
+        this.serachCenter = "";
       } else {
         this.serachCenter = this.supplierArr[this.index].key;
       }
@@ -598,7 +622,7 @@ export default {
       this.Six = false;
       this.index = index;
       if (this.mainProcess[this.index].key == "点击输入") {
-        this.serachCenter = ""
+        this.serachCenter = "";
       } else {
         this.serachCenter = this.mainProcess[this.index].key;
       }
@@ -622,8 +646,8 @@ export default {
       this.one = false;
       this.Six = false;
       this.index = index;
-       if (this.customerArr[this.index].key == "点击输入") {
-        this.serachCenter = ""
+      if (this.customerArr[this.index].key == "点击输入") {
+        this.serachCenter = "";
       } else {
         this.serachCenter = this.customerArr[this.index].key;
       }
@@ -656,7 +680,7 @@ export default {
       this.one = false;
       this.index = index;
       if (this.facilitatorArr[this.index].key == "点击输入") {
-        this.serachCenter = ""
+        this.serachCenter = "";
       } else {
         this.serachCenter = this.facilitatorArr[this.index].key;
       }
@@ -778,7 +802,7 @@ export default {
           font-size: 16px;
           color: #ddd;
           margin-bottom: 20px;
-          cursor: pointer;
+          // cursor: pointer;
         }
         .ListAct {
           color: #fff;
@@ -878,6 +902,13 @@ export default {
           align-items: flex-end;
           box-sizing: border-box;
           position: relative;
+          .Err {
+            position: absolute;
+            top: 60px;
+            left: 20px;
+            color: red;
+            font-size: 12px;
+          }
           .SearchIndustry {
             position: absolute;
             top: 104px;

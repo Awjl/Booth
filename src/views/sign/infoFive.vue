@@ -212,6 +212,31 @@ export default {
         }
       });
     },
+    yanzheng() {
+      let emli = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+      if (
+        this.$store.state.userData.name &&
+        this.$store.state.userData.nameEng &&
+        this.$store.state.userData.linkman &&
+        this.$store.state.userData.mobile &&
+        this.$store.state.userData.linkmanEmail &&
+        emli.test(this.$store.state.userData.linkmanEmail)
+      ) {
+        if (this.$store.state.userData.twoIndustry) {
+          this._addUserInfo();
+        } else {
+          alert("请选择行业！");
+          this.$router.push({
+            path: `/infoTwo`
+          });
+        }
+      } else {
+        alert("基本信息有错！");
+        this.$router.push({
+          path: `/infoOne`
+        });
+      }
+    },
     preservation() {
       this.$store.commit("SET_logoPic", this.uplogoImg);
       this.$store.commit("SET_introductionPic", this.upintroduceImg);
@@ -266,7 +291,7 @@ export default {
         this.$store.state.userData.introductionPic
       );
       this.formData.append("supplier", this.$store.state.userData.supplier);
-      this._addUserInfo();
+      this.yanzheng();
     },
     tohome() {
       this.$router.push({
@@ -331,7 +356,7 @@ export default {
           font-size: 16px;
           color: #ddd;
           margin-bottom: 20px;
-          cursor: pointer;
+          // cursor: pointer;
         }
         .ListAct {
           color: #fff;
@@ -363,14 +388,18 @@ export default {
                 }
                 input {
                   color: #fff;
-                  height: 20px;
-                  line-height: 20px;
+                  padding: 0 5px;
+                  height: 30px;
+                  line-height: 30px;
+                  font-size: 10px;
                   background: rgba($color: #ffffff, $alpha: 0.5);
                 }
                 div {
                   color: #fff;
-                  height: 20px;
-                  line-height: 20px;
+                  height: 30px;
+                  line-height: 30px;
+                  padding: 0 5px;
+                  font-size: 10px;
                   background: rgba($color: #ffffff, $alpha: 0.5);
                 }
               }
@@ -390,11 +419,14 @@ export default {
                 color: #fff;
                 margin-bottom: 10px;
               }
-              div {
-                height: 20px;
-                line-height: 20px;
-                background: rgba($color: #ffffff, $alpha: 0.5);
-              }
+              input {
+                  color: #fff;
+                  padding: 0 5px;
+                  height: 30px;
+                  line-height: 30px;
+                  font-size: 10px;
+                  background: rgba($color: #ffffff, $alpha: 0.5);
+                }
             }
           }
         }
@@ -424,15 +456,16 @@ export default {
                   width: 100%;
                 }
                 input {
-                  padding: 0 10px;
                   box-sizing: border-box;
                   width: 100%;
-                  height: 20px;
-                  outline: none;
-                  background: rgba($color: #fff, $alpha: 0.5);
+                  color: #fff;
+                  padding: 0 5px;
+                  height: 30px;
+                  line-height: 30px;
+                  font-size: 10px;
+                  background: rgba($color: #ffffff, $alpha: 0.5);
                 }
                 .ItemText {
-                  padding: 0 10px;
                   box-sizing: border-box;
                   width: 100%;
                   height: 70px;
@@ -443,7 +476,8 @@ export default {
                     display: inline-block;
                     padding: 4px 10px;
                     background: rgba($color: #000, $alpha: 0.15);
-                    margin: 10px;
+                    margin: 6px;
+                    font-size: 10px;
                     cursor: pointer;
                   }
                 }

@@ -64,7 +64,8 @@
           <div class="enterpriseItem">
             <div class="enterpriseItemLeft">
               <div class="enterpriseItemHead" @click="toOthercore(item.user.id)">
-                <img :src="`${item.user.logoUrl}`" alt>
+                <img src="../../assets/images/home/head2.png" alt v-if="item.user.logoUrl == null">
+                <img :src="`${item.user.logoUrl}`" alt v-else>
               </div>
               <div class="enterpriseItemLeftTitle">
                 <p>{{item.user.name}}</p>

@@ -16,17 +16,17 @@
       <div class="LoginInput">
         <div class="inpList">
           <input type="text" placeholder="企业名称" v-model="UserData.username">
-          <!-- <p class="Err">错误</p> -->
+          <p class="Err">{{usernameERR}}</p>
         </div>
         <div class="inpList">
           <input type="password" placeholder="密码" v-model="UserData.password">
-          <!-- <p class="Err">错误</p> -->
+          <p class="Err">{{passwordERR}}</p>
         </div>
         <div class="inpList">
           <p class="inpText">验证码已发送您注册的邮箱中</p>
           <input type="text" placeholder="验证码" v-model="UserData.code">
           <div class="Listbtn" @click="_sendCode">发送</div>
-          <!-- <p class="Err">错误</p> -->
+          <p class="Err">{{codeERR}}</p>
         </div>
         <div class="forgetPass">
           <span>忘记密码？</span>
@@ -48,6 +48,9 @@ export default {
   data() {
     return {
       close: false,
+      usernameERR: "",
+      passwordERR: "",
+      codeERR: "",
       UserData: {
         username: "",
         password: "",
@@ -57,27 +60,54 @@ export default {
   },
   methods: {
     _login() {
-      login(this.UserData).then(res => {
-        if (res.status === ERR_OK) {
-          this.closeLogin();
-          if (res.data.data.isRegister === 2) {
-            this.$router.go(0);
-            setUser(res.data.data.id);
-            setOne(res.data.data.oneIndustryid);
-            setTwo(res.data.data.twoIndustryid);
-          } else {
-            this.$router.push({
-              name: `infoOne`,
-              params: { id: res.data.data.id }
-            });
+      if (!this.UserData.username) {
+        this.usernameERR = "请输入用户名";
+      } else {
+        this.usernameERR = "";
+      }
+      if (!this.UserData.password) {
+        this.passwordERR = "请输入密码";
+      } else {
+        this.passwordERR = "";
+      }
+      if (!this.UserData.code) {
+        this.codeERR = "请输入验证码";
+      } else {
+        this.codeERR = "";
+      }
+      if (
+        this.UserData.username &&
+        this.UserData.password &&
+        this.UserData.code
+      ) {
+        login(this.UserData).then(res => {
+          if (res.data.code === 500505) {
+            this.codeERR = res.data.msg;
           }
-        }
-      });
+          if (res.data.code === 500500) {
+            this.passwordERR = res.data.msg;
+          }
+          if (res.data.code === 0) {
+            this.closeLogin();
+            if (res.data.data.isRegister === 2) {
+              this.$router.go(0);
+              setUser(res.data.data.id);
+              setOne(res.data.data.oneIndustryid);
+              setTwo(res.data.data.twoIndustryid);
+            } else {
+              this.$router.push({
+                name: `infoOne`,
+                params: { id: res.data.data.id }
+              });
+            }
+          }
+        });
+      }
     },
     _sendCode() {
       sendCode(this.UserData.username).then(res => {
-        if (res.status === ERR_OK) {
-          console.log("已发送");
+        if (res.data.code === 500504) {
+          this.usernameERR = res.data.msg;
         }
       });
     },

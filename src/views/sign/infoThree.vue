@@ -69,7 +69,7 @@ export default {
   },
   created() {
     this.imgListArr = this.$store.state.userData.imgListUrlArr;
-    console.log(this.imgListArr)
+    console.log(this.imgListArr);
   },
   methods: {
     _addUserInfo() {
@@ -81,6 +81,31 @@ export default {
           });
         }
       });
+    },
+    yanzheng() {
+      let emli = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+      if (
+        this.$store.state.userData.name &&
+        this.$store.state.userData.nameEng &&
+        this.$store.state.userData.linkman &&
+        this.$store.state.userData.mobile &&
+        this.$store.state.userData.linkmanEmail &&
+        emli.test(this.$store.state.userData.linkmanEmail)
+      ) {
+        if (this.$store.state.userData.twoIndustry) {
+          this._addUserInfo();
+        } else {
+          alert("请选择行业！");
+          this.$router.push({
+            path: `/infoTwo`
+          });
+        }
+      } else {
+        alert("基本信息有错！");
+        this.$router.push({
+          path: `/infoOne`
+        });
+      }
     },
     preservation() {
       this.$store.commit("SET_imgList", this.upImgList);
@@ -134,7 +159,7 @@ export default {
         this.$store.state.userData.introductionPic
       );
       this.formData.append("supplier", this.$store.state.userData.supplier);
-      this._addUserInfo();
+      this.yanzheng();
     },
     toNext() {
       this.$router.push({
@@ -230,7 +255,7 @@ export default {
           font-size: 16px;
           color: #ddd;
           margin-bottom: 20px;
-          cursor: pointer;
+          // cursor: pointer;
         }
         .ListAct {
           color: #fff;

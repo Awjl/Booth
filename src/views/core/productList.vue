@@ -3,6 +3,7 @@
     <div class="productListHeard" v-if="this.$route.query.id">
       <div class="productListHeardLogo">
         <img :src="datalist.user.logoUrl" alt>
+        <img src="../../assets/images/home/head2.png" alt v-if="datalist.user.logoUrl == null">
       </div>
       <div class="productListHeardName">
         <div class="productListHeardNameTop">
@@ -29,6 +30,7 @@
     </div>
     <div class="productListHeard" v-if="!this.$route.query.id">
       <div class="productListHeardLogo">
+        <img src="../../assets/images/home/head2.png" alt v-if="this.$store.state.userData.logoPicUrl == null">
         <img :src="this.$store.state.userData.logoPicUrl" alt>
       </div>
       <div class="productListHeardName">

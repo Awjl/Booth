@@ -2,9 +2,13 @@
 module.exports = {
   // 修改的配置
   // 将baseUrl: '/api',改为baseUrl: '/',
-  transpileDependencies: [],
+  transpileDependencies: [
+    'webpack-dev-server/client',
+  ],
   baseUrl: '/',
   devServer: {
+    // host: '127.0.0.1',
+    disableHostCheck: true, // 加这个就没事啦。
     proxy: {
       '/api': {
         target: 'http://47.101.165.134/booth',

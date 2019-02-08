@@ -9,15 +9,15 @@
         <div class="LoginInput">
           <div class="inpList">
             <input type="text" placeholder="用户名" v-model="user.username">
-            <!-- <p class="Err">错误</p> -->
+            <p class="Err">{{usernameErr}}</p>
           </div>
           <div class="inpList">
             <input type="password" placeholder="密码" v-model="user.password">
-            <!-- <p class="Err">错误</p> -->
+            <p class="Err">{{passwordErr}}</p>
           </div>
           <div class="inpList">
             <input type="text" placeholder="邮箱" v-model="user.email">
-            <!-- <p class="Err">错误</p> -->
+            <p class="Err">{{emlErr}}</p>
           </div>
           <div class="LoginBtn" @click="toSign">
             <span>立即注册</span>
@@ -56,6 +56,9 @@ export default {
     return {
       successbox: false,
       userID: "",
+      emlErr: "",
+      usernameErr: "",
+      passwordErr: "",
       user: {
         username: "",
         email: "",
@@ -84,6 +87,12 @@ export default {
     },
     _register() {
       register(this.user).then(res => {
+        if (res.data.code === 500502) {
+          this.emlErr = res.data.msg;
+        }
+        if (res.data.code === 500503) {
+          this.usernameErr = res.data.msg;
+        }
         if (res.data.code === 0) {
           this.userID = res.data.data;
         }
@@ -104,7 +113,34 @@ export default {
       this.successbox = false;
     },
     toSign() {
-      this._register();
+      let emli = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+      if (!this.user.username) {
+        this.usernameErr = "请输入用户名";
+      } else {
+        this.usernameErr = "";
+      }
+      if (!this.user.password) {
+        this.passwordErr = "请输入用户名";
+      } else {
+        this.passwordErr = "";
+      }
+      if (this.user.email) {
+        if (!emli.test(this.user.email)) {
+          this.emlErr = "格式不正确";
+        } else {
+          this.emlErr = "";
+        }
+      } else {
+        this.emlErr = "请输入邮箱";
+      }
+      if (
+        this.user.username &&
+        this.user.password &&
+        this.user.email &&
+        emli.test(this.user.email)
+      ) {
+        this._register();
+      }
     },
     verification() {
       this._checkEmail();
@@ -152,7 +188,7 @@ export default {
           box-sizing: border-box;
           .Err {
             position: absolute;
-            top: 44px;
+            top: -10px;
             right: 0;
             color: red;
             font-size: 12px;

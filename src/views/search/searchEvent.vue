@@ -2,31 +2,31 @@
   <div class="searchPag">
     <div class="searchNav">
       <div class="searchList">
-        <div class="searchItem">
+        <div class="searchItem" @click="toCompany">
           <div>
             <span>企业</span>
             <span>{{searchList.companyNum}}个</span>
           </div>
         </div>
-        <div class="searchItem">
+        <div class="searchItem" @click="toExhibition">
           <div>
             <span>展会</span>
             <span>{{searchList.exhibitionNum}}个</span>
           </div>
         </div>
-        <div class="searchItem">
+        <div class="searchItem" @click="toEvent">
           <div>
             <span>企业动态</span>
             <span>{{searchList.eventNum}}个</span>
           </div>
         </div>
-        <div class="searchItem">
+        <div class="searchItem" @click="toBrochure">
           <div>
             <span>产品手册</span>
             <span>{{searchList.brochureNum}}个</span>
           </div>
         </div>
-        <div class="searchItem">
+        <div class="searchItem" @click="toImages">
           <div>
             <span>产品图片</span>
             <span>{{searchList.imageNum}}个</span>
@@ -46,36 +46,21 @@
         </span>
         <div class="Back" @click="toBack">返回搜索页</div>
       </div>
+      <div class="EvDetailsList" v-if="searchList.eventNum === 0">
+        暂无数据
+      </div>
       <div class="EvDetailsList">
         <div class="EvDetailsItem" v-for="(item, index) in searchList.events" :key="index">
           <div class="homeListHead">
             <div class="homeListImg">
               <div @click="toOthercore(item.id)">
-                <img :src="`http://47.101.165.134${item.logoUrl}`" alt>
+                <img :src="`${item.logoUrl}`" alt>
               </div>
             </div>
             <div class="homeListTitle">
               <div class="name">{{item.name}}</div>
               <div class="nameEN">{{item.fansNumber}}关注者</div>
               <p class="industry">{{item.industryName}}</p>
-              <!-- <div class="exhibition">
-                <div class="exhibitionItem">
-                  <div class="exhibitionCan">
-                    <span>已参与</span>
-                    <div class="exhibitionName">HOUSE VISION 2018 BEIJING EXHIBITION
-                      <br>探索家——未来生活大展
-                    </div>
-                  </div>
-                  <div class="exhibitionTime">
-                    <span>2018年9月21日
-                      <br>11月6日
-                    </span>
-                    <div class="exhibitionDetali">
-                      <i class="icon iconTo"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>-->
             </div>
             <div class="enterpriseItemRight">
               <div class="InterestListshare">分享</div>
@@ -85,7 +70,7 @@
           <div class="hometext">{{item.summary}}</div>
           <div class="moveBtn" @click="toOthercore(item.id)">更多</div>
           <div class="homeItemImg">
-            <img :src="`http://47.101.165.134${item.introductionUrl}`" alt>
+            <img :src="`${item.introductionUrl}`" alt>
           </div>
         </div>
       </div>
@@ -144,6 +129,46 @@ export default {
         name: `search`,
         query: { center: this.center }
       });
+    },
+        toExhibition() {
+      this.$router.push({
+        name: `searchExhibition`,
+        query: {
+          center: this.center
+        }
+      });
+    },
+    toBrochure() {
+      this.$router.push({
+        name: `searchBrochure`,
+        query: {
+          center: this.center
+        }
+      });
+    },
+    toCompany() {
+      this.$router.push({
+        name: `searchCompaby`,
+        query: {
+          center: this.center
+        }
+      });
+    },
+    toImages() {
+      this.$router.push({
+        name: `searchImages`,
+        query: {
+          center: this.center
+        }
+      });
+    },
+    toEvent() {
+      this.$router.push({
+        name: `searchEvent`,
+        query: {
+          center: this.center
+        }
+      });
     }
   }
 };
@@ -166,6 +191,7 @@ export default {
       height: 54px;
       background: #fff;
       margin-bottom: 6px;
+      cursor: pointer;
       div {
         width: 100%;
         height: 100%;

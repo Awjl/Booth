@@ -2,31 +2,31 @@
   <div class="searchPag">
     <div class="searchNav">
       <div class="searchList">
-        <div class="searchItem">
+        <div class="searchItem" @click="toCompany">
           <div>
             <span>企业</span>
             <span>{{searchList.companyNum}}个</span>
           </div>
         </div>
-        <div class="searchItem">
+        <div class="searchItem" @click="toExhibition">
           <div>
             <span>展会</span>
             <span>{{searchList.exhibitionNum}}个</span>
           </div>
         </div>
-        <div class="searchItem">
+        <div class="searchItem" @click="toEvent">
           <div>
             <span>企业动态</span>
             <span>{{searchList.eventNum}}个</span>
           </div>
         </div>
-        <div class="searchItem">
+        <div class="searchItem" @click="toBrochure">
           <div>
             <span>产品手册</span>
             <span>{{searchList.brochureNum}}个</span>
           </div>
         </div>
-        <div class="searchItem">
+        <div class="searchItem" @click="toImages">
           <div>
             <span>产品图片</span>
             <span>{{searchList.imageNum}}个</span>
@@ -46,11 +46,14 @@
         </span>
         <div class="Back" @click="toBack">返回搜索页</div>
       </div>
+      <div class="CoDetailsList" v-if="searchList.companyNum === 0">
+        暂无数据
+      </div>
       <div class="CoDetailsList">
         <div class="CoDetailsItem" v-for="(item, index) in searchList.companies" :key="index">
           <div class="enterpriseItemLeft">
             <div class="enterpriseItemHead" @click="toOthercore(item.id)">
-              <img :src="`http://47.101.165.134${item.logoUrl}`" alt>
+              <img :src="`${item.logoUrl}`" alt>
             </div>
             <div class="enterpriseItemLeftTitle">
               <p>{{item.name}}</p>
@@ -119,6 +122,46 @@ export default {
         name: `search`,
         query: { center: this.center }
       });
+    },
+        toExhibition() {
+      this.$router.push({
+        name: `searchExhibition`,
+        query: {
+          center: this.center
+        }
+      });
+    },
+    toBrochure() {
+      this.$router.push({
+        name: `searchBrochure`,
+        query: {
+          center: this.center
+        }
+      });
+    },
+    toCompany() {
+      this.$router.push({
+        name: `searchCompaby`,
+        query: {
+          center: this.center
+        }
+      });
+    },
+    toImages() {
+      this.$router.push({
+        name: `searchImages`,
+        query: {
+          center: this.center
+        }
+      });
+    },
+    toEvent() {
+      this.$router.push({
+        name: `searchEvent`,
+        query: {
+          center: this.center
+        }
+      });
     }
   }
 };
@@ -141,6 +184,7 @@ export default {
       height: 54px;
       background: #fff;
       margin-bottom: 6px;
+      cursor: pointer;
       div {
         width: 100%;
         height: 100%;

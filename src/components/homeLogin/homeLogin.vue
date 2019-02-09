@@ -64,8 +64,11 @@
           <div class="enterpriseItem">
             <div class="enterpriseItemLeft">
               <div class="enterpriseItemHead" @click="toOthercore(item.user.id)">
-                <img src="../../assets/images/home/head2.png" alt v-if="item.user.logoUrl == null">
-                <img :src="`${item.user.logoUrl}`" alt v-else>
+                <div class="enterpriseItemHeadBg" v-if="item.user.logoUrl == null">
+                  <img src="../../assets/images/icon/man.png" alt>
+                </div>
+                <!-- <img src="../../assets/images/home/head2.png" alt > -->
+                <img :src="`${item.user.logoUrl}`" alt>
               </div>
               <div class="enterpriseItemLeftTitle">
                 <p>{{item.user.name}}</p>
@@ -309,6 +312,18 @@ export default {
           .enterpriseItemHead {
             width: 66px;
             height: 66px;
+            .enterpriseItemHeadBg {
+              width: 50px;
+              height: 50px;
+              background: #fff;
+              border-radius: 50%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              img {
+                width: 60%;
+              }
+            }
             img {
               cursor: pointer;
             }

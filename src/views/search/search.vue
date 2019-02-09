@@ -2,31 +2,31 @@
   <div class="searchPag">
     <div class="searchNav">
       <div class="searchList">
-        <div class="searchItem">
+        <div class="searchItem" @click="toCompany">
           <div>
             <span>企业</span>
             <span>{{searchList.companyNum}}个</span>
           </div>
         </div>
-        <div class="searchItem">
+        <div class="searchItem"  @click="toExhibition">
           <div>
             <span>展会</span>
             <span>{{searchList.exhibitionNum}}个</span>
           </div>
         </div>
-        <div class="searchItem">
+        <div class="searchItem" @click="toEvent">
           <div>
             <span>企业动态</span>
             <span>{{searchList.eventNum}}个</span>
           </div>
         </div>
-        <div class="searchItem">
+        <div class="searchItem" @click="toBrochure">
           <div>
             <span>产品手册</span>
             <span>{{searchList.brochureNum}}个</span>
           </div>
         </div>
-        <div class="searchItem">
+        <div class="searchItem" @click="toImages">
           <div>
             <span>产品图片</span>
             <span>{{searchList.imageNum}}个</span>
@@ -47,6 +47,7 @@
               <i class="icon iconTo1"></i>
             </div>
           </div>
+          <div class="exhibitionList" v-if="searchList.exhibitionNum === 0">暂无数据</div>
           <div class="exhibitionList">
             <div
               class="exhibitionItem"
@@ -55,7 +56,7 @@
               @click="toDetailsOne(item.id)"
             >
               <div class="exhibitionItemImg">
-                <img :src="`http://47.101.165.134${item.bannerUrl.split(',')[0]}`" alt>
+                <img :src="`${item.bannerUrl.split(',')[0]}`" alt>
               </div>
               <div class="exhibitionItemName">{{item.nameEng}} {{item.name}}</div>
             </div>
@@ -68,6 +69,7 @@
               <i class="icon iconTo1"></i>
             </div>
           </div>
+          <div class="brochureList" v-if="searchList.brochureNum === 0">暂无数据</div>
           <div class="brochureList">
             <div class="brochureItem" v-for="(item, index) in searchList.brochures" :key="index">
               <div class="brochureItemImg" @click="lookbrochure()">
@@ -76,8 +78,8 @@
               <div class="brochureItemText">
                 <div class="brochureItemHead">
                   <div class="brochureItemName">
-                    <div class="brochureItemLogo" @click="toOthercore(item.id)">
-                      <img :src="`http://47.101.165.134${item.logoUrl}`" alt>
+                    <div class="brochureItemLogo" @click="toOthercore(item.id)" v-if="item.logoUrl">
+                      <img :src="`${item.logoUrl}`" alt>
                     </div>
                     <div class="brochureLogoName">
                       <p>{{item.name}}</p>
@@ -111,11 +113,12 @@
               <i class="icon iconTo1"></i>
             </div>
           </div>
+          <div class="companyList" v-if="searchList.companyNum === 0">暂无数据</div>
           <div class="companyList">
             <div class="companyItem" v-for="(item, index) in searchList.companies" :key="index">
               <div class="enterpriseItemLeft">
                 <div class="enterpriseItemHead" @click="toOthercore(item.id)">
-                  <img :src="`http://47.101.165.134${item.logoUrl}`" alt>
+                  <img :src="`${item.logoUrl}`" alt>
                 </div>
                 <div class="enterpriseItemLeftTitle">
                   <p>{{item.name}}</p>
@@ -137,9 +140,10 @@
               <i class="icon iconTo1"></i>
             </div>
           </div>
+          <div class="searchimagesList" v-if="searchList.imageNum === 0">暂无数据</div>
           <div class="searchimagesList">
             <div class="searchimagesItem" v-for="(item, index) in searchList.images" :key="index">
-              <img :src="`http://47.101.165.134${item.url}`" alt>
+              <img :src="`${item.url}`" alt>
             </div>
           </div>
         </div>
@@ -150,12 +154,13 @@
               <i class="icon iconTo1"></i>
             </div>
           </div>
+          <div class="eventList" v-if="searchList.eventNum === 0">暂无数据</div>
           <div class="eventList">
             <div class="eventItem" v-for="(item, index) in searchList.events" :key="index">
               <div class="homeListHead">
                 <div class="homeListImg">
                   <div @click="toOthercore(item.id)">
-                    <img :src="`http://47.101.165.134${item.logoUrl}`" alt>
+                    <img :src="`${item.logoUrl}`" alt>
                   </div>
                 </div>
                 <div class="homeListTitle">
@@ -188,7 +193,7 @@
               <div class="hometext">{{item.summary}}</div>
               <div class="moveBtn" @click="toOthercore(item.id)">更多</div>
               <div class="homeItemImg">
-                <img :src="`http://47.101.165.134${item.introductionUrl}`" alt>
+                <img :src="`${item.introductionUrl}`" alt>
               </div>
             </div>
           </div>
@@ -311,6 +316,7 @@ export default {
       height: 54px;
       background: #fff;
       margin-bottom: 6px;
+      cursor: pointer;
       div {
         width: 100%;
         height: 100%;
@@ -419,7 +425,6 @@ export default {
                 margin-left: 10px;
                 p:nth-child(1) {
                   margin-top: 4px;
-                  font-size: 16px;
                   font-weight: bold;
                 }
                 p:nth-child(2) {
@@ -438,7 +443,7 @@ export default {
               justify-content: space-between;
               .brochureItemNum {
                 font-weight: bold;
-                margin-top: 30px;
+                font-size: 10px;
               }
             }
             .brochureItemmanual {
@@ -449,10 +454,9 @@ export default {
               .label {
                 span {
                   display: inline-block;
-                  width: 60px;
-                  height: 24px;
+                  font-size: 10px;
+                  padding: 4px;
                   text-align: center;
-                  line-height: 24px;
                   margin-right: 4px;
                   background: rgba($color: #000000, $alpha: 0.2);
                   color: #fff;
@@ -463,6 +467,9 @@ export default {
                 height: 64px;
                 background: rgba($color: #000000, $alpha: 0.2);
                 margin-top: 10px;
+                padding: 4px;
+                box-sizing: border-box;
+                font-size: 14px;
               }
             }
           }

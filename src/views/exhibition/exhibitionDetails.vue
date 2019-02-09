@@ -42,6 +42,7 @@
         </div>
       </div>
       <div class="DetailsListBox" v-if="indexType">
+        <p v-if="ExhList.length === 0">暂无数据</p>
         <div class="companyItem" v-for="(item, index) in ExhList" :key="index">
           <p>{{item.stand}}</p>
           <div class="enterpriseItemLeft">
@@ -61,6 +62,7 @@
         </div>
       </div>
       <div class="DetailsListBox" v-if="!indexType">
+        <p v-if="VisList.length === 0">暂无数据</p>
         <div class="companyItemTwo" v-for="(item, index) in VisList" :key="index">
           <div class="companyItemTwoLeft">
             <div class="companyItemTwoLeftImg" @click="toOthercore(item.id)">
@@ -518,7 +520,7 @@ export default {
           height: 100%;
           margin-left: 10px;
           p:nth-child(1) {
-            font-size: 26px;
+            font-size: 16px;
             font-weight: bold;
           }
           p:nth-child(2) {
@@ -583,7 +585,7 @@ export default {
           width: calc(80% - 100px);
           margin-left: 10px;
           p:nth-child(1) {
-            font-size: 26px;
+            font-size: 16px;
             font-weight: bold;
           }
           p:nth-child(2) {

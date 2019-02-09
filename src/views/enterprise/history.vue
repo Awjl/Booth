@@ -11,6 +11,7 @@
       <div class="HBoxOne">
         <div class="historyItemName">企业</div>
         <div class="historyItem">
+          <p v-if=" dataList.users.length === 0">暂无数据</p>
           <div class="historyItemA">
             <div class="historyItemAItem" v-for="(item, index) in dataList.users" :key="index">
               <div class="historyItemHead" @click="toOthercore(item.userId)">
@@ -28,6 +29,7 @@
       <div class="HBoxTwo">
         <div class="historyItemName">产品册</div>
         <div class="historyItem">
+          <p v-if=" dataList.products.length === 0">暂无数据</p>
           <div class="historyItemB">
             <div class="historyItemBItem" v-for="(item, index) in dataList.products" :key="index">
               <div class="brochureItemImg" @click="pdfUrlUrL(item.pdfUrl)">
@@ -66,6 +68,7 @@
       <div class="HBoxThree">
         <div class="historyItemName">图片</div>
         <div class="historyItem">
+          <p v-if=" dataList.pictures.length === 0">暂无数据</p>
           <div class="historyItemImg" v-for="(item, index) in dataList.pictures" :key="index">
             <img :src="item.url" alt>
           </div>

@@ -38,6 +38,7 @@
     </div>
     <div class="enterpriseBox">
       <div class="enterpriseBoxList">
+        <p v-if="dataList.length === 0">暂无数据</p>
         <div class="enterpriseBoxItem" v-for="(item, index) in dataList" :key="index">
           <div class="homeListHead">
             <div class="homeListImg">

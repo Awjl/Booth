@@ -41,6 +41,7 @@
           <span>产品册</span>
         </div>
         <div class="leftList">
+          <p v-if=" dataList.products.length === 0">暂无数据</p>
           <div class="leftListItem" v-for="(item, index) in dataList.products" :key="index">
             <div class="brochureItemImg" @click="pdfUrlUrL(item.pdfUrl)">
               <img :src="`${item.coverUrl}`" alt>
@@ -79,6 +80,7 @@
           <span>图片</span>
         </div>
         <div class="rightimgList">
+           <p v-if=" dataList.pictures.length === 0">暂无数据</p>
           <div class="rightImgItem" v-for="(item, index) in dataList.pictures" :key="index">
             <img :src="item.url" alt>
           </div>

@@ -54,6 +54,7 @@ export default {
     };
   },
   created() {
+    window.scrollTo(0, 0);
     getIndexBanner().then(res => {
       if (res.status === ERR_OK) {
         this.listImg = res.data.data;

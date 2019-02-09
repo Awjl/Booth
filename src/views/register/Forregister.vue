@@ -68,6 +68,8 @@ export default {
     };
   },
   created() {
+        window.scrollTo(0, 0);
+
     if (this.$route.query.id && this.$route.query.name ) {
       this.overBoxone = false;
     } else {

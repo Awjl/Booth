@@ -30,7 +30,11 @@
     </div>
     <div class="productListHeard" v-if="!this.$route.query.id">
       <div class="productListHeardLogo">
-        <img src="../../assets/images/home/head2.png" alt v-if="this.$store.state.userData.logoPicUrl == null">
+        <img
+          src="../../assets/images/home/head2.png"
+          alt
+          v-if="this.$store.state.userData.logoPicUrl == null"
+        >
         <img :src="this.$store.state.userData.logoPicUrl" alt>
       </div>
       <div class="productListHeardName">
@@ -127,7 +131,7 @@ export default {
     };
   },
   created() {
-    console.log(this.$route.query.id);
+    window.scrollTo(0, 0);
     if (this.$route.query.id) {
       this._getAllProducts(this.$route.query.id, this.$store.state.user.UserID);
       this._getCompanyInfo();
@@ -142,13 +146,19 @@ export default {
     _collection(id) {
       this.collectionData.otherId = id;
       collection(this.collectionData).then(res => {
-        this._getAllProducts(this.$route.query.id, this.$store.state.user.UserID);
+        this._getAllProducts(
+          this.$route.query.id,
+          this.$store.state.user.UserID
+        );
       });
     },
     _cancelCollection(id) {
       this.collectionData.otherId = id;
       cancelCollection(this.collectionData).then(res => {
-        this._getAllProducts(this.$route.query.id, this.$store.state.user.UserID);
+        this._getAllProducts(
+          this.$route.query.id,
+          this.$store.state.user.UserID
+        );
       });
     },
     _focus() {

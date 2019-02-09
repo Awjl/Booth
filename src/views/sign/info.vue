@@ -116,6 +116,8 @@ export default {
     };
   },
   created() {
+        window.scrollTo(0, 0);
+
     getIndustry().then(res => {
       if (res.status === ERR_OK) {
         this.industryData = res.data.data;

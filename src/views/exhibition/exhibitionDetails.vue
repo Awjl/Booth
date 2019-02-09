@@ -184,6 +184,7 @@ export default {
     };
   },
   created() {
+    window.scrollTo(0, 0);
     this._getExhibitionInfoById(this.$route.query.id);
     this._getAllExhibitiors();
     this._getAllVisitors();

@@ -38,7 +38,9 @@ export default {
       title: "",
     };
   },
-  
+  created() {
+    window.scrollTo(0, 0);
+  },
   components: {
     Choice
   },

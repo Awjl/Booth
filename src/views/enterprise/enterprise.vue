@@ -141,6 +141,7 @@ export default {
     };
   },
   created() {
+    window.scrollTo(0, 0);
     getAdvert(this.$store.state.userData.twoIndustry).then(res => {
       if (res.status === 200) {
         this.dataAll = res.data.data;

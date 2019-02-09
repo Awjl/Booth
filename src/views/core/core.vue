@@ -183,6 +183,7 @@ export default {
     };
   },
   created() {
+    window.scrollTo(0, 0);
     this._getCompanyInfo();
     getInfoPercent(this.$store.state.user.UserID).then(res => {
       if (res.status === ERR_OK) {

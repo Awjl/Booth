@@ -225,6 +225,8 @@ export default {
     };
   },
   created() {
+        window.scrollTo(0, 0);
+
     console.log(this.$route.query.center);
     this._search();
   },

@@ -90,8 +90,8 @@ export default {
     };
   },
   created() {
-    console.log(this.center);
-    console.log(this.searchList);
+        window.scrollTo(0, 0);
+
     this._search();
   },
   methods: {

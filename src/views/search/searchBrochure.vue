@@ -49,7 +49,7 @@
       <div class="BrDetailsList" v-if="searchList.brochureNum === 0">暂无数据</div>
       <div class="BrDetailsList">
         <div class="BrDetailsItem" v-for="(item, index) in searchList.brochures" :key="index">
-          <div class="brochureItemImg">
+          <div class="brochureItemImg" @click="lookbrochure(item.pdfUrl, item.id)">
             <img :src="`${item.coverUrl}`" alt>
           </div>
           <div class="brochureItemText">
@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import { search } from "@/api/api.js";
+import { search, getProductById } from "@/api/api.js";
 
 export default {
   name: "searchPag",
@@ -103,7 +103,7 @@ export default {
     };
   },
   created() {
-        window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
 
     this._search();
   },
@@ -115,6 +115,14 @@ export default {
           console.log(res.data.data);
         }
       });
+    },
+    lookbrochure(url, id) {
+      getProductById(id, this.$store.state.user.UserID).then(res => {
+        if (res.data.code === 0) {
+          console.log("查看成功");
+        }
+      });
+      window.open(url, "_blank");
     },
     toOthercore(id) {
       this.$router.push({

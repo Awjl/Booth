@@ -43,7 +43,7 @@
         <div class="leftList">
           <p v-if=" dataList.products.length === 0">暂无数据</p>
           <div class="leftListItem" v-for="(item, index) in dataList.products" :key="index">
-            <div class="brochureItemImg" @click="pdfUrlUrL(item.pdfUrl)">
+            <div class="brochureItemImg" @click="pdfUrlUrL(item.pdfUrl, item.id)">
               <img :src="`${item.coverUrl}`" alt>
             </div>
             <div class="brochureItemText">
@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import { getCollectionRecord, getIndustry, ERR_OK } from "@/api/api.js";
+import { getCollectionRecord, getIndustry, getProductById, ERR_OK } from "@/api/api.js";
 
 export default {
   name: "collection",
@@ -138,7 +138,12 @@ export default {
         }
       });
     },
-    pdfUrlUrL(url) {
+    pdfUrlUrL(url, id) {
+      getProductById(id, this.$store.state.user.UserID).then(res => {
+        if (res.data.code === 0) {
+          console.log("查看成功");
+        }
+      });
       window.open(url, "_blank");
     },
     toOthercore(id) {

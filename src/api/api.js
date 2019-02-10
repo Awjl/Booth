@@ -495,3 +495,12 @@ export function addUserInfoByEmail(data) {
         data: data
     });
 }
+
+// 邀请参加 /inviteToExhibition
+export function inviteToExhibition(data) {
+    return service({
+        url: "/inviteToExhibition",
+        method: "post",
+        data: data
+    });
+}

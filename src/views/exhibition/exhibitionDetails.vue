@@ -24,12 +24,12 @@
         <div>地点：{{detailsData.location}}</div>
         <div>简述：{{detailsData.summary}}</div>
       </div>
-      <div class="exhibitionRight">
+      <div class="exhibitionRight" @click="lookImg(detailsData.summaryPicture)">
         <img :src="`${detailsData.summaryPicture}`" alt>
       </div>
     </div>
     <div class="TitleHead">展会地图</div>
-    <div class="Map">
+    <div class="Map" @click="lookImg(detailsData.mapUrl)">
       <img :src="`${detailsData.mapUrl}`" alt>
     </div>
     <div class="exhibitionDetailsList">
@@ -56,7 +56,7 @@
             </div>
           </div>
           <div class="enterpriseItemRight">
-            <div class="InterestListshare">分享</div>
+            <div class="InterestListshare" @click="copyUrl(item.id)">分享</div>
             <div class="InterestListSee" @click="toMover(item.id)">查看产品手册</div>
           </div>
         </div>
@@ -74,25 +74,25 @@
               <p>{{item.industryName}}</p>
             </div>
             <div class="companyItemTwoLeftshare">
-              <div class="InterestListshare">分享</div>
+              <div class="InterestListshare" @click="copyUrl(item.id)">分享</div>
               <div class="InterestListSee" @click="toMover(item.id)">查看产品手册</div>
             </div>
           </div>
           <div class="companyItemTwoRight">
-            <span>邀请</span>
+            <div v-if="item.precentDate" class="companyItemTwoRightList">
+              <p>已确认到场</p>
+              <p>{{item.precentDate}}</p>
+            </div>
+            <span v-if="!item.precentDate" @click="Invitation(item.id)">邀请</span>
           </div>
         </div>
       </div>
-      <!-- <div class="moverBtn">
-        <div>展开</div>
-        <i class="icon iconMover1"></i>
-      </div>-->
     </div>
     <div class="timebox">
       <P>{{detailsData.date}}</P>
       <p>{{detailsData.dateEng}}</p>
     </div>
-    <div class="Map1">
+    <div class="Map1" @click="lookImg(detailsData.trafficUrl)">
       <img :src="`${detailsData.trafficUrl}`" alt>
     </div>
     <div class="signUpBox" v-if="show">
@@ -118,12 +118,16 @@
             </div>
             <div class="signUpBoxListItemTwo">
               <p>到场时间</p>
-              <input type="text" v-model="item.precentDate">
+              <input type="text" v-model="item.precentDate" placeholder="如：2019-01-01至2019-01-01">
             </div>
           </div>
         </div>
         <div class="signUpBoxBtn" @click="UpList">确认报名</div>
       </div>
+    </div>
+    <div class="sessceBox" v-if="SuccessBox" @click="hideSuccess">恭喜，报名成功！</div>
+    <div class="sessceBox" v-if="SuccessBoxImg" @click="hideSuccess">
+      <img :src="SuccessImg" alt>
     </div>
   </div>
 </template>
@@ -136,6 +140,7 @@ import {
   enrollExhibition,
   getAllExhibitiors,
   getAllVisitors,
+  inviteToExhibition,
   ERR_OK
 } from "@/api/api.js";
 import { getUser } from "@/utils/auth.js";
@@ -145,6 +150,9 @@ export default {
     return {
       content: "",
       show: false,
+      SuccessBox: false,
+      SuccessBoxImg: false,
+      SuccessImg: "",
       indexType: true,
       signUp: [
         {
@@ -182,7 +190,12 @@ export default {
         content: ""
       },
       ExhList: [],
-      VisList: []
+      VisList: [],
+      inviteTo: {
+        exhibitionId: this.$route.query.id,
+        relationId: "",
+        userId: this.$store.state.user.UserID
+      }
     };
   },
   created() {
@@ -215,8 +228,6 @@ export default {
     _getAllExhibitiors() {
       getAllExhibitiors(this.AllExh).then(res => {
         if (res.data.code === 0) {
-          console.log("获取参展商-------");
-          console.log(res.data.data);
           this.ExhList = res.data.data;
         }
       });
@@ -224,8 +235,6 @@ export default {
     _getAllVisitors() {
       getAllVisitors(this.AllVis).then(res => {
         if (res.data.code === 0) {
-          console.log("获取到访商-------");
-          console.log(res.data.data);
           this.VisList = res.data.data;
         }
       });
@@ -233,18 +242,33 @@ export default {
     _enrollExhibition() {
       enrollExhibition(this.signUp).then(res => {
         if (res.data.code === 0) {
-          console.log("报名成功");
           this.show = false;
+          this.SuccessBox = true;
         }
       });
     },
     _getExhibitionInfoById(id) {
       getExhibitionInfoById(id).then(res => {
-        console.log(res);
         if (res.data.code === 0) {
           this.detailsData = res.data.data;
         }
       });
+    },
+    Invitation(id) {
+      this.inviteTo.relationId = id
+      inviteToExhibition(this.inviteTo).then(res => {
+        if (res.data.code === 0) {
+          alert("邀请成功")
+        }
+      });
+    },
+    lookImg(url) {
+      this.SuccessImg = url;
+      this.SuccessBoxImg = true;
+    },
+    hideSuccess() {
+      this.SuccessBox = false;
+      this.SuccessBoxImg = false;
     },
     toOthercore(id) {
       this.$router.push({
@@ -295,12 +319,50 @@ export default {
     },
     showBox() {
       this.show = !this.show;
+    },
+    copyUrl(id) {
+      let url = `http://47.101.165.134/#/othercore?id=${id}`;
+      let textArea = document.createElement("textarea");
+      textArea.style.position = "fixed";
+      textArea.style.top = 0;
+      textArea.style.left = 0;
+      textArea.style.width = "2em";
+      textArea.style.height = "2em";
+      textArea.style.padding = 0;
+      textArea.style.border = "none";
+      textArea.style.outline = "none";
+      textArea.style.boxShadow = "none";
+      textArea.style.background = "transparent";
+      textArea.value = url;
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand("copy");
+      } catch (err) {
+        this.throwError("不能使用这种方法复制内容" + err.toString());
+      }
+      document.body.removeChild(textArea);
+      alert("复制成功!");
     }
   }
 };
 </script>
 
 <style lang="scss">
+.sessceBox {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba($color: #000000, $alpha: 0.4);
+  color: #fff;
+  font-size: 40px;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .exhibitionDetails {
   background: #fff;
   .swiper-container {
@@ -633,6 +695,23 @@ export default {
         justify-content: center;
         align-items: center;
         border-left: 1px solid #000;
+        .companyItemTwoRightList {
+          width: 100%;
+          height: 100%;
+          background: rgba($color: #648aa2, $alpha: 0.3);
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          p:nth-child(1) {
+            font-size: 18px;
+          }
+          p:nth-child(2) {
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 6px;
+          }
+        }
         span {
           display: block;
           width: 94px;
@@ -640,6 +719,7 @@ export default {
           background: #fff;
           text-align: center;
           line-height: 30px;
+          cursor: pointer;
         }
       }
     }

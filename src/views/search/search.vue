@@ -8,7 +8,7 @@
             <span>{{searchList.companyNum}}个</span>
           </div>
         </div>
-        <div class="searchItem"  @click="toExhibition">
+        <div class="searchItem" @click="toExhibition">
           <div>
             <span>展会</span>
             <span>{{searchList.exhibitionNum}}个</span>
@@ -72,7 +72,7 @@
           <div class="brochureList" v-if="searchList.brochureNum === 0">暂无数据</div>
           <div class="brochureList">
             <div class="brochureItem" v-for="(item, index) in searchList.brochures" :key="index">
-              <div class="brochureItemImg" @click="lookbrochure()">
+              <div class="brochureItemImg" @click="lookbrochure(item.pdfUrl, item.id)">
                 <img :src="`${item.coverUrl}`" alt>
               </div>
               <div class="brochureItemText">
@@ -167,26 +167,9 @@
                   <div class="name">{{item.name}}</div>
                   <div class="nameEN">{{item.fansNumber}}关注者</div>
                   <p class="industry">{{item.industryName}}</p>
-                  <!-- <div class="exhibition">
-                    <div class="exhibitionItem">
-                      <div class="exhibitionCan">
-                        <span>已参与</span>
-                        <div class="exhibitionName">
-                          HOUSE VISION 2018 BEIJING EXHIBITION <br />
-                          探索家——未来生活大展
-                        </div>
-                      </div>
-                      <div class="exhibitionTime">
-                        <span>2018年9月21日<br />11月6日</span>
-                        <div class="exhibitionDetali">
-                          <i class="icon iconTo"></i>
-                        </div>
-                      </div>
-                    </div>
-                  </div>-->
                 </div>
                 <div class="enterpriseItemRight">
-                  <div class="InterestListshare">分享</div>
+                  <div class="InterestListshare" @click="copyUrl(item.id)">分享</div>
                   <div class="InterestListSee" @click="toBrochureList(item.id)">查看产品手册</div>
                 </div>
               </div>
@@ -204,7 +187,7 @@
 </template>
 
 <script>
-import { search } from "@/api/api.js";
+import { search, getProductById } from "@/api/api.js";
 export default {
   name: "searchPag",
   data() {
@@ -225,7 +208,7 @@ export default {
     };
   },
   created() {
-        window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
 
     console.log(this.$route.query.center);
     this._search();
@@ -238,6 +221,14 @@ export default {
           console.log(res.data.data);
         }
       });
+    },
+    lookbrochure(url, id) {
+      getProductById(id, this.$store.state.user.UserID).then(res => {
+        if (res.data.code === 0) {
+          console.log("查看成功");
+        }
+      });
+      window.open(url, "_blank");
     },
     toOthercore(id) {
       this.$router.push({
@@ -296,6 +287,31 @@ export default {
           center: this.center
         }
       });
+    },
+    copyUrl(id) {
+      // var clipBoardContent = "";
+      let url = `http://47.101.165.134/#/othercore?id=${id}`;
+      let textArea = document.createElement("textarea");
+      textArea.style.position = "fixed";
+      textArea.style.top = 0;
+      textArea.style.left = 0;
+      textArea.style.width = "2em";
+      textArea.style.height = "2em";
+      textArea.style.padding = 0;
+      textArea.style.border = "none";
+      textArea.style.outline = "none";
+      textArea.style.boxShadow = "none";
+      textArea.style.background = "transparent";
+      textArea.value = url;
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand("copy");
+      } catch (err) {
+        this.throwError("不能使用这种方法复制内容" + err.toString());
+      }
+      document.body.removeChild(textArea);
+      alert("复制成功!");
     }
   }
 };

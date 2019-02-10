@@ -18,7 +18,6 @@ export default {
     };
   },
   created() {
-    console.log(this.url);
     let splictStr = this.url.split("&");
     let urlObj = {};
     for (var i = 0; i < splictStr.length; i++) {
@@ -29,6 +28,8 @@ export default {
         this.success = res.data;
         this.timer = setTimeout(() => {
           window.opener = null;
+          window.open(" ", "_self", " ");
+          window.close();
         }, 3000);
       }
     });

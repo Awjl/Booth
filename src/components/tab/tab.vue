@@ -21,6 +21,13 @@
         <img :src="`${this.$store.state.userData.logoPicUrl}`" alt>
       </div>
     </div>
+    <div class="boxLoing" v-if="showBox">
+      <p>您还未登陆，是否去登陆？</p>
+      <div>
+        <span @click="quxiao">取消</span>
+        <span @click="tologinList">去登陆</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -29,6 +36,7 @@ export default {
   name: "tab",
   data() {
     return {
+      showBox: false,
       LoginState: true,
       SignState: true,
       searchData: ""
@@ -60,19 +68,35 @@ export default {
       });
     },
     toNews() {
-      this.$router.push({
-        path: `/News`
-      });
+      if (!this.$store.state.user.UserID) {
+        this.showBox = true;
+      } else {
+        this.$router.push({
+          path: `/News`
+        });
+      }
     },
     toEnterprise() {
-      this.$router.push({
-        path: `/enterprise`
-      });
+      if (!this.$store.state.user.UserID) {
+        this.showBox = true;
+      } else {
+        this.$router.push({
+          path: `/enterprise`
+        });
+      }
     },
     toCore() {
       this.$router.push({
         path: `/core`
       });
+    },
+    tologinList() {
+      this.$router.push({
+        name: `loginList`
+      });
+    },
+    quxiao() {
+      this.showBox = false;
     }
   }
 };
@@ -88,6 +112,34 @@ export default {
   align-items: center;
   padding: 0 16px;
   box-sizing: border-box;
+  .boxLoing {
+    position: fixed;
+    width: 350px;
+    height: 100px;
+    background: #fff;
+    top: 100px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    z-index: 9999999999;
+    box-shadow: 2px 0px 10px #333333;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    div {
+      margin-top: 20px;
+      span {
+        padding: 4px 10px;
+        background: #000;
+        color: #fff;
+        font-size: 10px;
+        margin-right: 10px;
+        cursor: pointer;
+      }
+    }
+  }
   .tabLogo {
     display: flex;
     align-items: center;
@@ -136,7 +188,7 @@ export default {
         border-radius: 50%;
         overflow: hidden;
       }
-      &.HeadImgLogo img{
+      &.HeadImgLogo img {
         width: 20px;
       }
     }

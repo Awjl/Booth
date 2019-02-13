@@ -1,11 +1,11 @@
 <template>
   <div class="homeRight">
-    <img :src="`${dataAll.areaA.url}`" alt>
+    <img :src="`${dataAll.areaA.url}`" alt v-if="dataAll.areaA">
     <div class="homeTitle">
       <img src="../../assets/images/home/logo.png" alt>
       <img src="../../assets/images/home/logoText.png" alt>
     </div>
-    <img :src="`${dataAll.areaB.url}`" alt>
+    <img :src="`${dataAll.areaB.url}`" alt v-if="dataAll.areaB">
   </div>
 </template>
 
@@ -26,6 +26,7 @@ export default {
     if (!this.$store.state.user.UserID) {
       getAdvert(this.$store.state.userData.oneIndustry).then(res => {
         if (res.status === ERR_OK) {
+          console.log(res.data.data)
           this.dataAll = res.data.data;
         }
       });

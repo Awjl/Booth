@@ -55,7 +55,7 @@
               <p>{{item.industryName}}</p>
             </div>
           </div>
-          <div class="enterpriseItemRight">
+          <div class="enterpriseItemRight" v-if="item.isRegister != 1">
             <div class="InterestListshare" @click="copyUrl(item.id)">分享</div>
             <div class="InterestListSee" @click="toMover(item.id)">查看产品手册</div>
           </div>
@@ -73,7 +73,7 @@
               <p>{{item.fansNumber}}关注者</p>
               <p>{{item.industryName}}</p>
             </div>
-            <div class="companyItemTwoLeftshare">
+            <div class="companyItemTwoLeftshare"  v-if="item.isRegister != 1">
               <div class="InterestListshare" @click="copyUrl(item.id)">分享</div>
               <div class="InterestListSee" @click="toMover(item.id)">查看产品手册</div>
             </div>
@@ -81,7 +81,7 @@
           <div class="companyItemTwoRight">
             <div v-if="item.precentDate" class="companyItemTwoRightList">
               <p>已确认到场</p>
-              <p>{{item.precentDate}}</p>
+              <p>{{`${new Date(item.precentDate).getFullYear()}/${ 10 > (new Date(item.precentDate).getMonth() + 1) ? '0' + (new Date(item.precentDate).getMonth()+ 1) : new Date(item.precentDate).getMonth()}/${ 10 > new Date(item.precentDate).getDate() ? '0' + new Date(item.precentDate).getDate() : new Date(item.precentDate).getDate()}`}}</p>
             </div>
             <span v-if="!item.precentDate" @click="Invitation(item.id)">邀请</span>
           </div>
@@ -97,7 +97,7 @@
     </div>
     <div class="signUpBox" v-if="show">
       <div class="signUpBoxItem">
-        <div class="signUpBoxhead">参观报名</div>
+        <div class="signUpBoxhead">参加报名</div>
         <div class="signUpBoxMove">
           <p @click="showBox">取消</p>
           <div @click="addMan">添加人员</div>
@@ -105,20 +105,36 @@
         <div class="signUpBoxList">
           <div class="signUpBoxListItem" v-for="(item, index) in signUp" :key="index">
             <div class="signUpBoxListItemOne">
-              <p>姓名</p>
-              <input type="text" v-model="item.name">
+              <p>
+                姓名
+                <!-- <span v-if="!item.name" class="Err">未输入</span> -->
+              </p>
+              <input type="text" v-model="item.name" placeholder="请输入姓名">
             </div>
             <div class="signUpBoxListItemOne">
               <p>职务</p>
-              <input type="text" v-model="item.position">
+              <select v-model="item.position">
+                <option value="1">市场及销售</option>
+                <option value="2">采购</option>
+                <option value="3">管理</option>
+                <option value="4">技术</option>
+                <option value="5">生产及运营</option>
+                <option value="6">其他</option>
+              </select>
             </div>
             <div class="signUpBoxListItemTwo">
-              <p>联系方式</p>
-              <input type="text" v-model="item.mobile">
+              <p>
+                联系方式
+                <!-- <span v-if="!item.mobile" class="Err">未输入</span> -->
+              </p>
+              <input type="text" v-model="item.mobile" placeholder="请输入邮箱或者电话">
             </div>
             <div class="signUpBoxListItemTwo">
-              <p>到场时间</p>
-              <input type="text" v-model="item.precentDate" placeholder="如：2019-01-01至2019-01-01">
+              <p>
+                到场时间
+                <!-- <span v-if="!item.precentDate" class="Err">未输入</span> -->
+              </p>
+              <input type="text" v-model="item.precentDate" placeholder="如：2019-01-01">
             </div>
           </div>
         </div>
@@ -128,6 +144,13 @@
     <div class="sessceBox" v-if="SuccessBox" @click="hideSuccess">恭喜，报名成功！</div>
     <div class="sessceBox" v-if="SuccessBoxImg" @click="hideSuccess">
       <img :src="SuccessImg" alt>
+    </div>
+    <div class="boxLoing" v-if="showBox2">
+      <p>您还未登陆，是否去登陆？</p>
+      <div>
+        <span @click="quxiao2">取消</span>
+        <span @click="tologinList">去登陆</span>
+      </div>
     </div>
   </div>
 </template>
@@ -150,6 +173,7 @@ export default {
     return {
       content: "",
       show: false,
+      showBox2: false,
       SuccessBox: false,
       SuccessBoxImg: false,
       SuccessImg: "",
@@ -158,10 +182,10 @@ export default {
         {
           exhibitionId: this.$route.query.id,
           userId: getUser(),
-          name: "",
-          mobile: "",
-          precentDate: "",
-          position: ""
+          name: null,
+          mobile: null,
+          precentDate: null,
+          position: "1"
         }
       ],
       detailsData: {
@@ -199,6 +223,12 @@ export default {
     };
   },
   created() {
+    // if (!this.$store.state.user.UserID) {
+    //   this.$router.push({
+    //     name: `loginList`
+    //   });
+    //   return;
+    // }
     window.scrollTo(0, 0);
     this._getExhibitionInfoById(this.$route.query.id);
     this._getAllExhibitiors();
@@ -255,10 +285,10 @@ export default {
       });
     },
     Invitation(id) {
-      this.inviteTo.relationId = id
+      this.inviteTo.relationId = id;
       inviteToExhibition(this.inviteTo).then(res => {
         if (res.data.code === 0) {
-          alert("邀请成功")
+          alert("邀请成功");
         }
       });
     },
@@ -304,21 +334,40 @@ export default {
       }
     },
     UpList() {
-      this._enrollExhibition();
+      console.log(JSON.stringify(this.signUp).indexOf("null") != -1);
+      if (JSON.stringify(this.signUp).indexOf("null") != -1) {
+        return;
+      } else {
+        this._enrollExhibition();
+      }
     },
     addMan() {
       let arr = {
         exhibitionId: this.$route.query.id,
         userId: getUser(),
-        name: "",
-        mobile: "",
-        precentDate: "",
-        position: ""
+        name: null,
+        mobile: null,
+        precentDate: null,
+        position: "1"
       };
       this.signUp.push(arr);
     },
     showBox() {
-      this.show = !this.show;
+      if (!this.$store.state.user.UserID) {
+        this.showBox2 = true;
+      } else {
+        this.show = !this.show;
+        this.signUp = [
+          {
+            exhibitionId: this.$route.query.id,
+            userId: getUser(),
+            name: null,
+            mobile: null,
+            precentDate: null,
+            position: "1"
+          }
+        ];
+      }
     },
     copyUrl(id) {
       let url = `http://47.101.165.134/#/othercore?id=${id}`;
@@ -343,12 +392,48 @@ export default {
       }
       document.body.removeChild(textArea);
       alert("复制成功!");
+    },
+    tologinList() {
+      this.$router.push({
+        name: `loginList`
+      });
+    },
+    quxiao2() {
+      this.showBox2 = false;
     }
   }
 };
 </script>
 
 <style lang="scss">
+.boxLoing {
+  position: fixed;
+  width: 350px;
+  height: 100px;
+  background: #fff;
+  top: 100px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  z-index: 9999999999;
+  box-shadow: 2px 0px 10px #333333;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  div {
+    margin-top: 20px;
+    span {
+      padding: 4px 10px;
+      background: #000;
+      color: #fff;
+      font-size: 10px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+  }
+}
 .sessceBox {
   position: fixed;
   left: 0;
@@ -441,19 +526,31 @@ export default {
           font-size: 10px;
           margin: 6px 0;
         }
-        input {
+        input,
+        select {
           width: 100%;
           height: 20px;
         }
+
         .signUpBoxListItemOne {
           width: 50%;
           padding: 0 20px;
           box-sizing: border-box;
+          .Err {
+            color: red;
+            font-size: 10px;
+            margin-left: 10px;
+          }
         }
         .signUpBoxListItemTwo {
           width: 100%;
           padding: 0 20px;
           box-sizing: border-box;
+          .Err {
+            color: red;
+            font-size: 10px;
+            margin-left: 10px;
+          }
         }
       }
     }

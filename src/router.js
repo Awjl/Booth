@@ -31,6 +31,14 @@ export default new Router({
       }
     },
     {
+      path: "/loginList",
+      name: "loginList",
+      component: () => import("./views/sign/loginList.vue"),
+      meta: {
+        title: "登陆"
+      }
+    },
+    {
       path: "/register",
       name: "register",
       component: () => import("./views/register/Forregister.vue"),

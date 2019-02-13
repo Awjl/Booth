@@ -12,11 +12,11 @@ res.data.data.<template>
       </div>
       <div class="signBgMain">
         <div class="signBgMainLeft">
-          <div class="signBgMainList">基础信息</div>
-          <div class="signBgMainList">行业及商业伙伴</div>
-          <div class="signBgMainList ListAct">其他信息</div>
-          <div class="signBgMainList">形象展示</div>
-          <div class="signBgMainList">信息核对</div>
+          <div class="signBgMainList" @click="toOne">基础信息</div>
+          <div class="signBgMainList" @click="toTwo">行业及商业伙伴</div>
+          <div class="signBgMainList ListAct" @click="toThree">其他信息</div>
+          <div class="signBgMainList" @click="toFour">形象展示</div>
+          <div class="signBgMainList" @click="toFive">信息核对</div>
         </div>
         <div class="signBgMainRight">
           <div class="signBgThreeMainList">
@@ -69,7 +69,8 @@ export default {
   },
   created() {
     this.imgListArr = this.$store.state.userData.imgListUrlArr;
-    console.log(this.imgListArr);
+    this.imgList = this.$store.state.userData.imgListUrl;
+    console.log(this.$store.state.userData.imgList);
   },
   methods: {
     _addUserInfo() {
@@ -90,6 +91,7 @@ export default {
         this.$store.state.userData.linkman &&
         this.$store.state.userData.mobile &&
         this.$store.state.userData.linkmanEmail &&
+        this.$store.state.userData.address &&
         emli.test(this.$store.state.userData.linkmanEmail)
       ) {
         if (this.$store.state.userData.twoIndustry) {
@@ -148,6 +150,7 @@ export default {
       );
       this.formData.append("customer", this.$store.state.userData.customer);
       for (let i = 0; i <= this.$store.state.userData.imgList.length; i++) {
+        console.log(this.$store.state.userData.imgList[i])
         this.formData.append(
           "companyPics",
           this.$store.state.userData.imgList[i]
@@ -166,17 +169,17 @@ export default {
         path: `/infoFour`
       });
       this.$store.commit("SET_imgList", this.upImgList);
+      this.$store.commit("SET_imgListUrl", this.imgList);
     },
     upImg(e) {
-      var avatarImg = e.target.files;
-      for (var i = 0; i < avatarImg.length; i++) {
-        var Img = e.target.files[i];
-        var avatarImgsize = Img.size;
-        var avatarImgtype = Img.type;
-        if (this.imgType.type.indexOf(avatarImgtype) === -1) {
-          this.$message.error("格式不正确");
-          return false;
-        } else {
+      let avatarImg = e.target.files;
+      for (let i = 0; i < avatarImg.length; i++) {
+        let Img = e.target.files[i];
+        // let avatarImgsize = Img.size;
+        // if (this.imgType.type.indexOf(avatarImgtype) === -1) {
+        //   this.$message.error("格式不正确");
+        //   return false;
+        // } else {
           const _this = this;
           if (!e || !window.FileReader) return;
           const reader = new FileReader();
@@ -185,12 +188,12 @@ export default {
             _this.imgList.push(e.target.result);
           };
           this.upImgList.push(Img);
-        }
+        // }
       }
     },
-
     toBack() {
       this.$store.commit("SET_imgList", this.upImgList);
+      this.$store.commit("SET_imgListUrl", this.imgList);
       this.$router.push({
         path: `/infoTwo`
       });
@@ -198,6 +201,42 @@ export default {
     tohome() {
       this.$router.push({
         path: `/home`
+      });
+    },
+    toOne() {
+      this.$store.commit("SET_imgList", this.upImgList);
+      this.$store.commit("SET_imgListUrl", this.imgList);
+      this.$router.push({
+        path: `/infoOne`
+      });
+    },
+    toTwo() {
+      this.$store.commit("SET_imgList", this.upImgList);
+      this.$store.commit("SET_imgListUrl", this.imgList);
+      this.$router.push({
+        path: `/infoTwo`
+      });
+    },
+    toThree() {
+      this.$store.commit("SET_imgList", this.upImgList);
+      this.$store.commit("SET_imgListUrl", this.imgList);
+      this.$router.push({
+        path: `/infoThree`
+      });
+    },
+    toFour() {
+      this.$store.commit("SET_imgList", this.upImgList);
+      this.$store.commit("SET_imgListUrl", this.imgList);
+      this.$router.push({
+        path: `/infoFour`
+      });
+    },
+    toFive() {
+      this.$store.commit("SET_imgList", this.upImgList);
+      this.$store.commit("SET_imgListUrl", this.imgList);
+
+      this.$router.push({
+        path: `/infoFive`
       });
     }
   }
@@ -255,7 +294,7 @@ export default {
           font-size: 16px;
           color: #ddd;
           margin-bottom: 20px;
-          // cursor: pointer;
+          cursor: pointer;
         }
         .ListAct {
           color: #fff;

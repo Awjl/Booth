@@ -2,20 +2,10 @@
   <div class="exhibition">
     <div class="swiper-container">
       <div class="swiper-wrapper">
-        <div
-          class="swiper-slide"
-          v-for="(item, index) in listImg"
-          :key="index"
-        >
-          <img
-            :src="`${item.bannerUrl.split(',')[0]}`"
-            alt
-          >
+        <div class="swiper-slide" v-for="(item, index) in listImg" :key="index">
+          <img :src="`${item.bannerUrl.split(',')[0]}`" alt>
           <div class="exhibitionBottom">
-            <div
-              class="exhibitionMain"
-              @click="toDetails"
-            >
+            <div class="exhibitionMain" @click="toDetails">
               <div class="exhibitionMainName">
                 <p>{{item.nameEng}}</p>
                 <p>{{item.name}}</p>
@@ -25,7 +15,6 @@
                 <div class="exhibitionMainItem">时间：{{item.date}}</div>
                 <div class="exhibitionMainItem">地点：{{item.location}}</div>
                 <div class="exhibitionMainItem">简述：{{item.summary}}</div>
-
               </div>
             </div>
           </div>
@@ -38,7 +27,6 @@
       <div class="swiper-button-prev"></div>
       <div class="swiper-button-next"></div>
     </div>
-
   </div>
 </template>
 
@@ -50,6 +38,7 @@ import { getIndexBanner, ERR_OK } from "@/api/api.js";
 export default {
   data() {
     return {
+      showBox: false,
       listImg: []
     };
   },
@@ -58,7 +47,7 @@ export default {
     getIndexBanner().then(res => {
       if (res.status === ERR_OK) {
         this.listImg = res.data.data;
-        console.log(this.listImg)
+        console.log(this.listImg);
       }
     });
   },
@@ -81,7 +70,7 @@ export default {
         prevEl: ".swiper-button-prev"
       },
       on: {
-        click: function () {
+        click: function() {
           const realIndex = this.realIndex;
           _this.toDetails(realIndex);
         }
@@ -100,6 +89,34 @@ export default {
 </script>
 
 <style lang="scss">
+.boxLoing {
+  position: fixed;
+  width: 350px;
+  height: 100px;
+  background: #fff;
+  top: 100px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  z-index: 9999999999;
+  box-shadow: 2px 0px 10px #333333;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  div {
+    margin-top: 20px;
+    span {
+      padding: 4px 10px;
+      background: #000;
+      color: #fff;
+      font-size: 10px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+  }
+}
 .exhibition {
   .swiper-container {
     width: 100%;

@@ -18,13 +18,17 @@
         </div>
         <div class="LoginItemTitle">
           <p>{{this.$store.state.userData.name}}</p>
-          <p>{{this.$store.state.userData.fansNumber}}位关注者</p>
+          <p>
+            <span
+              v-if="this.$store.state.userData.fansNumber"
+            >{{this.$store.state.userData.fansNumber}}</span>
+            <span v-else>0</span>位关注者
+          </p>
           <p>{{this.$store.state.userData.oneIndustryname}}</p>
         </div>
-        <div class="LoginItemUser">
+        <div class="LoginItemUser" v-if="attentionUserList.attentionMe.length !== 0">
           <p>谁看过我</p>
           <div class="LoginItemUserList">
-            <p v-if="attentionUserList.attentionMe.length === 0">暂无数据</p>
             <div
               class="LoginItemUserImg"
               v-for="(item, index) in attentionUserList.attentionMe"
@@ -35,10 +39,9 @@
             </div>
           </div>
         </div>
-        <div class="LoginItemUser">
+        <div class="LoginItemUser" v-if="attentionUserList.attentionTo.length !== 0">
           <p>我看过谁</p>
           <div class="LoginItemUserList">
-            <p v-if="attentionUserList.attentionTo.length === 0">暂无数据</p>
             <div
               class="LoginItemUserImg"
               v-for="(item, index) in attentionUserList.attentionTo"
@@ -58,16 +61,12 @@
           <span @click="toenterprise">了解更多</span>
         </div>
         <div class="InterestList" v-for="(item, index) in dataList" :key="index">
-          <!-- <div class="InterestList" v-if="item.exhibition">
-            <p class="boothNum">A2022</p>
-          </div>-->
           <div class="enterpriseItem">
             <div class="enterpriseItemLeft">
               <div class="enterpriseItemHead" @click="toOthercore(item.user.id)">
                 <div class="enterpriseItemHeadBg" v-if="item.user.logoUrl == null">
                   <img src="../../assets/images/icon/man.png" alt>
                 </div>
-                <!-- <img src="../../assets/images/home/head2.png" alt > -->
                 <img :src="`${item.user.logoUrl}`" alt>
               </div>
               <div class="enterpriseItemLeftTitle">
@@ -78,7 +77,7 @@
             </div>
             <div class="enterpriseItemRight">
               <div class="InterestListshare" @click="copyUrl(item.user.id)">分享</div>
-              <!-- <input type="button" name="anniu2" onClick='copyUrl()' value="复制URL地址" class="InterestListshare">  -->
+
               <div class="InterestListSee" @click="toMover(item.user.id)">查看产品手册</div>
             </div>
           </div>
@@ -91,9 +90,16 @@
                 {{item.exhibition.name}}
               </p>
             </div>
-            <div class="alreadyTime">{{item.exhibition.date}}</div>
+            <div class="alreadyTime">{{item.exhibition.dateEng}}</div>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="boxLoing" v-if="showBox">
+      <p>您还未登陆，是否去登陆？</p>
+      <div>
+        <span @click="quxiao">取消</span>
+        <span @click="tologinList">去登陆</span>
       </div>
     </div>
   </div>
@@ -106,6 +112,7 @@ export default {
   name: "homeLogin",
   data() {
     return {
+      showBox: false,
       userData: {
         firstIndustryId: this.$store.state.userData.oneIndustry,
         secondIndustryId: this.$store.state.userData.twoIndustry,
@@ -119,8 +126,6 @@ export default {
     };
   },
   created() {
-    console.log(this.$store.state.user.UserID);
-    console.log(this.userData);
     if (this.$store.state.user.UserID) {
       this._mayBeInterestedCompany();
       this._getAttention();
@@ -131,7 +136,6 @@ export default {
   },
   methods: {
     _mayBeInterestedCompany() {
-      console.log(this.userData);
       mayBeInterestedCompany(this.userData).then(res => {
         if (res.status === ERR_OK) {
           this.dataList = res.data.data;
@@ -142,14 +146,11 @@ export default {
     _getAttention() {
       getAttention(this.$store.state.user.UserID).then(res => {
         if (res.data.code === 0) {
-          console.log("谁看过谁-----------------------------------");
           this.attentionUserList = res.data.data;
-          console.log(this.attentionUserList);
         }
       });
     },
     copyUrl(id) {
-      // var clipBoardContent = "";
       let url = `http://47.101.165.134/#/othercore?id=${id}`;
       let textArea = document.createElement("textarea");
       textArea.style.position = "fixed";
@@ -174,10 +175,14 @@ export default {
       alert("复制成功!");
     },
     toOthercore(id) {
-      this.$router.push({
-        path: `/othercore`,
-        query: { id: id }
-      });
+      // if (!this.$store.state.user.UserID) {
+      //   this.showBox = true;
+      // } else {
+        this.$router.push({
+          path: `/othercore`,
+          query: { id: id }
+        });
+      // }
     },
     toenterprise() {
       if (this.$store.state.user.UserID) {
@@ -185,7 +190,7 @@ export default {
           path: "/enterprise"
         });
       } else {
-        alert("请登录");
+        this.showBox = true;
       }
     },
     toSign() {
@@ -194,11 +199,22 @@ export default {
       });
     },
     toMover(id) {
-      console.log(id);
+      if (!this.$store.state.user.UserID) {
+        this.showBox = true;
+      } else {
+        this.$router.push({
+          name: `productList`,
+          query: { id: id }
+        });
+      }
+    },
+    tologinList() {
       this.$router.push({
-        name: `productList`,
-        query: { id: id }
+        name: `loginList`
       });
+    },
+    quxiao() {
+      this.showBox = false;
     }
   }
 };
@@ -207,6 +223,34 @@ export default {
 <style lang="scss">
 .he40 {
   height: 40px;
+}
+.boxLoing {
+  position: fixed;
+  width: 350px;
+  height: 100px;
+  background: #fff;
+  top: 100px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  z-index: 9999999999;
+  box-shadow: 2px 0px 10px #333333;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  div {
+    margin-top: 20px;
+    span {
+      padding: 4px 10px;
+      background: #000;
+      color: #fff;
+      font-size: 10px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+  }
 }
 .homeLogin {
   width: 100%;
@@ -428,9 +472,10 @@ export default {
         }
       }
       .alreadyTime {
-        font-size: 14px;
+        font-size: 10px;
         color: #fff;
-        width: 100px;
+        // width: 150px;
+        text-align: right;
       }
     }
   }

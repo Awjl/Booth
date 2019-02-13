@@ -13,6 +13,9 @@
       <div class="Forregister">
         <p v-if="!overBoxone">对方企业未注册Booth</p>
         <p v-if="overBoxone">您的认证申请已发送，请耐心等待对方企业验证！</p>
+        <div class="InvitationBoxItemBtn" v-if="overBoxone" style="margin-top:30px;">
+          <span class="true" @click="tocore">返回上一级</span>
+        </div>
         <div class="ForregisterBox" v-if="!overBoxone">
           <p>该企业尚未在Booth注册，请您输入企业联系人和联系方式，</p>
           <p>Booth会为您放送认证申请邮件</p>
@@ -68,9 +71,9 @@ export default {
     };
   },
   created() {
-        window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
 
-    if (this.$route.query.id && this.$route.query.name ) {
+    if (this.$route.query.id && this.$route.query.name) {
       this.overBoxone = false;
     } else {
       this.overBoxone = true;
@@ -105,6 +108,23 @@ export default {
   height: 100vh;
   background: #2c73a1;
   overflow: auto;
+  .InvitationBoxItemBtn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    span {
+      display: block;
+      width: 85px;
+      height: 30px;
+      text-align: center;
+      line-height: 30px;
+      cursor: pointer;
+      box-sizing: border-box;
+      background: #000;
+      color: #fff;
+      margin-right: 10px;
+    }
+  }
   .signBgTwo {
     height: 100%;
     width: 100%;
@@ -181,23 +201,6 @@ export default {
               padding: 0 10px;
               box-sizing: border-box;
             }
-          }
-        }
-        .InvitationBoxItemBtn {
-          width: 100%;
-          display: flex;
-          justify-content: center;
-          span {
-            display: block;
-            width: 85px;
-            height: 30px;
-            text-align: center;
-            line-height: 30px;
-            cursor: pointer;
-            box-sizing: border-box;
-            background: #000;
-            color: #fff;
-            margin-right: 10px;
           }
         }
       }

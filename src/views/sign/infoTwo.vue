@@ -12,11 +12,11 @@
       </div>
       <div class="signBgMain">
         <div class="signBgMainLeft">
-          <div class="signBgMainList">基础信息</div>
-          <div class="signBgMainList ListAct">行业及商业伙伴</div>
-          <div class="signBgMainList">其他信息</div>
-          <div class="signBgMainList">形象展示</div>
-          <div class="signBgMainList">信息核对</div>
+          <div class="signBgMainList" @click="toOne">基础信息</div>
+          <div class="signBgMainList ListAct" @click="toTwo">行业及商业伙伴</div>
+          <div class="signBgMainList" @click="toThree">其他信息</div>
+          <div class="signBgMainList" @click="toFour">形象展示</div>
+          <div class="signBgMainList" @click="toFive">信息核对</div>
         </div>
         <div class="signBgMainRightTwo">
           <div class="signBgMainListRight">
@@ -57,7 +57,7 @@
                 <div class="SearchIndustryIn">
                   <input
                     type="text"
-                    placeholder="请输入行业名称"
+                    placeholder="请输入竞争对手"
                     v-on:input="inputFunc"
                     v-model="serachCenter"
                   >
@@ -84,7 +84,7 @@
                 <div class="SearchIndustryIn">
                   <input
                     type="text"
-                    placeholder="请输入行业名称"
+                    placeholder="请输入行业关键词"
                     v-on:input="inputFuncTwo"
                     v-model="serachCenter"
                   >
@@ -105,7 +105,7 @@
                 <div class="SearchIndustryIn">
                   <input
                     type="text"
-                    placeholder="请输入行业名称"
+                    placeholder="请输入主要供应商"
                     v-on:input="inputFuncThree"
                     v-model="serachCenter"
                   >
@@ -132,7 +132,7 @@
                 <div class="SearchIndustryIn">
                   <input
                     type="text"
-                    placeholder="请输入行业名称"
+                    placeholder="请输入主要工艺"
                     v-on:input="inputFuncFore"
                     v-model="serachCenter"
                   >
@@ -153,7 +153,7 @@
                 <div class="SearchIndustryIn">
                   <input
                     type="text"
-                    placeholder="请输入行业名称"
+                    placeholder="请输入主要客户"
                     v-on:input="inputFuncFive"
                     v-model="serachCenter"
                   >
@@ -180,7 +180,7 @@
                 <div class="SearchIndustryIn">
                   <input
                     type="text"
-                    placeholder="请输入行业名称"
+                    placeholder="请输入第三方服务商"
                     v-on:input="inputFuncSix"
                     v-model="serachCenter"
                   >
@@ -277,7 +277,9 @@ export default {
       index: "",
       serachCenter: "",
       serachList: [],
+      searchcenter: "",
       searchExh: [],
+      timer2: "",
       industryData: [],
       items: [],
       typeindex: 0,
@@ -387,6 +389,7 @@ export default {
         this.$store.state.userData.linkman &&
         this.$store.state.userData.mobile &&
         this.$store.state.userData.linkmanEmail &&
+        this.$store.state.userData.address &&
         emli.test(this.$store.state.userData.linkmanEmail)
       ) {
         if (this.$store.state.userData.twoIndustry) {
@@ -476,9 +479,12 @@ export default {
       });
     },
     _searchExhibition(name) {
+      console.log(name);
       searchExhibition(name).then(res => {
         if (res.status === ERR_OK) {
+          console.log(res.data);
           this.searchExh = res.data.data;
+          // console.log(this.searchExh)
         }
       });
     },
@@ -498,9 +504,15 @@ export default {
       this.exhibitionArr[this.Exhibitionindex].name = item.name;
       this.searchExh = [];
     },
+    setTime2() {
+      this.timer2 = setTimeout(() => {
+        this._searchExhibition(this.searchcenter);
+      }, 500);
+    },
     inputFuncServer(name, index) {
       this.searchExh = [];
-      this._searchExhibition(name);
+      this.searchcenter = name;
+      this.setTime2();
       this.Exhibitionindex = index;
     },
     mouseOver(index, data) {
@@ -746,6 +758,101 @@ export default {
       this.$router.push({
         path: `/home`
       });
+    },
+    toOne() {
+      this.$store.commit("SET_oneIndustryname", this.name);
+      this.$store.commit("SET_oneIndustry", this.userData.oneIndustry);
+      this.$store.commit("SET_twoIndustry", this.userData.twoIndustry);
+      this.$store.commit("SET_competitor", JSON.stringify(this.competitorArr));
+      this.$store.commit("SET_keywords", JSON.stringify(this.keywordsArr));
+      this.$store.commit("SET_supplier", JSON.stringify(this.supplierArr));
+      this.$store.commit("SET_mainProcess", JSON.stringify(this.mainProcess));
+      this.$store.commit(
+        "SET_facilitator",
+        JSON.stringify(this.facilitatorArr)
+      );
+      this.$store.commit("SET_summary", this.userData.summary);
+      this.$store.commit("SET_exhibitions", JSON.stringify(this.exhibitionArr));
+      this.$store.commit("SET_customer", JSON.stringify(this.customerArr));
+      this.$router.push({
+        path: `/infoOne`
+      });
+    },
+    toTwo() {
+      this.$store.commit("SET_oneIndustryname", this.name);
+      this.$store.commit("SET_oneIndustry", this.userData.oneIndustry);
+      this.$store.commit("SET_twoIndustry", this.userData.twoIndustry);
+      this.$store.commit("SET_competitor", JSON.stringify(this.competitorArr));
+      this.$store.commit("SET_keywords", JSON.stringify(this.keywordsArr));
+      this.$store.commit("SET_supplier", JSON.stringify(this.supplierArr));
+      this.$store.commit("SET_mainProcess", JSON.stringify(this.mainProcess));
+      this.$store.commit(
+        "SET_facilitator",
+        JSON.stringify(this.facilitatorArr)
+      );
+      this.$store.commit("SET_summary", this.userData.summary);
+      this.$store.commit("SET_exhibitions", JSON.stringify(this.exhibitionArr));
+      this.$store.commit("SET_customer", JSON.stringify(this.customerArr));
+      this.$router.push({
+        path: `/infoTwo`
+      });
+    },
+    toThree() {
+      this.$store.commit("SET_oneIndustryname", this.name);
+      this.$store.commit("SET_oneIndustry", this.userData.oneIndustry);
+      this.$store.commit("SET_twoIndustry", this.userData.twoIndustry);
+      this.$store.commit("SET_competitor", JSON.stringify(this.competitorArr));
+      this.$store.commit("SET_keywords", JSON.stringify(this.keywordsArr));
+      this.$store.commit("SET_supplier", JSON.stringify(this.supplierArr));
+      this.$store.commit("SET_mainProcess", JSON.stringify(this.mainProcess));
+      this.$store.commit(
+        "SET_facilitator",
+        JSON.stringify(this.facilitatorArr)
+      );
+      this.$store.commit("SET_summary", this.userData.summary);
+      this.$store.commit("SET_exhibitions", JSON.stringify(this.exhibitionArr));
+      this.$store.commit("SET_customer", JSON.stringify(this.customerArr));
+      this.$router.push({
+        path: `/infoThree`
+      });
+    },
+    toFour() {
+      this.$store.commit("SET_oneIndustryname", this.name);
+      this.$store.commit("SET_oneIndustry", this.userData.oneIndustry);
+      this.$store.commit("SET_twoIndustry", this.userData.twoIndustry);
+      this.$store.commit("SET_competitor", JSON.stringify(this.competitorArr));
+      this.$store.commit("SET_keywords", JSON.stringify(this.keywordsArr));
+      this.$store.commit("SET_supplier", JSON.stringify(this.supplierArr));
+      this.$store.commit("SET_mainProcess", JSON.stringify(this.mainProcess));
+      this.$store.commit(
+        "SET_facilitator",
+        JSON.stringify(this.facilitatorArr)
+      );
+      this.$store.commit("SET_summary", this.userData.summary);
+      this.$store.commit("SET_exhibitions", JSON.stringify(this.exhibitionArr));
+      this.$store.commit("SET_customer", JSON.stringify(this.customerArr));
+      this.$router.push({
+        path: `/infoFour`
+      });
+    },
+    toFive() {
+      this.$store.commit("SET_oneIndustryname", this.name);
+      this.$store.commit("SET_oneIndustry", this.userData.oneIndustry);
+      this.$store.commit("SET_twoIndustry", this.userData.twoIndustry);
+      this.$store.commit("SET_competitor", JSON.stringify(this.competitorArr));
+      this.$store.commit("SET_keywords", JSON.stringify(this.keywordsArr));
+      this.$store.commit("SET_supplier", JSON.stringify(this.supplierArr));
+      this.$store.commit("SET_mainProcess", JSON.stringify(this.mainProcess));
+      this.$store.commit(
+        "SET_facilitator",
+        JSON.stringify(this.facilitatorArr)
+      );
+      this.$store.commit("SET_summary", this.userData.summary);
+      this.$store.commit("SET_exhibitions", JSON.stringify(this.exhibitionArr));
+      this.$store.commit("SET_customer", JSON.stringify(this.customerArr));
+      this.$router.push({
+        path: `/infoFive`
+      });
     }
   }
 };
@@ -802,7 +909,7 @@ export default {
           font-size: 16px;
           color: #ddd;
           margin-bottom: 20px;
-          // cursor: pointer;
+          cursor: pointer;
         }
         .ListAct {
           color: #fff;

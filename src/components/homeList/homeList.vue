@@ -51,6 +51,13 @@
         <img :src="`${item.user.introductionUrl}`" alt>
       </div>
     </div>
+    <div class="boxLoing" v-if="showBox">
+      <p>您还未登陆，是否去登陆？</p>
+      <div>
+        <span @click="quxiao">取消</span>
+        <span @click="tologinList">去登陆</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -61,6 +68,7 @@ export default {
   name: "homeList",
   data() {
     return {
+      showBox: false,
       followData: {
         userId: "",
         concernedId: ""
@@ -107,7 +115,6 @@ export default {
       });
     },
     copyUrl(id) {
-      // var clipBoardContent = "";
       let url = `http://47.101.165.134/#/othercore?id=${id}`;
       let textArea = document.createElement("textarea");
       textArea.style.position = "fixed";
@@ -132,16 +139,24 @@ export default {
       alert("复制成功!");
     },
     toOthercore(id) {
-      this.$router.push({
-        path: `/othercore`,
-        query: { id: id }
-      });
+      // if (!this.$store.state.user.UserID) {
+      //   this.showBox = true;
+      // } else {
+        this.$router.push({
+          path: `/othercore`,
+          query: { id: id }
+        });
+      // }
     },
     toExt(id) {
-      this.$router.push({
-        path: `/exhibitionDetails`,
-        query: { id: id }
-      });
+      // if (!this.$store.state.user.UserID) {
+      //   this.showBox = true;
+      // } else {
+        this.$router.push({
+          path: `/exhibitionDetails`,
+          query: { id: id }
+        });
+      // }
     },
     followId(id) {
       if (this.$store.state.user.UserID) {
@@ -149,7 +164,7 @@ export default {
         this.followData.concernedId = id;
         this._focus();
       } else {
-        alert("请登录");
+        this.showBox = true;
       }
     },
     cancelfollowId(id) {
@@ -158,15 +173,26 @@ export default {
         this.followData.concernedId = id;
         this._cancelFocus();
       } else {
-        alert("请登录");
+        this.showBox = true;
       }
     },
     toMover(id) {
-      console.log(id);
+      if (!this.$store.state.user.UserID) {
+        this.showBox = true;
+      } else {
+        this.$router.push({
+          name: `productList`,
+          query: { id: id }
+        });
+      }
+    },
+    tologinList() {
       this.$router.push({
-        name: `productList`,
-        query: { id: id }
+        name: `loginList`
       });
+    },
+    quxiao() {
+      this.showBox = false;
     }
   }
 };

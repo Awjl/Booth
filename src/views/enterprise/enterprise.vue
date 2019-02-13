@@ -93,12 +93,12 @@
       </div>
       <div class="enterpriseBoxBaner">
         <div class="homeRight">
-          <img :src="`${dataAll.areaA.url}`" alt>
+          <img :src="`${dataAll.areaA.url}`" alt v-if="dataAll.areaA">
           <div class="homeTitle">
             <img src="../../assets/images/home/logo.png" alt>
             <img src="../../assets/images/home/logoText.png" alt>
           </div>
-          <img :src="`${dataAll.areaB.url}`" alt>
+          <img :src="`${dataAll.areaB.url}`" alt v-if="dataAll.areaB">
         </div>
       </div>
     </div>
@@ -142,6 +142,12 @@ export default {
     };
   },
   created() {
+    if (!this.$store.state.user.UserID) {
+      this.$router.push({
+        name: `loginList`,
+      });
+      return
+    }
     window.scrollTo(0, 0);
     getAdvert(this.$store.state.userData.twoIndustry).then(res => {
       if (res.status === 200) {

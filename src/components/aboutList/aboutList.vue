@@ -110,7 +110,7 @@
                 {{item.exhibition.name}}
               </p>
             </div>
-            <div class="alreadyTime">{{item.exhibition.date}}</div>
+            <div class="alreadyTime">{{item.exhibition.dateEng}}</div>
           </div>
         </div>
         <div v-if="ind == 5">暂无数据</div>
@@ -148,7 +148,7 @@
                 {{item.exhibition.name}}
               </p>
             </div>
-            <div class="alreadyTime">{{item.exhibition.date}}</div>
+            <div class="alreadyTime">{{item.exhibition.dateEng}}</div>
           </div>
         </div>
       </div>
@@ -625,7 +625,8 @@ export default {
     .alreadyTime {
       font-size: 14px;
       color: #000;
-      width: 100px;
+      // width: 100px;
+      text-align: right;
     }
   }
 }

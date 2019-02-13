@@ -66,7 +66,11 @@
               </div>
             </div>
             <div class="enterpriseItemRight">
-              <div class="InterestListshare" v-if="item.user && item.isRegister != 1" @click="copyUrl(item.user.id)">分享</div>
+              <div
+                class="InterestListshare"
+                v-if="item.user && item.isRegister != 1"
+                @click="copyUrl(item.user.id)"
+              >分享</div>
               <div
                 class="InterestListSee"
                 v-if="item.user && item.isRegister != 1"
@@ -83,7 +87,7 @@
                 {{item.exhibition.name}}
               </p>
             </div>
-            <div class="alreadyTime">{{item.exhibition.date}}</div>
+            <div class="alreadyTime">{{item.exhibition.dateEng}}</div>
           </div>
         </div>
         <div v-if="ind == 5">暂无数据</div>
@@ -115,11 +119,13 @@
           <div class="already" v-if="item.exhibition">
             <div class="alreadyHead">
               <span>已参加</span>
-              <p>HOUSE VISION 2018 BEIJING EXHIBITION
-                <br>探索家——未来生活大展
+              <p>
+                {{item.exhibition.nameEng}}
+                <br>
+                {{item.exhibition.name}}
               </p>
             </div>
-            <div class="alreadyTime">2018年9月21日</div>
+            <div class="alreadyTime">{{item.exhibition.dateEng}}</div>
           </div>
         </div>
       </div>
@@ -468,7 +474,8 @@ export default {
     .alreadyTime {
       font-size: 14px;
       color: #000;
-      width: 100px;
+      // width: 100px;
+      text-align: right;
     }
   }
 }

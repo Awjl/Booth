@@ -12,11 +12,11 @@
       </div>
       <div class="signBgMain">
         <div class="signBgMainLeft">
-          <div class="signBgMainList ListAct">基础信息</div>
-          <div class="signBgMainList">行业及商业伙伴</div>
-          <div class="signBgMainList">其他信息</div>
-          <div class="signBgMainList">形象展示</div>
-          <div class="signBgMainList">信息核对</div>
+          <div class="signBgMainList ListAct" @click="toOne">基础信息</div>
+          <div class="signBgMainList" @click="toTwo">行业及商业伙伴</div>
+          <div class="signBgMainList" @click="toThree">其他信息</div>
+          <div class="signBgMainList" @click="toFour">形象展示</div>
+          <div class="signBgMainList" @click="toFive">信息核对</div>
         </div>
         <div class="signBgMainRight">
           <div class="signBgMainList">
@@ -50,7 +50,8 @@
             </div>
             <div class="signBgMainRightItem">
               <p>企业所在地</p>
-              <input type="text" v-model="userData.address" disabled>
+              <input type="text" v-model="userData.address">
+              <p class="Err">{{addressERR}}</p>
             </div>
             <div class="signBgMainRightItem">
               <p>联系人</p>
@@ -106,6 +107,7 @@ export default {
       linkmanERR: "",
       mobileERR: "",
       linkmanEmailERR: "",
+      addressERR: "",
       userData: {
         name: "",
         nameEng: "",
@@ -179,6 +181,11 @@ export default {
       } else {
         this.mobileERR = "";
       }
+      if (!this.$store.state.userData.address) {
+        this.addressERR = "请输入企业地址";
+      } else {
+        this.addressERR = "";
+      }
       if (!this.$store.state.userData.linkmanEmail) {
         this.linkmanEmailERR = "请输入联系邮箱";
       } else {
@@ -193,7 +200,7 @@ export default {
         this.$store.state.userData.nameEng &&
         this.$store.state.userData.linkman &&
         this.$store.state.userData.mobile &&
-        this.$store.state.userData.linkmanEmail &&
+        this.$store.state.userData.linkmanEmail &&this.$store.state.userData.address &&
         emli.test(this.$store.state.userData.linkmanEmail)
       ) {
         if (this.$store.state.userData.twoIndustry) {
@@ -300,6 +307,71 @@ export default {
       this.$router.push({
         path: `/home`
       });
+    },
+    toOne() {
+      this.$store.commit("SET_NAME", this.userData.name);
+      this.$store.commit("SET_NAMEENG", this.userData.nameEng);
+      this.$store.commit("SET_MEMBER", this.userData.member);
+      this.$store.commit("SET_ADDRESS", this.userData.address);
+      this.$store.commit("SET_LINKMAN", this.userData.linkman);
+      this.$store.commit("SET_POSITION", this.userData.position);
+      this.$store.commit("SET_MOBILE", this.userData.mobile);
+      this.$store.commit("SET_LINKMANEMAIL", this.userData.linkmanEmail);
+      this.$router.push({
+        path: `/infoOne`
+      });
+    },
+    toTwo() {
+      this.$store.commit("SET_NAME", this.userData.name);
+      this.$store.commit("SET_NAMEENG", this.userData.nameEng);
+      this.$store.commit("SET_MEMBER", this.userData.member);
+      this.$store.commit("SET_ADDRESS", this.userData.address);
+      this.$store.commit("SET_LINKMAN", this.userData.linkman);
+      this.$store.commit("SET_POSITION", this.userData.position);
+      this.$store.commit("SET_MOBILE", this.userData.mobile);
+      this.$store.commit("SET_LINKMANEMAIL", this.userData.linkmanEmail);
+      this.$router.push({
+        path: `/infoTwo`
+      });
+    },
+    toThree() {
+      this.$store.commit("SET_NAME", this.userData.name);
+      this.$store.commit("SET_NAMEENG", this.userData.nameEng);
+      this.$store.commit("SET_MEMBER", this.userData.member);
+      this.$store.commit("SET_ADDRESS", this.userData.address);
+      this.$store.commit("SET_LINKMAN", this.userData.linkman);
+      this.$store.commit("SET_POSITION", this.userData.position);
+      this.$store.commit("SET_MOBILE", this.userData.mobile);
+      this.$store.commit("SET_LINKMANEMAIL", this.userData.linkmanEmail);
+      this.$router.push({
+        path: `/infoThree`
+      });
+    },
+    toFour() {
+      this.$store.commit("SET_NAME", this.userData.name);
+      this.$store.commit("SET_NAMEENG", this.userData.nameEng);
+      this.$store.commit("SET_MEMBER", this.userData.member);
+      this.$store.commit("SET_ADDRESS", this.userData.address);
+      this.$store.commit("SET_LINKMAN", this.userData.linkman);
+      this.$store.commit("SET_POSITION", this.userData.position);
+      this.$store.commit("SET_MOBILE", this.userData.mobile);
+      this.$store.commit("SET_LINKMANEMAIL", this.userData.linkmanEmail);
+      this.$router.push({
+        path: `/infoFour`
+      });
+    },
+    toFive() {
+      this.$store.commit("SET_NAME", this.userData.name);
+      this.$store.commit("SET_NAMEENG", this.userData.nameEng);
+      this.$store.commit("SET_MEMBER", this.userData.member);
+      this.$store.commit("SET_ADDRESS", this.userData.address);
+      this.$store.commit("SET_LINKMAN", this.userData.linkman);
+      this.$store.commit("SET_POSITION", this.userData.position);
+      this.$store.commit("SET_MOBILE", this.userData.mobile);
+      this.$store.commit("SET_LINKMANEMAIL", this.userData.linkmanEmail);
+      this.$router.push({
+        path: `/infoFive`
+      });
     }
   }
 };
@@ -356,7 +428,7 @@ export default {
           font-size: 16px;
           color: #ddd;
           margin-bottom: 20px;
-          // cursor: pointer;
+          cursor: pointer;
         }
         .ListAct {
           color: #fff;

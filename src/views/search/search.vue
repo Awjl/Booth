@@ -127,7 +127,7 @@
                 </div>
               </div>
               <div class="enterpriseItemRight">
-                <div class="InterestListshare">分享</div>
+                <div class="InterestListshare" @click="copyUrl(item.id)">分享</div>
                 <div class="InterestListSee" @click="toBrochureList(item.id)">查看产品手册</div>
               </div>
             </div>
@@ -183,6 +183,13 @@
         </div>
       </div>
     </div>
+    <div class="boxLoing" v-if="showBox">
+      <p>您还未登陆，是否去登陆？</p>
+      <div>
+        <span @click="quxiao">取消</span>
+        <span @click="tologinList">去登陆</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -192,6 +199,7 @@ export default {
   name: "searchPag",
   data() {
     return {
+      showBox: false,
       center: this.$route.query.center,
       searchList: {
         brochureNum: "", // 册子
@@ -223,70 +231,106 @@ export default {
       });
     },
     lookbrochure(url, id) {
-      getProductById(id, this.$store.state.user.UserID).then(res => {
-        if (res.data.code === 0) {
-          console.log("查看成功");
-        }
-      });
+      if (!this.$store.state.user.UserID) {
+        this.showBox = true;
+      } else {
+        getProductById(id, this.$store.state.user.UserID).then(res => {
+          if (res.data.code === 0) {
+            console.log("查看成功");
+          }
+        });
+      }
       window.open(url, "_blank");
     },
     toOthercore(id) {
-      this.$router.push({
-        path: `/othercore`,
-        query: { id: id }
-      });
+      // if (!this.$store.state.user.UserID) {
+      //   this.showBox = true;
+      // } else {
+        this.$router.push({
+          path: `/othercore`,
+          query: { id: id }
+        });
+      // }
     },
     toDetailsOne(id) {
-      this.$router.push({
-        path: `/exhibitionDetails`,
-        query: { id: id }
-      });
+      if (!this.$store.state.user.UserID) {
+        this.showBox = true;
+      } else {
+        this.$router.push({
+          path: `/exhibitionDetails`,
+          query: { id: id }
+        });
+      }
     },
     toBrochureList(id) {
-      this.$router.push({
-        name: `productList`,
-        query: { id: id }
-      });
+      if (!this.$store.state.user.UserID) {
+        this.showBox = true;
+      } else {
+        this.$router.push({
+          name: `productList`,
+          query: { id: id }
+        });
+      }
     },
     toExhibition() {
-      this.$router.push({
-        name: `searchExhibition`,
-        query: {
-          center: this.center
-        }
-      });
+      // if (!this.$store.state.user.UserID) {
+      //   this.showBox = true;
+      // } else {
+        this.$router.push({
+          name: `searchExhibition`,
+          query: {
+            center: this.center
+          }
+        });
+      // }
     },
     toBrochure() {
-      this.$router.push({
-        name: `searchBrochure`,
-        query: {
-          center: this.center
-        }
-      });
+      if (!this.$store.state.user.UserID) {
+        this.showBox = true;
+      } else {
+        this.$router.push({
+          name: `searchBrochure`,
+          query: {
+            center: this.center
+          }
+        });
+      }
     },
     toCompany() {
-      this.$router.push({
-        name: `searchCompaby`,
-        query: {
-          center: this.center
-        }
-      });
+      if (!this.$store.state.user.UserID) {
+        this.showBox = true;
+      } else {
+        this.$router.push({
+          name: `searchCompaby`,
+          query: {
+            center: this.center
+          }
+        });
+      }
     },
     toImages() {
-      this.$router.push({
-        name: `searchImages`,
-        query: {
-          center: this.center
-        }
-      });
+      if (!this.$store.state.user.UserID) {
+        this.showBox = true;
+      } else {
+        this.$router.push({
+          name: `searchImages`,
+          query: {
+            center: this.center
+          }
+        });
+      }
     },
     toEvent() {
-      this.$router.push({
-        name: `searchEvent`,
-        query: {
-          center: this.center
-        }
-      });
+      if (!this.$store.state.user.UserID) {
+        this.showBox = true;
+      } else {
+        this.$router.push({
+          name: `searchEvent`,
+          query: {
+            center: this.center
+          }
+        });
+      }
     },
     copyUrl(id) {
       // var clipBoardContent = "";
@@ -312,12 +356,48 @@ export default {
       }
       document.body.removeChild(textArea);
       alert("复制成功!");
+    },
+    tologinList() {
+      this.$router.push({
+        name: `loginList`
+      });
+    },
+    quxiao() {
+      this.showBox = false;
     }
   }
 };
 </script>
 
 <style lang="scss">
+.boxLoing {
+  position: fixed;
+  width: 350px;
+  height: 100px;
+  background: #fff;
+  top: 100px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  z-index: 9999999999;
+  box-shadow: 2px 0px 10px #333333;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  div {
+    margin-top: 20px;
+    span {
+      padding: 4px 10px;
+      background: #000;
+      color: #fff;
+      font-size: 10px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+  }
+}
 .searchPag {
   width: 100%;
   height: calc(100vh - 218px);
@@ -527,7 +607,6 @@ export default {
                 height: 100%;
                 margin-left: 10px;
                 p:nth-child(1) {
-                  font-size: 26px;
                   font-weight: bold;
                 }
                 p:nth-child(2) {

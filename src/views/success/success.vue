@@ -2,7 +2,7 @@
   <div class="success">
     <p v-if="success">激活成功</p>
     <p v-if="!success">激活失败</p>
-    <p v-if="success">3秒后自动关闭...</p>
+    <p v-if="success">3秒后自动返回首页...</p>
   </div>
 </template>
 

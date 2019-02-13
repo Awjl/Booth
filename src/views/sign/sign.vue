@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="signBgList" v-if="userID">
-        <p>注册成功！</p>
+        <p>注册成功</p>
         <div class="btnEmial" @click="verification">邮箱验证并完善资料</div>
         <div class="EmialText">
           <p>验证邮件已发送至您的邮箱</p>
@@ -120,7 +120,7 @@ export default {
         this.usernameErr = "";
       }
       if (!this.user.password) {
-        this.passwordErr = "请输入用户名";
+        this.passwordErr = "请输入密码";
       } else {
         this.passwordErr = "";
       }

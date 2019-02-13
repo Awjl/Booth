@@ -114,6 +114,12 @@ export default {
     };
   },
   created() {
+    if (!this.$store.state.user.UserID) {
+      this.$router.push({
+        name: `loginList`,
+      });
+      return
+    }
     window.scrollTo(0, 0);
     this._getCollectionRecord();
     this._getIndustry();

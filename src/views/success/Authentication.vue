@@ -57,7 +57,7 @@ export default {
       name: "",
       way: "",
       type: "",
-      id: this.$route.query.id 
+      id: this.$route.query.id
     };
   },
   created() {
@@ -85,14 +85,20 @@ export default {
   },
   methods: {
     toTrue() {
-      if (this.way === 2) {
+      if (this.way == 2) {
         isAgreeMsg(this.token, 1).then(res => {
-          alert("点击成功");
+          alert("您已接受其通知关系");
+          this.$router.push({
+            path: `/home`
+          });
         });
       } else {
         if (this.id) {
           isAgreeMsg(this.token, 1, this.id).then(res => {
-            alert("点击成功");
+            alert("您已拒绝其通知关系");
+            this.$router.push({
+              path: `/home`
+            });
           });
         } else {
           this.$router.push({
@@ -102,14 +108,20 @@ export default {
       }
     },
     toOver() {
-      if (this.way === 2) {
+      if (this.way == 2) {
         isAgreeMsg(this.token, 2).then(res => {
-          console.log(res);
+          alert("您拒绝其通知关系");
+          this.$router.push({
+            path: `/home`
+          });
         });
       } else {
         if (this.id) {
-          isAgreeMsg(this.token, 2, id).then(res => {
-            console.log(res);
+          isAgreeMsg(this.token, 2, this.id).then(res => {
+            alert("您已拒绝其通知关系");
+            this.$router.push({
+              path: `/home`
+            });
           });
         } else {
           this.$router.push({

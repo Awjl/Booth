@@ -12,11 +12,11 @@
       </div>
       <div class="signBgMain">
         <div class="signBgMainLeft">
-          <div class="signBgMainList">基础信息</div>
-          <div class="signBgMainList">行业及商业伙伴</div>
-          <div class="signBgMainList">其他信息</div>
-          <div class="signBgMainList ListAct">形象展示</div>
-          <div class="signBgMainList">信息核对</div>
+          <div class="signBgMainList" @click="toOne">基础信息</div>
+          <div class="signBgMainList" @click="toTwo">行业及商业伙伴</div>
+          <div class="signBgMainList" @click="toThree">其他信息</div>
+          <div class="signBgMainList ListAct" @click="toFour">形象展示</div>
+          <div class="signBgMainList" @click="toFive">信息核对</div>
         </div>
         <div class="signBgMainRight">
           <div class="signBgFourMainList">
@@ -117,22 +117,27 @@ export default {
   created() {
     this.logoImg = this.$store.state.userData.logoPicUrl;
     this.introduceImg = this.$store.state.userData.introductionPicUrl;
-    console.log(this.$store.state.userData.introductionPic, this.$store.state.userData.logoPic);
+    console.log(
+      this.$store.state.userData.introductionPic,
+      this.$store.state.userData.logoPic
+    );
     this._getAllProducts();
   },
   methods: {
     _deleteProduct(id) {
       deleteProduct(id).then(res => {
         if (res.data.code === 0) {
-          console.log("删除成功");
           this._getAllProducts();
         }
       });
     },
     _getAllProducts() {
-      getAllProducts(this.$store.state.user.UserID).then(res => {
+      getAllProducts(
+        this.$store.state.user.UserID,
+        this.$store.state.user.UserID
+      ).then(res => {
         if (res.data.code === 0) {
-          console.log(res.data.data);
+          console.log("获取全部产品手册---------------------");
           this.AllProducts = res.data.data;
         }
       });
@@ -164,6 +169,7 @@ export default {
         this.$store.state.userData.linkman &&
         this.$store.state.userData.mobile &&
         this.$store.state.userData.linkmanEmail &&
+        this.$store.state.userData.address &&
         emli.test(this.$store.state.userData.linkmanEmail)
       ) {
         if (this.$store.state.userData.twoIndustry) {
@@ -346,6 +352,51 @@ export default {
       this.$router.push({
         path: `/home`
       });
+    },
+    toOne() {
+      this.$store.commit("SET_logoPicUrl", this.logoImg);
+      this.$store.commit("SET_introductionPicUrl", this.introduceImg);
+      this.$store.commit("SET_logoPic", this.uplogoImg);
+      this.$store.commit("SET_introductionPic", this.upintroduceImg);
+      this.$router.push({
+        path: `/infoOne`
+      });
+    },
+    toTwo() {
+      this.$store.commit("SET_logoPicUrl", this.logoImg);
+      this.$store.commit("SET_introductionPicUrl", this.introduceImg);
+      this.$store.commit("SET_logoPic", this.uplogoImg);
+      this.$store.commit("SET_introductionPic", this.upintroduceImg);
+      this.$router.push({
+        path: `/infoTwo`
+      });
+    },
+    toThree() {
+      this.$store.commit("SET_logoPicUrl", this.logoImg);
+      this.$store.commit("SET_introductionPicUrl", this.introduceImg);
+      this.$store.commit("SET_logoPic", this.uplogoImg);
+      this.$store.commit("SET_introductionPic", this.upintroduceImg);
+      this.$router.push({
+        path: `/infoThree`
+      });
+    },
+    toFour() {
+      this.$store.commit("SET_logoPicUrl", this.logoImg);
+      this.$store.commit("SET_introductionPicUrl", this.introduceImg);
+      this.$store.commit("SET_logoPic", this.uplogoImg);
+      this.$store.commit("SET_introductionPic", this.upintroduceImg);
+      this.$router.push({
+        path: `/infoFour`
+      });
+    },
+    toFive() {
+      this.$store.commit("SET_logoPicUrl", this.logoImg);
+      this.$store.commit("SET_introductionPicUrl", this.introduceImg);
+      this.$store.commit("SET_logoPic", this.uplogoImg);
+      this.$store.commit("SET_introductionPic", this.upintroduceImg);
+      this.$router.push({
+        path: `/infoFive`
+      });
     }
   },
   components: {
@@ -405,7 +456,7 @@ export default {
           font-size: 16px;
           color: #ddd;
           margin-bottom: 20px;
-          // cursor: pointer;
+          cursor: pointer;
         }
         .ListAct {
           color: #fff;

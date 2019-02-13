@@ -33,6 +33,13 @@
         <HomeRight></HomeRight>
       </div>
     </div>
+    <div class="boxLoing" v-if="showBox">
+      <p>您还未登陆，是否去登陆？</p>
+      <div>
+        <span @click="quxiao">取消</span>
+        <span @click="tologinList">去登陆</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -54,12 +61,13 @@ export default {
   name: "home",
   data() {
     return {
+      showBox: false,
       listImg: [],
       dataList: {}
     };
   },
   created() {
-        window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
     getIndexBanner().then(res => {
       if (res.status === ERR_OK) {
         this.listImg = res.data.data;
@@ -111,6 +119,14 @@ export default {
       this.$router.push({
         name: `infoOne`
       });
+    },
+    tologinList() {
+      this.$router.push({
+        name: `loginList`
+      });
+    },
+    quxiao() {
+      this.showBox = false;
     }
   },
   components: {

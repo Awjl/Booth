@@ -12,11 +12,11 @@
       </div>
       <div class="signBgMainFive">
         <div class="signBgMainFiveLeft">
-          <div class="signBgMainFiveList">基础信息</div>
-          <div class="signBgMainFiveList">行业及商业伙伴</div>
-          <div class="signBgMainFiveList">其他信息</div>
-          <div class="signBgMainFiveList">形象展示</div>
-          <div class="signBgMainFiveList ListAct">信息核对</div>
+          <div class="signBgMainFiveList" @click="toOne">基础信息</div>
+          <div class="signBgMainFiveList" @click="toTwo">行业及商业伙伴</div>
+          <div class="signBgMainFiveList" @click="toThree">其他信息</div>
+          <div class="signBgMainFiveList" @click="toFour">形象展示</div>
+          <div class="signBgMainFiveList ListAct" @click="toFive">信息核对</div>
         </div>
         <div class="signBgMainFiveRight">
           <div class="top">
@@ -220,6 +220,7 @@ export default {
         this.$store.state.userData.linkman &&
         this.$store.state.userData.mobile &&
         this.$store.state.userData.linkmanEmail &&
+        this.$store.state.userData.address &&
         emli.test(this.$store.state.userData.linkmanEmail)
       ) {
         if (this.$store.state.userData.twoIndustry) {
@@ -302,6 +303,31 @@ export default {
       this.$router.push({
         path: `/infofour`
       });
+    },
+    toOne() {
+      this.$router.push({
+        path: `/infoOne`
+      });
+    },
+    toTwo() {
+      this.$router.push({
+        path: `/infoTwo`
+      });
+    },
+    toThree() {
+      this.$router.push({
+        path: `/infoThree`
+      });
+    },
+    toFour() {
+      this.$router.push({
+        path: `/infoFour`
+      });
+    },
+    toFive() {
+      this.$router.push({
+        path: `/infoFive`
+      });
     }
   }
 };
@@ -356,7 +382,7 @@ export default {
           font-size: 16px;
           color: #ddd;
           margin-bottom: 20px;
-          // cursor: pointer;
+          cursor: pointer;
         }
         .ListAct {
           color: #fff;
@@ -420,13 +446,13 @@ export default {
                 margin-bottom: 10px;
               }
               input {
-                  color: #fff;
-                  padding: 0 5px;
-                  height: 30px;
-                  line-height: 30px;
-                  font-size: 10px;
-                  background: rgba($color: #ffffff, $alpha: 0.5);
-                }
+                color: #fff;
+                padding: 0 5px;
+                height: 30px;
+                line-height: 30px;
+                font-size: 10px;
+                background: rgba($color: #ffffff, $alpha: 0.5);
+              }
             }
           }
         }

@@ -1,10 +1,11 @@
 <template>
   <div class="choice">
     <div class="searchBox">
-      <input type="text" placeholder="搜索你感兴趣的企业/展会" v-model="searchData">
+      <input type="text" placeholder="搜索你感兴趣的企业/展会" v-model="searchData" @keyup.enter="toSearch">
       <i class="icon iconSearch" @click="toSearch"></i>
     </div>
-    <div class="choiceBox" @click="choiceShow()">选择你的所属行业 Selected list item
+    <p style="color:#fff;  text-align: center;margin: 6px 0;font-size:10px;">or/或</p>
+    <div class="choiceBox" @click="choiceShow()">选择您的所属行业 Select your industry
       <div class="choiceList" v-if="choiceBoxshow">
         <div
           class="choiceItem"
@@ -115,10 +116,9 @@ export default {
     width: 248px;
     height: 40px;
     line-height: 40px;
-    margin-top: 10px;
     background: #fff;
     text-align: center;
-    font-size: 14px;
+    font-size: 10px;
     color: #326b90;
     cursor: pointer;
     position: relative;

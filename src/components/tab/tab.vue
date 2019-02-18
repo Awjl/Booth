@@ -3,9 +3,24 @@
     <div class="tabLogo">
       <img src="../../assets/images/home/logo.png" alt @click="toHome">
       <div class="tabSearch">
-        <input type="text" placeholder="搜索你感兴趣的企业/展会" v-model="searchData">
+        <input type="text" placeholder="搜索你感兴趣的企业/展会" v-model="searchData" @keyup.enter="toSearch">
         <i class="icon iconSearch" @click="toSearch"></i>
       </div>
+      <select v-model="One" @change="currentSel">
+        <option
+          v-for="(items, index) in industryData"
+          :key="index"
+          :value="items.id"
+        >{{items.industryName}}</option>
+      </select>
+      <select v-model="Two">
+        <option
+          v-for="(items, index) in items"
+          :key="index"
+          :value="items.id"
+        >{{items.industryName}}</option>
+      </select>
+      <div class="TabBtn" @click="TabClick">切换</div>
     </div>
     <div class="tabLoging">
       <div @click="toHome">首页</div>
@@ -14,7 +29,7 @@
       <div @click="toNews">消息</div>
       <div @click="toSign" v-if="!this.$store.state.user.UserID">注册</div>
       <div @click="ShowLogin" v-if="!this.$store.state.user.UserID">登陆</div>
-      <div class="HeadImg HeadImgLogo" v-if="!this.$store.state.user.UserID">
+      <div class="HeadImg HeadImgLogo" v-if="!this.$store.state.user.UserID" @click="ShowLogin">
         <img src="../../assets/images/icon/man.png" alt>
       </div>
       <div class="HeadImg" @click="toCore" v-if="this.$store.state.user.UserID">
@@ -32,6 +47,9 @@
 </template>
 
 <script>
+import { getIndustry, ERR_OK } from "@/api/api.js";
+import { setOne, setTwo, getOne, getTwo } from "@/utils/auth.js";
+
 export default {
   name: "tab",
   data() {
@@ -39,10 +57,37 @@ export default {
       showBox: false,
       LoginState: true,
       SignState: true,
-      searchData: ""
+      industryData: [],
+      items: [],
+      searchData: "",
+      One: getOne(),
+      Two: getTwo()
     };
   },
+  created() {
+    this._getIndustry();
+  },
   methods: {
+    _getIndustry() {
+      getIndustry().then(res => {
+        if (res.status === ERR_OK) {
+          this.industryData = res.data.data;
+          this.items = this.industryData[this.One - 1].secondIndustries;
+        }
+      });
+    },
+    currentSel() {
+      this.Two = ""
+      this.items = this.industryData[this.One - 1].secondIndustries;
+    },
+    TabClick() {
+      console.log('切换')
+      console.log(this.One)
+      console.log(this.Two)
+      this.$router.go(0);
+      setOne(this.One);
+      setTwo(this.Two);
+    },
     toExhibition() {
       this.$router.push({
         path: `/exhibition`
@@ -143,6 +188,22 @@ export default {
   .tabLogo {
     display: flex;
     align-items: center;
+    select {
+      width: 100px;
+      height: 32px;
+      border: 1px solid #fff;
+      background: initial;
+      outline: none;
+      margin-left: 10px;
+    }
+    .TabBtn {
+      margin-left: 10px;
+      padding: 4px 10px;
+      background: #000;
+      color: #fff;
+      font-size: 10px;
+      cursor: pointer;
+    }
     img {
       cursor: pointer;
     }

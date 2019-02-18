@@ -39,6 +39,14 @@ export default new Router({
       }
     },
     {
+      path: "/forgetPass",
+      name: "forgetPass",
+      component: () => import("./views/sign/forgetPass.vue"),
+      meta: {
+        title: "修改密码"
+      }
+    },
+    {
       path: "/register",
       name: "register",
       component: () => import("./views/register/Forregister.vue"),

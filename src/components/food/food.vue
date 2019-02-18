@@ -5,10 +5,10 @@
     </div>
     <div class="foodshare">
       <p>
-        Basics contains components and complex blocks which can easily be
-        untegrated
+        上海麦屿信息科技有限公司
       </p>
-      <p>into almost any design</p>
+      <p>联系邮箱：hi@booth.vip</p>
+      <p>联系电话：待定</p>
       <p>
         <img src="../../assets/images/home/f.png" alt />
         <img src="../../assets/images/home/t.png" alt />

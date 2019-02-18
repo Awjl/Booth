@@ -29,7 +29,7 @@
           <p class="Err">{{codeERR}}</p>
         </div>
         <div class="forgetPass">
-          <span>忘记密码？</span>
+          <span @click="Toforget">忘记密码？</span>
         </div>
         <div class="LoginBtn">
           <span @click="_login">确认</span>
@@ -109,6 +109,11 @@ export default {
         if (res.data.code === 500504) {
           this.usernameERR = res.data.msg;
         }
+      });
+    },
+    Toforget() {
+      this.$router.push({
+        path: `/forgetPass`
       });
     },
     closeLogin() {

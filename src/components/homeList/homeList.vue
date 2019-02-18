@@ -32,7 +32,7 @@
                 </div>
               </div>
               <div class="exhibitionTime">
-                <span>{{item.participation.date}}</span>
+                <span>{{item.participation.dateEng}}</span>
                 <div class="exhibitionDetali">
                   <i class="icon iconTo"></i>
                 </div>
@@ -142,20 +142,20 @@ export default {
       // if (!this.$store.state.user.UserID) {
       //   this.showBox = true;
       // } else {
-        this.$router.push({
-          path: `/othercore`,
-          query: { id: id }
-        });
+      this.$router.push({
+        path: `/othercore`,
+        query: { id: id }
+      });
       // }
     },
     toExt(id) {
       // if (!this.$store.state.user.UserID) {
       //   this.showBox = true;
       // } else {
-        this.$router.push({
-          path: `/exhibitionDetails`,
-          query: { id: id }
-        });
+      this.$router.push({
+        path: `/exhibitionDetails`,
+        query: { id: id }
+      });
       // }
     },
     followId(id) {
@@ -201,12 +201,12 @@ export default {
 <style lang="scss">
 .homeList {
   width: 100%;
-  background: #fff;
-  padding: 20px;
-  box-sizing: border-box;
   .homleListItem {
     width: 100%;
-    margin-bottom: 60px;
+    margin-bottom: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+    background: #fff;
     .homeListHead {
       display: flex;
       justify-content: space-between;
@@ -284,10 +284,11 @@ export default {
                 display: flex;
                 text-align: right;
                 align-items: center;
-                width: 90px;
+                // width: 90px;
                 height: 52px;
                 font-weight: bold;
                 font-size: 12px;
+                margin-right: 4px;
               }
               .exhibitionDetali {
                 width: 26px;

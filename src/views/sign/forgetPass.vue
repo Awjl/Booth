@@ -2,16 +2,12 @@
   <div class="signDetails">
     <div class="signBg">
       <div class="signBgName">
-        <p>登陆booth</p>
+        <p>修改密码</p>
       </div>
       <div class="LoginInput">
         <div class="inpList">
           <input type="text" placeholder="企业名称" v-model="UserData.username">
           <p class="Err">{{usernameERR}}</p>
-        </div>
-        <div class="inpList">
-          <input type="password" placeholder="密码" v-model="UserData.password">
-          <p class="Err">{{passwordERR}}</p>
         </div>
         <div class="inpList">
           <p class="inpText">验证码已发送您注册的邮箱中</p>
@@ -20,7 +16,7 @@
           <p class="Err">{{codeERR}}</p>
         </div>
         <div class="forgetPass">
-          <span @click="Toforget">忘记密码？</span>
+          <span @click="ToLogin">去登陆</span>
           <span @click="ToSign">去注册</span>
         </div>
         <div class="LoginBtn">
@@ -37,7 +33,7 @@
 </template>
 
 <script>
-import { login, sendCode, ERR_OK } from "@/api/api.js";
+import { matchCode, sendCode, ERR_OK } from "@/api/api.js";
 import { setUser, setOne, setTwo } from "@/utils/auth.js";
 export default {
   name: "sign",
@@ -49,7 +45,6 @@ export default {
       codeERR: "",
       UserData: {
         username: "",
-        password: "",
         code: ""
       }
     };
@@ -62,11 +57,6 @@ export default {
       } else {
         this.usernameERR = "";
       }
-      if (!this.UserData.password) {
-        this.passwordERR = "请输入密码";
-      } else {
-        this.passwordERR = "";
-      }
       if (!this.UserData.code) {
         this.codeERR = "请输入验证码";
       } else {
@@ -74,31 +64,11 @@ export default {
       }
       if (
         this.UserData.username &&
-        this.UserData.password &&
         this.UserData.code
       ) {
-        login(this.UserData).then(res => {
-          if (res.data.code === 500505) {
-            this.codeERR = res.data.msg;
-          }
-          if (res.data.code === 500500) {
-            this.passwordERR = res.data.msg;
-          }
+        matchCode(this.UserData).then(res => {
           if (res.data.code === 0) {
-            this.closeLogin();
-            if (res.data.data.isRegister === 2) {
-              setUser(res.data.data.id);
-              setOne(res.data.data.oneIndustryid);
-              setTwo(res.data.data.twoIndustryid);
-              this.$router.push({
-                name: `home`
-              });
-            } else {
-              this.$router.push({
-                name: `infoOne`,
-                params: { id: res.data.data.id }
-              });
-            }
+           
           }
         });
       }
@@ -110,18 +80,15 @@ export default {
         }
       });
     },
+    ToLogin() {
+      this.$router.push({
+        path: `/loginList`
+      });
+    },
     ToSign() {
       this.$router.push({
         path: `/sign`
       });
-    },
-    Toforget() {
-      this.$router.push({
-        path: `/forgetPass`
-      });
-    },
-    closeLogin() {
-      this.$emit("closeLogin", this.close);
     }
   }
 };

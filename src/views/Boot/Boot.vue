@@ -1,7 +1,7 @@
 <template>
   <div class="boot">
     <div class="bootLogo"><div class="logo"></div></div>
-    <div class="bootBg"><Choice v-on:cliceToBooth="cliceToBooth"></Choice></div>
+    <div class="bootBg" ><Choice v-on:cliceToBooth="cliceToBooth"></Choice></div>
     <div class="bootFoot">
       <div class="footImg">
         <img src="../../assets/images/guide/item1.png" alt="" />
@@ -14,7 +14,7 @@
         <img src="../../assets/images/guide/item8.png" alt="" />
         <img src="../../assets/images/guide/item9.png" alt="" />
       </div>
-      <div class="footText">Shanghai maiyu technology co.LTD</div>
+      <div class="footText">上海麦屿信息科技有限公司</div>
     </div>
     <div class="bootBox" v-if="title">
       <p class="black" @click="heavy()">
@@ -104,7 +104,7 @@ export default {
     position: fixed;
     left: 0;
     right: 0;
-    top: 0;
+    top: -10px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;

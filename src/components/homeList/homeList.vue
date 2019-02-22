@@ -14,7 +14,7 @@
           >+ 已关注</div>
         </div>
         <div class="homeListTitle">
-          <div class="name">{{item.user.name}}</div>
+          <div class="name" @click="toOthercore(item.user.id)">{{item.user.name}}</div>
           <div class="nameEN">{{item.user.fansNumber}}关注者</div>
           <p class="industry">{{item.user.industryName}}</p>
           <div
@@ -136,7 +136,7 @@ export default {
         this.throwError("不能使用这种方法复制内容" + err.toString());
       }
       document.body.removeChild(textArea);
-      alert("复制成功!");
+      alert("企业连接已复制!");
     },
     toOthercore(id) {
       // if (!this.$store.state.user.UserID) {
@@ -235,6 +235,7 @@ export default {
         margin: 0 10px;
         .name {
           font-size: 24px;
+          cursor: pointer;
         }
         .nameEN {
           margin: 4px 0;

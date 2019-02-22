@@ -40,11 +40,11 @@
             <div class="coreAboutlist">{{datalist.user.address}}</div>
             <div class="coreAboutTtile">公司规模</div>
             <div class="coreAboutlist">
-              <span v-if="datalist.user.member == 1">10-50</span>
-              <span v-if="datalist.user.member == 2">50-100</span>
-              <span v-if="datalist.user.member == 3">100-200</span>
-              <span v-if="datalist.user.member == 4">200-500</span>
-              <span v-if="datalist.user.member == 5">500以上</span>
+              <span v-if="datalist.user.member == 1">1-20</span>
+              <span v-if="datalist.user.member == 2">21-100</span>
+              <span v-if="datalist.user.member == 3">101-1000</span>
+              <span v-if="datalist.user.member == 4">1000+</span>
+              <span v-if="datalist.user.member == 5">10000+</span>
             </div>
             <div class="coreAboutTtile">专注领域</div>
             <div class="coreAboutlist">
@@ -238,7 +238,7 @@ export default {
         this.throwError("不能使用这种方法复制内容" + err.toString());
       }
       document.body.removeChild(textArea);
-      alert("复制成功!");
+      alert("企业连接已复制!");
     },
     lookImg(url, id) {
       this.imgBoxShow = !this.imgBoxShow;

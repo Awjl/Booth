@@ -36,7 +36,7 @@
       <div class="signBgLogo">
         <img src="../../assets/images/home/logo.png" alt>
         <p>博商供应链</p>
-        <div class="foot">Shanghai maiyu technology co.LTD</div>
+        <div class="foot">上海麦屿信息科技有限公司</div>
       </div>
     </div>
     <div class="signBox" v-if="successbox">
@@ -222,6 +222,7 @@ export default {
         }
         .LoginBtn {
           text-align: center;
+          margin-top: 50px;
           span {
             background: #000;
             padding: 6px 26px;

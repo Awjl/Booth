@@ -225,7 +225,7 @@ export default {
         this.throwError("不能使用这种方法复制内容" + err.toString());
       }
       document.body.removeChild(textArea);
-      alert("复制成功!");
+      alert("企业连接已复制!");
     }
   }
 };

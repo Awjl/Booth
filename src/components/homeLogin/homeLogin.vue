@@ -70,7 +70,7 @@
                 <img :src="`${item.user.logoUrl}`" alt>
               </div>
               <div class="enterpriseItemLeftTitle">
-                <p>{{item.user.name}}</p>
+                <p @click="toOthercore(item.user.id)">{{item.user.name}}</p>
                 <p>{{item.user.fansNumber}}位关注者</p>
                 <p>{{item.user.industryName}}</p>
               </div>
@@ -172,7 +172,7 @@ export default {
         this.throwError("不能使用这种方法复制内容" + err.toString());
       }
       document.body.removeChild(textArea);
-      alert("复制成功!");
+      alert("企业连接已复制!");
     },
     toOthercore(id) {
       // if (!this.$store.state.user.UserID) {
@@ -404,6 +404,7 @@ export default {
             p:nth-child(1) {
               font-size: 18px;
               font-weight: bold;
+              cursor: pointer;
             }
             p:nth-child(2) {
               font-size: 14px;

@@ -10,7 +10,7 @@
           <p>目前只开放企业用户注册</p>
         </div>
       </div>
-      <div class="signBgMain">
+      <div class="signBgMain" @click="inputFun">
         <div class="signBgMainLeft">
           <div class="signBgMainList ListAct" @click="toOne">基础信息</div>
           <div class="signBgMainList" @click="toTwo">行业及商业伙伴</div>
@@ -29,7 +29,7 @@
                   class="SearchIndustryList"
                   v-for="(item, index) in serachList"
                   :key="index"
-                  @click="tureBoxOne(item)"
+                  @click.stop="tureBoxOne(item)"
                 >{{item.screenName}}</div>
               </div>
             </div>
@@ -39,13 +39,13 @@
               <input type="text" v-model="userData.nameEng">
             </div>
             <div class="signBgMainRightItem">
-              <p>人数规模（勾选）</p>
+              <p>人数规模</p>
               <select v-model="userData.member">
-                <option value="1">10-50</option>
-                <option value="2">50-100</option>
-                <option value="3">100-200</option>
-                <option value="4">200-500</option>
-                <option value="5">500以上</option>
+                <option value="1">1-20</option>
+                <option value="2">21-100</option>
+                <option value="3">101-1000</option>
+                <option value="4">1000+</option>
+                <option value="5">10000+</option>
               </select>
             </div>
             <div class="signBgMainRightItem">
@@ -59,7 +59,7 @@
               <input type="text" v-model="userData.linkman">
             </div>
             <div class="signBgMainRightItem">
-              <p>联系人职位（勾选）</p>
+              <p>联系人职责</p>
               <select v-model="userData.position">
                 <option value="1">市场及销售</option>
                 <option value="2">采购</option>
@@ -200,7 +200,8 @@ export default {
         this.$store.state.userData.nameEng &&
         this.$store.state.userData.linkman &&
         this.$store.state.userData.mobile &&
-        this.$store.state.userData.linkmanEmail &&this.$store.state.userData.address &&
+        this.$store.state.userData.linkmanEmail &&
+        this.$store.state.userData.address &&
         emli.test(this.$store.state.userData.linkmanEmail)
       ) {
         if (this.$store.state.userData.twoIndustry) {
@@ -219,15 +220,20 @@ export default {
       }, 1000);
     },
     tureBoxOne(item) {
-      console.log(item);
-      this.userData.name = item.screenName;
-      this.userData.address = item.address;
+      console.log();
+      if (item) {
+        this.userData.name = item.screenName;
+        this.userData.address = item.address;
+      }
       this.serachList = [];
     },
     inputFunc() {
       // 搜索 1
       clearInterval(this.timer);
       this.setTime();
+    },
+    inputFun() {
+      this.serachList = [];
     },
     preservation() {
       this.$store.commit("SET_NAME", this.userData.name);

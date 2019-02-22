@@ -84,6 +84,9 @@ export default {
           if (res.data.code === 500505) {
             this.codeERR = res.data.msg;
           }
+          if (res.data.code === 500506) {
+            this.codeERR = res.data.msg;
+          }
           if (res.data.code === 500500) {
             this.passwordERR = res.data.msg;
           }

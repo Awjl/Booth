@@ -21,7 +21,7 @@
         <div class="signBgMainRightTwo">
           <div class="signBgMainListRight">
             <div class="signBgMainTRightItem" @click.stop="showBoxList">
-              <p>行业类型（勾选）</p>
+              <p>行业类型</p>
               <input type="text" disabled="true" v-model="name">
               <p class="Err">{{IndustryERR}}</p>
               <div class="Industry" v-if="stateBox">

@@ -27,7 +27,6 @@
               :key="index"
             >{{ items.industryName }}</div>
           </div>
-          <!-- <div class="enterpriseMianthree">三级分类</div> -->
         </div>
         <div class="enterpriseList">
           <div class="enterpriseItem ItemAct" @click="toEnterprise">发现</div>
@@ -50,7 +49,7 @@
                 class="follow"
                 v-if="item.isConcerned === 1"
                 @click="cancelfollowId(item.user.id)"
-              >+ 已关注</div>
+              >已关注</div>
             </div>
             <div class="homeListTitle">
               <div class="name">{{item.user.name}}</div>
@@ -144,11 +143,17 @@ export default {
   created() {
     if (!this.$store.state.user.UserID) {
       this.$router.push({
-        name: `loginList`,
+        name: `loginList`
       });
-      return
+      return;
     }
     window.scrollTo(0, 0);
+    if (this.$route.query.Oneid) {
+      this.infoData.firstIndustryId = this.$route.query.Oneid;
+    }
+    if (this.$route.query.Twoid) {
+      this.infoData.secondIndustryId = this.$route.query.Twoid;
+    }
     getAdvert(this.$store.state.userData.twoIndustry).then(res => {
       if (res.status === 200) {
         this.dataAll = res.data.data;
@@ -191,6 +196,7 @@ export default {
         }
       });
     },
+    
     copyUrl(id) {
       // var clipBoardContent = "";
       let url = `http://47.101.165.134/#/othercore?id=${id}`;

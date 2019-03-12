@@ -12,7 +12,7 @@
         class="btn"
         v-if="datalist.isConcerned === 1"
         @click="cancelfollowId(datalist.user.id)"
-      >+ 已关注</div>
+      >已关注</div>
     </div>
     <div class="othercoreMain">
       <div class="othercoreAbout">
@@ -82,7 +82,7 @@
                   class="follow"
                   v-if="datalist.isConcerned === 1"
                   @click="cancelfollowId(datalist.user.id)"
-                >+ 已关注</div>
+                >已关注</div>
               </div>
               <div class="homeListTitle">
                 <div class="name">{{datalist.user.name}}</div>

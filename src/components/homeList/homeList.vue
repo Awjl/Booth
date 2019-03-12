@@ -11,12 +11,15 @@
             class="follow"
             v-if="item.isConcerned === 1"
             @click="cancelfollowId(item.user.id)"
-          >+ 已关注</div>
+          >已关注</div>
         </div>
         <div class="homeListTitle">
           <div class="name" @click="toOthercore(item.user.id)">{{item.user.name}}</div>
           <div class="nameEN">{{item.user.fansNumber}}关注者</div>
-          <p class="industry">{{item.user.industryName}}</p>
+          <p
+            class="industry"
+            @click="toSeach(item.user.oneIndustryid, item.user.twoIndustryid)"
+          >{{item.user.industryName}}</p>
           <div
             class="exhibition"
             v-if="item.participation !== null"
@@ -138,6 +141,15 @@ export default {
       document.body.removeChild(textArea);
       alert("企业连接已复制!");
     },
+    toSeach(one, two) {
+      this.$router.push({
+        path: `/enterprise`,
+        query: {
+          Oneid: one,
+          Twoid: two
+        }
+      });
+    },
     toOthercore(id) {
       // if (!this.$store.state.user.UserID) {
       //   this.showBox = true;
@@ -244,6 +256,7 @@ export default {
           color: #326b90;
           font-weight: bold;
           font-size: 12px;
+          cursor: pointer;
         }
         .exhibition {
           width: 80%;

@@ -185,9 +185,9 @@ export default {
   created() {
     if (!this.$store.state.user.UserID) {
       this.$router.push({
-        name: `loginList`,
+        name: `loginList`
       });
-      return
+      return;
     }
     window.scrollTo(0, 0);
     this._getCompanyInfo();
@@ -270,9 +270,11 @@ export default {
 
 <style lang="scss" scoped>
 .core {
-  padding: 30px 20px;
-  box-sizing: border-box;
+  // padding: 30px 20px;
+  // box-sizing: border-box;
   .coreHeard {
+    padding: 30px 20px;
+    box-sizing: border-box;
     display: flex;
     .coreHeardLogo {
       width: 170px;
@@ -294,14 +296,16 @@ export default {
           width: 100%;
           padding-left: 30px;
           box-sizing: border-box;
+          color: #fff;
           .coreNamehead {
             width: 100%;
             display: flex;
             justify-content: space-between;
+            color: #fff;
             div {
               p {
                 margin-top: 4px;
-                color: #648aa2;
+                color: #326b90;
               }
               p:nth-child(2) {
                 cursor: pointer;
@@ -314,7 +318,7 @@ export default {
           }
           .Industry {
             margin-top: 10px;
-            color: #648aa2;
+            color: #326b90;
           }
         }
       }
@@ -339,7 +343,7 @@ export default {
             width: 100%;
             text-align: right;
             font-size: 28px;
-            color: #2c73a1;
+            color: #326b90;
             margin-bottom: 20px;
           }
           .overBox {
@@ -356,6 +360,8 @@ export default {
     }
   }
   .coreMain {
+    padding: 30px 20px;
+    box-sizing: border-box;
     display: flex;
     width: 100%;
     margin-top: 80px;

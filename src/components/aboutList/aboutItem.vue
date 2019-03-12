@@ -28,11 +28,11 @@
             </div>
             <div class="brochuremover">
               <span>谁读过</span>
-              <span @click="toMover(id)">了解更多</span>
+              <span @click="toHistory()">了解更多</span>
             </div>
             <div class="brochureReadLsit">
               <p v-if=" item.users.length === 0">暂无数据</p>
-              <div v-for="(item, index) in item.users" :key="index">
+              <div v-for="(item, index) in item.users" :key="index" @click="toOthercore(item.id)">
                 <img :src="`${item.logoUrl}`" alt>
               </div>
             </div>
@@ -57,10 +57,10 @@
             <div class="enterpriseItemLeft">
               <div class="enterpriseItemHead">
                 <img src="../../assets/images/home/head2.png" alt v-if="item.isRegister == 1">
-                <img :src="`${item.user.logoUrl}`" alt v-else>
+                <img :src="`${item.user.logoUrl}`" v-else  @click="toOthercore(item.user.id)">
               </div>
               <div class="enterpriseItemLeftTitle">
-                <p v-if="item.user">{{item.user.name}}</p>
+                <p v-if="item.user" @click="toOthercore(item.user.id)">{{item.user.name}}</p>
                 <p v-if="item.user && item.isRegister != 1">{{item.user.fansNumber}}位关注者</p>
                 <p v-if="item.user && item.isRegister != 1">{{item.user.industryName}}</p>
               </div>
@@ -196,11 +196,29 @@ export default {
       });
       window.open(url, "_blank");
     },
+    toHistory() {
+      this.$router.push({
+        path: `/history`
+      });
+    },
     toMover(id) {
       this.$router.push({
         path: `/productList`,
         query: { id: id }
       });
+    },
+    toOthercore(id) {
+      // console.log(id)
+      // if (!this.$store.state.user.UserID) {
+      //   this.showBox = true;
+      // } else {
+      if (id) {
+        this.$router.push({
+          path: `/othercore`,
+          query: { id: id }
+        });
+      }
+      // }
     },
     copyUrl(id) {
       // var clipBoardContent = "";
@@ -337,8 +355,9 @@ export default {
             div {
               margin: 0 1%;
               height: 60px;
+              cursor: pointer;
               img {
-                height: 60px;
+                height:100%;
               }
             }
           }

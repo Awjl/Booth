@@ -15,7 +15,7 @@
       </div>
       <div class="LoginInput">
         <div class="inpList">
-          <input type="text" placeholder="企业名称" v-model="UserData.username">
+          <input type="text" placeholder="邮箱/企业全称登陆" v-model="UserData.username">
           <p class="Err">{{usernameERR}}</p>
         </div>
         <div class="inpList">

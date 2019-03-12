@@ -10,9 +10,6 @@
           <img :src="`${item}`" alt>
         </div>
       </div>
-      <div class="swiper-pagination"></div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
     </div>
     <div class="signUp" @click="showBox">参加报名</div>
     <div class="exhibitionTitle">
@@ -34,7 +31,7 @@
     </div>
     <div class="exhibitionDetailsList">
       <div class="TitleHead TitleHeadOne">
-        <span :class="{act: indexType}" @click="TabNav(1)">参展商列表</span>
+        <span :class="{act: indexType}" @click="TabNav(1)">参展商</span>
         <span :class="{act: !indexType}" @click="TabNav(2)">到访商</span>
         <div class="inputBox">
           <input type="text" placeholder="搜索展位/展商" v-model="content">
@@ -235,24 +232,24 @@ export default {
     this._getAllVisitors();
   },
   updated() {
-    let _this = this;
-    var swiper = new Swiper(".swiper-container", {
-      slidesPerView: 1,
-      spaceBetween: 30,
-      loop: true,
-      autoplay: {
-        delay: 3000,
-        disableOnInteraction: false
-      },
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true
-      },
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev"
-      }
-    });
+    // let _this = this;
+    // var swiper = new Swiper(".swiper-container", {
+    //   slidesPerView: 1,
+    //   spaceBetween: 30,
+    //   loop: true,
+    //   autoplay: {
+    //     delay: 3000,
+    //     disableOnInteraction: false
+    //   },
+    //   pagination: {
+    //     el: ".swiper-pagination",
+    //     clickable: true
+    //   },
+    //   navigation: {
+    //     nextEl: ".swiper-button-next",
+    //     prevEl: ".swiper-button-prev"
+    //   }
+    // });
   },
   methods: {
     _getAllExhibitiors() {

@@ -29,11 +29,11 @@
             </div>
             <div class="brochuremover">
               <span>谁读过</span>
-              <span @click="toMover()">了解更多</span>
+              <span @click="toHistory()">了解更多</span>
             </div>
             <div class="brochureReadLsit">
               <p v-if=" item.users.length === 0">暂无数据</p>
-              <div v-for="(item, index) in item.users" :key="index">
+              <div v-for="(item, index) in item.users" :key="index" @click="toOthercore(item.id)">
                 <img :src="`${item.logoUrl}`" alt>
               </div>
             </div>
@@ -58,10 +58,10 @@
             <div class="enterpriseItemLeft">
               <div class="enterpriseItemHead">
                 <img src="../../assets/images/home/head2.png" alt v-if="item.isRegister == 1">
-                <img :src="`${item.user.logoUrl}`" alt v-else>
+                <img :src="`${item.user.logoUrl}`" alt v-else @click="toOthercore(item.user.id)">
               </div>
               <div class="enterpriseItemLeftTitle">
-                <p v-if="item.user">
+                <p v-if="item.user" @click="toOthercore(item.user.id)">
                   {{item.user.name}}
                   <span
                     v-if="item.user && item.isRegister != 1 && item.isAuth == 0 "
@@ -87,7 +87,11 @@
                   v-if="item.user && item.isRegister != 1 && item.isAuth == 2 "
                   @click="_sendRelationMsg(item.user.id)"
                 >认证</div>
-                <div class="InterestListshare" v-if="item.user && item.isRegister != 1" @click="copyUrl(item.user.id)">分享</div>
+                <div
+                  class="InterestListshare"
+                  v-if="item.user && item.isRegister != 1"
+                  @click="copyUrl(item.user.id)"
+                >分享</div>
                 <div
                   class="InterestListshare"
                   v-if="item.user && item.isRegister == 1"
@@ -247,6 +251,24 @@ export default {
         }
       });
       window.open(url, "_blank");
+    },
+    toHistory() {
+      this.$router.push({
+        path: `/history`
+      });
+    },
+    toOthercore(id) {
+      // if (!this.$store.state.user.UserID) {
+      //   this.showBox = true;
+      // } else {
+      if (id) {
+        this.$router.push({
+          path: `/othercore`,
+          query: { id: id }
+        });
+      }
+
+      // }
     },
     Invitation(name) {
       this.$router.push({
@@ -458,11 +480,15 @@ export default {
             display: flex;
             flex-wrap: wrap;
             font-size: 10px;
+            height: 60px;
+            overflow: hidden;
             div {
-              width: 18%;
               margin: 0 1%;
-              height: 40px;
-              background: #fff;
+              height: 60px;
+              cursor: pointer;
+              img {
+                height: 100%;
+              }
             }
           }
         }
@@ -519,6 +545,7 @@ export default {
       // justify-content: space-between;
       .enterpriseItemHead {
         width: 66px;
+        cursor: pointer;
       }
       .enterpriseItemLeftTitle {
         width: calc(100% - 66px);
@@ -527,6 +554,7 @@ export default {
           font-size: 20px;
           font-weight: bold;
           line-height: 22px;
+          cursor: pointer;
           span {
             font-size: 10px;
             display: inline-block;

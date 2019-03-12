@@ -72,7 +72,7 @@
               <div class="enterpriseItemLeftTitle">
                 <p @click="toOthercore(item.user.id)">{{item.user.name}}</p>
                 <p>{{item.user.fansNumber}}位关注者</p>
-                <p>{{item.user.industryName}}</p>
+                <p  @click="toSeach(item.user.oneIndustryid, item.user.twoIndustryid)">{{item.user.industryName}}</p>
               </div>
             </div>
             <div class="enterpriseItemRight">
@@ -147,6 +147,15 @@ export default {
       getAttention(this.$store.state.user.UserID).then(res => {
         if (res.data.code === 0) {
           this.attentionUserList = res.data.data;
+        }
+      });
+    },
+    toSeach(one, two) {
+      this.$router.push({
+        path: `/enterprise`,
+        query: {
+          Oneid: one,
+          Twoid: two
         }
       });
     },
@@ -414,6 +423,7 @@ export default {
               font-size: 12px;
               margin-top: 6px;
               color: #326b90;
+              cursor: pointer;
             }
           }
         }

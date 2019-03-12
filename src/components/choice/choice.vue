@@ -6,16 +6,17 @@
     </div>
     <p style="color:#fff;  text-align: center;margin: 6px 0;font-size:10px;">or/或</p>
     <div class="choiceBox" @click="choiceShow()">选择您的所属行业 Select your industry
-      <div class="choiceList" v-if="choiceBoxshow">
+      <div class="choiceList" v-if="choiceBoxshow" style="height: 189px;">
         <div
           class="choiceItem"
           v-for="(items, index) in industryData"
           :key="index"
           :class="{ choiceItemHover: index == typeindex }"
           @mouseenter="mouseOver(index, items)"
+          @click.stop="toBooth(items.industryName)"
         >{{ items.industryName }}</div>
       </div>
-      <div class="choiceList" style="left:270px;" v-if="choiceBoxshow">
+      <div class="choiceList" style="left:270px;max-height: 189px;" v-if="choiceBoxshow">
         <div class="choiceListChildren">
           <div
             class="choiceItem"
@@ -71,8 +72,10 @@ export default {
     toBooth(name, id) {
       this.choiceBoxshow = !this.choiceBoxshow;
       this.ToBooth = name;
-      setTwo(id);
-      this.$store.commit("SET_twoIndustry", id);
+      if (id) {
+        setTwo(id);
+        this.$store.commit("SET_twoIndustry", id);
+      }
       this.$emit("cliceToBooth", this.ToBooth);
     },
     toSearch() {
@@ -127,7 +130,7 @@ export default {
       top: 45px;
       left: 0;
       width: 274px;
-      height: 189px;
+      // height: 189px;
       background: #fff;
       box-sizing: border-box;
       overflow: auto;
@@ -137,7 +140,7 @@ export default {
       .choiceItem {
         text-align: left;
         width: 100%;
-        height: 24px;
+        // height: 24px;
         line-height: 24px;
         padding: 0 15px;
         box-sizing: border-box;
@@ -150,14 +153,16 @@ export default {
         }
       }
       .choiceListChildren {
-        height: 100%;
         width: 100%;
-        padding: 10px 15px;
         box-sizing: border-box;
-        // border-left: 1px solid #000;
         background: rgba($color: #326b90, $alpha: 0.2);
+        div:last-child {
+          border-bottom: none;
+        }
         .choiceItem {
-          // margin: 0 10px;
+          margin: 0 10px;
+          width: 90%;
+          box-sizing: border-box;
           padding: 0;
           border-bottom: 1px solid #707070;
           &:nth-child(1) {

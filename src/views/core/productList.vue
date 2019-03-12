@@ -24,7 +24,7 @@
             class="follow"
             v-if="datalist.isConcerned === 1"
             @click="cancelfollowId(datalist.user.id)"
-          >+ 已关注</div>
+          >已关注</div>
         </div>
       </div>
     </div>

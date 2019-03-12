@@ -239,10 +239,6 @@ export default {
       }
     },
     preservation() {
-      this.$store.commit("SET_logoPic", this.uplogoImg);
-      this.$store.commit("SET_introductionPic", this.upintroduceImg);
-      this.$store.commit("SET_logoPicUrl", this.logoImg);
-      this.$store.commit("SET_introductionPicUrl", this.introduceImg);
 
       this.formData.append("id", this.$store.state.user.UserID);
       this.formData.append("name", this.$store.state.userData.name);

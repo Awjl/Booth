@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="signUp" @click="showBox">参加报名</div>
-    <div class="exhibitionTitle">
+    <div class="exhibitionTitle" id="exhibitionTitle">
       <div class="exhibitionLeft">
         <p>{{detailsData.nameEng}}</p>
         <p>{{detailsData.name}}</p>
@@ -25,11 +25,11 @@
         <img :src="`${detailsData.summaryPicture}`" alt>
       </div>
     </div>
-    <div class="TitleHead">展会地图</div>
+    <div class="TitleHead" id="TitleHead">展会地图</div>
     <div class="Map" @click="lookImg(detailsData.mapUrl)">
       <img :src="`${detailsData.mapUrl}`" alt>
     </div>
-    <div class="exhibitionDetailsList">
+    <div class="exhibitionDetailsList" id="exhibitionDetailsList">
       <div class="TitleHead TitleHeadOne">
         <span :class="{act: indexType}" @click="TabNav(1)">参展商</span>
         <span :class="{act: !indexType}" @click="TabNav(2)">到访商</span>
@@ -70,7 +70,7 @@
               <p>{{item.fansNumber}}关注者</p>
               <p>{{item.industryName}}</p>
             </div>
-            <div class="companyItemTwoLeftshare"  v-if="item.isRegister != 1">
+            <div class="companyItemTwoLeftshare" v-if="item.isRegister != 1">
               <div class="InterestListshare" @click="copyUrl(item.id)">分享</div>
               <div class="InterestListSee" @click="toMover(item.id)">查看产品手册</div>
             </div>
@@ -85,11 +85,11 @@
         </div>
       </div>
     </div>
-    <div class="timebox">
+    <div class="timebox" id="timebox">
       <P>{{detailsData.date}}</P>
       <p>{{detailsData.dateEng}}</p>
     </div>
-    <div class="Map1" @click="lookImg(detailsData.trafficUrl)">
+    <div class="Map1" @click="lookImg(detailsData.trafficUrl)" id="Map1">
       <img :src="`${detailsData.trafficUrl}`" alt>
     </div>
     <div class="signUpBox" v-if="show">
@@ -102,8 +102,7 @@
         <div class="signUpBoxList">
           <div class="signUpBoxListItem" v-for="(item, index) in signUp" :key="index">
             <div class="signUpBoxListItemOne">
-              <p>
-                姓名
+              <p>姓名
                 <!-- <span v-if="!item.name" class="Err">未输入</span> -->
               </p>
               <input type="text" v-model="item.name" placeholder="请输入姓名">
@@ -120,15 +119,13 @@
               </select>
             </div>
             <div class="signUpBoxListItemTwo">
-              <p>
-                联系方式
+              <p>联系方式
                 <!-- <span v-if="!item.mobile" class="Err">未输入</span> -->
               </p>
               <input type="text" v-model="item.mobile" placeholder="请输入邮箱或者电话">
             </div>
             <div class="signUpBoxListItemTwo">
-              <p>
-                到场时间
+              <p>到场时间
                 <!-- <span v-if="!item.precentDate" class="Err">未输入</span> -->
               </p>
               <input type="text" v-model="item.precentDate" placeholder="如：2019-01-01">
@@ -137,6 +134,33 @@
         </div>
         <div class="signUpBoxBtn" @click="UpList">确认报名</div>
       </div>
+    </div>
+    <div class="suspensionBox">
+      <div
+        class="suspensionBoxList"
+        :class="{BoxListact: typeIndex == '1'}"
+        @click="TabNavBox('1')"
+      >展会概念</div>
+      <div
+        class="suspensionBoxList"
+        :class="{BoxListact: typeIndex == '2'}"
+        @click="TabNavBox('2')"
+      >展会地图</div>
+      <div
+        class="suspensionBoxList"
+        :class="{BoxListact: typeIndex == '3'}"
+        @click="TabNavBox('3')"
+      >参展列表</div>
+      <div
+        class="suspensionBoxList"
+        :class="{BoxListact: typeIndex == '4'}"
+        @click="TabNavBox('4')"
+      >展会日期</div>
+      <div
+        class="suspensionBoxList"
+        :class="{BoxListact: typeIndex == '5'}"
+        @click="TabNavBox('5')"
+      >展会交通</div>
     </div>
     <div class="sessceBox" v-if="SuccessBox" @click="hideSuccess">恭喜，报名成功！</div>
     <div class="sessceBox" v-if="SuccessBoxImg" @click="hideSuccess">
@@ -175,6 +199,7 @@ export default {
       SuccessBoxImg: false,
       SuccessImg: "",
       indexType: true,
+      typeIndex: "1",
       signUp: [
         {
           exhibitionId: this.$route.query.id,
@@ -280,6 +305,25 @@ export default {
           this.detailsData = res.data.data;
         }
       });
+    },
+    TabNavBox(ind) {
+      this.typeIndex = ind;
+      if (this.typeIndex == "1") {
+        var anchor = document.getElementById("exhibitionTitle");
+        window.scrollTo(0, anchor.offsetTop);
+      } else if (this.typeIndex == "2") {
+        var anchor = document.getElementById("TitleHead");
+        window.scrollTo(0, anchor.offsetTop);
+      } else if (this.typeIndex == "3") {
+        var anchor = document.getElementById("exhibitionDetailsList");
+        window.scrollTo(0, anchor.offsetTop);
+      } else if (this.typeIndex == "4") {
+        var anchor = document.getElementById("timebox");
+        window.scrollTo(0, anchor.offsetTop);
+      } else {
+        var anchor = document.getElementById("Map1");
+        window.scrollTo(0, anchor.offsetTop);
+      }
     },
     Invitation(id) {
       this.inviteTo.relationId = id;
@@ -562,6 +606,31 @@ export default {
       font-size: 10px;
       cursor: pointer;
     }
+  }
+}
+.suspensionBox {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 99;
+  .suspensionBoxList {
+    width: 170px;
+    height: 50px;
+    margin: 10px 0;
+    text-align: center;
+    line-height: 50px;
+    background: #c4d4df;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .BoxListact {
+    background: #326b90;
+    color: #fff;
   }
 }
 .signUp {

@@ -1,41 +1,102 @@
 <template>
   <div class="login">
     <div class="LoginBox">
-      <div class="close" @click="closeSign"><i class="icon iconClose"></i></div>
+      <div class="close" @click="closeSign">
+        <i class="icon iconClose"></i>
+      </div>
       <div class="LoginImg">
-        <img src="../../assets/images/home/signUp.png" alt />
+        <img src="../../assets/images/home/signUp.png" alt>
         <div class="LoginIcon">
-          <img src="../../assets/images/icon/man.png" alt />
+          <img src="../../assets/images/icon/man.png" alt>
         </div>
       </div>
       <div class="LoginInput">
         <div class="inpList">
-          <input type="text" placeholder="企业名称" />
-          <p class="Err">错误</p>
+          <input type="text" placeholder="用户名" v-model="user.nameShort">
+          <p class="Err">{{usernameErr}}</p>
         </div>
         <div class="inpList">
-          <input type="password" placeholder="密码" />
-          <p class="Err">错误</p>
+          <input type="password" placeholder="密码" v-model="user.password">
+          <p class="Err">{{passwordErr}}</p>
         </div>
         <div class="inpList">
-          <input type="text" placeholder="邮箱" />
-          <p class="Err">错误</p>
+          <input type="text" placeholder="邮箱" v-model="user.email">
+          <p class="Err">{{emlErr}}</p>
         </div>
-        <div class="LoginBtn"><span>加入booth</span></div>
+        <div class="LoginBtn" @click="toSign">
+          <span>加入booth</span>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { register, checkEmail, isActivate, ERR_OK } from "@/api/api.js";
 export default {
-  name: "login",
+  name: "signBox",
   data() {
     return {
-      close: false
+      close: false,
+      emlErr: "",
+      usernameErr: "",
+      passwordErr: "",
+      user: {
+        nameShort: "",
+        email: "",
+        password: ""
+      },
+      userID: ""
     };
   },
   methods: {
+    _register() {
+      register(this.user).then(res => {
+        if (res.data.code === 500502) {
+          this.emlErr = res.data.msg;
+        }
+        if (res.data.code === 500503) {
+          this.usernameErr = res.data.msg;
+        }
+        if (res.data.code === 0) {
+          this.userID = res.data.data;
+          this.$router.push({
+            name: `sign`,
+            params: { id: this.userID, email: this.user.email }
+          });
+        }
+      });
+    },
+    toSign() {
+      let emli = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+      if (!this.user.nameShort) {
+        this.usernameErr = "请输入用户名";
+      } else {
+        this.usernameErr = "";
+      }
+      if (!this.user.password) {
+        this.passwordErr = "请输入密码";
+      } else {
+        this.passwordErr = "";
+      }
+      if (this.user.email) {
+        if (!emli.test(this.user.email)) {
+          this.emlErr = "格式不正确";
+        } else {
+          this.emlErr = "";
+        }
+      } else {
+        this.emlErr = "请输入邮箱";
+      }
+      if (
+        this.user.nameShort &&
+        this.user.password &&
+        this.user.email &&
+        emli.test(this.user.email)
+      ) {
+        this._register();
+      }
+    },
     closeSign() {
       this.$emit("closeSign", this.close);
     }
@@ -54,6 +115,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 9999;
   .LoginBox {
     width: 400px;
     background: #2c73a1;
@@ -99,6 +161,19 @@ export default {
         margin-bottom: 20px;
         position: relative;
         box-sizing: border-box;
+        .Listbtn {
+          position: absolute;
+          top: 0px;
+          right: 0px;
+          height: 36px;
+          line-height: 36px;
+          width: 112px;
+          text-align: center;
+          background: #000;
+          // padding: 6px 35px;
+          color: #fff;
+          cursor: pointer;
+        }
         .Err {
           position: absolute;
           top: 44px;

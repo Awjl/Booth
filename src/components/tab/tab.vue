@@ -81,9 +81,6 @@ export default {
       this.items = this.industryData[this.One - 1].secondIndustries;
     },
     TabClick() {
-      console.log('切换')
-      console.log(this.One)
-      console.log(this.Two)
       this.$router.go(0);
       setOne(this.One);
       setTwo(this.Two);
@@ -94,9 +91,10 @@ export default {
       });
     },
     toSign() {
-      this.$router.push({
-        path: `/sign`
-      });
+      // this.$router.push({
+      //   path: `/sign`
+      // });
+      this.$emit("ShowSign", this.SignState);
     },
     toHome() {
       this.$router.push({
@@ -104,7 +102,7 @@ export default {
       });
     },
     ShowLogin() {
-      this.$emit("ShowLogin", this.SignState);
+      this.$emit("ShowLogin", this.LoginState);
     },
     toSearch() {
       this.$router.push({

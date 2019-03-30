@@ -25,7 +25,9 @@
         <div class="inpList">
           <p class="inpText">验证码已发送您注册的邮箱中</p>
           <input type="text" placeholder="验证码" v-model="UserData.code">
-          <div class="Listbtn" @click="_sendCode">发送</div>
+          <div class="Listbtn" @click="_sendCode">
+            <SIdentify :identifyCode="identifyCode"></SIdentify>
+          </div>
           <p class="Err">{{codeERR}}</p>
         </div>
         <div class="forgetPass">
@@ -42,11 +44,14 @@
 <script>
 import { login, sendCode, ERR_OK } from "@/api/api.js";
 import { setUser, setOne, setTwo } from "@/utils/auth.js";
+import SIdentify from "@/base/SIdentify/SIdentify"
 
 export default {
   name: "login",
   data() {
     return {
+      identifyCodes: "1234567890qwertyuioplkjhgfdsazxcvbnm",
+      identifyCode: "",
       close: false,
       usernameERR: "",
       passwordERR: "",
@@ -58,7 +63,21 @@ export default {
       }
     };
   },
+  mounted() {
+    this.identifyCode = "";
+    this.makeCode(this.identifyCodes, 4);
+  },
   methods: {
+    randomNum(min, max) {
+      return Math.floor(Math.random() * (max - min) + min);
+    },
+    makeCode(o, l) {
+      for (let i = 0; i < l; i++) {
+        this.identifyCode += this.identifyCodes[
+          this.randomNum(0, this.identifyCodes.length)
+        ];
+      }
+    },
     _login() {
       if (!this.UserData.username) {
         this.usernameERR = "请输入用户名";
@@ -72,6 +91,10 @@ export default {
       }
       if (!this.UserData.code) {
         this.codeERR = "请输入验证码";
+        this._sendCode()
+      } else if (this.UserData.code != this.identifyCode) {
+        this.codeERR = "验证码错误";
+        this._sendCode()
       } else {
         this.codeERR = "";
       }
@@ -108,11 +131,8 @@ export default {
       }
     },
     _sendCode() {
-      sendCode(this.UserData.username).then(res => {
-        if (res.data.code === 500504) {
-          this.usernameERR = res.data.msg;
-        }
-      });
+      this.identifyCode = "";
+      this.makeCode(this.identifyCodes, 4);
     },
     Toforget() {
       this.$router.push({
@@ -122,6 +142,9 @@ export default {
     closeLogin() {
       this.$emit("closeLogin", this.close);
     }
+  },
+  components: {
+    SIdentify
   }
 };
 </script>
@@ -191,12 +214,12 @@ export default {
           position: absolute;
           top: 0px;
           right: 0px;
-          height: 24px;
-          line-height: 24px;
-          width: 30px;
+          height: 36px;
+          line-height: 36px;
+          width: 112px;
           text-align: center;
           background: #000;
-          padding: 6px 35px;
+          // padding: 6px 35px;
           color: #fff;
           cursor: pointer;
         }

@@ -12,12 +12,12 @@
             <p class="Err">{{usernameErr}}</p>
           </div>
           <div class="inpList">
-            <input type="password" placeholder="密码" v-model="user.password">
-            <p class="Err">{{passwordErr}}</p>
+            <input type="password" placeholder="密码" v-model="user.username">
+            <p class="Err">{{usernameErr}}</p>
           </div>
           <div class="inpList">
             <input type="text" placeholder="邮箱" v-model="user.email">
-            <p class="Err">{{emlErr}}</p>
+            <p class="Err">{{usernameErr}}</p>
           </div>
           <div class="LoginBtn" @click="toSign">
             <span>立即注册</span>
@@ -66,7 +66,12 @@ export default {
       }
     };
   },
-  created() {},
+  created() {
+    if (this.$route.params.id) {
+      this.userID = this.$route.params.id;
+      this.user.email = this.$route.params.email;
+    }
+  },
   methods: {
     _isActivate() {
       isActivate(this.userID).then(res => {
@@ -101,7 +106,6 @@ export default {
     _checkEmail() {
       checkEmail(this.userID).then(res => {
         if (res.data.code === 0) {
-          console.log("发送成功");
           this.successbox = !this.successbox;
         }
       });

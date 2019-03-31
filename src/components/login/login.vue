@@ -15,7 +15,7 @@
       </div>
       <div class="LoginInput">
         <div class="inpList">
-          <input type="text" placeholder="邮箱/企业全称登陆" v-model="UserData.username">
+          <input type="text" placeholder="邮箱/手机号/企业简" v-model="UserData.username">
           <p class="Err">{{usernameERR}}</p>
         </div>
         <div class="inpList">
@@ -50,7 +50,7 @@ export default {
   name: "login",
   data() {
     return {
-      identifyCodes: "1234567890qwertyuioplkjhgfdsazxcvbnm",
+      identifyCodes: "1234567890",
       identifyCode: "",
       close: false,
       usernameERR: "",

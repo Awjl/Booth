@@ -76,7 +76,6 @@ export default {
     if (this.$store.state.user.UserID) {
       getInfoPercent(this.$store.state.user.UserID).then(res => {
         if (res.status === ERR_OK) {
-          console.log("获取百分比----------------------");
           this.$store.commit("SET_Percent", res.data.data);
         }
       });
@@ -92,6 +91,7 @@ export default {
         delay: 5000,
         disableOnInteraction: false
       },
+      preventLinksPropagation : false,
       pagination: {
         el: ".swiper-pagination",
         clickable: true

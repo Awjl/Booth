@@ -225,13 +225,14 @@ export default {
       border-bottom: 2px solid #707070;
       padding-bottom: 30px;
       .homeListImg {
-        width: 66px;
+        width: 50px;
+        text-align: center;
         img {
           width: 100%;
           cursor: pointer;
         }
         .follow {
-          width: 60px;
+          width: 50px;
           height: 20px;
           text-align: center;
           line-height: 20px;
@@ -243,10 +244,11 @@ export default {
         }
       }
       .homeListTitle {
-        width: calc(100% - 186px);
+        width: calc(100% - 160px);
         margin: 0 10px;
         .name {
-          font-size: 24px;
+          font-size: 20px;
+          font-weight: bold;
           cursor: pointer;
         }
         .nameEN {
@@ -259,7 +261,7 @@ export default {
           cursor: pointer;
         }
         .exhibition {
-          width: 80%;
+          width: 100%;
           min-width: 356px;
           height: 52px;
           background: #fff;
@@ -323,7 +325,7 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: flex-end;
-        width: 100px;
+        width: 90px;
         .InterestListshare {
           width: 50px;
           height: 30px;
@@ -349,7 +351,7 @@ export default {
     }
     .hometext {
       margin: 10px 0;
-      font-size: 16px;
+      font-size: 14px;
       line-height: 24px;
       letter-spacing: 1px;
     }

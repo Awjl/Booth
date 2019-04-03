@@ -4,8 +4,9 @@
       <input type="text" placeholder="搜索你感兴趣的企业/展会" v-model="searchData" @keyup.enter="toSearch">
       <i class="icon iconSearch" @click="toSearch"></i>
     </div>
-    <p style="color:#fff;  text-align: center;margin: 6px 0;font-size:10px;">or/或</p>
-    <div class="choiceBox" @click="choiceShow()">选择您的所属行业 Select your industry
+    <p style="color:#fff;  text-align: center;margin: 6px 0;font-size:10px;">或</p>
+    <div class="choiceBox" @click="choiceShow()">
+      选择您的所属行业 Select your industry
       <div class="choiceList" v-if="choiceBoxshow" style="height: 189px;">
         <div
           class="choiceItem"
@@ -27,6 +28,7 @@
         </div>
       </div>
     </div>
+    <div class="choiceBtn" @click="tosing">登陆/注册</div>
   </div>
 </template>
 
@@ -57,6 +59,11 @@ export default {
           this.industryData = res.data.data;
           this.items = this.industryData[0].secondIndustries;
         }
+      });
+    },
+    tosing() {
+      this.$router.push({
+        path: `/sign`
       });
     },
     choiceShow() {
@@ -177,6 +184,16 @@ export default {
         }
       }
     }
+  }
+  .choiceBtn {
+    width: 100px;
+    height: 40px;
+    background: #326b90;
+    line-height: 40px;
+    text-align: center;
+    color: #fff;
+    margin: 20px auto;
+    cursor: pointer;
   }
 }
 </style>

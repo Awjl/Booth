@@ -64,15 +64,17 @@
           <div class="enterpriseItem">
             <div class="enterpriseItemLeft">
               <div class="enterpriseItemHead" @click="toOthercore(item.user.id)">
-                <div class="enterpriseItemHeadBg" v-if="item.user.logoUrl == null">
+                <!-- <div class="enterpriseItemHeadBg" v-if="item.user.logoUrl == null">
                   <img src="../../assets/images/icon/man.png" alt>
-                </div>
+                </div>-->
                 <img :src="`${item.user.logoUrl}`" alt>
               </div>
               <div class="enterpriseItemLeftTitle">
                 <p @click="toOthercore(item.user.id)">{{item.user.name}}</p>
                 <p>{{item.user.fansNumber}}位关注者</p>
-                <p  @click="toSeach(item.user.oneIndustryid, item.user.twoIndustryid)">{{item.user.industryName}}</p>
+                <p
+                  @click="toSeach(item.user.oneIndustryid, item.user.twoIndustryid)"
+                >{{item.user.industryName}}</p>
               </div>
             </div>
             <div class="enterpriseItemRight">
@@ -187,10 +189,10 @@ export default {
       // if (!this.$store.state.user.UserID) {
       //   this.showBox = true;
       // } else {
-        this.$router.push({
-          path: `/othercore`,
-          query: { id: id }
-        });
+      this.$router.push({
+        path: `/othercore`,
+        query: { id: id }
+      });
       // }
     },
     toenterprise() {
@@ -336,7 +338,7 @@ export default {
             width: 18%;
             height: 50px;
             margin-right: 2%;
-            background: #fff;
+            // background: #fff;
             margin-bottom: 10px;
             cursor: pointer;
           }
@@ -387,31 +389,23 @@ export default {
         justify-content: space-between;
         .enterpriseItemLeft {
           display: flex;
+          width: 100%;
           height: 100%;
           .enterpriseItemHead {
-            width: 66px;
-            height: 66px;
-            .enterpriseItemHeadBg {
-              width: 50px;
-              height: 50px;
-              background: #fff;
-              border-radius: 50%;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              img {
-                width: 60%;
-              }
-            }
+            width: 50px;
+            height: 50px;
+            text-align: center;
             img {
+              width: 100%;
               cursor: pointer;
             }
           }
           .enterpriseItemLeftTitle {
             height: 100%;
+            width: calc(100% - 50px);
             margin-left: 10px;
             p:nth-child(1) {
-              font-size: 18px;
+              font-size: 14px;
               font-weight: bold;
               cursor: pointer;
             }
@@ -468,12 +462,13 @@ export default {
         align-items: center;
         span {
           display: block;
-          width: 66px;
-          height: 34px;
+          width: 60px;
+          height: 28px;
           text-align: center;
-          line-height: 34px;
+          line-height: 28px;
           background: #000;
           color: #fff;
+          font-size: 10px;
         }
         p {
           width: 160px;

@@ -104,7 +104,7 @@ export default {
     position: fixed;
     left: 0;
     right: 0;
-    top: -10px;
+    top: -44px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;

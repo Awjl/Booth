@@ -6,7 +6,7 @@
       </div>
       <div class="LoginInput">
         <div class="inpList">
-          <input type="text" placeholder="邮箱/手机号/企业简" v-model="UserData.username">
+          <input type="text" placeholder="邮箱/手机号/企业简称" v-model="UserData.username">
           <p class="Err">{{usernameERR}}</p>
         </div>
         <div class="inpList">
@@ -14,7 +14,7 @@
           <p class="Err">{{passwordERR}}</p>
         </div>
         <div class="inpList">
-          <p class="inpText">验证码已发送您注册的邮箱中</p>
+          <p class="inpText">验证码发送至您注册的邮箱中</p>
           <input type="text" placeholder="验证码" v-model="UserData.code">
           <div class="Listbtn" @click="_sendCode">发送</div>
           <p class="Err">{{codeERR}}</p>

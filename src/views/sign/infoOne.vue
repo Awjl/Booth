@@ -14,7 +14,7 @@
         <div class="signBgMainLeft">
           <div class="signBgMainList ListAct" @click="toOne">基础信息</div>
           <div class="signBgMainList" @click="toTwo">行业及商业伙伴</div>
-          <div class="signBgMainList" @click="toThree">其他信息</div>
+          <div class="signBgMainList" @click="toThree">核心竞争力</div>
           <div class="signBgMainList" @click="toFour">形象展示</div>
           <div class="signBgMainList" @click="toFive">信息核对</div>
         </div>
@@ -37,6 +37,16 @@
               <p>企业英文全称</p>
               <p class="Err">{{nameEngERR}}</p>
               <input type="text" v-model="userData.nameEng">
+            </div>
+            <div class="signBgMainRightItem">
+              <p>企业中文简称</p>
+              <p class="Err">{{nameEngERR}}</p>
+              <input type="text" v-model="userData.nameEng">
+            </div>
+            <div class="signBgMainRightItem">
+              <!-- <p>企业中文简称</p>
+              <p class="Err">{{nameEngERR}}</p>
+              <input type="text" v-model="userData.nameEng"> -->
             </div>
             <div class="signBgMainRightItem">
               <p>人数规模</p>
@@ -451,8 +461,8 @@ export default {
         .signBgMainList {
           display: flex;
           flex-wrap: wrap;
-          justify-content: center;
-          align-items: center;
+          // justify-content: center;
+          // align-items: center;
         }
         .signBgMainRightItem {
           width: 50%;

@@ -14,7 +14,7 @@
         <div class="signBgMainFiveLeft">
           <div class="signBgMainFiveList" @click="toOne">基础信息</div>
           <div class="signBgMainFiveList" @click="toTwo">行业及商业伙伴</div>
-          <div class="signBgMainFiveList" @click="toThree">其他信息</div>
+          <div class="signBgMainFiveList" @click="toThree">核心竞争力</div>
           <div class="signBgMainFiveList" @click="toFour">形象展示</div>
           <div class="signBgMainFiveList ListAct" @click="toFive">信息核对</div>
         </div>
@@ -66,13 +66,21 @@
             </div>
             <div class="Exhibition">
               <div class="ExhibitionHead">你所感兴趣的展会</div>
-              <div
-                class="ExhibitionList"
-                v-for="(item, index) in JSON.parse(userData.exhibitions)"
-                :key="index"
-              >
-                <p>展会名称</p>
-                <input disabled :value="userData.name">
+              <div v-if="userData.exhibitions">
+                <div
+                  class="ExhibitionList"
+                  v-for="(item, index) in JSON.parse(userData.exhibitions)"
+                  :key="index"
+                >
+                  <p>展会名称</p>
+                  <input disabled :value="userData.name">
+                </div>
+              </div>
+              <div v-if="!userData.exhibitions">
+                <div class="ExhibitionList">
+                  <p>展会名称</p>
+                  <input disabled :value="userData.name">
+                </div>
               </div>
             </div>
           </div>
@@ -85,62 +93,80 @@
                 </div>
                 <div class="signBgMainTRightItem">
                   <p>主要竞争对手</p>
-                  <div class="ItemText">
+                  <div class="ItemText" v-if="userData.competitor">
                     <span
                       v-for="(item, index) in JSON.parse(userData.competitor)"
                       :key="index"
                       v-show="item.key != '点击输入'"
                     >{{item.key}}</span>
                   </div>
+                  <div class="ItemText" v-if="!userData.competitor">
+                    无
+                  </div>
                 </div>
                 <div class="signBgMainTRightItem">
                   <p>行业关键词录</p>
-                  <div class="ItemText">
+                  <div class="ItemText" v-if="userData.keywords">
                     <span
                       v-for="(item, index) in JSON.parse(userData.keywords)"
                       :key="index"
                       v-show="item.key != '点击输入'"
                     >{{item.key}}</span>
                   </div>
+                  <div class="ItemText" v-if="!userData.keywords">
+                    无
+                  </div>
                 </div>
                 <div class="signBgMainTRightItem">
                   <p>主要供应商</p>
-                  <div class="ItemText">
+                  <div class="ItemText" v-if="userData.supplier">
                     <span
                       v-for="(item, index) in JSON.parse(userData.supplier)"
                       :key="index"
                       v-show="item.key != '点击输入'"
                     >{{item.key}}</span>
                   </div>
+                   <div class="ItemText" v-if="!userData.supplier">
+                    无
+                  </div>
                 </div>
                 <div class="signBgMainTRightItem">
                   <p>主要工艺</p>
-                  <div class="ItemText">
+                  <div class="ItemText" v-if="userData.mainProcess">
                     <span
                       v-for="(item, index) in JSON.parse(userData.mainProcess)"
                       :key="index"
                       v-show="item.key != '点击输入'"
                     >{{item.key}}</span>
                   </div>
+                  <div class="ItemText" v-if="!userData.mainProcess">
+                    无
+                  </div>
                 </div>
                 <div class="signBgMainTRightItem">
                   <p>主要客户</p>
-                  <div class="ItemText">
+                  <div class="ItemText" v-if="userData.customer">
                     <span
                       v-for="(item, index) in JSON.parse(userData.customer)"
                       :key="index"
                       v-show="item.key != '点击输入'"
                     >{{item.key}}</span>
                   </div>
+                   <div class="ItemText" v-if="!userData.customer">
+                    无
+                  </div>
                 </div>
                 <div class="signBgMainTRightItem">
                   <p>第三方服务商</p>
-                  <div class="ItemText">
+                  <div class="ItemText" v-if="userData.facilitator">
                     <span
                       v-for="(item, index) in JSON.parse(userData.facilitator)"
                       :key="index"
                       v-show="item.key != '点击输入'"
                     >{{item.key}}</span>
+                  </div>
+                  <div class="ItemText" v-if="!userData.facilitator">
+                    无
                   </div>
                 </div>
                 <div class="signBgMainTRightItem">
@@ -152,7 +178,7 @@
             <div class="Other">
               <div>
                 <div class="OtherHead">其他信息</div>
-                <div class="OtherList">
+                <div class="OtherList" v-if="userData.imgListUrlArr.length">
                   <img
                     :src="item.picture.url"
                     alt
@@ -165,6 +191,9 @@
                     v-for="(item, index) in userData.imgListUrl"
                     :key="index"
                   >
+                </div>
+                 <div class="OtherList" v-if="!userData.imgListUrlArr.length">
+                  无
                 </div>
               </div>
               <div>
@@ -239,7 +268,6 @@ export default {
       }
     },
     preservation() {
-
       this.formData.append("id", this.$store.state.user.UserID);
       this.formData.append("name", this.$store.state.userData.name);
       this.formData.append("engName", this.$store.state.userData.nameEng);

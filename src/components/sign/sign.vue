@@ -12,7 +12,7 @@
       </div>
       <div class="LoginInput">
         <div class="inpList">
-          <input type="text" placeholder="邮箱/手机号/企业简" v-model="user.nameShort">
+          <input type="text" placeholder="邮箱/手机号/企业简称" v-model="user.nameShort">
           <p class="Err">{{usernameErr}}</p>
         </div>
         <div class="inpList">

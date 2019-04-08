@@ -3,24 +3,37 @@
     <div class="tabLogo">
       <img src="../../assets/images/home/logo.png" alt @click="toHome">
       <div class="tabSearch">
-        <input type="text" placeholder="搜索你感兴趣的企业/展会" v-model="searchData" @keyup.enter="toSearch">
+        <input
+          type="text"
+          placeholder="搜索你感兴趣的企业/展会"
+          v-model="searchData"
+          @keyup.enter="toSearch"
+          @focus="searchstate = true"
+        >
         <i class="icon iconSearch" @click="toSearch"></i>
+        <div class="Searchbox tabSearchleft" v-if="searchstate">
+          <div class="tabSearchboxleft">
+            <div
+              v-for="(items, index) in industryData"
+              :key="index"
+              :class="{ act: index == typeindex }"
+              @mouseenter="mouseOver(index, items)"
+              @click.stop="TabClick()"
+            >{{items.industryName}}</div>
+          </div>
+        </div>
+        <div class="Searchbox tabSearchright" v-if="searchstate">
+          <div class="tabSearchbox">
+            <div
+              v-for="(items, index) in items"
+              :class="{ actTwo: index == typeindexTwo }"
+              :key="index"
+              @click.stop="TabClick()"
+              @mouseenter="mouseOverTwo(index,items)"
+            >{{items.industryName}}</div>
+          </div>
+        </div>
       </div>
-      <select v-model="One" @change="currentSel">
-        <option
-          v-for="(items, index) in industryData"
-          :key="index"
-          :value="items.id"
-        >{{items.industryName}}</option>
-      </select>
-      <select v-model="Two">
-        <option
-          v-for="(items, index) in items"
-          :key="index"
-          :value="items.id"
-        >{{items.industryName}}</option>
-      </select>
-      <div class="TabBtn" @click="TabClick">切换</div>
     </div>
     <div class="tabLoging">
       <div @click="toHome">首页</div>
@@ -58,14 +71,18 @@ export default {
       LoginState: true,
       SignState: true,
       industryData: [],
+      typeindex: 0,
+      typeindexTwo: 0,
       items: [],
       searchData: "",
       One: getOne(),
-      Two: getTwo()
+      Two: getTwo(),
+      searchstate: false
     };
   },
   created() {
     this._getIndustry();
+    console.log(this.One, this.Two);
   },
   methods: {
     _getIndustry() {
@@ -76,11 +93,19 @@ export default {
         }
       });
     },
-    currentSel() {
-      this.Two = ""
-      this.items = this.industryData[this.One - 1].secondIndustries;
+    mouseOver(index, data) {
+      this.typeindex = index;
+      this.items = data.secondIndustries;
+      this.One = data.id;
+      this.Two = data.secondIndustries[0].id;
+      this.typeindexTwo = 0;
+    },
+    mouseOverTwo(index, data) {
+      this.typeindexTwo = index;
+      this.Two = data.id;
     },
     TabClick() {
+      this.searchstate = false;
       this.$router.go(0);
       setOne(this.One);
       setTwo(this.Two);
@@ -91,9 +116,6 @@ export default {
       });
     },
     toSign() {
-      // this.$router.push({
-      //   path: `/sign`
-      // });
       this.$emit("ShowSign", this.SignState);
     },
     toHome() {
@@ -105,6 +127,7 @@ export default {
       this.$emit("ShowLogin", this.LoginState);
     },
     toSearch() {
+      this.searchstate = false;
       this.$router.push({
         path: `/search`,
         query: { center: this.searchData }
@@ -214,6 +237,55 @@ export default {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      position: relative;
+      .Searchbox {
+        position: absolute;
+        top: 30px;
+        width: 50%;
+        z-index: 9999;
+        height: 170px;
+        background: #fff;
+        > div {
+          height: 100%;
+          width: 100%;
+          overflow: auto;
+          &.tabSearchbox {
+            background: rgba($color: #326b90, $alpha: 0.2);
+          }
+          > div {
+            padding: 4px 10px;
+            cursor: pointer;
+            font-size: 10px;
+          }
+        }
+      }
+      .tabSearchleft {
+        left: 0;
+        .tabSearchboxleft {
+          > div {
+            &.act {
+              background: rgba($color: #326b90, $alpha: 0.2);
+            }
+          }
+        }
+      }
+      .tabSearchright {
+        right: 0;
+        .tabSearchbox {
+          background: rgba($color: #326b90, $alpha: 0.2);
+          > div {
+            padding: 4px 0;
+            margin: 4px 10px;
+            border-bottom: 1px solid #707070;
+            &:last-child {
+              border-bottom: none;
+            }
+            &.actTwo {
+              color: #fff;
+            }
+          }
+        }
+      }
       .iconSearch {
         cursor: pointer;
       }

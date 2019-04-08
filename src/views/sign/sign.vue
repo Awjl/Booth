@@ -8,11 +8,11 @@
       <div class="signBgList" v-if="!userID">
         <div class="LoginInput">
           <div class="inpList">
-            <input type="text" placeholder="邮箱/手机号/企业简" v-model="user.username">
+            <input type="text" placeholder="邮箱/手机号/企业简称" v-model="user.username">
             <p class="Err">{{usernameErr}}</p>
           </div>
           <div class="inpList">
-            <input type="password" placeholder="密码" v-model="user.username">
+            <input type="password" placeholder="密码" v-model="user.password">
             <p class="Err">{{usernameErr}}</p>
           </div>
           <div class="inpList">

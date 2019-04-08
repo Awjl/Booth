@@ -48,8 +48,8 @@
           <div class="InterestListSee" @click="toMover(item.user.id)">查看产品手册</div>
         </div>
       </div>
-      <div class="hometext">{{item.user.summary}}</div>
-      <div class="moveBtn" @click="toOthercore(item.user.id)">更多</div>
+      <div class="hometext" ref="heightlist">{{item.user.summary}}</div>
+      <div class="moveBtn" @click="toOthercore(index)" ref="moveBtn">更多</div>
       <div class="homeItemImg">
         <img :src="`${item.user.introductionUrl}`" alt>
       </div>
@@ -150,14 +150,23 @@ export default {
         }
       });
     },
-    toOthercore(id) {
+    toOthercore(index) {
+      // console.log(());
+      this.$refs.heightlist[index].style.height = "auto";
+      this.$refs.heightlist[index].style.overflow = "";
+      this.$refs.moveBtn[index].innerHTML = "";
+      // display: -webkit-box;
+      //       -webkit-box-orient: vertical;
+      //       -webkit-line-clamp: 5;
+      //       overflow: hidden;
+      // this.$refs.heightlist[index].style.height
       // if (!this.$store.state.user.UserID) {
       //   this.showBox = true;
       // } else {
-      this.$router.push({
-        path: `/othercore`,
-        query: { id: id }
-      });
+      // this.$router.push({
+      //   path: `/othercore`,
+      //   query: { id: id }
+      // });
       // }
     },
     toExt(id) {
@@ -353,6 +362,8 @@ export default {
       margin: 10px 0;
       font-size: 14px;
       line-height: 24px;
+      height: 120px;
+      overflow: hidden;
       letter-spacing: 1px;
     }
     .moveBtn {

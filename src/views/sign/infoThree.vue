@@ -14,7 +14,7 @@ res.data.data.<template>
         <div class="signBgMainLeft">
           <div class="signBgMainList" @click="toOne">基础信息</div>
           <div class="signBgMainList" @click="toTwo">行业及商业伙伴</div>
-          <div class="signBgMainList ListAct" @click="toThree">其他信息</div>
+          <div class="signBgMainList ListAct" @click="toThree">核心竞争力</div>
           <div class="signBgMainList" @click="toFour">形象展示</div>
           <div class="signBgMainList" @click="toFive">信息核对</div>
         </div>

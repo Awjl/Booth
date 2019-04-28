@@ -2,6 +2,7 @@ const getters = {
   UserID: state => state.user.UserID, //
   name: state => state.userData.name, //
   nameEng: state => state.userData.nameEng, //
+  nameShort: state => state.userData.nameShort, //
   member: state => state.userData.member, //
   address: state => state.userData.address, // 地点
   linkman: state => state.userData.linkman, //

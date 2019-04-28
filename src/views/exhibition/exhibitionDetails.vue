@@ -97,12 +97,13 @@
         <div class="signUpBoxhead">参加报名</div>
         <div class="signUpBoxMove">
           <p @click="showBox">取消</p>
-          <div @click="addMan">添加人员</div>
+          <div @click="addMan" v-if="addHide">添加人员</div>
         </div>
         <div class="signUpBoxList">
           <div class="signUpBoxListItem" v-for="(item, index) in signUp" :key="index">
             <div class="signUpBoxListItemOne">
-              <p>姓名
+              <p>
+                姓名
                 <!-- <span v-if="!item.name" class="Err">未输入</span> -->
               </p>
               <input type="text" v-model="item.name" placeholder="请输入姓名">
@@ -119,16 +120,19 @@
               </select>
             </div>
             <div class="signUpBoxListItemTwo">
-              <p>联系方式
+              <p>
+                联系方式
                 <!-- <span v-if="!item.mobile" class="Err">未输入</span> -->
               </p>
               <input type="text" v-model="item.mobile" placeholder="请输入邮箱或者电话">
             </div>
-            <div class="signUpBoxListItemTwo">
-              <p>到场时间
-                <!-- <span v-if="!item.precentDate" class="Err">未输入</span> -->
-              </p>
-              <input type="text" v-model="item.precentDate" placeholder="如：2019-01-01">
+            <div class="signUpBoxListItemTwo" style="width: 50%">
+              <p>到场时间</p>
+              <datepicker :value="item.precentDate" format="YYYY-MM-DD" name="date2"></datepicker>
+            </div>
+            <div class="signUpBoxListItemTwo" style="width: 50%">
+              <p>离场时间</p>
+              <datepicker :value="precentDate" format="YYYY-MM-DD" name="date2"></datepicker>
             </div>
           </div>
         </div>
@@ -179,6 +183,7 @@
 <script>
 import Swiper from "swiper";
 import "swiper/dist/css/swiper.min.css";
+import datepicker from "vue-date-picker";
 import {
   getExhibitionInfoById,
   enrollExhibition,
@@ -200,13 +205,16 @@ export default {
       SuccessImg: "",
       indexType: true,
       typeIndex: "1",
+      addHide: true,
+      precentDate: "2019-08-01",
       signUp: [
         {
           exhibitionId: this.$route.query.id,
           userId: getUser(),
           name: null,
           mobile: null,
-          precentDate: null,
+          precentDate: "2019-01-01",
+          outDate: "2019-01-01",
           position: "1"
         }
       ],
@@ -256,6 +264,9 @@ export default {
     this._getAllExhibitiors();
     this._getAllVisitors();
   },
+  components: {
+    datepicker
+  },
   updated() {
     // let _this = this;
     // var swiper = new Swiper(".swiper-container", {
@@ -296,6 +307,7 @@ export default {
         if (res.data.code === 0) {
           this.show = false;
           this.SuccessBox = true;
+          this.addHide = true;
         }
       });
     },
@@ -375,8 +387,11 @@ export default {
       }
     },
     UpList() {
+      console.log("123");
+      console.log(this.signUp);
       console.log(JSON.stringify(this.signUp).indexOf("null") != -1);
       if (JSON.stringify(this.signUp).indexOf("null") != -1) {
+        console.log("123");
         return;
       } else {
         this._enrollExhibition();
@@ -388,23 +403,30 @@ export default {
         userId: getUser(),
         name: null,
         mobile: null,
-        precentDate: null,
+        precentDate: "2019-01-01",
+        outDate: "2019-01-01",
         position: "1"
       };
       this.signUp.push(arr);
+      if (this.signUp.length >= 4) {
+        this.addHide = false;
+      }
     },
     showBox() {
       if (!this.$store.state.user.UserID) {
         this.showBox2 = true;
+        this.addHide = true;
       } else {
         this.show = !this.show;
+        this.addHide = true;
         this.signUp = [
           {
             exhibitionId: this.$route.query.id,
             userId: getUser(),
             name: null,
             mobile: null,
-            precentDate: null,
+            precentDate: "2019-01-01",
+            outDate: "2019-01-01",
             position: "1"
           }
         ];
@@ -519,11 +541,11 @@ export default {
   z-index: 9999999;
   .signUpBoxItem {
     max-width: 638px;
-    max-height: 80vh;
+    max-height: 90vh;
     background: #fff;
     padding: 0 20px;
     box-sizing: border-box;
-    overflow: auto;
+    // overflow: auto;
     .signUpBoxhead {
       text-align: center;
       font-size: 24px;
@@ -587,6 +609,9 @@ export default {
           width: 100%;
           padding: 0 20px;
           box-sizing: border-box;
+          .picker-wrap {
+            bottom: 20px;
+          }
           .Err {
             color: red;
             font-size: 10px;

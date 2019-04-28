@@ -87,6 +87,7 @@ export default {
       let emli = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
       if (
         this.$store.state.userData.name &&
+        this.$store.state.userData.nameShort &&
         this.$store.state.userData.nameEng &&
         this.$store.state.userData.linkman &&
         this.$store.state.userData.mobile &&
@@ -115,6 +116,7 @@ export default {
 
       this.formData.append("id", this.$store.state.user.UserID);
       this.formData.append("name", this.$store.state.userData.name);
+      this.formData.append("nameShort", this.$store.state.userData.nameShort);
       this.formData.append("engName", this.$store.state.userData.nameEng);
       this.formData.append("member", this.$store.state.userData.member);
       this.formData.append("address", this.$store.state.userData.address);

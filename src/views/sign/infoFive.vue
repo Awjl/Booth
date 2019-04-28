@@ -100,9 +100,7 @@
                       v-show="item.key != '点击输入'"
                     >{{item.key}}</span>
                   </div>
-                  <div class="ItemText" v-if="!userData.competitor">
-                    无
-                  </div>
+                  <div class="ItemText" v-if="!userData.competitor">无</div>
                 </div>
                 <div class="signBgMainTRightItem">
                   <p>行业关键词录</p>
@@ -113,9 +111,7 @@
                       v-show="item.key != '点击输入'"
                     >{{item.key}}</span>
                   </div>
-                  <div class="ItemText" v-if="!userData.keywords">
-                    无
-                  </div>
+                  <div class="ItemText" v-if="!userData.keywords">无</div>
                 </div>
                 <div class="signBgMainTRightItem">
                   <p>主要供应商</p>
@@ -126,9 +122,7 @@
                       v-show="item.key != '点击输入'"
                     >{{item.key}}</span>
                   </div>
-                   <div class="ItemText" v-if="!userData.supplier">
-                    无
-                  </div>
+                  <div class="ItemText" v-if="!userData.supplier">无</div>
                 </div>
                 <div class="signBgMainTRightItem">
                   <p>主要工艺</p>
@@ -139,9 +133,7 @@
                       v-show="item.key != '点击输入'"
                     >{{item.key}}</span>
                   </div>
-                  <div class="ItemText" v-if="!userData.mainProcess">
-                    无
-                  </div>
+                  <div class="ItemText" v-if="!userData.mainProcess">无</div>
                 </div>
                 <div class="signBgMainTRightItem">
                   <p>主要客户</p>
@@ -152,9 +144,7 @@
                       v-show="item.key != '点击输入'"
                     >{{item.key}}</span>
                   </div>
-                   <div class="ItemText" v-if="!userData.customer">
-                    无
-                  </div>
+                  <div class="ItemText" v-if="!userData.customer">无</div>
                 </div>
                 <div class="signBgMainTRightItem">
                   <p>第三方服务商</p>
@@ -165,9 +155,7 @@
                       v-show="item.key != '点击输入'"
                     >{{item.key}}</span>
                   </div>
-                  <div class="ItemText" v-if="!userData.facilitator">
-                    无
-                  </div>
+                  <div class="ItemText" v-if="!userData.facilitator">无</div>
                 </div>
                 <div class="signBgMainTRightItem">
                   <p>简介（最多200字）</p>
@@ -192,9 +180,7 @@
                     :key="index"
                   >
                 </div>
-                 <div class="OtherList" v-if="!userData.imgListUrlArr.length">
-                  无
-                </div>
+                <div class="OtherList" v-if="!userData.imgListUrlArr.length">无</div>
               </div>
               <div>
                 <div class="OtherHead">形象展示</div>
@@ -245,6 +231,7 @@ export default {
       let emli = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
       if (
         this.$store.state.userData.name &&
+        this.$store.state.userData.nameShort &&
         this.$store.state.userData.nameEng &&
         this.$store.state.userData.linkman &&
         this.$store.state.userData.mobile &&
@@ -270,6 +257,8 @@ export default {
     preservation() {
       this.formData.append("id", this.$store.state.user.UserID);
       this.formData.append("name", this.$store.state.userData.name);
+      this.formData.append("nameShort", this.$store.state.userData.nameShort);
+
       this.formData.append("engName", this.$store.state.userData.nameEng);
       this.formData.append("member", this.$store.state.userData.member);
       this.formData.append("address", this.$store.state.userData.address);

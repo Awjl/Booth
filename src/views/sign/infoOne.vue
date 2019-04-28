@@ -40,8 +40,8 @@
             </div>
             <div class="signBgMainRightItem">
               <p>企业中文简称</p>
-              <p class="Err">{{nameEngERR}}</p>
-              <input type="text" v-model="userData.nameEng">
+              <p class="Err">{{nameShortEngERR}}</p>
+              <input type="text" v-model="userData.nameShort">
             </div>
             <div class="signBgMainRightItem">
               <!-- <p>企业中文简称</p>
@@ -113,6 +113,7 @@ export default {
       timer: "",
       serachList: [],
       nameERR: "",
+      nameShortEngERR: "",
       nameEngERR: "",
       linkmanERR: "",
       mobileERR: "",
@@ -121,6 +122,7 @@ export default {
       userData: {
         name: "",
         nameEng: "",
+        nameShort: "",
         member: "1",
         address: "", // 地点
         linkman: "",
@@ -176,6 +178,11 @@ export default {
       } else {
         this.nameERR = "";
       }
+      if (!this.$store.state.userData.nameShort) {
+        this.nameShortEngERR = "请输入公司简称";
+      } else {
+        this.nameShortEngERR = "";
+      }
       if (!this.$store.state.userData.nameEng) {
         this.nameEngERR = "请输入英文名称";
       } else {
@@ -207,6 +214,7 @@ export default {
       }
       if (
         this.$store.state.userData.name &&
+        this.$store.state.userData.nameShort &&
         this.$store.state.userData.nameEng &&
         this.$store.state.userData.linkman &&
         this.$store.state.userData.mobile &&
@@ -248,6 +256,7 @@ export default {
     preservation() {
       this.$store.commit("SET_NAME", this.userData.name);
       this.$store.commit("SET_NAMEENG", this.userData.nameEng);
+      this.$store.commit("SET_NAMESHORT", this.userData.nameShort);
       this.$store.commit("SET_MEMBER", this.userData.member);
       this.$store.commit("SET_ADDRESS", this.userData.address);
       this.$store.commit("SET_LINKMAN", this.userData.linkman);
@@ -258,6 +267,7 @@ export default {
       this.formData.append("id", this.$store.state.user.UserID);
       this.formData.append("name", this.$store.state.userData.name);
       this.formData.append("engName", this.$store.state.userData.nameEng);
+      this.formData.append("nameShort", this.$store.state.userData.nameShort);
       this.formData.append("member", this.$store.state.userData.member);
       this.formData.append("address", this.$store.state.userData.address);
       this.formData.append("linkman", this.$store.state.userData.linkman);

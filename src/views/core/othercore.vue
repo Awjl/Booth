@@ -16,6 +16,24 @@
     </div>
     <div class="othercoreMain">
       <div class="othercoreAbout">
+        <div class="coreAbouMover" :style="{height:Height}">
+          <div class="coreAbouMoverTitle">
+            <div class="coreAbouMoverTitleTop">
+              <p>主要</p>
+              <p>合作伙伴</p>
+            </div>
+            <div class="coreAbouMoverTitleBottom" @click="Close">关闭展开内容</div>
+          </div>
+          <div class="coreAbouMoverList">
+            <p v-if="ind == 0">暂无数据</p>
+            <div class="coreAbouMoverItem" v-for="(item, index) in cooperationData" :key="index">
+              <div class="coreAbouMoverItemImg"><img:src="`${item.user.logoUrl}`" alt=""></div>
+            </div>
+            <div class="coreAbouMoverItem" v-if="Height == '100px'&& ind > 5">
+              <div class="coreAbouMoverItemBtn" @click="Open">展开</div>
+            </div>
+          </div>
+        </div>
         <div class="othercoreAboutTop">
           <div class="othercoreAboutintroduction">
             <div class="othercoreAboutHead">关于我们</div>
@@ -56,6 +74,8 @@
             <div class="othercoreAboutlist">{{datalist.user.linkmanEmail}}</div>
           </div>
           <div class="othercoreAboutintroductionImg">
+            <div class="othercoreAboutHead">核心竞争力</div>
+
             <div
               class="ItemImg"
               v-for="(item, index) in datalist.pictures"
@@ -149,6 +169,7 @@ import {
   viewPicture,
   collection,
   cancelCollection,
+  getPartner,
   ERR_OK
 } from "@/api/api.js";
 
@@ -192,7 +213,10 @@ export default {
         otherId: "",
         type: 2,
         userId: this.$store.state.user.UserID
-      }
+      },
+      cooperationData: [],
+      ind: 0,
+      Height: "100px;"
     };
   },
   created() {
@@ -204,6 +228,7 @@ export default {
     // }
     window.scrollTo(0, 0);
     this._getCompanyInfo();
+    this._getPartner(0);
   },
   methods: {
     _collection() {
@@ -211,6 +236,19 @@ export default {
         if (res.status === ERR_OK) {
           this.isCollected = 1;
           this._getCompanyInfo();
+        }
+      });
+    },
+    _getPartner(type) {
+      getPartner(this.$store.state.user.UserID, type).then(res => {
+        if (res.data.code === 0) {
+          this.cooperationData = res.data.data;
+          this.ind = 0;
+          for (let i = 0; i < this.cooperationData.length; i++) {
+            if (!this.cooperationData[i].user) {
+              this.ind++;
+            }
+          }
         }
       });
     },
@@ -251,6 +289,12 @@ export default {
           this._getCompanyInfo();
         }
       });
+    },
+    Open() {
+      this.Height = "400px";
+    },
+    Close() {
+      this.Height = "100px";
     },
     quxiao() {
       this.imgBoxShow = false;
@@ -397,9 +441,9 @@ export default {
       width: 60%;
       .othercoreAboutTop {
         width: 100%;
-        padding: 30px 40px;
-        background: rgba($color: #648aa2, $alpha: 0.3);
+        height: 762px;
         box-sizing: border-box;
+        display: flex;
       }
       .othercoreAboutBottom {
         width: 100%;
@@ -554,20 +598,29 @@ export default {
         }
       }
       .othercoreAboutintroduction {
-        width: 90%;
+        width: 59%;
+        height: 100%;
+        overflow: auto;
+        padding: 30px 20px;
+        box-sizing: border-box;
+        background: rgba($color: #648aa2, $alpha: 0.3);
+        margin-right: 1%;
       }
       .othercoreAboutintroductionImg {
-        width: 100%;
-        margin-top: 40px;
-        display: flex;
-        flex-wrap: wrap;
+        padding: 30px 20px;
+        width: 40%;
+        height: 100%;
+        overflow: auto;
+        box-sizing: border-box;
+        background: rgba($color: #326b90, $alpha: 0.6);
         .ItemImg {
-          width: 15%;
-          padding: 6px;
+          width: 32%;
+          margin-right: 1%;
+          float: left;
+          height: 100px;
+          overflow: hidden;
           box-sizing: border-box;
-          background: #fff;
-          margin-left: 1%;
-          margin-bottom: 10px;
+          margin-bottom: 5px;
         }
       }
       .othercoreAboutHead {
@@ -590,6 +643,85 @@ export default {
         margin: 4px 0;
         span {
           margin-right: 20px;
+        }
+      }
+      .coreAbouMover {
+        width: 100%;
+        // height: 400px;
+        height: 100px;
+        overflow: hidden;
+        display: flex;
+        border-radius: 20px;
+        border: 2px solid #fff;
+        margin-bottom: 20px;
+        .coreAbouMoverTitle {
+          width: 150px;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          .coreAbouMoverTitleTop {
+            padding: 20px;
+            width: 150px;
+            font-size: 26px;
+            box-sizing: border-box;
+            p {
+              font-weight: bold;
+            }
+          }
+          .coreAbouMoverTitleBottom {
+            width: 85px;
+            height: 34px;
+            line-height: 34px;
+            text-align: center;
+            margin-left: 20px;
+            margin-bottom: 20px;
+            font-size: 10px;
+            font-weight: bold;
+            box-sizing: border-box;
+            background: rgba(100, 138, 162, 1);
+            cursor: pointer;
+            margin-top: 20px;
+          }
+        }
+        .coreAbouMoverList {
+          height: 100%;
+          overflow: auto;
+          width: calc(100% - 130px);
+          p {
+            height: 100px;
+            line-height: 100px;
+          }
+          .coreAbouMoverItem {
+            width: 16%;
+            float: left;
+            .coreAbouMoverItemImg {
+              width: 80px;
+              height: 80px;
+              padding: 20px;
+              box-sizing: border-box;
+              // margin: 10px;
+              margin: 10px auto;
+              border-radius: 50px;
+              border: 1px solid #326b90;
+              background: #fff;
+            }
+          }
+
+          .coreAbouMoverItemBtn {
+            width: 80px;
+            height: 80px;
+            line-height: 80px;
+            text-align: center;
+            // padding: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            box-sizing: border-box;
+            margin: 10px auto;
+            border-radius: 50px;
+            background: #326b90;
+            cursor: pointer;
+          }
         }
       }
     }

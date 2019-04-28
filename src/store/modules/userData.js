@@ -5,6 +5,7 @@ const userData = {
   state: {
     name: "",
     nameEng: "",
+    nameShort: "",
     member: "1",
     address: "", // 地点
     linkman: "",
@@ -40,6 +41,9 @@ const userData = {
     },
     SET_NAMEENG: (state, nameEng) => {
       state.nameEng = nameEng;
+    },
+    SET_NAMESHORT: (state, nameShort) => {
+      state.nameShort = nameShort;
     },
     SET_MEMBER: (state, member) => {
       state.member = member;

@@ -6890,6 +6890,13 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
+vue-date-picker@2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/vue-date-picker/-/vue-date-picker-2.5.0.tgz#db7a71c2c37e97b9ba16a90301f96fd5f07a4f5a"
+  integrity sha512-pVGLlORSrnHlCqLPf6e1NKUQbvv2FaMUXS3o/C6UfYZD9B+7H1nUMEBFBDwmwDE9GAJsav8J9r4ODvkPegbP3Q==
+  dependencies:
+    vue "^2.5.21"
+
 vue-eslint-parser@^2.0.3:
   version "2.0.3"
   resolved "http://registry.npm.taobao.org/vue-eslint-parser/download/vue-eslint-parser-2.0.3.tgz#c268c96c6d94cfe3d938a5f7593959b0ca3360d1"
@@ -6955,6 +6962,11 @@ vue-wechat-title@2.0.5:
 vue@^2.5.17:
   version "2.5.21"
   resolved "http://registry.npm.taobao.org/vue/download/vue-2.5.21.tgz#3d33dcd03bb813912ce894a8303ab553699c4a85"
+
+vue@^2.5.21:
+  version "2.6.10"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
+  integrity sha512-ImThpeNU9HbdZL3utgMCq0oiMzAkt1mcgy3/E6zWC/G6AaQoeuFdsl9nDhTDU3X1R6FK7nsIUuRACVcjI+A2GQ==
 
 vuex@^3.0.1:
   version "3.0.1"

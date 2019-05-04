@@ -21,7 +21,7 @@
           <p class="Err">{{codeERR}}</p>
         </div>
         <div class="forgetPass">
-          <span @click="Toforget">忘记密码？</span>
+          <!-- <span @click="Toforget">忘记密码？</span> -->
           <span @click="ToSign">去注册</span>
         </div>
         <div class="LoginBtn">
@@ -227,7 +227,7 @@ export default {
         margin-top: -10px;
         span {
           cursor: pointer;
-          margin: 0 10px;
+          // margin: 0 10px;
         }
       }
       .LoginBtn {

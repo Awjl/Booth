@@ -40,13 +40,15 @@
             <div class="coreAbouMoverTitleBottom"  @click="Close">关闭展开内容</div>
           </div>
           <div class="coreAbouMoverList">
-            <p v-if="ind == 0">暂无数据</p>
-            <div class="coreAbouMoverItem"  v-for="(item, index) in cooperationData"  :key="index">
-              <div class="coreAbouMoverItemImg">
-               <img:src="`${item.user.logoUrl}`" alt="">
+            <p v-if="AllPartnerData.length == 0">暂无数据</p>
+            <div class="coreAbouMoverItem"  v-for="(item, index) in AllPartnerData"  :key="index">
+              <div class="coreAbouMoverItemImg" @click="toOthercore(item.id)">
+               <img v-if="item.url" :src="item.url" alt="" >
+               <img src="../../assets/images/home/foodlogo.png" alt="" v-else>
               </div>
+              <p>{{item.name}}</p>
             </div>
-            <div class="coreAbouMoverItem" v-if="Height == '100px'&& ind > 5">
+            <div class="coreAbouMoverItem" v-if="Height == '100px'&& AllPartnerData.length > 5">
               <div class="coreAbouMoverItemBtn" @click="Open">展开</div>
             </div>
           </div>
@@ -167,6 +169,7 @@ import {
   viewPicture,
   getInfoPercent,
   getPartner,
+  getAllPartner,
   ERR_OK
 } from "@/api/api.js";
 
@@ -204,7 +207,8 @@ export default {
       Exhibitions: [],
       cooperationData: [],
       ind: 0,
-      Height: '100px;'
+      Height: '170px;',
+      AllPartnerData: []
     };
   },
   created() {
@@ -221,9 +225,20 @@ export default {
         this.$store.commit("SET_Percent", res.data.data);
       }
     });
-    this._getPartner(0);
+    // this._getPartner(0);
+    this._getAllPartner()
   },
   methods: {
+    _getAllPartner() {
+      getAllPartner(
+        this.$store.state.user.UserID
+      ).then(res => {
+        if (res.status === ERR_OK) {
+         console.log('获取头像')
+         this.AllPartnerData = res.data.data
+        }
+      });
+    },
     _getCompanyInfo() {
       getCompanyInfo(
         this.$store.state.user.UserID,
@@ -240,24 +255,33 @@ export default {
         }
       });
     },
-    _getPartner(type) {
-      getPartner(this.$store.state.user.UserID, type).then(res => {
-        if (res.data.code === 0) {
-          this.cooperationData = res.data.data;
-          this.ind = 0;
-          for (let i = 0; i < this.cooperationData.length; i++) {
-            if (!this.cooperationData[i].user) {
-              this.ind++;
-            }
-          }
-        }
-      });
+    // _getPartner(type) {
+    //   getPartner(this.$store.state.user.UserID, type).then(res => {
+    //     if (res.data.code === 0) {
+    //       this.cooperationData = res.data.data;
+    //       this.ind = 0;
+    //       for (let i = 0; i < this.cooperationData.length; i++) {
+    //         if (!this.cooperationData[i].user) {
+    //           this.ind++;
+    //         }
+    //       }
+    //     }
+    //   });
+    // },
+    toOthercore(id) {
+      console.log(id)
+      if (id) {
+        this.$router.push({
+          path: `/othercore`,
+          query: { id: id }
+        });
+      }
     },
     Open() {
-      this.Height = '400px'
+      this.Height = '680px'
     },
     Close() {
-      this.Height = '100px'
+      this.Height = '170px'
     },
     copyUrl(id) {
       // var clipBoardContent = "";
@@ -613,8 +637,7 @@ export default {
       }
       .coreAbouMover {
         width: 100%;
-        // height: 400px;
-        height: 100px;
+        height: 170px;
         overflow: hidden;
         display: flex;
         border-radius: 20px;
@@ -647,7 +670,7 @@ export default {
             box-sizing: border-box;
             background: rgba(100, 138, 162, 1);
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 120px;
           }
         }
         .coreAbouMoverList {
@@ -670,7 +693,21 @@ export default {
               margin: 10px auto;
               border-radius: 50px;
               border: 1px solid #326b90;
-              background: #fff;
+              background: #326b90;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              img {
+                width: 50%;
+              }
+            }
+            p {
+              height: auto;
+              width: 100%;
+              line-height: 20px;
+              padding: 0 10px;
+              box-sizing: border-box;
+              text-align: center;
             }
           }
 

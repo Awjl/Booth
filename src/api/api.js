@@ -504,3 +504,13 @@ export function inviteToExhibition(data) {
         data: data
     });
 }
+// 获取合作伙伴
+export function getAllPartner(id) {
+    return service({
+        url: "/user/getAllPartner",
+        method: "get",
+        params: {
+            userId: id
+        }
+    });
+}

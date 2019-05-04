@@ -28,7 +28,7 @@
         </div>
       </div>
     </div>
-    <div class="choiceBtn" @click="tosing">登陆/注册</div>
+    <div class="choiceBtn" @click="tosing">去注册</div>
   </div>
 </template>
 

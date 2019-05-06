@@ -1,18 +1,25 @@
 <template>
   <div class="boot">
-    <div class="bootLogo"><div class="logo"></div></div>
-    <div class="bootBg" ><Choice v-on:cliceToBooth="cliceToBooth"></Choice></div>
+    <div class="bootLogo">
+      <div class="bootLogohead">
+        <div class="logo"></div>
+        <p>博商产业链</p>
+      </div>
+    </div>
+    <div class="bootBg">
+      <Choice v-on:cliceToBooth="cliceToBooth"></Choice>
+    </div>
     <div class="bootFoot">
       <div class="footImg">
-        <img src="../../assets/images/guide/item1.png" alt="" />
-        <img src="../../assets/images/guide/item2.png" alt="" />
-        <img src="../../assets/images/guide/item3.png" alt="" />
-        <img src="../../assets/images/guide/item4.png" alt="" />
-        <img src="../../assets/images/guide/item5.png" alt="" />
-        <img src="../../assets/images/guide/item6.png" alt="" />
-        <img src="../../assets/images/guide/item7.png" alt="" />
-        <img src="../../assets/images/guide/item8.png" alt="" />
-        <img src="../../assets/images/guide/item9.png" alt="" />
+        <img src="../../assets/images/guide/item1.png" alt>
+        <img src="../../assets/images/guide/item2.png" alt>
+        <img src="../../assets/images/guide/item3.png" alt>
+        <img src="../../assets/images/guide/item4.png" alt>
+        <img src="../../assets/images/guide/item5.png" alt>
+        <img src="../../assets/images/guide/item6.png" alt>
+        <img src="../../assets/images/guide/item7.png" alt>
+        <img src="../../assets/images/guide/item8.png" alt>
+        <img src="../../assets/images/guide/item9.png" alt>
       </div>
       <div class="footText">上海麦屿信息科技有限公司</div>
     </div>
@@ -35,7 +42,7 @@ export default {
   name: "boot",
   data() {
     return {
-      title: "",
+      title: ""
     };
   },
   created() {
@@ -72,6 +79,18 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    .bootLogohead {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      p {
+        font-size: 30px;
+        margin-bottom: 4px;
+        margin-left: 6px;
+        letter-spacing: 4px;
+        color: #326B90;
+      }
+    }
   }
   .bootBg {
     height: calc(100vh - 263px);

@@ -635,9 +635,9 @@ export default {
 }
 .suspensionBox {
   position: fixed;
-  top: 0;
+  top: 10vh;
   right: 0;
-  height: 100vh;
+  height: 80vh;
   width: 200px;
   display: flex;
   justify-content: center;

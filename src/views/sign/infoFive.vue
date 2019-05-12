@@ -292,6 +292,7 @@ export default {
         "exhibitions",
         this.$store.state.userData.exhibitions
       );
+      this.formData.append("titles", this.$store.state.userData.titles);
       this.formData.append("customer", this.$store.state.userData.customer);
       for (let i = 0; i <= this.$store.state.userData.imgList.length; i++) {
         this.formData.append(

@@ -50,14 +50,20 @@
         </div>-->
       </div>
     </div>
-    <div class="productListTitle">产品册
+    <div class="productListTitle">
+      产品册
       <div class="productListTitleBtn" v-if="!this.$route.query.id">
         <span @click="toInfofour">更多</span>
       </div>
     </div>
     <div class="productListMain">
       <p v-if="AllProducts.length === 0">暂无数据</p>
-      <div class="aboutTopItem" v-for="(item, index) in AllProducts" :key="index">
+      <div
+        class="aboutTopItem"
+        v-for="(item, index) in AllProducts"
+        :key="index"
+        :style="{width: Widthpx}"
+      >
         <div class="brochureItemImg" @click="looKcoverUrl(item.pdfUrl, item.id)">
           <img :src="item.coverUrl" alt>
         </div>
@@ -83,7 +89,7 @@
           </div>
           <div class="brochureReadLsit">
             <p v-if=" item.users.length === 0">暂无数据</p>
-            <div v-for="(item, index) in item.users" :key="index">
+            <div v-for="(item, index) in item.users" :key="index" :style="{width: imgWidth}">
               <img :src="`${item.logoUrl}`" alt>
             </div>
           </div>
@@ -127,15 +133,17 @@ export default {
         otherId: "",
         type: 1,
         userId: this.$store.state.user.UserID
-      }
+      },
+      Widthpx: "48%",
+      imgWidth: ''
     };
   },
   created() {
     if (!this.$store.state.user.UserID) {
       this.$router.push({
-        name: `loginList`,
+        name: `loginList`
       });
-      return
+      return;
     }
     window.scrollTo(0, 0);
     if (this.$route.query.id) {
@@ -195,6 +203,22 @@ export default {
         if (res.data.code === 0) {
           console.log(res.data.data);
           this.AllProducts = res.data.data;
+          if (this.AllProducts.length == 1) {
+            this.Widthpx = "68%";
+            this.imgWidth = '8%'
+          } else if (
+            this.AllProducts.length == 2 ||
+            this.AllProducts.length == 4
+          ) {
+            this.Widthpx = "48%";
+            this.imgWidth = '18%'
+          } else if (this.AllProducts.length == 3) {
+            this.Widthpx = "31%";
+            this.imgWidth = '18%'
+          } else {
+            this.Widthpx = "31%";
+            this.imgWidth = '18%'
+          }
         }
       });
     },
@@ -235,7 +259,7 @@ export default {
 
 <style lang="scss" scoped>
 .productList {
-  height: calc(100vh - 218px);
+  // height: calc(100vh - 218px);
   min-height: 582px;
   box-sizing: border-box;
   .productListTitle {
@@ -321,29 +345,30 @@ export default {
   }
   .productListMain > p {
     width: 100%;
-
     text-align: center;
     margin-top: 30px;
   }
   .productListMain {
-    display: flex;
-    flex-wrap: wrap;
+    // display: flex;
+    // flex-wrap: wrap;
+    // justify-content: space-between;
     box-sizing: border-box;
+    overflow: hidden;
     margin: 30px;
     .aboutTopItem {
-      width: 30%;
+      float: left;
+      margin: 0 auto;
       display: flex;
       justify-content: space-between;
       margin-bottom: 10px;
-      background: #fff;
       padding: 10px;
       box-sizing: border-box;
       .brochureItemImg {
-        width: 120px;
-        background: #fff;
+        width: 140px;
+        text-align: center;
       }
       .brochureItemText {
-        width: calc(100% - 120px);
+        width: calc(100% - 140px);
         margin-left: 20px;
         .brochureItemHead {
           display: flex;
@@ -402,13 +427,13 @@ export default {
           }
         }
         .brochureReadLsit {
-          display: flex;
-          flex-wrap: wrap;
           font-size: 10px;
           div {
-            width: 18%;
-            margin: 0 1%;
-            height: 40px;
+            float: left;
+            text-align: center;
+            margin: 0 1% 10px;
+            border-radius: 10px;
+            overflow: hidden;
             background: #fff;
           }
         }

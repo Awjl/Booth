@@ -23,6 +23,7 @@ const getters = {
   customer: state => state.userData.customer,
   imgList: state => state.userData.imgList,
   imgListUrl: state => state.userData.imgListUrl,
+  titles: state => state.userData.titles,
   imgListUrlArr: state => state.userData.imgListUrlArr,
   logoPic: state => state.userData.logoPic,
   logoPicUrl: state => state.userData.logoPicUrl,

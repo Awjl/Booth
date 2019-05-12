@@ -24,9 +24,10 @@ const userData = {
     exhibitions: "", // 会展
     exhibitionOne: "",
     customer: "", // 客户/
-    imgList: [],
-    imgListUrl: [],
-    imgListUrlArr: [],
+    imgList: [], // 上传图片
+    imgListUrl: [], // 上传图片本地展示
+    titles: [],
+    imgListUrlArr: [], // 服务器图片
     logoPic: "",
     logoPicUrl: "",
     introductionPic: "",
@@ -105,6 +106,9 @@ const userData = {
     },
     SET_imgListUrl: (state, imgListUrl) => {
       state.imgListUrl = imgListUrl;
+    },
+    SET_titles: (state, titles) => {
+      state.titles = titles;
     },
     SET_imgListUrlArr: (state, imgListUrlArr) => {
       state.imgListUrlArr = imgListUrlArr;

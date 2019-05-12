@@ -1,4 +1,4 @@
-res.data.data.<template>
+<template>
   <div class="signDetails">
     <div class="signBgTwo">
       <div class="signBgInfoLog">
@@ -22,17 +22,33 @@ res.data.data.<template>
           <div class="signBgThreeMainList">
             <p>您可以上传相关素材支撑您的企业资质</p>
             <p>例如：主要产品、专利证书、制造车间、企业文化相关照片、视频等</p>
-            <div class="UpImg">
-              <div class="UpimgList">
-                <label for="upTop">+</label>
-                <input @change="upImg" type="file" id="upTop" value="图片上传预览" multiple>
-              </div>
-              <div class="imgList">
-                <div class="imgListItem" v-for="(item, index) in imgListArr" :key="index">
-                  <img :src="item.picture.url" alt>
-                </div>
-                <div class="imgListItem" v-for="(item, index) in imgList" :key="index">
-                  <img :src="item" alt>
+            <div class="upImgBox">
+              <div class="UpImg">
+                <div class="UpImgBottom">
+                  <div class="UpimgList">
+                    <label for="upTop">+</label>
+                    <input @change="upImg" type="file" id="upTop" value="图片上传预览" multiple>
+                  </div>
+                  <div class="imgList">
+                    <div class="imgListItem" v-for="(item, index) in imgListArr" :key="index">
+                      <img :src="item.picture.url" alt>
+                      <div class="UpImgTop">
+                        <input type="text" placeholder="请输入图片说明" v-model="item.picture.description">
+                      </div>
+                    </div>
+                    <!-- <div class="imgListItem" v-for="(item, index) in imgListArr" :key="index">
+                      <img :src="item.picture.url" alt>
+                      <div class="UpImgTop">
+                        <input type="text" placeholder="请输入图片说明">
+                      </div>
+                    </div>
+                    <div class="imgListItem" v-for="(item, index) in imgList" :key="index">
+                      <img :src="item" alt>
+                      <div class="UpImgTop">
+                        <input type="text" placeholder="请输入图片说明">
+                      </div>
+                    </div>-->
+                  </div>
                 </div>
               </div>
             </div>
@@ -58,9 +74,11 @@ export default {
   name: "sign",
   data() {
     return {
-      imgList: [],
-      imgListArr: [],
-      upImgList: [],
+      // imgList: [], // 展示地址
+      imgListArr: [], // 服务器图片展示地址
+      // upImgList: [], // 上传图片
+      // upImgTitle: [], // 上传名字
+      client: "",
       formData: new FormData(),
       imgType: {
         type: "image/jpeg, image/png, image/jpg"
@@ -70,9 +88,20 @@ export default {
   created() {
     this.imgListArr = this.$store.state.userData.imgListUrlArr;
     this.imgList = this.$store.state.userData.imgListUrl;
-    console.log(this.$store.state.userData.imgList);
+    console.log(this.imgListArr);
   },
   methods: {
+    getRight() {
+      this.client = new OSS.Wrapper({
+        region: "同endpoint",
+        secure: true, //https
+        endpoint: "运维会告诉你",
+        accessKeyId: "id和secret去阿里云控制台获得",
+        /*accessKeyId,accessKeySecret两者到阿里云控制台获得*/
+        accessKeySecret: "",
+        bucket: "" /*装图片的桶名*/
+      });
+    },
     _addUserInfo() {
       addUserInfo(this.formData).then(res => {
         if (res.data.code === 0) {
@@ -82,6 +111,15 @@ export default {
           });
         }
       });
+    },
+    forEachData() {
+      this.upImgTitle = [];
+      let _this = this;
+      this.showData.forEach(item => {
+        _this.upImgTitle.push(item.title);
+      });
+      console.log(this.upImgTitle);
+      this.$store.commit("SET_titles", this.upImgTitle);
     },
     yanzheng() {
       let emli = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
@@ -111,9 +149,9 @@ export default {
       }
     },
     preservation() {
+      this.forEachData();
       this.$store.commit("SET_imgList", this.upImgList);
       this.$store.commit("SET_imgListUrl", this.imgList);
-
       this.formData.append("id", this.$store.state.user.UserID);
       this.formData.append("name", this.$store.state.userData.name);
       this.formData.append("nameShort", this.$store.state.userData.nameShort);
@@ -150,9 +188,10 @@ export default {
         "exhibitions",
         this.$store.state.userData.exhibitions
       );
+      this.formData.append("titles", this.$store.state.userData.titles);
       this.formData.append("customer", this.$store.state.userData.customer);
       for (let i = 0; i <= this.$store.state.userData.imgList.length; i++) {
-        console.log(this.$store.state.userData.imgList[i])
+        console.log(this.$store.state.userData.imgList[i]);
         this.formData.append(
           "companyPics",
           this.$store.state.userData.imgList[i]
@@ -170,30 +209,40 @@ export default {
       this.$router.push({
         path: `/infoFour`
       });
+      this.forEachData();
       this.$store.commit("SET_imgList", this.upImgList);
       this.$store.commit("SET_imgListUrl", this.imgList);
     },
     upImg(e) {
-      let avatarImg = e.target.files;
-      for (let i = 0; i < avatarImg.length; i++) {
-        let Img = e.target.files[i];
-        // let avatarImgsize = Img.size;
-        // if (this.imgType.type.indexOf(avatarImgtype) === -1) {
-        //   this.$message.error("格式不正确");
-        //   return false;
-        // } else {
-          const _this = this;
-          if (!e || !window.FileReader) return;
-          const reader = new FileReader();
-          reader.readAsDataURL(Img);
-          reader.onload = function(e) {
-            _this.imgList.push(e.target.result);
-          };
-          this.upImgList.push(Img);
-        // }
-      }
+      var self = this;
+      var file = e.target.files[0];
+
+      var type = file.name.split(".")[1];
+      var storeAs = new Date().getTime() + "." + type;
+      this.getRight();
+      this.client
+        .multipartUpload(storeAs, file)
+        .then(function(result) {
+          console.log(result.res.requestUrls); //至此就拿到了返回的路径
+          _this.imgListArr.push({
+            isCollected: null,
+            picture: {
+              createDate: '',
+              ossId: storeAs,
+              url: "http://47.101.165.134/root/picture/company/"+ storeAs,
+              id: '',
+              userId: _this.$store.state.user.UserID,
+              description: ""
+            }
+          });
+          // self.data.url = result.res.requestUrls[0].split("?")[0];
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
     },
     toBack() {
+      this.forEachData();
       this.$store.commit("SET_imgList", this.upImgList);
       this.$store.commit("SET_imgListUrl", this.imgList);
       this.$router.push({
@@ -206,6 +255,7 @@ export default {
       });
     },
     toOne() {
+      this.forEachData();
       this.$store.commit("SET_imgList", this.upImgList);
       this.$store.commit("SET_imgListUrl", this.imgList);
       this.$router.push({
@@ -213,6 +263,7 @@ export default {
       });
     },
     toTwo() {
+      this.forEachData();
       this.$store.commit("SET_imgList", this.upImgList);
       this.$store.commit("SET_imgListUrl", this.imgList);
       this.$router.push({
@@ -220,6 +271,7 @@ export default {
       });
     },
     toThree() {
+      this.forEachData();
       this.$store.commit("SET_imgList", this.upImgList);
       this.$store.commit("SET_imgListUrl", this.imgList);
       this.$router.push({
@@ -227,6 +279,7 @@ export default {
       });
     },
     toFour() {
+      this.forEachData();
       this.$store.commit("SET_imgList", this.upImgList);
       this.$store.commit("SET_imgListUrl", this.imgList);
       this.$router.push({
@@ -234,9 +287,9 @@ export default {
       });
     },
     toFive() {
+      this.forEachData();
       this.$store.commit("SET_imgList", this.upImgList);
       this.$store.commit("SET_imgListUrl", this.imgList);
-
       this.$router.push({
         path: `/infoFive`
       });
@@ -319,47 +372,84 @@ export default {
             font-size: 16px;
             color: #fff;
           }
-          .UpImg {
-            display: flex;
-            margin: 50px 0;
-            .UpimgList {
-              width: 132px;
-              height: 132px;
-              background: #fff;
-              overflow: hidden;
-              position: relative;
-              margin-right: 20px;
-              label {
-                position: absolute;
-                top: 0;
-                left: 0;
-                display: block;
-                width: 100%;
-                height: 100%;
-                // text-align: center;
-                z-index: 999;
-                font-size: 30px;
+          .upImgBox {
+            height: 400px;
+            overflow: auto;
+            .UpImg {
+              margin: 10px 0 10px;
+              // .UpImgTop {
+              //   margin-bottom: 10px;
+              //   input {
+              //     background: rgba(255, 255, 255, 0.36);
+              //     outline: none;
+              //     padding: 0 10px;
+              //     height: 20px;
+              //     color: #fff;
+              //   }
+              // }
+              .UpImgBottom {
                 display: flex;
-                justify-content: center;
-                align-items: center;
               }
-              input {
-                opacity: 0;
+              .UpimgList {
+                width: 120px;
+                height: 120px;
+                background: #fff;
+                overflow: hidden;
+                position: relative;
+                margin-right: 20px;
+                label {
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  display: block;
+                  width: 100%;
+                  height: 100%;
+                  // text-align: center;
+                  z-index: 999;
+                  font-size: 30px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                }
+                input {
+                  opacity: 0;
+                }
               }
             }
-          }
-          .imgList {
-            height: 284px;
-            width: 608px;
-            overflow: auto;
-            display: flex;
-            flex-wrap: wrap;
-            .imgListItem {
-              width: 132px;
-              height: 132px;
-              background: #fff;
-              margin-right: 14px;
-              margin-bottom: 14px;
+            .imgList {
+              width: 608px;
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: space-between;
+              .imgListItem {
+                width: 120px;
+                height: 160px;
+                margin-right: 14px;
+                margin-bottom: 14px;
+                img {
+                  width: 120px;
+                  height: 120px;
+                }
+                .UpImgTop {
+                  width: 100%;
+                  height: 30px;
+                  margin-top: 10px;
+                  input {
+                    width: 100%;
+                    display: block;
+                    background: rgba(255, 255, 255, 0.36);
+                    outline: none;
+                    padding: 0 10px;
+                    height: 20px;
+                    box-sizing: border-box;
+                    color: #fff;
+                    &::-webkit-input-placeholder {
+                      color: #fff;
+                      font-size: 10px;
+                    }
+                  }
+                }
+              }
             }
           }
         }

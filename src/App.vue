@@ -30,6 +30,7 @@ export default {
           console.log(res.data.data);
           this.$store.commit("SET_NAME", res.data.data.user.name);
           this.$store.commit("SET_NAMEENG", res.data.data.user.nameEng);
+          this.$store.commit("SET_NAMESHORT", res.data.data.user.nameShort);
           this.$store.commit("SET_MEMBER", res.data.data.user.member);
           this.$store.commit("SET_ADDRESS", res.data.data.user.address);
           this.$store.commit("SET_LINKMAN", res.data.data.user.linkman);

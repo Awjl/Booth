@@ -264,6 +264,11 @@ export default {
       this.$store.commit("SET_MOBILE", this.userData.mobile);
       this.$store.commit("SET_LINKMANEMAIL", this.userData.linkmanEmail);
 
+
+      let arr = []
+      for (let i = 0; i < this.$store.state.userData.imgListUrlArr.length; i++) {
+         arr.push(this.$store.state.userData.imgListUrlArr[i].picture)
+      }
       this.formData.append("id", this.$store.state.user.UserID);
       this.formData.append("name", this.$store.state.userData.name);
       this.formData.append("engName", this.$store.state.userData.nameEng);
@@ -302,12 +307,14 @@ export default {
       );
       this.formData.append("titles", this.$store.state.userData.titles);
       this.formData.append("customer", this.$store.state.userData.customer);
-      for (let i = 0; i <= this.$store.state.userData.imgList.length; i++) {
-        this.formData.append(
-          "companyPics",
-          this.$store.state.userData.imgList[i]
-        );
-      }
+      this.formData.append("params", JSON.stringify(arr));
+
+      // for (let i = 0; i <= this.$store.state.userData.imgList.length; i++) {
+      //   this.formData.append(
+      //     "companyPics",
+      //     this.$store.state.userData.imgList[i]
+      //   );
+      // }
       this.formData.append("logoPic", this.$store.state.userData.logoPic);
       this.formData.append(
         "introductionPic",

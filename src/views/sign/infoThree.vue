@@ -36,18 +36,6 @@
                         <input type="text" placeholder="请输入图片说明" v-model="item.picture.description">
                       </div>
                     </div>
-                    <!-- <div class="imgListItem" v-for="(item, index) in imgListArr" :key="index">
-                      <img :src="item.picture.url" alt>
-                      <div class="UpImgTop">
-                        <input type="text" placeholder="请输入图片说明">
-                      </div>
-                    </div>
-                    <div class="imgListItem" v-for="(item, index) in imgList" :key="index">
-                      <img :src="item" alt>
-                      <div class="UpImgTop">
-                        <input type="text" placeholder="请输入图片说明">
-                      </div>
-                    </div>-->
                   </div>
                 </div>
               </div>
@@ -74,10 +62,7 @@ export default {
   name: "sign",
   data() {
     return {
-      // imgList: [], // 展示地址
       imgListArr: [], // 服务器图片展示地址
-      // upImgList: [], // 上传图片
-      // upImgTitle: [], // 上传名字
       client: "",
       formData: new FormData(),
       imgType: {
@@ -87,21 +72,8 @@ export default {
   },
   created() {
     this.imgListArr = this.$store.state.userData.imgListUrlArr;
-    this.imgList = this.$store.state.userData.imgListUrl;
-    console.log(this.imgListArr);
   },
   methods: {
-    getRight() {
-      this.client = new OSS.Wrapper({
-        region: "同endpoint",
-        secure: true, //https
-        endpoint: "运维会告诉你",
-        accessKeyId: "id和secret去阿里云控制台获得",
-        /*accessKeyId,accessKeySecret两者到阿里云控制台获得*/
-        accessKeySecret: "",
-        bucket: "" /*装图片的桶名*/
-      });
-    },
     _addUserInfo() {
       addUserInfo(this.formData).then(res => {
         if (res.data.code === 0) {
@@ -111,15 +83,6 @@ export default {
           });
         }
       });
-    },
-    forEachData() {
-      this.upImgTitle = [];
-      let _this = this;
-      this.showData.forEach(item => {
-        _this.upImgTitle.push(item.title);
-      });
-      console.log(this.upImgTitle);
-      this.$store.commit("SET_titles", this.upImgTitle);
     },
     yanzheng() {
       let emli = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
@@ -149,9 +112,11 @@ export default {
       }
     },
     preservation() {
-      this.forEachData();
-      this.$store.commit("SET_imgList", this.upImgList);
-      this.$store.commit("SET_imgListUrl", this.imgList);
+      this.$store.commit("SET_imgListUrlArr", this.imgListArr);
+      let arr = []
+      for (let i = 0; i < this.$store.state.userData.imgListUrlArr.length; i++) {
+        arr.push(this.$store.state.userData.imgListUrlArr[i].picture)
+      }
       this.formData.append("id", this.$store.state.user.UserID);
       this.formData.append("name", this.$store.state.userData.name);
       this.formData.append("nameShort", this.$store.state.userData.nameShort);
@@ -190,13 +155,12 @@ export default {
       );
       this.formData.append("titles", this.$store.state.userData.titles);
       this.formData.append("customer", this.$store.state.userData.customer);
-      for (let i = 0; i <= this.$store.state.userData.imgList.length; i++) {
-        console.log(this.$store.state.userData.imgList[i]);
-        this.formData.append(
-          "companyPics",
-          this.$store.state.userData.imgList[i]
-        );
-      }
+      this.formData.append("params", JSON.stringify(arr));
+      // for (let i = 0; i <= arr.length; i++) {
+      //   this.formData.append(
+      //     "params",arr[i]
+      //   );
+      // }
       this.formData.append("logoPic", this.$store.state.userData.logoPic);
       this.formData.append(
         "introductionPic",
@@ -209,42 +173,35 @@ export default {
       this.$router.push({
         path: `/infoFour`
       });
-      this.forEachData();
-      this.$store.commit("SET_imgList", this.upImgList);
-      this.$store.commit("SET_imgListUrl", this.imgList);
+      this.$store.commit("SET_imgListUrlArr", this.imgListArr);
     },
     upImg(e) {
-      var self = this;
-      var file = e.target.files[0];
-
-      var type = file.name.split(".")[1];
-      var storeAs = new Date().getTime() + "." + type;
-      this.getRight();
-      this.client
-        .multipartUpload(storeAs, file)
-        .then(function(result) {
-          console.log(result.res.requestUrls); //至此就拿到了返回的路径
-          _this.imgListArr.push({
-            isCollected: null,
-            picture: {
-              createDate: '',
-              ossId: storeAs,
-              url: "http://47.101.165.134/root/picture/company/"+ storeAs,
-              id: '',
-              userId: _this.$store.state.user.UserID,
-              description: ""
-            }
-          });
-          // self.data.url = result.res.requestUrls[0].split("?")[0];
-        })
-        .catch(function(err) {
-          console.log(err);
+      const client = new OSS.Wrapper({
+        region: "oss-cn-beijing.aliyuncs.com",
+        accessKeyId: "LTAIGvFxVNxq1rpx",
+        accessKeySecret: "r5bCUwH1yMuKCCyOPjwnd4MfQw7gm2",
+        bucket: "booth2" /*装图片的桶名*/
+      });
+      let file = e.target.files[0];
+      let storeAs = new Date().getTime();
+      var _this = this;
+      client.multipartUpload(storeAs, file).then(res => {
+        _this.imgListArr.push({
+          isCollected: null,
+          picture: {
+            createDate: "",
+            ossId: storeAs,
+            url:
+              `http://oss-cn-beijing.aliyuncs.com/${storeAs}?x-oss-process=image/format,png"`,
+            id: "",
+            userId: _this.$store.state.user.UserID,
+            description: ""
+          }
         });
+      });
     },
     toBack() {
-      this.forEachData();
-      this.$store.commit("SET_imgList", this.upImgList);
-      this.$store.commit("SET_imgListUrl", this.imgList);
+      this.$store.commit("SET_imgListUrlArr", this.imgListArr);
       this.$router.push({
         path: `/infoTwo`
       });
@@ -255,41 +212,33 @@ export default {
       });
     },
     toOne() {
-      this.forEachData();
-      this.$store.commit("SET_imgList", this.upImgList);
-      this.$store.commit("SET_imgListUrl", this.imgList);
+      this.$store.commit("SET_imgListUrlArr", this.imgListArr);
       this.$router.push({
         path: `/infoOne`
       });
     },
     toTwo() {
-      this.forEachData();
-      this.$store.commit("SET_imgList", this.upImgList);
-      this.$store.commit("SET_imgListUrl", this.imgList);
+      this.$store.commit("SET_imgListUrlArr", this.imgListArr);
       this.$router.push({
         path: `/infoTwo`
       });
     },
     toThree() {
-      this.forEachData();
-      this.$store.commit("SET_imgList", this.upImgList);
-      this.$store.commit("SET_imgListUrl", this.imgList);
+      this.$store.commit("SET_imgListUrlArr", this.imgListArr);
       this.$router.push({
         path: `/infoThree`
       });
     },
     toFour() {
-      this.forEachData();
-      this.$store.commit("SET_imgList", this.upImgList);
-      this.$store.commit("SET_imgListUrl", this.imgList);
+      this.$store.commit("SET_imgListUrlArr", this.imgListArr);
       this.$router.push({
         path: `/infoFour`
       });
     },
     toFive() {
-      this.forEachData();
-      this.$store.commit("SET_imgList", this.upImgList);
-      this.$store.commit("SET_imgListUrl", this.imgList);
+      // this.$store.commit("SET_imgList", this.upImgList);
+      // this.$store.commit("SET_imgListUrl", this.imgList);
+      this.$store.commit("SET_imgListUrlArr", this.imgListArr);
       this.$router.push({
         path: `/infoFive`
       });

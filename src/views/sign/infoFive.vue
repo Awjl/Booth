@@ -173,12 +173,6 @@
                     v-for="(item, index) in userData.imgListUrlArr"
                     :key="index"
                   >
-                  <img
-                    :src="item.picture.url"
-                    alt
-                    v-for="(item, index) in userData.imgListUrl"
-                    :key="index"
-                  >
                 </div>
                 <div class="OtherList" v-if="!userData.imgListUrlArr.length">无</div>
               </div>
@@ -255,6 +249,14 @@ export default {
       }
     },
     preservation() {
+      let arr = [];
+      for (
+        let i = 0;
+        i < this.$store.state.userData.imgListUrlArr.length;
+        i++
+      ) {
+         arr.push(this.$store.state.userData.imgListUrlArr[i].picture)
+      }
       this.formData.append("id", this.$store.state.user.UserID);
       this.formData.append("name", this.$store.state.userData.name);
       this.formData.append("nameShort", this.$store.state.userData.nameShort);
@@ -294,12 +296,14 @@ export default {
       );
       this.formData.append("titles", this.$store.state.userData.titles);
       this.formData.append("customer", this.$store.state.userData.customer);
-      for (let i = 0; i <= this.$store.state.userData.imgList.length; i++) {
-        this.formData.append(
-          "companyPics",
-          this.$store.state.userData.imgList[i]
-        );
-      }
+      this.formData.append("params", JSON.stringify(arr));
+
+      // for (let i = 0; i <= this.$store.state.userData.imgList.length; i++) {
+      //   this.formData.append(
+      //     "companyPics",
+      //     this.$store.state.userData.imgList[i]
+      //   );
+      // }
       this.formData.append("logoPic", this.$store.state.userData.logoPic);
       this.formData.append(
         "introductionPic",

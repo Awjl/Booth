@@ -514,3 +514,14 @@ export function getAllPartner(id) {
         }
     });
 }
+// 上传图片到OSS 
+export function upload(data) {
+    return service({
+        url: `/user/upload`,
+        method: "post",
+        data: data,
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+}

@@ -55,9 +55,11 @@
 </template>
 
 <script>
-import { addUserInfo, ERR_OK } from "@/api/api.js";
+import { addUserInfo, upload, ERR_OK } from "@/api/api.js";
 import { setUser } from "@/utils/auth.js";
+// import OSS from "ali-oss";
 
+// import OSS = require('ali-oss');
 export default {
   name: "sign",
   data() {
@@ -65,6 +67,7 @@ export default {
       imgListArr: [], // 服务器图片展示地址
       client: "",
       formData: new FormData(),
+      formDataTwo: new FormData(),
       imgType: {
         type: "image/jpeg, image/png, image/jpg"
       }
@@ -113,9 +116,13 @@ export default {
     },
     preservation() {
       this.$store.commit("SET_imgListUrlArr", this.imgListArr);
-      let arr = []
-      for (let i = 0; i < this.$store.state.userData.imgListUrlArr.length; i++) {
-        arr.push(this.$store.state.userData.imgListUrlArr[i].picture)
+      let arr = [];
+      for (
+        let i = 0;
+        i < this.$store.state.userData.imgListUrlArr.length;
+        i++
+      ) {
+        arr.push(this.$store.state.userData.imgListUrlArr[i].picture);
       }
       this.formData.append("id", this.$store.state.user.UserID);
       this.formData.append("name", this.$store.state.userData.name);
@@ -176,28 +183,23 @@ export default {
       this.$store.commit("SET_imgListUrlArr", this.imgListArr);
     },
     upImg(e) {
-      const client = new OSS.Wrapper({
-        region: "oss-cn-beijing.aliyuncs.com",
-        accessKeyId: "LTAIGvFxVNxq1rpx",
-        accessKeySecret: "r5bCUwH1yMuKCCyOPjwnd4MfQw7gm2",
-        bucket: "booth2" /*装图片的桶名*/
-      });
       let file = e.target.files[0];
-      let storeAs = new Date().getTime();
-      var _this = this;
-      client.multipartUpload(storeAs, file).then(res => {
-        _this.imgListArr.push({
+      this.formDataTwo.append("file", file)
+      upload(this.formDataTwo).then(res => {
+        if (res.data.code === 0) {
+         this.imgListArr.push({
           isCollected: null,
           picture: {
             createDate: "",
-            ossId: storeAs,
+            ossId: res.data.data,
             url:
-              `http://oss-cn-beijing.aliyuncs.com/${storeAs}?x-oss-process=image/format,png"`,
+              `http://booth1.oss-cn-shanghai.aliyuncs.com/${res.data.data}?x-oss-process=image/format,png`,
             id: "",
-            userId: _this.$store.state.user.UserID,
+            userId: this.$store.state.user.UserID,
             description: ""
           }
         });
+        }
       });
     },
     toBack() {

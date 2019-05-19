@@ -222,7 +222,7 @@ export default {
       }
       this.formData.append("id", this.$store.state.user.UserID);
       this.formData.append("name", this.$store.state.userData.name);
-            this.formData.append("nameShort", this.$store.state.userData.nameShort);
+      this.formData.append("nameShort", this.$store.state.userData.nameShort);
 
       this.formData.append("engName", this.$store.state.userData.nameEng);
       this.formData.append("member", this.$store.state.userData.member);

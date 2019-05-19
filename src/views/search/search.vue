@@ -190,6 +190,13 @@
         <span @click="tologinList">去登陆</span>
       </div>
     </div>
+    <div class="boxLoing" v-if="showBoxTwo">
+      <p>抱歉您所搜索的内容尚未入住Booth商博，</p>
+      <p>请尝试通过行业搜索类似内容</p>
+      <div>
+        <span @click="quxiao">关闭</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -200,6 +207,7 @@ export default {
   data() {
     return {
       showBox: false,
+      showBoxTwo: false,
       center: this.$route.query.center,
       searchList: {
         brochureNum: "", // 册子
@@ -226,7 +234,16 @@ export default {
       search(this.center).then(res => {
         if (res.data.code === 0) {
           this.searchList = res.data.data;
-          console.log(res.data.data);
+          if (
+            this.searchList.companyNum === 0 &&
+            this.searchList.exhibitionNum === 0 &&
+            this.searchList.eventNum === 0 &&
+            this.searchList.brochureNum === 0 &&
+            this.searchList.imageNum === 0
+          ) {
+            console.log('213')
+            this.showBoxTwo = true;
+          }
         }
       });
     },
@@ -246,10 +263,10 @@ export default {
       // if (!this.$store.state.user.UserID) {
       //   this.showBox = true;
       // } else {
-        this.$router.push({
-          path: `/othercore`,
-          query: { id: id }
-        });
+      this.$router.push({
+        path: `/othercore`,
+        query: { id: id }
+      });
       // }
     },
     toDetailsOne(id) {
@@ -276,12 +293,12 @@ export default {
       // if (!this.$store.state.user.UserID) {
       //   this.showBox = true;
       // } else {
-        this.$router.push({
-          name: `searchExhibition`,
-          query: {
-            center: this.center
-          }
-        });
+      this.$router.push({
+        name: `searchExhibition`,
+        query: {
+          center: this.center
+        }
+      });
       // }
     },
     toBrochure() {
@@ -364,6 +381,7 @@ export default {
     },
     quxiao() {
       this.showBox = false;
+      this.showBoxTwo = false;
     }
   }
 };

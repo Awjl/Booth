@@ -33,7 +33,12 @@
                     <div class="imgListItem" v-for="(item, index) in imgListArr" :key="index">
                       <img :src="item.picture.url" alt>
                       <div class="UpImgTop">
-                        <input type="text" placeholder="请输入图片说明" v-model="item.picture.description">
+                        <input
+                          type="text"
+                          placeholder="请输入图片说明"
+                          v-model="item.picture.description"
+                          @change="setData(item)"
+                        >
                       </div>
                     </div>
                   </div>
@@ -55,7 +60,7 @@
 </template>
 
 <script>
-import { addUserInfo, upload, ERR_OK } from "@/api/api.js";
+import { addUserInfo, upload, savePicture,updatePicture, ERR_OK } from "@/api/api.js";
 import { setUser } from "@/utils/auth.js";
 // import OSS from "ali-oss";
 
@@ -67,14 +72,16 @@ export default {
       imgListArr: [], // 服务器图片展示地址
       client: "",
       formData: new FormData(),
-      formDataTwo: new FormData(),
+
       imgType: {
         type: "image/jpeg, image/png, image/jpg"
       }
     };
   },
   created() {
-    this.imgListArr = this.$store.state.userData.imgListUrlArr;
+    if (this.$store.state.userData.imgListUrlArr) {
+      this.imgListArr = this.$store.state.userData.imgListUrlArr;
+    }
   },
   methods: {
     _addUserInfo() {
@@ -182,23 +189,52 @@ export default {
       });
       this.$store.commit("SET_imgListUrlArr", this.imgListArr);
     },
-    upImg(e) {
-      let file = e.target.files[0];
-      this.formDataTwo.append("file", file)
-      upload(this.formDataTwo).then(res => {
+    setData(item) {
+      let formData = new FormData();
+      formData.append("ossId", item.picture.ossId);
+      formData.append("description", item.picture.description);
+      formData.append("url", item.picture.url);
+      formData.append("userId", item.picture.userId);
+      formData.append("id", item.picture.id);
+      updatePicture(formData).then(res => {
         if (res.data.code === 0) {
-         this.imgListArr.push({
-          isCollected: null,
-          picture: {
-            createDate: "",
-            ossId: res.data.data,
-            url:
-              `http://booth1.oss-cn-shanghai.aliyuncs.com/${res.data.data}?x-oss-process=image/format,png`,
-            id: "",
-            userId: this.$store.state.user.UserID,
-            description: ""
-          }
-        });
+        }
+      });
+    },
+    upImg(e) {
+      let formData = new FormData();
+      let file = e.target.files[0];
+      formData.append("file", file);
+      upload(formData).then(res => {
+        var _this = this;
+        if (res.data.code === 0) {
+          let formDataTwo = new FormData();
+          formDataTwo.append("ossId", res.data.data);
+          formDataTwo.append("description", "");
+          formDataTwo.append(
+            "url",
+            `http://booth1.oss-cn-shanghai.aliyuncs.com/${
+              res.data.data
+            }?x-oss-process=image/format,png`
+          );
+          formDataTwo.append("userId", this.$store.state.user.UserID);
+          savePicture(formDataTwo).then(res => {
+            if (res.data.code === 0) {
+              _this.imgListArr.push({
+                isCollected: null,
+                picture: {
+                  createDate: "",
+                  ossId: res.data.data.ossId,
+                  url: `http://booth1.oss-cn-shanghai.aliyuncs.com/${
+                    res.data.data.ossId
+                  }?x-oss-process=image/format,png`,
+                  id: "",
+                  userId: this.$store.state.user.UserID,
+                  description: ""
+                }
+              });
+            }
+          });
         }
       });
     },
@@ -325,7 +361,6 @@ export default {
           }
           .upImgBox {
             height: 400px;
-            overflow: auto;
             .UpImg {
               margin: 10px 0 10px;
               // .UpImgTop {
@@ -369,6 +404,8 @@ export default {
             }
             .imgList {
               width: 608px;
+              height: 400px;
+              overflow: auto;
               display: flex;
               flex-wrap: wrap;
               justify-content: space-between;

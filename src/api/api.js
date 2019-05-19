@@ -264,7 +264,6 @@ export function deleteProduct(id) {
 }
 // 获取所有产品手册 1
 export function getAllProducts(id, userId) {
-    console.log(id, userId)
     return service({
         url: `/product/getAllProducts`,
         method: "get",
@@ -518,6 +517,28 @@ export function getAllPartner(id) {
 export function upload(data) {
     return service({
         url: `/user/upload`,
+        method: "post",
+        data: data,
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+}
+// 修改
+export function updatePicture(data) {
+    return service({
+        url: `/user/updatePicture`,
+        method: "post",
+        data: data,
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+}
+// 新增
+export function savePicture(data) {
+    return service({
+        url: `/user/savePicture`,
         method: "post",
         data: data,
         headers: {

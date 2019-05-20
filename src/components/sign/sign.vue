@@ -12,7 +12,7 @@
       </div>
       <div class="LoginInput">
         <div class="inpList">
-          <input type="text" placeholder="邮箱/手机号/企业简称" v-model="user.nameShort">
+          <input type="text" placeholder="企业简称" v-model="user.nameShort">
           <p class="Err">{{usernameErr}}</p>
         </div>
         <div class="inpList">
@@ -44,13 +44,14 @@ export default {
       user: {
         nameShort: "",
         email: "",
-        password: ""
+        password: "",
       },
       userID: ""
     };
   },
   methods: {
     _register() {
+      this.user.nameShort = this.user.username
       register(this.user).then(res => {
         if (res.data.code === 500502) {
           this.emlErr = res.data.msg;

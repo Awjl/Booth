@@ -8,16 +8,16 @@
       <div class="signBgList" v-if="!userID">
         <div class="LoginInput">
           <div class="inpList">
-            <input type="text" placeholder="邮箱/手机号/企业简称" v-model="user.username">
+            <input type="text" placeholder="企业简称" v-model="user.username">
             <p class="Err">{{usernameErr}}</p>
           </div>
           <div class="inpList">
             <input type="password" placeholder="密码" v-model="user.password">
-            <p class="Err">{{usernameErr}}</p>
+            <p class="Err">{{passwordErr}}</p>
           </div>
           <div class="inpList">
             <input type="text" placeholder="邮箱" v-model="user.email">
-            <p class="Err">{{usernameErr}}</p>
+            <p class="Err">{{emlErr}}</p>
           </div>
           <div class="LoginBtn" @click="toSign">
             <span>立即注册</span>
@@ -62,7 +62,8 @@ export default {
       user: {
         username: "",
         email: "",
-        password: ""
+        password: "",
+        nameShort: ''
       }
     };
   },
@@ -91,6 +92,7 @@ export default {
       });
     },
     _register() {
+      this.user.nameShort = this.user.username
       register(this.user).then(res => {
         if (res.data.code === 500502) {
           this.emlErr = res.data.msg;

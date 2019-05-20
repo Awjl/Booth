@@ -4,13 +4,13 @@
       <div class="signBgName">
         <p>修改密码</p>
       </div>
-      <div class="LoginInput">
+      <div class="LoginInput" v-if="showemilbox">
         <div class="inpList">
-          <input type="text" placeholder="企业名称" v-model="UserData.username">
+          <input type="text" placeholder="请求输入邮箱" v-model="UserData.username">
           <p class="Err">{{usernameERR}}</p>
         </div>
         <div class="inpList">
-          <p class="inpText">验证码已发送您注册的邮箱中</p>
+          <p class="inpText" v-if="showemil">验证码已发送您注册的邮箱中</p>
           <input type="text" placeholder="验证码" v-model="UserData.code">
           <div class="Listbtn" @click="_sendCode">发送</div>
           <p class="Err">{{codeERR}}</p>
@@ -23,6 +23,29 @@
           <span @click="_login">确认</span>
         </div>
       </div>
+      <div class="LoginInput" v-if="showemilbox1">
+        <div class="inpList">
+          <input type="password" placeholder="请求输入新密码" v-model="password">
+          <p class="Err">{{passworderr}}</p>
+        </div>
+        <div class="inpList">
+          <input type="password" placeholder="请求重新输入新密码" v-model="newpassword">
+          <p class="Err">{{newpassworderr}}</p>
+        </div>
+        <div class="forgetPass">
+          <span @click="ToLogin">去登陆</span>
+          <span @click="ToSign">去注册</span>
+        </div>
+        <div class="LoginBtn">
+          <span @click="_loginlist">确认修改</span>
+        </div>
+      </div>
+      <div class="LoginInput" v-if="showtrue">
+        <p>密码修改成功</p>
+        <div class="LoginBtn">
+          <span @click="ToSign">去登陆</span>
+        </div>
+      </div>
       <div class="signBgLogo">
         <img src="../../assets/images/home/logo.png" alt>
         <p>博商供应链</p>
@@ -33,19 +56,28 @@
 </template>
 
 <script>
-import { matchCode, sendCode, ERR_OK } from "@/api/api.js";
+import { matchCode, sendCode, changePassword, ERR_OK } from "@/api/api.js";
 import { setUser, setOne, setTwo } from "@/utils/auth.js";
 export default {
   name: "sign",
   data() {
     return {
+      showemil: false,
+      showtrue: false,
+      showemilbox: true,
+      showemilbox1: false,
       close: false,
       usernameERR: "",
       passwordERR: "",
       codeERR: "",
+      passworderr: "",
+      newpassworderr: "",
+      password: "",
+      newpassword: "",
       UserData: {
         username: "",
-        code: ""
+        code: "",
+        password: ""
       }
     };
   },
@@ -62,21 +94,49 @@ export default {
       } else {
         this.codeERR = "";
       }
-      if (
-        this.UserData.username &&
-        this.UserData.code
-      ) {
+      if (this.UserData.username && this.UserData.code) {
         matchCode(this.UserData).then(res => {
-          if (res.data.code === 0) {
-           
+          if (res.data.code === 0 && res.data.data) {
+            this.showemilbox = false;
+            this.showemilbox1 = true;
+            this.showtrue = false;
           }
         });
       }
     },
+    _loginlist() {
+      if (!this.password) {
+        this.passworderr = "请输入新密码";
+        return;
+      }
+      if (this.password != this.newpassword) {
+        this.newpassworderr = "两次密码输入不一致";
+        return;
+      } else {
+        this.UserData.password = this.newpassword;
+      }
+      changePassword(this.UserData).then(res => {
+        if (res.data.code === 0 && res.data.data) {
+          this.showemilbox = false;
+          this.showemilbox1 = false;
+          this.showtrue = true;
+        }
+      });
+    },
+    // 修改密码
     _sendCode() {
+      this.showemil = false;
+      if (!this.UserData.username) {
+        this.usernameERR = "请输入邮箱";
+        return;
+      } else {
+        this.usernameERR = "";
+      }
       sendCode(this.UserData.username).then(res => {
         if (res.data.code === 500504) {
           this.usernameERR = res.data.msg;
+        } else {
+          this.showemil = true;
         }
       });
     },
@@ -120,6 +180,11 @@ export default {
     .LoginInput {
       width: 300px;
       margin: 26px 0;
+      > p {
+        font-size: 16px;
+        color: #fff;
+        text-align: center;
+      }
       .inpList {
         width: 100%;
         height: 40px;

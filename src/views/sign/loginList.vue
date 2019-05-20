@@ -1,5 +1,5 @@
 <template>
-  <div class="signDetails">
+  <div class="signDetailslist">
     <div class="signBg">
       <div class="signBgName">
         <p>登陆booth</p>
@@ -112,6 +112,7 @@ export default {
           }
           if (res.data.code === 0) {
             if (res.data.data.isRegister === 2) {
+              this.$router.go(0);
               this.$router.push({
                 name: `home`
               });
@@ -150,7 +151,7 @@ export default {
 </script>
 
 <style lang="scss">
-.signDetails {
+.signDetailslist {
   width: 100vw;
   height: 100vh;
   background: #2c73a1;

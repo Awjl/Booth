@@ -186,7 +186,10 @@ export function changePassword(data) {
     return service({
         url: `/changePassword`,
         method: "post",
-        data: data
+        data: {
+            email: data.username,
+            password: data.password
+        }
     });
 }
 // 邮箱验证 1
@@ -223,12 +226,12 @@ export function register(data) {
     });
 }
 // 发送邮箱验证码 1
-export function sendCode(username) {
+export function sendCode(email) {
     return service({
         url: `/sendCode`,
         method: "get",
         params: {
-            username: username
+            email: email
         }
     });
 }
@@ -381,7 +384,7 @@ export function matchCode(data) {
         url: `/matchCode`,
         method: "get",
         params: {
-            username: data.username,
+            email: data.username,
             code: data.code
         }
     });

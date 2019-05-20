@@ -305,7 +305,7 @@ export default {
       .LoginItemLogo {
         width: 66px;
         height: 66px;
-        margin: 0 auto;
+        margin: 0 auto 10px;
       }
       .LoginItemTitle {
         text-align: center;
@@ -340,7 +340,12 @@ export default {
             margin-right: 2%;
             // background: #fff;
             margin-bottom: 10px;
+            overflow: hidden;
             cursor: pointer;
+          }
+          .LoginItemUserImg > img {
+            width: 100%;
+            height: 100%;
           }
         }
       }

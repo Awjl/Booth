@@ -559,6 +559,8 @@ export default {
       margin: -20px 0 0px;
       p {
         margin-bottom: 10px;
+        height: 18px;
+        line-height: 18px;
         cursor: pointer;
       }
       div {

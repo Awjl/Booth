@@ -216,9 +216,13 @@ export default {
       this.$store.commit("SET_logoPicUrl", this.logoImg);
       this.$store.commit("SET_introductionPicUrl", this.introduceImg);
 
-       let arr = []
-      for (let i = 0; i < this.$store.state.userData.imgListUrlArr.length; i++) {
-         arr.push(this.$store.state.userData.imgListUrlArr[i].picture)
+      let arr = [];
+      for (
+        let i = 0;
+        i < this.$store.state.userData.imgListUrlArr.length;
+        i++
+      ) {
+        arr.push(this.$store.state.userData.imgListUrlArr[i].picture);
       }
       this.formData.append("id", this.$store.state.user.UserID);
       this.formData.append("name", this.$store.state.userData.name);
@@ -593,7 +597,16 @@ export default {
                     }
                     .brochureintroduce {
                       width: 100%;
-                      height: 64px;
+                      height: 65px;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                      display: -webkit-box;
+                      -webkit-line-clamp: 4;
+                      -webkit-box-orient: vertical;
+                      padding: 4px 10px;
+                      box-sizing: border-box;
+                      line-height: 15px;
+                      overflow: hidden;
                       background: rgba($color: #000000, $alpha: 0.2);
                       margin-top: 10px;
                     }

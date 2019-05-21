@@ -432,9 +432,12 @@ export default {
             float: left;
             text-align: center;
             margin: 0 1% 10px;
-            border-radius: 10px;
             overflow: hidden;
-            background: #fff;
+            img {
+              border-radius: 10px;
+              height: 60px;
+              width: 60px;
+            }
           }
         }
       }

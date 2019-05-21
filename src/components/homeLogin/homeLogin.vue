@@ -70,7 +70,8 @@
                 <img :src="`${item.user.logoUrl}`" alt>
               </div>
               <div class="enterpriseItemLeftTitle">
-                <p @click="toOthercore(item.user.id)">{{item.user.name}}</p>
+                <p @click="toOthercore(item.user.id)" v-if="item.user.nameShort">{{item.user.nameShort}}</p>
+                <p @click="toOthercore(item.user.id)" v-else>{{item.user.name}}</p>
                 <p>{{item.user.fansNumber}}位关注者</p>
                 <p
                   @click="toSeach(item.user.oneIndustryid, item.user.twoIndustryid)"
@@ -281,6 +282,9 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        >img {
+          width: 90px;
+        }
         .signIcon {
           width: 78px;
           height: 78px;
@@ -298,7 +302,7 @@ export default {
         line-height: 50px;
         background: #000;
         color: #ffffff;
-        font-size: 22px;
+        font-size: 18px;
         margin: 70px auto 0;
         cursor: pointer;
       }

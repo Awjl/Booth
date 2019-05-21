@@ -268,6 +268,12 @@ export default {
     //     }
     //   });
     // },
+    toMover(id) {
+      this.$router.push({
+        path: `/productList`,
+        query: { id: id }
+      });
+    },
     toOthercore(id) {
       console.log(id)
       if (id) {

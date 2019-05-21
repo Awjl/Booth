@@ -2,7 +2,7 @@
   <div class="signDetailslist">
     <div class="signBg">
       <div class="signBgName">
-        <p>登陆booth</p>
+        <p>登陆</p>
       </div>
       <div class="LoginInput">
         <div class="inpList">
@@ -29,7 +29,7 @@
         </div>
       </div>
       <div class="signBgLogo">
-        <img src="../../assets/images/home/logo.png" alt>
+        <img src="../../assets/images/home/logo1.png" alt>
         <p>博商供应链</p>
         <div class="foot">上海麦屿信息科技有限公司</div>
       </div>

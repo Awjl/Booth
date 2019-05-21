@@ -16,10 +16,10 @@
       <div class="exhibitionLeft">
         <p>{{detailsData.nameEng}}</p>
         <p>{{detailsData.name}}</p>
-        <div>主题：{{detailsData.title}}</div>
-        <div>时间：{{detailsData.date}}</div>
-        <div>地点：{{detailsData.location}}</div>
-        <div>简述：{{detailsData.summary}}</div>
+        <div><strong>主题：</strong>{{detailsData.title}}</div>
+        <div><strong>时间：</strong>{{detailsData.date}}</div>
+        <div><strong>地点：</strong>{{detailsData.location}}</div>
+        <div><strong>简述：</strong>{{detailsData.summary}}</div>
       </div>
       <div class="exhibitionRight" @click="lookImg(detailsData.summaryPicture)">
         <img :src="`${detailsData.summaryPicture}`" alt>
@@ -679,13 +679,17 @@ export default {
     width: 50%;
     padding: 0 40px;
     box-sizing: border-box;
-    font-size: 24px;
+    font-size: 22px;
     p:nth-child(2) {
       margin-bottom: 20px;
     }
     div {
       margin-bottom: 10px;
       line-height: 30px;
+      font-size: 22px;
+      strong {
+        font-weight: bold;
+      }
     }
   }
   .exhibitionRight {

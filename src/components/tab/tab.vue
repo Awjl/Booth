@@ -135,7 +135,7 @@ export default {
     },
     toNews() {
       if (!this.$store.state.user.UserID) {
-        this.showBox = true;
+        this.$emit("ShowLogin", this.LoginState);
       } else {
         this.$router.push({
           path: `/News`
@@ -144,7 +144,7 @@ export default {
     },
     toEnterprise() {
       if (!this.$store.state.user.UserID) {
-        this.showBox = true;
+        this.$emit("ShowLogin", this.LoginState);
       } else {
         this.$router.push({
           path: `/enterprise`
@@ -209,6 +209,9 @@ export default {
   .tabLogo {
     display: flex;
     align-items: center;
+    img {
+      width: 95px;
+    }
     select {
       width: 100px;
       height: 32px;

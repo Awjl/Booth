@@ -16,7 +16,7 @@
           <p class="Err">{{codeERR}}</p>
         </div>
         <div class="forgetPass">
-          <span @click="ToLogin">去登陆</span>
+          <span @click="ToLogin">去登录</span>
           <span @click="ToSign">去注册</span>
         </div>
         <div class="LoginBtn">
@@ -33,7 +33,7 @@
           <p class="Err">{{newpassworderr}}</p>
         </div>
         <div class="forgetPass">
-          <span @click="ToLogin">去登陆</span>
+          <span @click="ToLogin">去登录</span>
           <span @click="ToSign">去注册</span>
         </div>
         <div class="LoginBtn">
@@ -43,7 +43,7 @@
       <div class="LoginInput" v-if="showtrue">
         <p>密码修改成功</p>
         <div class="LoginBtn">
-          <span @click="ToSign">去登陆</span>
+          <span @click="ToSign">去登录</span>
         </div>
       </div>
       <div class="signBgLogo">

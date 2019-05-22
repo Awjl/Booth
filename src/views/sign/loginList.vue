@@ -2,7 +2,7 @@
   <div class="signDetailslist">
     <div class="signBg">
       <div class="signBgName">
-        <p>登陆</p>
+        <p>登录</p>
       </div>
       <div class="LoginInput">
         <div class="inpList">

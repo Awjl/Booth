@@ -34,10 +34,10 @@
       </div>
     </div>
     <div class="boxLoing" v-if="showBox">
-      <p>您还未登陆，是否去登陆？</p>
+      <p>您还未登录，是否去登录？</p>
       <div>
         <span @click="quxiao">取消</span>
-        <span @click="tologinList">去登陆</span>
+        <span @click="tologinList">去登录</span>
       </div>
     </div>
   </div>

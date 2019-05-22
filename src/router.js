@@ -35,7 +35,7 @@ export default new Router({
       name: "loginList",
       component: () => import("./views/sign/loginList.vue"),
       meta: {
-        title: "登陆"
+        title: "登录"
       }
     },
     {

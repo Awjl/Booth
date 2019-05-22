@@ -7,7 +7,7 @@
       <div class="LoginImg">
         <div>
           <p>login</p>
-          <p>登陆</p>
+          <p>登录</p>
         </div>
         <div class="LoginIcon">
           <img src="../../assets/images/icon/man.png" alt>

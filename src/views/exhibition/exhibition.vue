@@ -14,7 +14,7 @@
                 <div class="exhibitionMainItem">主题：{{item.title}}</div>
                 <div class="exhibitionMainItem">时间：{{item.date}}</div>
                 <div class="exhibitionMainItem">地点：{{item.location}}</div>
-                <div class="exhibitionMainItem">简述：{{item.summary}}</div>
+                <div class="exhibitionMainItem summary">简述：{{item.summary}}</div>
               </div>
             </div>
           </div>
@@ -154,6 +154,13 @@ export default {
       width: 50%;
       padding: 0 5%;
       font-size: 14px;
+      .summary {
+        width: 100%;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 5;
+        overflow: hidden;
+      }
       .exhibitionMainItem {
         margin: 6px 0;
       }

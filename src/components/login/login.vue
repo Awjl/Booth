@@ -116,7 +116,7 @@ export default {
           if (res.data.code === 0) {
             this.closeLogin();
             if (res.data.data.isRegister === 2) {
-              this.$router.go(0);
+              window.location.reload();
               setUser(res.data.data.id);
               setOne(res.data.data.oneIndustryid);
               setTwo(res.data.data.twoIndustryid);

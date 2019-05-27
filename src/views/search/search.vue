@@ -82,7 +82,7 @@
                       <img :src="`${item.logoUrl}`" alt>
                     </div>
                     <div class="brochureLogoName">
-                      <p>{{item.name}}</p>
+                      <p @click="toOthercore(item.id)">{{item.name}}</p>
                       <p>{{item.fansNumber}}关注者</p>
                       <p>{{item.industryName}}</p>
                     </div>
@@ -121,7 +121,7 @@
                   <img :src="`${item.logoUrl}`" alt>
                 </div>
                 <div class="enterpriseItemLeftTitle">
-                  <p>{{item.name}}</p>
+                  <p @click="toOthercore(item.id)">{{item.name}}</p>
                   <p>{{item.fansNumber}}位关注者</p>
                   <p>{{item.industryName}}</p>
                 </div>
@@ -164,7 +164,7 @@
                   </div>
                 </div>
                 <div class="homeListTitle">
-                  <div class="name">{{item.name}}</div>
+                  <div class="name" @click="toOthercore(item.id)">{{item.name}}</div>
                   <div class="nameEN">{{item.fansNumber}}关注者</div>
                   <p class="industry">{{item.industryName}}</p>
                 </div>
@@ -174,7 +174,7 @@
                 </div>
               </div>
               <div class="hometext">{{item.summary}}</div>
-              <div class="moveBtn" @click="toOthercore(item.id)">更多</div>
+              <!-- <div class="moveBtn" @click="toOthercore(item.id)">更多</div> -->
               <div class="homeItemImg">
                 <img :src="`${item.introductionUrl}`" alt>
               </div>
@@ -241,7 +241,7 @@ export default {
             this.searchList.brochureNum === 0 &&
             this.searchList.imageNum === 0
           ) {
-            console.log('213')
+            console.log("213");
             this.showBoxTwo = true;
           }
         }
@@ -580,12 +580,17 @@ export default {
               }
               .brochureintroduce {
                 width: 100%;
-                height: 64px;
+                height: 80px;
+                line-height: 20px;
                 background: rgba($color: #000000, $alpha: 0.2);
                 margin-top: 10px;
-                padding: 4px;
+                padding: 0 4px;
                 box-sizing: border-box;
                 font-size: 14px;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 4;
+                overflow: hidden;
               }
             }
           }

@@ -3,7 +3,7 @@
     <div class="homleListItem" v-for="(item, index) in dataList" :key="index">
       <div class="homeListHead">
         <div class="homeListImg">
-          <div @click="toOthercore(item.user.id)">
+          <div @click="toOthercoreList(item.user.id)">
             <img :src="`${item.user.logoUrl}`" alt>
           </div>
           <div class="follow" v-if="item.isConcerned === 2" @click="followId(item.user.id)">+ 关注</div>
@@ -14,7 +14,7 @@
           >已关注</div>
         </div>
         <div class="homeListTitle">
-          <div class="name" @click="toOthercore(item.user.id)">{{item.user.name}}</div>
+          <div class="name" @click="toOthercoreList(item.user.id)">{{item.user.name}}</div>
           <div class="nameEN">{{item.user.fansNumber}}关注者</div>
           <p
             class="industry"
@@ -149,6 +149,16 @@ export default {
           Twoid: two
         }
       });
+    },
+    toOthercoreList(id) {
+      if (!this.$store.state.user.UserID) {
+        this.showBox = true;
+      } else {
+        this.$router.push({
+          path: `/othercore`,
+          query: { id: id }
+        });
+      }
     },
     toOthercore(index) {
       // console.log(());

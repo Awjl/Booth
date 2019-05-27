@@ -57,7 +57,7 @@
             <div class="enterpriseItemLeft">
               <div class="enterpriseItemHead">
                 <img src="../../assets/images/home/head2.png" alt v-if="item.isRegister == 1">
-                <img :src="`${item.user.logoUrl}`" v-else  @click="toOthercore(item.user.id)">
+                <img :src="`${item.user.logoUrl}`" v-else @click="toOthercore(item.user.id)">
               </div>
               <div class="enterpriseItemLeftTitle">
                 <p v-if="item.user" @click="toOthercore(item.user.id)">{{item.user.name}}</p>
@@ -140,6 +140,7 @@
           class="InterestItem"
           v-for="(item, index) in interestedExhibitions"
           :key="index"
+          @click="toDetails(item.id)"
         >{{item.name}}</div>
       </div>
       <div class="aboutListMiddlelist" style="text-align: center;" v-else>暂无感兴趣的展会</div>
@@ -165,6 +166,7 @@ export default {
   created() {
     this._getPartner(1);
     this._getSimilarityCompany();
+    console.log(this.interestedExhibitions, "感兴趣展会");
   },
   methods: {
     _getSimilarityCompany() {
@@ -186,6 +188,15 @@ export default {
             }
           }
         }
+      });
+    },
+    toDetails(id) {
+      if (id == "0") {
+        return;
+      }
+      this.$router.push({
+        path: `/exhibitionDetails`,
+        query: { id: id }
       });
     },
     looKcoverUrl(url, id) {
@@ -357,7 +368,7 @@ export default {
               height: 60px;
               cursor: pointer;
               img {
-                height:100%;
+                height: 100%;
               }
             }
           }
@@ -404,6 +415,10 @@ export default {
       padding: 10px;
       font-size: 16px;
       font-weight: bold;
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
     }
   }
   .enterpriseItem {

@@ -16,10 +16,22 @@
       <div class="exhibitionLeft">
         <p>{{detailsData.nameEng}}</p>
         <p>{{detailsData.name}}</p>
-        <div><strong>主题：</strong>{{detailsData.title}}</div>
-        <div><strong>时间：</strong>{{detailsData.date}}</div>
-        <div><strong>地点：</strong>{{detailsData.location}}</div>
-        <div><strong>简述：</strong>{{detailsData.summary}}</div>
+        <div>
+          <strong>主题：</strong>
+          {{detailsData.title}}
+        </div>
+        <div>
+          <strong>时间：</strong>
+          {{detailsData.date}}
+        </div>
+        <div>
+          <strong>地点：</strong>
+          {{detailsData.location}}
+        </div>
+        <div>
+          <strong>简述：</strong>
+          {{detailsData.summary}}
+        </div>
       </div>
       <div class="exhibitionRight" @click="lookImg(detailsData.summaryPicture)">
         <img :src="`${detailsData.summaryPicture}`" alt>
@@ -47,7 +59,7 @@
               <img :src="item.logoUrl" alt>
             </div>
             <div class="enterpriseItemLeftTitle">
-              <p>{{item.name}}</p>
+              <p @click="toOthercore(item.id)">{{item.name}}</p>
               <p>{{item.fansNumber}}位关注者</p>
               <p>{{item.industryName}}</p>
             </div>
@@ -66,7 +78,7 @@
               <img :src="item.logoUrl" alt>
             </div>
             <div class="companyItemTwoLeftname">
-              <p>{{item.name}}</p>
+              <p @click="toOthercore(item.id)">{{item.name}}</p>
               <p>{{item.fansNumber}}关注者</p>
               <p>{{item.industryName}}</p>
             </div>
@@ -708,6 +720,7 @@ export default {
   display: flex;
   span {
     margin-right: 30px;
+    cursor: pointer;
   }
   .act {
     font-weight: bold;
@@ -761,7 +774,7 @@ export default {
       box-sizing: border-box;
       margin-bottom: 20px;
       display: flex;
-      justify-content: space-between;
+      // justify-content: space-between;
       align-items: center;
       .enterpriseItemLeft {
         display: flex;
@@ -778,6 +791,7 @@ export default {
           p:nth-child(1) {
             font-size: 16px;
             font-weight: bold;
+            cursor: pointer;
           }
           p:nth-child(2) {
             font-size: 14px;
@@ -843,6 +857,7 @@ export default {
           p:nth-child(1) {
             font-size: 16px;
             font-weight: bold;
+            cursor: pointer;
           }
           p:nth-child(2) {
             font-size: 14px;

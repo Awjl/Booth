@@ -106,22 +106,30 @@ export default {
     },
     TabClick() {
       this.searchstate = false;
-      this.$router.go(0);
+      window.location.reload();
       setOne(this.One);
       setTwo(this.Two);
     },
     toExhibition() {
-      this.$router.push({
-        path: `/exhibition`
+      // this.$router.push({
+      //   path: `/exhibition`
+      // });
+      let routeUrl = this.$router.resolve({
+        path: "/exhibition"
       });
+      window.open(routeUrl.href, "_blank");
     },
     toSign() {
       this.$emit("ShowSign", this.SignState);
     },
     toHome() {
-      this.$router.push({
-        path: `/home`
+      // this.$router.push({
+      //   path: `/home`
+      // });
+      let routeUrl = this.$router.resolve({
+        path: "/home"
       });
+      window.open(routeUrl.href, "_blank");
     },
     ShowLogin() {
       this.$emit("ShowLogin", this.LoginState);
@@ -137,24 +145,36 @@ export default {
       if (!this.$store.state.user.UserID) {
         this.$emit("ShowLogin", this.LoginState);
       } else {
-        this.$router.push({
-          path: `/News`
+        // this.$router.push({
+        //   path: `/News`
+        // });
+        let routeUrl = this.$router.resolve({
+          path: "/News"
         });
+        window.open(routeUrl.href, "_blank");
       }
     },
     toEnterprise() {
       if (!this.$store.state.user.UserID) {
         this.$emit("ShowLogin", this.LoginState);
       } else {
-        this.$router.push({
-          path: `/enterprise`
+        // this.$router.push({
+        //   path: `/enterprise`
+        // });
+        let routeUrl = this.$router.resolve({
+          path: "/enterprise"
         });
+        window.open(routeUrl.href, "_blank");
       }
     },
     toCore() {
-      this.$router.push({
-        path: `/core`
+      // this.$router.push({
+      //   path: `/core`
+      // });
+      let routeUrl = this.$router.resolve({
+        path: "/core"
       });
+      window.open(routeUrl.href, "_blank");
     },
     tologinList() {
       this.$router.push({

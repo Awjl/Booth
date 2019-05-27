@@ -167,6 +167,7 @@
           class="InterestItem"
           v-for="(item, index) in interestedExhibitions"
           :key="index"
+          @click="toDetails(item.id)"
         >{{item.name}}</div>
       </div>
       <div class="aboutListMiddlelist" style="text-align: center;" v-else>暂无感兴趣的展会</div>
@@ -211,6 +212,7 @@ export default {
   created() {
     this._getPartner(1);
     this._getSimilarityCompany();
+    console.log(this.interestedExhibitions, "感兴趣展会");
   },
   methods: {
     _sendRelationMsg(id) {
@@ -222,6 +224,15 @@ export default {
             path: `/register`
           });
         }
+      });
+    },
+    toDetails(id) {
+      if (id == "0") {
+        return;
+      }
+      this.$router.push({
+        path: `/exhibitionDetails`,
+        query: { id: id }
       });
     },
     _getSimilarityCompany() {
@@ -534,6 +545,10 @@ export default {
       padding: 10px;
       font-size: 16px;
       font-weight: bold;
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
     }
   }
   .enterpriseItem {

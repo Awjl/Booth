@@ -28,7 +28,10 @@
         </div>
       </div>
     </div>
-    <div class="choiceBtn" @click="tosing">去注册</div>
+    <div class="choiceBtn">
+      <span @click="tosing">去注册</span>/
+      <span @click="toLogin">去登陆</span>
+    </div>
   </div>
 </template>
 
@@ -64,6 +67,12 @@ export default {
     tosing() {
       this.$router.push({
         path: `/sign`
+      });
+    },
+    toLogin() {
+      console.log('13')
+      this.$router.push({
+        name: `loginList`
       });
     },
     choiceShow() {
@@ -186,7 +195,7 @@ export default {
     }
   }
   .choiceBtn {
-    width: 100px;
+    width: 120px;
     height: 40px;
     background: #326b90;
     line-height: 40px;
@@ -194,6 +203,9 @@ export default {
     color: #fff;
     margin: 20px auto;
     cursor: pointer;
+    span:hover {
+      text-decoration: underline;
+    }
   }
 }
 </style>

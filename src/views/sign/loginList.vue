@@ -112,7 +112,7 @@ export default {
           }
           if (res.data.code === 0) {
             if (res.data.data.isRegister === 2) {
-              this.$router.go(0);
+              window.location.reload();
               this.$router.push({
                 name: `home`
               });

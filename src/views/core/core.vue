@@ -98,7 +98,7 @@
               class="ItemImg"
               v-for="(item, index) in datalist.pictures"
               :key="index"
-              @click="lookImg(item.picture.url, item.id)"
+              @click="lookImg(index, item.id)"
             >
               <img :src="`${item.picture.url}`" alt>
             </div>
@@ -157,7 +157,7 @@
       </div>
     </div>
     <div class="ImgBox" v-if="imgBoxShow" @click="lookImg() ">
-      <img :src="imgList" alt>
+      <img :src=" datalist.pictures[imgIndex].picture.url" alt>
     </div>
   </div>
 </template>
@@ -208,7 +208,8 @@ export default {
       cooperationData: [],
       ind: 0,
       Height: '170px;',
-      AllPartnerData: []
+      AllPartnerData: [],
+      imgIndex:''
     };
   },
   created() {
@@ -314,9 +315,10 @@ export default {
       document.body.removeChild(textArea);
       alert("企业连接已复制!");
     },
-    lookImg(url, id) {
+    lookImg(index, id) {
+      this.imgIndex = index
+      console.log(this.imgIndex)
       this.imgBoxShow = !this.imgBoxShow;
-      this.imgList = url;
       viewPicture(id, this.$store.state.user.UserID).then(res => {
         if (res.data.code === 0) {
           console.log("查看成功");

@@ -70,9 +70,11 @@ export default {
         prevEl: ".swiper-button-prev"
       },
       on: {
-        click: function() {
-          const realIndex = this.realIndex;
-          _this.toDetails(realIndex);
+        click: function(event, handler) {
+          if (event.target.src) {
+            const realIndex = this.realIndex;
+            _this.toDetails(realIndex);
+          }
         }
       }
     });

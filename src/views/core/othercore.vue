@@ -13,6 +13,10 @@
         v-if="datalist.isConcerned === 1"
         @click="cancelfollowId(datalist.user.id)"
       >已关注</div>
+      <p style="margin-top:10px; text-align:center;" v-if="datalist.user.isRegister == 1">
+        这是我公司页面，我需要添加/修改内容，<br>
+        如需协助请致电400-9018-021
+      </p>
     </div>
     <div class="othercoreMain">
       <div class="othercoreAbout">
@@ -209,6 +213,7 @@ export default {
           introductionUrl: "",
           fansNumber: "",
           name: "",
+          isRegister: '',
           mainProcess: [],
           interestedExhibitions: ""
         }
@@ -241,7 +246,6 @@ export default {
     _getAllPartner() {
       getAllPartner(this.$route.query.id).then(res => {
         if (res.status === ERR_OK) {
-          console.log("获取头像");
           this.AllPartnerData = res.data.data;
         }
       });
@@ -442,7 +446,7 @@ export default {
     }
     .industryName {
       font-size: 10px;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
     .btn {
       width: 80px;

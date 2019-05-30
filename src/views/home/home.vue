@@ -87,11 +87,12 @@ export default {
       slidesPerView: 1,
       spaceBetween: 30,
       loop: true,
+      preventClicks: false,
       autoplay: {
         delay: 5000,
         disableOnInteraction: false
       },
-      preventLinksPropagation : false,
+      preventLinksPropagation: false,
       pagination: {
         el: ".swiper-pagination",
         clickable: true
@@ -101,9 +102,11 @@ export default {
         prevEl: ".swiper-button-prev"
       },
       on: {
-        click: function() {
-          const realIndex = this.realIndex;
-          _this.toDetails(realIndex);
+        click: function(event, handler) {
+          if (event.target.src) {
+            const realIndex = this.realIndex;
+            _this.toDetails(realIndex);
+          }
         }
       }
     });

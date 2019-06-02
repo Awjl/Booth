@@ -486,16 +486,13 @@ export default {
         if (res.status === ERR_OK) {
           this.serachList = res.data.data;
         }
-        console.log(res.data.data);
       });
     },
     _searchExhibition(name) {
-      console.log(name);
       searchExhibition(name).then(res => {
         if (res.status === ERR_OK) {
           console.log(res.data);
           this.searchExh = res.data.data;
-          // console.log(this.searchExh)
         }
       });
     },

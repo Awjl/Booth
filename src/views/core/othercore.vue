@@ -14,8 +14,8 @@
         @click="cancelfollowId(datalist.user.id)"
       >已关注</div>
       <p style="margin-top:10px; text-align:center;" v-if="datalist.user.isRegister == 1">
-        这是我公司页面，我需要添加/修改内容，<br>
-        如需协助请致电400-9018-021
+        这是我公司页面，我需要添加/修改内容，
+        <br>如需协助请致电400-9018-021
       </p>
     </div>
     <div class="othercoreMain">
@@ -88,7 +88,7 @@
               class="ItemImg"
               v-for="(item, index) in datalist.pictures"
               :key="index"
-              @click="lookImg(item.picture.url, item.picture.id, item.isCollected)"
+              @click="lookImg(index, item.picture.id, item.isCollected)"
             >
               <img :src="`${item.picture.url}`" alt>
             </div>
@@ -161,7 +161,14 @@
       </div>
     </div>
     <div class="ImgBox" v-if="imgBoxShow" @click="quxiao">
-      <img :src="imgList" alt>
+      <div class="ImgBoxImg ImgBoxImgLeft" @click.stop="lookImgLeft()">
+        <img src="../../assets/images/left.png" alt>
+      </div>
+      <!-- <img :src="imgList" alt> -->
+      <img :src="datalist.pictures[imgIndex].picture.url" alt>
+      <div class="ImgBoxImg ImgBoxImgRight" @click.stop="lookImgRight()">
+        <img src="../../assets/images/right.png" alt>
+      </div>
       <div v-if="isCollected == 1" @click.stop="_cancelCollection()">已收藏</div>
       <div v-if="isCollected == 2" @click.stop="_collection()">收藏</div>
     </div>
@@ -213,7 +220,7 @@ export default {
           introductionUrl: "",
           fansNumber: "",
           name: "",
-          isRegister: '',
+          isRegister: "",
           mainProcess: [],
           interestedExhibitions: ""
         }
@@ -227,7 +234,8 @@ export default {
       cooperationData: [],
       ind: 0,
       Height: "100px;",
-      AllPartnerData: []
+      AllPartnerData: [],
+      imgIndex: 0
     };
   },
   created() {
@@ -351,15 +359,47 @@ export default {
       document.body.removeChild(textArea);
       alert("企业连接已复制!");
     },
-    lookImg(url, id, isCollected) {
+    lookImg(index, id, isCollected) {
       this.imgBoxShow = !this.imgBoxShow;
-      this.imgList = url;
+      this.imgIndex = index;
       this.isCollected = isCollected;
       this.collectionData.otherId = id;
-      console.log(id);
       viewPicture(id, this.$store.state.user.UserID).then(res => {
         if (res.data.code === 0) {
-          console.log("查看成功");
+        }
+      });
+    },
+    lookImgLeft() {
+      if (this.imgIndex === 0) {
+        return;
+      }
+      this.imgIndex = this.imgIndex - 1;
+      this.isCollected = this.datalist.pictures[this.imgIndex].isCollected;
+      this.collectionData.otherId = this.datalist.pictures[
+        this.imgIndex
+      ].picture.id;
+      viewPicture(
+        this.collectionData.otherId,
+        this.$store.state.user.UserID
+      ).then(res => {
+        if (res.data.code === 0) {
+        }
+      });
+    },
+    lookImgRight() {
+      this.imgIndex = this.imgIndex + 1;
+      if (this.imgIndex > this.datalist.pictures.length - 1) {
+        return;
+      }
+      this.isCollected = this.datalist.pictures[this.imgIndex].isCollected;
+      this.collectionData.otherId = this.datalist.pictures[
+        this.imgIndex
+      ].picture.id;
+      viewPicture(
+        this.collectionData.otherId,
+        this.$store.state.user.UserID
+      ).then(res => {
+        if (res.data.code === 0) {
         }
       });
     },
@@ -413,6 +453,28 @@ export default {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    .ImgBoxImg {
+      width: 30px;
+      height: 70px;
+      margin: 0 100px;
+      position: absolute;
+      border: none;
+      cursor: pointer;
+      img {
+        width: 100%;
+      }
+      // position: absolute;
+    }
+    .ImgBoxImgLeft {
+      position: absolute;
+      border: none;
+      left: 0;
+    }
+    .ImgBoxImgRight {
+      position: absolute;
+      border: none;
+      right: 0;
+    }
     div {
       border: 1px solid red;
       color: red;

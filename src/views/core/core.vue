@@ -37,14 +37,14 @@
               <p>主要</p>
               <p>合作伙伴</p>
             </div>
-            <div class="coreAbouMoverTitleBottom"  @click="Close">关闭展开内容</div>
+            <div class="coreAbouMoverTitleBottom" @click="Close">关闭展开内容</div>
           </div>
           <div class="coreAbouMoverList">
             <p v-if="AllPartnerData.length == 0">暂无数据</p>
-            <div class="coreAbouMoverItem"  v-for="(item, index) in AllPartnerData"  :key="index">
+            <div class="coreAbouMoverItem" v-for="(item, index) in AllPartnerData" :key="index">
               <div class="coreAbouMoverItemImg" @click="toOthercore(item.id)">
-               <img v-if="item.url" :src="item.url" alt="" >
-               <img src="../../assets/images/home/foodlogo.png" alt="" v-else>
+                <img v-if="item.url" :src="item.url" alt>
+                <img src="../../assets/images/home/foodlogo.png" alt v-else>
               </div>
               <p>{{item.name}}</p>
             </div>
@@ -157,7 +157,13 @@
       </div>
     </div>
     <div class="ImgBox" v-if="imgBoxShow" @click="lookImg() ">
-      <img :src=" datalist.pictures[imgIndex].picture.url" alt>
+      <div class="ImgBoxImg" @click.stop="lookImgLeft()">
+        <img src="../../assets/images/left.png" alt>
+      </div>
+      <img :src="datalist.pictures[imgIndex].picture.url" alt>
+      <div class="ImgBoxImg" @click.stop="lookImgRight()">
+        <img src="../../assets/images/right.png" alt>
+      </div>
     </div>
   </div>
 </template>
@@ -207,9 +213,9 @@ export default {
       Exhibitions: [],
       cooperationData: [],
       ind: 0,
-      Height: '170px;',
+      Height: "170px;",
       AllPartnerData: [],
-      imgIndex:''
+      imgIndex: ""
     };
   },
   created() {
@@ -227,16 +233,14 @@ export default {
       }
     });
     // this._getPartner(0);
-    this._getAllPartner()
+    this._getAllPartner();
   },
   methods: {
     _getAllPartner() {
-      getAllPartner(
-        this.$store.state.user.UserID
-      ).then(res => {
+      getAllPartner(this.$store.state.user.UserID).then(res => {
         if (res.status === ERR_OK) {
-         console.log('获取头像')
-         this.AllPartnerData = res.data.data
+          console.log("获取头像");
+          this.AllPartnerData = res.data.data;
         }
       });
     },
@@ -276,7 +280,7 @@ export default {
       });
     },
     toOthercore(id) {
-      console.log(id)
+      console.log(id);
       if (id) {
         this.$router.push({
           path: `/othercore`,
@@ -285,10 +289,10 @@ export default {
       }
     },
     Open() {
-      this.Height = '680px'
+      this.Height = "680px";
     },
     Close() {
-      this.Height = '170px'
+      this.Height = "170px";
     },
     copyUrl(id) {
       // var clipBoardContent = "";
@@ -316,14 +320,29 @@ export default {
       alert("企业连接已复制!");
     },
     lookImg(index, id) {
-      this.imgIndex = index
-      console.log(this.imgIndex)
+      this.imgIndex = index;
+      console.log(this.imgIndex);
       this.imgBoxShow = !this.imgBoxShow;
       viewPicture(id, this.$store.state.user.UserID).then(res => {
         if (res.data.code === 0) {
           console.log("查看成功");
         }
       });
+    },
+    lookImgLeft() {
+      if (this.imgIndex === 0) {
+        return;
+      }
+      this.imgIndex = this.imgIndex - 1;
+      console.log(this.imgIndex)
+    },
+    lookImgRight() {
+      if (this.imgIndex > this.datalist.pictures.length - 1) {
+        return;
+      }
+      this.imgIndex = this.imgIndex + 1;
+      console.log(this.imgIndex)
+      console.log(this.datalist.pictures[this.imgIndex].picture.url)
     },
     toExt(id) {
       this.$router.push({
@@ -751,8 +770,18 @@ export default {
     height: 100vh;
     background: rgba($color: #000000, $alpha: 0.5);
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    .ImgBoxImg {
+      width: 30px;
+      height: 70px;
+      margin: 0 100px;
+      cursor: pointer;
+      img {
+        width: 100%;
+      }
+      // position: absolute;
+    }
     img {
       width: 30%;
     }

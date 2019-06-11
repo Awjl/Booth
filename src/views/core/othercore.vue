@@ -165,6 +165,7 @@
         <img src="../../assets/images/left.png" alt>
       </div>
       <!-- <img :src="imgList" alt> -->
+      <p>{{datalist.pictures[imgIndex].picture.description}}</p>
       <img :src="datalist.pictures[imgIndex].picture.url" alt>
       <div class="ImgBoxImg ImgBoxImgRight" @click.stop="lookImgRight()">
         <img src="../../assets/images/right.png" alt>
@@ -483,7 +484,12 @@ export default {
       cursor: pointer;
     }
     img {
-      width: 30%;
+      width: 40%;
+    }
+    p {
+      font-size: 16px;
+      margin-bottom: 20px;
+      color: #fff;
     }
   }
   .othercoreHeard {

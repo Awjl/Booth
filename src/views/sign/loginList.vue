@@ -60,7 +60,7 @@ export default {
     };
   },
   created() {},
-   mounted() {
+  mounted() {
     this.identifyCode = "";
     this.makeCode(this.identifyCodes, 4);
   },
@@ -76,7 +76,7 @@ export default {
       }
     },
     _login() {
-       if (!this.UserData.username) {
+      if (!this.UserData.username) {
         this.usernameERR = "请输入用户名";
       } else {
         this.usernameERR = "";
@@ -88,10 +88,10 @@ export default {
       }
       if (!this.UserData.code) {
         this.codeERR = "请输入验证码";
-        this._sendCode()
+        this._sendCode();
       } else if (this.UserData.code != this.identifyCode) {
         this.codeERR = "验证码错误";
-        this._sendCode()
+        this._sendCode();
       } else {
         this.codeERR = "";
       }
@@ -112,13 +112,13 @@ export default {
           }
           if (res.data.code === 0) {
             if (res.data.data.isRegister === 2) {
-              window.location.reload();
-              this.$router.push({
-                name: `home`
-              });
               setUser(res.data.data.id);
               setOne(res.data.data.oneIndustryid);
               setTwo(res.data.data.twoIndustryid);
+              this.$router.push({
+                name: `home`
+              });
+              // window.location.reload();
             } else {
               this.$router.push({
                 name: `infoOne`,

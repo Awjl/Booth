@@ -136,6 +136,12 @@ export default {
     HomeLogin,
     HomeList,
     HomeRight
+  },
+  beforeRouteEnter(to, from, next) {
+    next();
+    if ( from.name === 'loginList') {
+       window.location.reload();
+    }
   }
 };
 </script>
@@ -198,7 +204,7 @@ export default {
     position: relative;
     .mianLeft {
       position: absolute;
-      top:30px;
+      top: 30px;
       left: 30px;
       width: 396px;
     }
@@ -208,8 +214,8 @@ export default {
     }
     .mianRight {
       position: absolute;
-      top:30px;
-      right:30px;
+      top: 30px;
+      right: 30px;
       width: 307px;
     }
   }

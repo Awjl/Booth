@@ -160,6 +160,7 @@
       <div class="ImgBoxImg" @click.stop="lookImgLeft()">
         <img src="../../assets/images/left.png" alt>
       </div>
+      <p>{{datalist.pictures[imgIndex].picture.description}}</p>
       <img :src="datalist.pictures[imgIndex].picture.url" alt>
       <div class="ImgBoxImg" @click.stop="lookImgRight()">
         <img src="../../assets/images/right.png" alt>
@@ -334,15 +335,15 @@ export default {
         return;
       }
       this.imgIndex = this.imgIndex - 1;
-      console.log(this.imgIndex)
+      console.log(this.imgIndex);
     },
     lookImgRight() {
       if (this.imgIndex > this.datalist.pictures.length - 1) {
         return;
       }
       this.imgIndex = this.imgIndex + 1;
-      console.log(this.imgIndex)
-      console.log(this.datalist.pictures[this.imgIndex].picture.url)
+      console.log(this.imgIndex);
+      console.log(this.datalist.pictures[this.imgIndex].picture.url);
     },
     toExt(id) {
       this.$router.push({
@@ -780,10 +781,14 @@ export default {
       img {
         width: 100%;
       }
-      // position: absolute;
     }
     img {
-      width: 30%;
+      width: 40%;
+    }
+    p {
+      font-size: 16px;
+      margin-bottom: 20px;
+      color: #fff;
     }
   }
 }

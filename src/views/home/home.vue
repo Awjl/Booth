@@ -193,18 +193,24 @@ export default {
     width: 100%;
     box-sizing: border-box;
     display: flex;
+    padding-left: 426px;
+    padding-right: 347px;
+    position: relative;
     .mianLeft {
-      width: 100%;
-      max-width: 396px;
+      position: absolute;
+      top:30px;
+      left: 30px;
+      width: 396px;
     }
     .mianList {
       width: 100%;
-      min-width: 576px;
       margin: 0 12px;
     }
     .mianRight {
-      width: 100%;
-      max-width: 307px;
+      position: absolute;
+      top:30px;
+      right:30px;
+      width: 307px;
     }
   }
 }

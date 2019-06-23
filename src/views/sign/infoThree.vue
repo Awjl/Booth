@@ -40,6 +40,9 @@
                           @change="setData(item)"
                         >
                       </div>
+                      <div class="UpImgButton" @click="removeButton(item.picture.ossId, index)">
+                        删除
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -60,7 +63,7 @@
 </template>
 
 <script>
-import { addUserInfo, upload, savePicture,updatePicture, ERR_OK } from "@/api/api.js";
+import { addUserInfo, upload, savePicture,updatePicture,deletePicture, ERR_OK } from "@/api/api.js";
 import { setUser } from "@/utils/auth.js";
 // import OSS from "ali-oss";
 
@@ -170,11 +173,6 @@ export default {
       this.formData.append("titles", this.$store.state.userData.titles);
       this.formData.append("customer", this.$store.state.userData.customer);
       this.formData.append("params", JSON.stringify(arr));
-      // for (let i = 0; i <= arr.length; i++) {
-      //   this.formData.append(
-      //     "params",arr[i]
-      //   );
-      // }
       this.formData.append("logoPic", this.$store.state.userData.logoPic);
       this.formData.append(
         "introductionPic",
@@ -198,6 +196,14 @@ export default {
       formData.append("id", item.picture.id);
       updatePicture(formData).then(res => {
         if (res.data.code === 0) {
+        }
+      });
+    },
+    removeButton(id, index) {
+      console.log(id, index)
+      deletePicture(id).then(res => {
+        if (res.data.code === 0) {
+        this.imgListArr.splice(index, 1);
         }
       });
     },
@@ -436,6 +442,17 @@ export default {
                       font-size: 10px;
                     }
                   }
+                }
+                .UpImgButton {
+                  width: 80px;
+                  height: 20px;
+                  line-height: 20px;
+                  text-align: center;
+                  margin: 0 auto;
+                  cursor: pointer;
+                  background: rgba(255, 255, 255, 0.36);
+                  color: #fff;
+                  border-radius: 4px;
                 }
               }
             }

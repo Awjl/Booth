@@ -549,3 +549,11 @@ export function savePicture(data) {
         }
     });
 }
+
+// 删除
+export function deletePicture(ossId) {
+    return service({
+        url: `/user/deletePicture/${ossId}`,
+        method: "post",
+    });
+}

@@ -36,18 +36,30 @@
       </div>
     </div>
     <div class="tabLoging">
-      <div @click="toHome">首页</div>
-      <div @click="toExhibition">展会</div>
-      <div @click="toEnterprise">企业</div>
-      <div @click="toNews">消息</div>
+      <router-link tag="a" target="_blank" :to="{path:'/home'}">首页</router-link>
+      <!-- <router-link tag="a" target="_blank" @click="toHome"  :to="{path:'/home',query:{id:'1'}}">首页</router-link> -->
+      <router-link tag="a" target="_blank" :to="{path:'/exhibition'}">展会</router-link>
+      <router-link tag="a" target="_blank" :to="{path:'/enterprise'}">企业</router-link>
+      <router-link tag="a" target="_blank" :to="{path:'/News'}">消息</router-link>
+      <!-- <div @click="toEnterprise">企业</div>
+      <div @click="toNews">消息</div>-->
       <div @click="toSign" v-if="!this.$store.state.user.UserID">注册</div>
       <div @click="ShowLogin" v-if="!this.$store.state.user.UserID">登录</div>
       <div class="HeadImg HeadImgLogo" v-if="!this.$store.state.user.UserID" @click="ShowLogin">
         <img src="../../assets/images/icon/man.png" alt>
       </div>
-      <div class="HeadImg" @click="toCore" v-if="this.$store.state.user.UserID">
+      <router-link
+        class="HeadImg"
+        tag="a"
+        target="_blank"
+        :to="{path:'/core'}"
+        v-if="this.$store.state.user.UserID"
+      >
         <img :src="`${this.$store.state.userData.logoPicUrl}`" alt>
-      </div>
+      </router-link>
+      <!-- <div class="HeadImg" @click="toCore" v-if="this.$store.state.user.UserID">
+        <img :src="`${this.$store.state.userData.logoPicUrl}`" alt>
+      </div>-->
     </div>
     <div class="boxLoing" v-if="showBox">
       <p>您还未登录，是否去登录？</p>
@@ -126,10 +138,10 @@ export default {
       // this.$router.push({
       //   path: `/home`
       // });
-      let routeUrl = this.$router.resolve({
-        path: "/home"
-      });
-      window.open(routeUrl.href, "_blank");
+      // let routeUrl = this.$router.resolve({
+      //   path: "/home"
+      // });
+      // window.open(routeUrl.href, "_blank");
     },
     ShowLogin() {
       this.$emit("ShowLogin", this.LoginState);
@@ -328,6 +340,21 @@ export default {
   .tabLoging {
     display: flex;
     align-items: center;
+    a {
+      cursor: pointer;
+      margin-left: 36px;
+      color: #fff;
+      &.HeadImg {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #fff;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+    }
     div {
       cursor: pointer;
       margin-left: 36px;

@@ -53,7 +53,7 @@
       <div class="DetailsListBox" v-if="indexType">
         <p v-if="ExhList.length === 0">暂无数据</p>
         <div class="companyItem" v-for="(item, index) in ExhList" :key="index">
-          <p>{{item.stand}}</p>
+          <!-- <p>{{item.stand}}</p> -->
           <div class="enterpriseItemLeft">
             <div class="enterpriseItemHead" @click="toOthercore(item.id)">
               <img :src="item.logoUrl" alt>
@@ -61,7 +61,10 @@
             <div class="enterpriseItemLeftTitle">
               <p @click="toOthercore(item.id)">{{item.name}}</p>
               <p>{{item.fansNumber}}位关注者</p>
-              <p>{{item.industryName}}</p>
+              <p class="enterpriseItemLeftTitle-Num">
+                <span>{{item.industryName}}</span>
+                <span class="button" v-if="item.stand">{{item.stand}}</span>
+              </p>
             </div>
           </div>
           <div class="enterpriseItemRight" v-if="item.isRegister != 1">
@@ -776,10 +779,11 @@ export default {
       display: flex;
       // justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       .enterpriseItemLeft {
         display: flex;
         height: 100%;
-        width: 80%;
+        width: 77%;
         .enterpriseItemHead {
           width: 66px;
           margin-left: 10px;
@@ -787,6 +791,7 @@ export default {
         }
         .enterpriseItemLeftTitle {
           height: 100%;
+          width: calc(100% - 66px);
           margin-left: 10px;
           p:nth-child(1) {
             font-size: 16px;
@@ -798,9 +803,25 @@ export default {
             margin-top: 10px;
           }
           p:nth-child(3) {
+            width: 100%;
             font-size: 12px;
             margin-top: 6px;
             color: #326b90;
+            display: flex;
+            justify-content: space-between;
+            .button {
+              display: inline-block;
+              //  width: 50px;
+              height: 30px;
+              text-align: center;
+              line-height: 30px;
+              color: #000;
+              background: #ffe76b;
+              padding: 0 4px;
+              font-size: 10px;
+              margin-top: -10px;
+              margin-right: 4px;
+            }
           }
         }
       }

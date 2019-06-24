@@ -40,9 +40,10 @@
                           @change="setData(item)"
                         >
                       </div>
-                      <div class="UpImgButton" @click="removeButton(item.picture.ossId, index)">
-                        删除
-                      </div>
+                      <div
+                        class="UpImgButton"
+                        @click="removeButton(item.picture.ossId,item.picture.id,index)"
+                      >删除</div>
                     </div>
                   </div>
                 </div>
@@ -63,7 +64,14 @@
 </template>
 
 <script>
-import { addUserInfo, upload, savePicture,updatePicture,deletePicture, ERR_OK } from "@/api/api.js";
+import {
+  addUserInfo,
+  upload,
+  savePicture,
+  updatePicture,
+  deletePicture,
+  ERR_OK
+} from "@/api/api.js";
 import { setUser } from "@/utils/auth.js";
 // import OSS from "ali-oss";
 
@@ -93,6 +101,20 @@ export default {
           setUser(this.$store.state.user.UserID);
           this.$router.push({
             path: `/home`
+          });
+        } else if (res.data.code === 500511) {
+          alert(
+            "不好意思,该企业中文名称已被注册,请更改企业名称或者致电400-901-8021申述此名称"
+          );
+          this.$router.push({
+            path: `/infoOne`
+          });
+        } else if (res.data.code === 500512) {
+          alert(
+            "不好意思,该企业英文名称已被注册,请更改企业名称或者致电400-901-8021申述此名称"
+          );
+          this.$router.push({
+            path: `/infoOne`
           });
         }
       });
@@ -199,11 +221,11 @@ export default {
         }
       });
     },
-    removeButton(id, index) {
-      console.log(id, index)
-      deletePicture(id).then(res => {
+    removeButton(ossid, id, index) {
+      console.log(id);
+      deletePicture(ossid, id).then(res => {
         if (res.data.code === 0) {
-        this.imgListArr.splice(index, 1);
+          this.imgListArr.splice(index, 1);
         }
       });
     },

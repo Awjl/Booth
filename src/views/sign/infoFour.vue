@@ -150,6 +150,20 @@ export default {
           this.$router.push({
             path: `/home`
           });
+        } else if (res.data.code === 500511) {
+          alert(
+            "不好意思,该企业中文名称已被注册,请更改企业名称或者致电400-901-8021申述此名称"
+          );
+          this.$router.push({
+            path: `/infoOne`
+          });
+        } else if (res.data.code === 500512) {
+          alert(
+            "不好意思,该企业英文名称已被注册,请更改企业名称或者致电400-901-8021申述此名称"
+          );
+          this.$router.push({
+            path: `/infoOne`
+          });
         }
       });
     },

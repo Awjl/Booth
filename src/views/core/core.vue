@@ -157,12 +157,12 @@
       </div>
     </div>
     <div class="ImgBox" v-if="imgBoxShow" @click="lookImg() ">
-      <div class="ImgBoxImg" @click.stop="lookImgLeft()">
+      <div class="ImgBoxImg ImgBoxImgLeft" @click.stop="lookImgLeft()">
         <img src="../../assets/images/left.png" alt>
       </div>
       <p>{{datalist.pictures[imgIndex].picture.description}}</p>
       <img :src="datalist.pictures[imgIndex].picture.url" alt>
-      <div class="ImgBoxImg" @click.stop="lookImgRight()">
+      <div class="ImgBoxImg ImgBoxImgRight" @click.stop="lookImgRight()">
         <img src="../../assets/images/right.png" alt>
       </div>
     </div>
@@ -771,19 +771,32 @@ export default {
     height: 100vh;
     background: rgba($color: #000000, $alpha: 0.5);
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    flex-direction: column;
     .ImgBoxImg {
       width: 30px;
       height: 70px;
       margin: 0 100px;
+      position: absolute;
+      border: none;
       cursor: pointer;
       img {
         width: 100%;
       }
     }
+    .ImgBoxImgLeft {
+      position: absolute;
+      border: none;
+      left: 0;
+    }
+    .ImgBoxImgRight {
+      position: absolute;
+      border: none;
+      right: 0;
+    }
     img {
-      width: 40%;
+      width: 45%;
     }
     p {
       font-size: 16px;

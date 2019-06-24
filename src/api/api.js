@@ -551,9 +551,13 @@ export function savePicture(data) {
 }
 
 // 删除
-export function deletePicture(ossId) {
+export function deletePicture(ossId, id) {
     return service({
-        url: `/user/deletePicture/${ossId}`,
+        url: `/user/deleteCompanyPic`,
+        data: {
+            ossId: ossId,
+            id: id,  
+        },
         method: "post",
     });
 }

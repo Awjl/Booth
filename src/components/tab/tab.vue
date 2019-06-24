@@ -48,6 +48,7 @@
       <div class="HeadImg HeadImgLogo" v-if="!this.$store.state.user.UserID" @click="ShowLogin">
         <img src="../../assets/images/icon/man.png" alt>
       </div>
+      <div @click="Cancellation" v-if="this.$store.state.user.UserID">注销</div>
       <router-link
         class="HeadImg"
         tag="a"
@@ -73,7 +74,15 @@
 
 <script>
 import { getIndustry, ERR_OK } from "@/api/api.js";
-import { setOne, setTwo, getOne, getTwo } from "@/utils/auth.js";
+import {
+  setOne,
+  setTwo,
+  getOne,
+  getTwo,
+  removeUser,
+  removeOne,
+  removeTwo
+} from "@/utils/auth.js";
 
 export default {
   name: "tab",
@@ -122,26 +131,32 @@ export default {
       setOne(this.One);
       setTwo(this.Two);
     },
-    toExhibition() {
-      // this.$router.push({
-      //   path: `/exhibition`
-      // });
-      let routeUrl = this.$router.resolve({
-        path: "/exhibition"
-      });
-      window.open(routeUrl.href, "_blank");
-    },
-    toSign() {
-      this.$emit("ShowSign", this.SignState);
-    },
+    // toExhibition() {
+    //   let routeUrl = this.$router.resolve({
+    //     path: "/exhibition"
+    //   });
+    //   window.open(routeUrl.href, "_blank");
+    // },
     toHome() {
-      // this.$router.push({
-      //   path: `/home`
-      // });
+      this.$router.push({
+        path: `/home`
+      });
       // let routeUrl = this.$router.resolve({
       //   path: "/home"
       // });
       // window.open(routeUrl.href, "_blank");
+    },
+    toSign() {
+      this.$emit("ShowSign", this.SignState);
+    },
+    Cancellation() {
+      let con;
+      con = confirm("确定要退出该账户么？");
+      if (!con) return
+      removeUser();
+      removeOne();
+      removeTwo();
+      window.location.reload();
     },
     ShowLogin() {
       this.$emit("ShowLogin", this.LoginState);
@@ -242,7 +257,7 @@ export default {
     display: flex;
     align-items: center;
     img {
-      width: 95px;
+      width: 75px;
     }
     select {
       width: 100px;

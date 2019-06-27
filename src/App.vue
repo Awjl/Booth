@@ -8,16 +8,11 @@ import { getCompanyInfo, ERR_OK } from "@/api/api.js";
 
 export default {
   created() {
-    let userName = window.sessionStorage.getItem("userName");
-    // console.log(userName === 'true')
-    // if (userName === 'true') {
-    //   this.$router.push({
-    //     path: `/home`
-    //   });
-    // } else {
-      if (this.$store.state.user.UserID) {
-        this._getCompanyInfo();
-      // }
+    if (this.$store.state.user.UserID) {
+      this.$router.push({
+        path: `/home`
+      });
+      this._getCompanyInfo();
     }
   },
   mounted() {

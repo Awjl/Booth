@@ -36,11 +36,11 @@
       </div>
     </div>
     <div class="tabLoging">
-      <router-link tag="a" target="_blank" :to="{path:'/home'}">首页</router-link>
-      <!-- <router-link tag="a" target="_blank" @click="toHome"  :to="{path:'/home',query:{id:'1'}}">首页</router-link> -->
-      <router-link tag="a" target="_blank" :to="{path:'/exhibition'}">展会</router-link>
-      <router-link tag="a" target="_blank" :to="{path:'/enterprise'}">企业</router-link>
-      <router-link tag="a" target="_blank" :to="{path:'/News'}">消息</router-link>
+      <router-link tag="a"  :to="{path:'/home'}">首页</router-link>
+      <!-- <router-link tag="a"  @click="toHome"  :to="{path:'/home',query:{id:'1'}}">首页</router-link> -->
+      <router-link tag="a"  :to="{path:'/exhibition'}">展会</router-link>
+      <router-link tag="a"  :to="{path:'/enterprise'}">企业</router-link>
+      <router-link tag="a"  :to="{path:'/News'}">消息</router-link>
       <!-- <div @click="toEnterprise">企业</div>
       <div @click="toNews">消息</div>-->
       <div @click="toSign" v-if="!this.$store.state.user.UserID">注册</div>
@@ -52,7 +52,7 @@
       <router-link
         class="HeadImg"
         tag="a"
-        target="_blank"
+        
         :to="{path:'/core'}"
         v-if="this.$store.state.user.UserID"
       >

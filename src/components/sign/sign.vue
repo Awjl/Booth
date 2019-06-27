@@ -45,13 +45,15 @@ export default {
         nameShort: "",
         email: "",
         password: "",
+        username: '',
       },
       userID: ""
     };
   },
   methods: {
     _register() {
-      this.user.nameShort = this.user.username
+      // this.user.nameShort = this.user.username
+      this.user.username = this.user.nameShort
       register(this.user).then(res => {
         if (res.data.code === 500502) {
           this.emlErr = res.data.msg;

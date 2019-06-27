@@ -29,13 +29,14 @@
               <div class="exhibitionCan">
                 <span>已参与</span>
                 <div class="exhibitionName">
+                  {{item.participation.dateEng}}
+                  <br>
                   {{item.participation.nameEng}}
                   <br>
                   {{item.participation.name}}
                 </div>
               </div>
               <div class="exhibitionTime">
-                <span>{{item.participation.dateEng}}</span>
                 <div class="exhibitionDetali">
                   <i class="icon iconTo"></i>
                 </div>
@@ -161,33 +162,15 @@ export default {
       }
     },
     toOthercore(index) {
-      // console.log(());
       this.$refs.heightlist[index].style.height = "auto";
       this.$refs.heightlist[index].style.overflow = "";
       this.$refs.moveBtn[index].innerHTML = "";
-      // display: -webkit-box;
-      //       -webkit-box-orient: vertical;
-      //       -webkit-line-clamp: 5;
-      //       overflow: hidden;
-      // this.$refs.heightlist[index].style.height
-      // if (!this.$store.state.user.UserID) {
-      //   this.showBox = true;
-      // } else {
-      // this.$router.push({
-      //   path: `/othercore`,
-      //   query: { id: id }
-      // });
-      // }
     },
     toExt(id) {
-      // if (!this.$store.state.user.UserID) {
-      //   this.showBox = true;
-      // } else {
       this.$router.push({
         path: `/exhibitionDetails`,
         query: { id: id }
       });
-      // }
     },
     followId(id) {
       if (this.$store.state.user.UserID) {
@@ -282,7 +265,7 @@ export default {
         .exhibition {
           width: 100%;
           min-width: 356px;
-          height: 52px;
+          // height: 52px;
           background: #fff;
           margin-top: 20px;
           cursor: pointer;
@@ -292,18 +275,25 @@ export default {
             background: rgba($color: #c8d3db, $alpha: 0.32);
             display: flex;
             justify-content: space-between;
+            position: relative;
             .exhibitionCan {
               display: flex;
+              align-items: center;
+              width: calc(100% - 36px);
               span {
-                display: block;
+                display: flex;
                 width: 60px;
-                height: 52px;
+                height: 100%;
+                // height: 52px;
                 background: #326b90;
                 color: #fff;
                 text-align: center;
-                line-height: 52px;
+                justify-content: center;
+                align-items: center;
+                // line-height: 52px;
               }
               .exhibitionName {
+                width: calc(100% - 64px);
                 margin-top: 4px;
                 margin-left: 10px;
                 line-height: 20px;
@@ -311,10 +301,13 @@ export default {
               }
             }
             .exhibitionTime {
-              display: flex;
-              height: 56px;
-              align-items: center;
-              margin-right: 10px;
+              height: 26px;
+              width: 26px;
+              position: absolute;
+              top: 0;
+              right: 10px;
+              bottom: 0px;
+              margin: auto;
               span {
                 display: flex;
                 text-align: right;

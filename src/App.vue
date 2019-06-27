@@ -8,8 +8,16 @@ import { getCompanyInfo, ERR_OK } from "@/api/api.js";
 
 export default {
   created() {
-    if (this.$store.state.user.UserID) {
-      this._getCompanyInfo();
+    let userName = window.sessionStorage.getItem("userName");
+    // console.log(userName === 'true')
+    // if (userName === 'true') {
+    //   this.$router.push({
+    //     path: `/home`
+    //   });
+    // } else {
+      if (this.$store.state.user.UserID) {
+        this._getCompanyInfo();
+      // }
     }
   },
   mounted() {
@@ -26,8 +34,7 @@ export default {
         this.$store.state.user.UserID
       ).then(res => {
         if (res.status === ERR_OK) {
-          console.log("用户信息--------------------------------");
-          console.log(res.data.data);
+          window.sessionStorage.setItem("userName", false);
           this.$store.commit("SET_NAME", res.data.data.user.name);
           this.$store.commit("SET_NAMEENG", res.data.data.user.nameEng);
           this.$store.commit("SET_NAMESHORT", res.data.data.user.nameShort);

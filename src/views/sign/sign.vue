@@ -63,7 +63,7 @@ export default {
         username: "",
         email: "",
         password: "",
-        nameShort: ''
+        nameShort: ""
       }
     };
   },
@@ -83,16 +83,18 @@ export default {
               params: { id: this.userID }
             });
           } else {
-            this.$router.push({
-              name: `infoOne`,
-              params: { id: this.userID }
-            });
+            if (res.data.data) {
+              this.$router.push({
+                name: `infoOne`,
+                params: { id: this.userID }
+              });
+            }
           }
         }
       });
     },
     _register() {
-      this.user.nameShort = this.user.username
+      this.user.nameShort = this.user.username;
       register(this.user).then(res => {
         if (res.data.code === 500502) {
           this.emlErr = res.data.msg;

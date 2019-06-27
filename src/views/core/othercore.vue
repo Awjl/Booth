@@ -585,7 +585,7 @@ export default {
                 font-size: 12px;
               }
               .exhibition {
-                width: 80%;
+                width: 90%;
                 min-width: 356px;
                 height: 52px;
                 background: #fff;

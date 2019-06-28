@@ -12,6 +12,7 @@
               <div>
                 <p>普通会员</p>
                 <p @click="toInfo">修改资料</p>
+                <p @click="Toforget">修改密码</p>
               </div>
             </div>
             <p>{{datalist.user.fansNumber}}位关注者</p>
@@ -356,7 +357,12 @@ export default {
         name: `infoOne`,
         params: { id: this.$store.state.user.UserID }
       });
-    }
+    },
+    Toforget() {
+      this.$router.push({
+        path: `/forgetPass`
+      });
+    },
   },
   components: {
     AboutList

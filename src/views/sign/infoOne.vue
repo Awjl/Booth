@@ -251,6 +251,7 @@ export default {
     },
     inputFunc() {
       // 搜索 1
+      // this.$store.commit("SET_NAME", this.userData.name);
       clearInterval(this.timer);
       this.setTime();
     },
@@ -258,7 +259,9 @@ export default {
       this.serachList = [];
     },
     preservation() {
-      this.$store.commit("SET_NAME", this.userData.name);
+      console.log(this.userData.name)
+       this.$store.commit("SET_NAME", this.userData.name);
+       console.log(this.$store.state.userData.name)     
       this.$store.commit("SET_NAMEENG", this.userData.nameEng);
       this.$store.commit("SET_NAMESHORT", this.userData.nameShort);
       this.$store.commit("SET_MEMBER", this.userData.member);
@@ -273,6 +276,7 @@ export default {
       for (let i = 0; i < this.$store.state.userData.imgListUrlArr.length; i++) {
          arr.push(this.$store.state.userData.imgListUrlArr[i].picture)
       }
+      this.formData = new FormData();
       this.formData.append("id", this.$store.state.user.UserID);
       this.formData.append("name", this.$store.state.userData.name);
       this.formData.append("engName", this.$store.state.userData.nameEng);

@@ -156,6 +156,7 @@ export default {
       ) {
         arr.push(this.$store.state.userData.imgListUrlArr[i].picture);
       }
+      this.formData = new FormData();
       this.formData.append("id", this.$store.state.user.UserID);
       this.formData.append("name", this.$store.state.userData.name);
       this.formData.append("nameShort", this.$store.state.userData.nameShort);

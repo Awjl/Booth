@@ -4,7 +4,7 @@ export const ERR_OK = 200;
 
 const service = axios.create({
     // baseURL: "./api", // api的base_url本地
-    baseURL: "http://47.101.165.134/booth", // api的base_url 服务器
+    baseURL: "https://www.booth.vip/booth", // api的base_url 服务器
 });
 // 获取行业列表   1
 export function getIndustry(Class) {

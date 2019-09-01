@@ -143,11 +143,11 @@
             </div>
             <div class="signUpBoxListItemTwo" style="width: 50%">
               <p>到场时间</p>
-              <datepicker :value="item.precentDate" format="YYYY-MM-DD" name="date2"></datepicker>
+              <datepicker :value="item.precentDate" format="YYYY年MM月DD日" name="date2"></datepicker>
             </div>
             <div class="signUpBoxListItemTwo" style="width: 50%">
               <p>离场时间</p>
-              <datepicker :value="precentDate" format="YYYY-MM-DD" name="date2"></datepicker>
+              <datepicker :value="precentDate" format="YYYY年MM月DD日" name="date2"></datepicker>
             </div>
           </div>
         </div>
@@ -221,7 +221,7 @@ export default {
       indexType: true,
       typeIndex: "1",
       addHide: true,
-      precentDate: "2019-08-01",
+      precentDate: "2019年08月01日",
       signUp: [
         {
           exhibitionId: this.$route.query.id,
@@ -440,8 +440,8 @@ export default {
             userId: getUser(),
             name: null,
             mobile: null,
-            precentDate: "2019-01-01",
-            outDate: "2019-01-01",
+            precentDate: "2019年01月01日",
+            outDate: "2019年01月01日",
             position: "1"
           }
         ];

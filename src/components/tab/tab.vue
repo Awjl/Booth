@@ -102,6 +102,7 @@ export default {
     };
   },
   created() {
+    this.searchData = this.$route.query.center;
     this._getIndustry();
     console.log(this.One, this.Two);
   },
@@ -167,6 +168,8 @@ export default {
         path: `/search`,
         query: { center: this.searchData }
       });
+      this.$emit('toSearch', this.searchData);
+
     },
     toNews() {
       if (!this.$store.state.user.UserID) {

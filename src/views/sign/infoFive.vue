@@ -216,7 +216,7 @@ export default {
         if (res.data.code === 0) {
           setUser(this.$store.state.user.UserID);
           this.$router.push({
-            path: `/home`
+            path: `/core`
           });
         } else if (res.data.code === 500511) {
           alert(

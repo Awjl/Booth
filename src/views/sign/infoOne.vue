@@ -91,7 +91,7 @@
             </div>
           </div>
           <div class="signBgMainFoot">
-            <span @click="preservation">保存并返回到首页</span>
+            <span @click="preservation">保存并返回到主页</span>
             <span @click="toNext">下一页</span>
           </div>
         </div>
@@ -166,7 +166,7 @@ export default {
         if (res.data.code === 0) {
           setUser(this.$store.state.user.UserID);
           this.$router.push({
-            path: `/home`
+            path: `/core`
           });
         } else if (res.data.code === 500511) {
           alert('不好意思,该企业中文名称已被注册,请更改企业名称或者致电400-901-8021申述此名称')

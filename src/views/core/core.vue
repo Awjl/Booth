@@ -11,7 +11,7 @@
               <span>{{datalist.user.name}}</span>
               <div>
                 <p>普通会员</p>
-                <p @click="toInfo">修改资料</p>
+                <p @click="toInfo">编辑资料</p>
                 <p @click="Toforget">修改密码</p>
               </div>
             </div>
